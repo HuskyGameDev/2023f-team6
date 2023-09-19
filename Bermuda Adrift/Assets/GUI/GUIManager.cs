@@ -9,4 +9,14 @@ public class GUIManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneIndex);
     }
+
+    public void SetActiveTrue(GameObject screen)
+    {
+        screen.SetActive(true);
+    }
+
+    public void SetActiveFalse(GameObject screen)
+    {
+        screen.SetActive(false);
+    }
 }

@@ -14,18 +14,8 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void ChangeVolume()
+    public void ChangeMasterVolume()
     {
         mixer.SetFloat("MasterVolume", Mathf.Log10(masterSlider.value) * 20);
-    }
-
-    public void VolumeUp(int volume)
-    {
-
-    }
-
-    public void VolumeDown(int volume)
-    {
-
     }
 }
