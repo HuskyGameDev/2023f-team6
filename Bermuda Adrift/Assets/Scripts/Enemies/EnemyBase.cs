@@ -22,14 +22,6 @@ public class EnemyBase : MonoBehaviour
     //0 doesn't spawn, 1 always spawns
     private float Rarity;
 
-    private void Start()
-    {
-        if (Type == Types.Airborne)
-            gameObject.AddComponent<AirborneAI>();
-        else if (Type != Types.Center)
-            gameObject.AddComponent<SurfaceUnderwaterAI>();
-    }
-
     private void TakeDamage (int damage)
     {
         Health -= damage;
