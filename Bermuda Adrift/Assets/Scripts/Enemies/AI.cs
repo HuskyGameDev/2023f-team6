@@ -10,8 +10,8 @@ public class AI : MonoBehaviour
     private bool inChannel;
     private bool arrived;
     private float speed;
-    [SerializeField]
     private Transform goal;
+    private GameObject goalGO;
     private void Start()
     {
         speed = gameObject.GetComponent<EnemyBase>().getSpeed();
@@ -50,25 +50,49 @@ public class AI : MonoBehaviour
             movement.position = Vector3.MoveTowards(movement.position, goal.position, speed * Time.deltaTime);
             if (movement.position == goal.position)
                 enteringChannel();
-        } else
+
+            //Add interaction with barriers
+
+            if (Mathf.Abs(movement.position.x + movement.position.y) <= 1)  //Stop when they reach the center
+            {
+                arrived = true;
+
+                if (movement.position.x < 0)
+                {
+                    movement.SetPositionAndRotation(new Vector3(-1, 0), movement.rotation);
+                } else if (movement.position.x > 0)
+                {
+                    movement.SetPositionAndRotation(new Vector3(1, 0), movement.rotation);
+                } else if (movement.position.y > 0)                 //Goes to 0 on x when on top and bottom channels
+                {
+                    movement.SetPositionAndRotation(new Vector3(0, 1), movement.rotation);
+                } else if (movement.position.y < 0)
+                {
+                    movement.SetPositionAndRotation(new Vector3(0, -1), movement.rotation);
+                }
+
+                StartCoroutine(Attacking());
+            }
+        }
+    }
+
+    IEnumerator Attacking()
+    {
+        while (gameObject.active)
         {
             //Attacking the center
             //Play attacking animation
-            gameObject.SendMessage("CenterDamage", 1);
+            yield return new WaitForSeconds(1f);
+
+            goalGO.SendMessage("CenterDamage", 1);
         }
     }
 
     void enteringChannel()
     {
-        goal = GameObject.FindGameObjectWithTag("Center").transform;
+        goalGO = GameObject.FindGameObjectWithTag("Center");
+        goal = goalGO.transform;
         float z = (Mathf.Atan2(movement.position.y, movement.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
         movement.rotation = Quaternion.Euler(0, 0, z);  //Faces towards center (If sprites faces left)
-    }
-
-    void OnCollisionEnter2D(Collision2D hit)
-    {
-        Debug.Log("Hit the center");
-        if (hit.gameObject.tag == "Center")    //Stop moving and start attacking
-            arrived = true;
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6307332547372554963}
   - component: {fileID: 915185028645706308}
   - component: {fileID: 6781315670268623806}
+  - component: {fileID: -3792157920126694891}
   m_Layer: 0
   m_Name: Swordfish
   m_TagString: Enemy
@@ -101,3 +102,16 @@ MonoBehaviour:
   Health: 7
   Damage: 1
   Speed: 10
+--- !u!114 &-3792157920126694891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795078812103573852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbbc36cee521864dab8e694b2b6f34f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goal: {fileID: 0}

@@ -20,7 +20,7 @@ public class EnemyBase : MonoBehaviour
     //For when we add more enemies
     //At start of round, decide what type of enemy and then specific enemies are randomized
     //0 doesn't spawn, 1 always spawns
-    private float Rarity;
+    private float Rarity = 1;
 
     private void TakeDamage (int damage)
     {
@@ -32,9 +32,14 @@ public class EnemyBase : MonoBehaviour
 
     void CenterDamage(int damage)
     {
-        Health -= damage;
-        if (Health <= 0)
-            SendMessage("Game End");
+        if (Type == Types.Center)
+        {
+            Health -= damage;
+            //Update UI?
+
+            if (Health <= 0)
+                SendMessage("Game End");
+        }
     }
 
     private void death()
@@ -46,5 +51,10 @@ public class EnemyBase : MonoBehaviour
     internal float getSpeed()
     {
         return Speed;
+    }
+
+    private void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
+    {
+        Health += health;
     }
 }
