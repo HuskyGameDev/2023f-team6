@@ -7,15 +7,21 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioMixer mixer;
-    [SerializeField] Slider masterSlider;
+    [SerializeField] Slider musicSlider;
+    [SerializeField] Slider SFXSlider;
 
     public void PlaySound()
     {
 
     }
 
-    public void ChangeMasterVolume()
+    public void ChangeSFXVolume()
     {
-        mixer.SetFloat("MasterVolume", Mathf.Log10(masterSlider.value) * 20);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(musicSlider.value) * 20);
+    }
+
+    public void ChangeMusicVolume()
+    {
+        mixer.SetFloat("MusicVolume", Mathf.Log10(SFXSlider.value) * 20);
     }
 }
