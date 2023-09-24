@@ -84,8 +84,8 @@ public class EnemyManager : MonoBehaviour
         if (total <= 0)
         {
             gameObject.SendMessage("endRound");
-            onRoundEnd?.Invoke(Round);
             Round++;
+            onRoundEnd?.Invoke(Round);
         }
         //Add Score points
     }
