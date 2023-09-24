@@ -454,6 +454,9 @@ MonoBehaviour:
   Health: 100
   Damage: 0
   Speed: 0
+  xp: 0
+  scrap: 0
+  enemyManager: {fileID: 0}
 --- !u!1 &1267189161
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,9 +498,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2038607806}
   - component: {fileID: 2038607805}
+  - component: {fileID: 2038607807}
   m_Layer: 0
-  m_Name: EnemyManager
-  m_TagString: Untagged
+  m_Name: Managers
+  m_TagString: Managers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -514,7 +518,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c5809d9f944ba4681216ef50dd5b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6396049091554363682, guid: af16611acd2ff484fb98e0b87b70fb37, type: 3}
+  airborne:
+  - {fileID: 6396049091554363682, guid: af16611acd2ff484fb98e0b87b70fb37, type: 3}
+  surface:
+  - {fileID: 5795078812103573852, guid: 8840b5b99d4379d40883feb4ec82026e, type: 3}
+  underwater:
+  - {fileID: 5130587931758551404, guid: 17b2bd3e3a2b42c4d8d4f451033d167b, type: 3}
 --- !u!4 &2038607806
 Transform:
   m_ObjectHideFlags: 0
@@ -530,6 +539,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038607807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038607804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31525263f0cedbd40992815aab5eb663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

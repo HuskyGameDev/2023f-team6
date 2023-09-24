@@ -101,7 +101,11 @@ MonoBehaviour:
   Type: 0
   Health: 15
   Damage: 2
-  Speed: 3
+  Speed: 1
+  xp: 0
+  scrap: 0
+  enemyManager: {fileID: 0}
+  Rarity: 1
 --- !u!114 &3689973537785308281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,4 +118,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbbc36cee521864dab8e694b2b6f34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {fileID: 0}

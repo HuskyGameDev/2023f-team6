@@ -47,13 +47,13 @@ public class AI : MonoBehaviour
     {
         if (!arrived)
         {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, speed * Time.deltaTime);
+            movement.position = Vector3.MoveTowards(movement.position, goal.position, speed * Time.deltaTime * 0.5f);
             if (movement.position == goal.position)
                 enteringChannel();
 
             //Add interaction with barriers
 
-            if (Mathf.Abs(movement.position.x + movement.position.y) <= 1)  //Stop when they reach the center
+            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center
             {
                 arrived = true;
 
