@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
 {
+    public static event Action<int> onRoundEnd;
+    public static event Action<int> onEnemyDeath;
+    public static event Action<int> onEnemySpawn;
+
     private Camera camera;
     private int total;
     private int Round;
@@ -23,11 +29,11 @@ public class EnemyManager : MonoBehaviour
 
     private void EnemySpawns()
     {
-        Round++;
         float x;
         float y;
         int type;
         total = (int) Random.Range(Round * 2, Round * 3);
+        onEnemySpawn?.Invoke(total);
         int i = 0;
         for (; i < total / 2; i++)     //Left and Right side enemies
         {
@@ -74,8 +80,13 @@ public class EnemyManager : MonoBehaviour
     private void EnemyDown()
     {
         total--;
+        onEnemyDeath?.Invoke(total);
         if (total <= 0)
+        {
             gameObject.SendMessage("endRound");
+            onRoundEnd?.Invoke(Round);
+            Round++;
+        }
         //Add Score points
     }
 

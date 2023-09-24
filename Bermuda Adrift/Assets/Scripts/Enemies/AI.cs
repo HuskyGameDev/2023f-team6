@@ -20,7 +20,7 @@ public class AI : MonoBehaviour
         nearestEntrance();
 
         float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-        movement.rotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+        movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
     }
 
     private void nearestEntrance()

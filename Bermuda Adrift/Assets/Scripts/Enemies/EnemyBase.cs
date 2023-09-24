@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBase : MonoBehaviour
 {
+    public static event Action<int> onEnemyTakeDmg;
+
     private enum Types {Underwater, Surface, Airborne, Center};
 
     [SerializeField] private Types Type;
@@ -15,6 +18,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int xp;
     [SerializeField] private int scrap;
     [SerializeField] private GameObject enemyManager;
+    [SerializeField] private Slider healthSlider;
+    private Animator animator;
 
     //For when we add more enemies
     //At start of round, decide what type of enemy and then specific enemies are randomized
@@ -22,12 +27,22 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float Rarity = 1;
     private void Start()
     {
+        if (gameObject.GetComponent<Animator>() != null) animator = gameObject.GetComponent<Animator>();
+
+        if (healthSlider != null) healthSlider.maxValue = Health;
+
         enemyManager = GameObject.FindGameObjectWithTag("Managers");
+        
     }
     private void Update()
     {
         if (Input.GetKeyDown("a"))
         {
+            if (animator != null)
+            {
+                animator.ResetTrigger("Hurt");
+                animator.SetTrigger("Hurt");
+            }
             TakeDamage(1);
         }
     }
@@ -35,6 +50,8 @@ public class EnemyBase : MonoBehaviour
     private void TakeDamage (int damage)
     {
         Health -= damage;
+        if (healthSlider != null) healthSlider.value = Health;
+        onEnemyTakeDmg?.Invoke(damage);
         //Mini Healthbar?
         if (Health <= 0)
             death();
