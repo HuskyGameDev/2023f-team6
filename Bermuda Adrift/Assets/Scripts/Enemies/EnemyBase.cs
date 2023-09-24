@@ -7,20 +7,30 @@ public class EnemyBase : MonoBehaviour
 {
     private enum Types {Underwater, Surface, Airborne, Center};
 
-    [SerializeField]
-    private Types Type;
+    [SerializeField] private Types Type;
 
-    [SerializeField]
-    private int Health;
-    [SerializeField]
-    private int Damage;
-    [SerializeField]
-    private float Speed;
+    [SerializeField] private int Health;
+    [SerializeField] private int Damage;
+    [SerializeField] private float Speed;
+    [SerializeField] private int xp;
+    [SerializeField] private int scrap;
+    [SerializeField] private GameObject enemyManager;
 
     //For when we add more enemies
     //At start of round, decide what type of enemy and then specific enemies are randomized
     //0 doesn't spawn, 1 always spawns
-    private float Rarity = 1;
+    [SerializeField] private float Rarity = 1;
+    private void Start()
+    {
+        enemyManager = GameObject.FindGameObjectWithTag("Managers");
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown("a"))
+        {
+            TakeDamage(1);
+        }
+    }
 
     private void TakeDamage (int damage)
     {
@@ -46,6 +56,9 @@ public class EnemyBase : MonoBehaviour
     {
         //Play death animation
         Destroy(gameObject);
+        //Add XP
+        //Add Scrap
+        enemyManager.SendMessage("EnemyDown");
     }
 
     internal float getSpeed()
@@ -56,5 +69,10 @@ public class EnemyBase : MonoBehaviour
     private void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
     {
         Health += health;
+    }
+
+    public float getRarity()
+    {
+        return Rarity;
     }
 }

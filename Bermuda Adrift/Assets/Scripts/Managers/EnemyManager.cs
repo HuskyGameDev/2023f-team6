@@ -5,9 +5,14 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     private Camera camera;
+    private int total;
     private int Round;
-    private enum Types { Underwater, Surface, Airborne, Center };
-    [SerializeField] private GameObject prefab;
+
+    private GameObject[] prefabs;
+    [SerializeField] private GameObject[] airborne;
+    [SerializeField] private GameObject[] surface;
+    [SerializeField] private GameObject[] underwater;
+
     private Vector2 spawnPoint;
 
     private void Start()
@@ -15,34 +20,63 @@ public class EnemyManager : MonoBehaviour
         camera = Camera.main;
         Round = 1;
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown("f"))
-        {
-            EnemySpawns(Types.Airborne);
-        }
-    }
 
-    private void EnemySpawns(Types type)
+    private void EnemySpawns()
     {
-        int total = (int) Random.Range(Round * 2, Round * 3);
-        Debug.Log(total);
+        Round++;
+        float x;
+        float y;
+        int type;
+        total = (int) Random.Range(Round * 2, Round * 3);
         int i = 0;
         for (; i < total / 2; i++)     //Left and Right side enemies
         {
-            //Set prefab to be equal to random enemy of the specified type
-            float x = leftBound() * posNeg();
-            float y = Random.Range(lowerBound(), -lowerBound());
-            Instantiate(prefab, new Vector2(x,y), Quaternion.identity);
+            type = (int)Random.Range(0, 3);     //Randomize type of enemy
+            if (type == 0)
+                prefabs = airborne;
+            else if (type == 1)
+                prefabs = surface;
+            else
+                prefabs = underwater;
+
+            x = leftBound() * posNeg();
+            y = Random.Range(lowerBound(), -lowerBound());  //Off-screen
+            Instantiate(prefabs[randomEnemy()], new Vector2(x,y), Quaternion.identity);
         }
         for (; i < total; i++)         //Top and bottom enemies
         {
-            //Set prefab to be equal to random enemy of the specified type
-            float x = Random.Range(leftBound(), -leftBound());
-            float y = lowerBound() * posNeg();
-            Instantiate(prefab, new Vector2(x, y), Quaternion.identity);
+            type = (int)Random.Range(0, 3);     //Randomize type of enemy
+            if (type == 0)
+                prefabs = airborne;
+            else if (type == 1)
+                prefabs = surface;
+            else
+                prefabs = underwater;
+
+            x = Random.Range(leftBound(), -leftBound());    //Off-screen
+            y = lowerBound() * posNeg();
+            Instantiate(prefabs[randomEnemy()], new Vector2(x, y), Quaternion.identity);
         }
 
+    }
+
+    private int randomEnemy()
+    {
+        //Pick a random enemy of a given type from the rarity
+        for(int i = 0; i < prefabs.Length; i++)
+        {
+            if (Random.Range(0, 1) <= prefabs[i].GetComponent<EnemyBase>().getRarity())
+                return i;
+        }
+        return 0;
+    }
+
+    private void EnemyDown()
+    {
+        total--;
+        if (total <= 0)
+            gameObject.SendMessage("endRound");
+        //Add Score points
     }
 
     private int posNeg()
@@ -61,6 +95,6 @@ public class EnemyManager : MonoBehaviour
 
     private float leftBound()
     {
-        return (camera.transform.position.x - camera.orthographicSize) * 1.5f;
+        return (camera.transform.position.x - camera.orthographicSize) * 2f;
     }
 }
