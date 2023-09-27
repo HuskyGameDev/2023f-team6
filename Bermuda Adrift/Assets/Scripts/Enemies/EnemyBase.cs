@@ -19,7 +19,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int scrap;
     [SerializeField] private GameObject enemyManager;
     [SerializeField] private Slider healthSlider;
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     //For when we add more enemies
     //At start of round, decide what type of enemy and then specific enemies are randomized
