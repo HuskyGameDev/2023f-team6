@@ -14,10 +14,7 @@ public class EnemyManager : MonoBehaviour
     private int total;
     private int Round;
 
-    private GameObject[] prefabs;
-    [SerializeField] private GameObject[] airborne;
-    [SerializeField] private GameObject[] surface;
-    [SerializeField] private GameObject[] underwater;
+    [SerializeField] private GameObject[] prefabs;
 
     private Vector2 spawnPoint;
 
@@ -37,28 +34,12 @@ public class EnemyManager : MonoBehaviour
         int i = 0;
         for (; i < total / 2; i++)     //Left and Right side enemies
         {
-            type = (int)Random.Range(0, 3);     //Randomize type of enemy
-            if (type == 0)
-                prefabs = airborne;
-            else if (type == 1)
-                prefabs = surface;
-            else
-                prefabs = underwater;
-
             x = leftBound() * posNeg();
             y = Random.Range(lowerBound(), -lowerBound());  //Off-screen
             Instantiate(prefabs[randomEnemy()], new Vector2(x,y), Quaternion.identity);
         }
         for (; i < total; i++)         //Top and bottom enemies
         {
-            type = (int)Random.Range(0, 3);     //Randomize type of enemy
-            if (type == 0)
-                prefabs = airborne;
-            else if (type == 1)
-                prefabs = surface;
-            else
-                prefabs = underwater;
-
             x = Random.Range(leftBound(), -leftBound());    //Off-screen
             y = lowerBound() * posNeg();
             Instantiate(prefabs[randomEnemy()], new Vector2(x, y), Quaternion.identity);
@@ -71,7 +52,7 @@ public class EnemyManager : MonoBehaviour
         //Pick a random enemy of a given type from the rarity
         for(int i = 0; i < prefabs.Length; i++)
         {
-            if (Random.Range(0, 1) <= prefabs[i].GetComponent<EnemyBase>().getRarity())
+            if (Random.Range(0, 1) <= prefabs[i].GetComponent<Enemy>().getRarity())
                 return i;
         }
         return 0;

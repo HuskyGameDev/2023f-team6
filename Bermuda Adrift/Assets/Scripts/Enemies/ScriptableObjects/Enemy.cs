@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,8 +19,38 @@ public class Enemy : ScriptableObject
     [SerializeField] private Animator animator;
     [SerializeField] private Sprite sprite;
 
-    //For when we add more enemies
-    //At start of round, decide what type of enemy and then specific enemies are randomized
     //0 doesn't spawn, 1 always spawns
     [SerializeField] private float Rarity = 1;
+
+    public int getDamage()
+    {
+        return Damage;
+    }
+    public int getHealth()
+    {
+        return Health;
+    }
+    public float getRarity()
+    {
+        return Rarity;
+    }
+    public float getSpeed()
+    {
+        return Speed;
+    }
+
+
+    public void takeDamage(int damage)
+    {
+        Health -= damage;
+        if (Health <= 0)
+            enemyManager.SendMessage("EnemyDown");
+    }
+
+    public void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
+    {
+        Health += health;
+    }
+
+
 }

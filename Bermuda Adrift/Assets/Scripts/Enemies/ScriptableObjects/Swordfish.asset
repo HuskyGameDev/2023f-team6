@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
-  m_Name: Seagull
+  m_Name: Swordfish
   m_EditorClassIdentifier: 
-  Type: 2
-  Health: 10
-  Damage: 100
-  Speed: 12
+  Type: 0
+  Health: 5
+  Damage: 1
+  Speed: 10
   xp: 5
-  scrap: 1
+  scrap: 2
   enemyManager: {fileID: 0}
   animator: {fileID: 0}
+  sprite: {fileID: 0}
   Rarity: 1
