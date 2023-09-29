@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         if (state == GameState.Idle)
         {
             state = GameState.Defend;
-            gameObject.SendMessage("EnemySpawns");
+            gameObject.SendMessage("SpawnEnemies");
         } else
             Debug.Log("Not idling");
     }

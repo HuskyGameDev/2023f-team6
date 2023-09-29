@@ -98,3 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
+  healthSlider: {fileID: 0}

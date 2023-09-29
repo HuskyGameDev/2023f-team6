@@ -18,7 +18,6 @@ MonoBehaviour:
   Speed: 3
   xp: 5
   scrap: 1
-  enemyManager: {fileID: 0}
   animator: {fileID: 0}
   sprite: {fileID: 0}
-  Rarity: 1
+  rarity: 0.333

@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Centerpiece : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int Health;
+    [SerializeField] private GameObject manager;
 
-    // Update is called once per frame
-    void Update()
+    void CenterDamage(int damage)
     {
-        
+        Health -= damage;
+        if (Health <= 0)
+            manager.SendMessage("GameEnd");
     }
 }

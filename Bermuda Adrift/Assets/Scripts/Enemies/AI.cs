@@ -12,11 +12,15 @@ public class AI : MonoBehaviour
     private bool arrived;
     private Transform goal;
     private GameObject goalGO;
+    private int Health;
+    private GameObject enemyManager;
 
     [SerializeField] private Slider healthSlider;
 
     private void Start()
     {
+        Health = enemy.getHealth();
+        enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
         if (healthSlider != null) healthSlider.maxValue = enemy.getHealth();
 
@@ -24,6 +28,11 @@ public class AI : MonoBehaviour
 
         float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
         movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+    }
+
+    public Enemy getEnemy()
+    {
+        return enemy;
     }
 
     private void nearestEntrance()
@@ -48,6 +57,11 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("a"))
+        {
+            TakeDamage(1);
+        }
+
         if (!arrived)
         {
             movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f);
@@ -101,11 +115,19 @@ public class AI : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        enemy.takeDamage(damage);
+        Health -= damage;
+        Debug.Log(Health);
         //if (healthSlider != null) healthSlider.value = Health;
         //onEnemyTakeDmg?.Invoke(damage);
-        if (enemy.getHealth() <= 0)
+        if (Health <= 0)
+        {
+            enemyManager.SendMessage("EnemyDown");
             death();
+        }
+    }
+    public void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
+    {
+        Health += health;
     }
 
     private void death()

@@ -16,48 +16,34 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private GameObject[] prefabs;
 
-    private Vector2 spawnPoint;
-
     private void Start()
     {
         camera = Camera.main;
         Round = 1;
     }
-
-    private void EnemySpawns()
+    public void SpawnEnemies()
     {
-        float x;
-        float y;
-        int type;
-        total = (int) Random.Range(Round * 2, Round * 3);
-        onEnemySpawn?.Invoke(total);
+        total = Random.Range(2 * Round, 3 * Round);
         int i = 0;
-        for (; i < total / 2; i++)     //Left and Right side enemies
+        for (; i < total / 2; i++)
         {
-            x = leftBound() * posNeg();
-            y = Random.Range(lowerBound(), -lowerBound());  //Off-screen
-            Instantiate(prefabs[randomEnemy()], new Vector2(x,y), Quaternion.identity);
+            Instantiate(prefabs[randomEnemy()], new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
         }
-        for (; i < total; i++)         //Top and bottom enemies
+        for (; i < total; i++)
         {
-            x = Random.Range(leftBound(), -leftBound());    //Off-screen
-            y = lowerBound() * posNeg();
-            Instantiate(prefabs[randomEnemy()], new Vector2(x, y), Quaternion.identity);
+            Instantiate(prefabs[randomEnemy()], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
         }
-
     }
-
     private int randomEnemy()
     {
-        //Pick a random enemy of a given type from the rarity
-        for(int i = 0; i < prefabs.Length; i++)
+        for (int i = 0; i < prefabs.Length; i++)
         {
-            if (Random.Range(0, 1) <= prefabs[i].GetComponent<Enemy>().getRarity())
+            float random = Random.Range(0f, 1f);
+            if (prefabs[i].GetComponent<AI>().getEnemy().getRarity() >= random)
                 return i;
         }
         return 0;
     }
-
     private void EnemyDown()
     {
         total--;
