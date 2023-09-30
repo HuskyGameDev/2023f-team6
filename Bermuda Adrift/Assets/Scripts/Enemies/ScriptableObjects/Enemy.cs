@@ -15,8 +15,6 @@ public class Enemy : ScriptableObject
     [SerializeField] private float Speed;
     [SerializeField] private int xp;
     [SerializeField] private int scrap;
-    [SerializeField] private Animator animator;
-    [SerializeField] private Sprite sprite;
 
     //0 for no spawn, 1 for guaranteed spawn
     [SerializeField] private float rarity;

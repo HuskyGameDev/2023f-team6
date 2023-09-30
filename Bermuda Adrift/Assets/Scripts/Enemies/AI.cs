@@ -26,8 +26,11 @@ public class AI : MonoBehaviour
 
         nearestEntrance();
 
-        float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-        movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+        if (goal != null)
+        {
+            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
+            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+        }
     }
 
     public Enemy getEnemy()
@@ -64,10 +67,12 @@ public class AI : MonoBehaviour
 
         if (!arrived)
         {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f);
-            if (movement.position == goal.position)
-                enteringChannel();
-
+            if (goal != null)
+            {
+                movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f);
+                if (movement.position == goal.position)
+                    enteringChannel();
+            }
             //Add interaction with barriers
 
             if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center
@@ -101,7 +106,10 @@ public class AI : MonoBehaviour
             //Play attacking animation
             yield return new WaitForSeconds(1f);
 
-            goalGO.SendMessage("CenterDamage", enemy.getDamage());
+            if (goalGO != null)
+            {
+                goalGO.SendMessage("CenterDamage", enemy.getDamage());
+            }
         }
     }
 
