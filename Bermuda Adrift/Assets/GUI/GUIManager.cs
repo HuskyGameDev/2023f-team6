@@ -8,6 +8,7 @@ using TMPro;
 public class GUIManager : MonoBehaviour
 {
     [SerializeField] GameObject[] obj;
+    Resolution[] resolutions;
 
     private void OnEnable()
     {
@@ -23,6 +24,11 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onEnemyDeath -= updateEnemyCount;
         EnemyManager.onEnemySpawn -= updateEnemyCount;
         EnemyBase.onEnemyTakeDmg -= showDamageTick;
+    }
+
+    private void Start()
+    {
+        resolutions = Screen.resolutions;
     }
 
     public void LoadScene(int sceneIndex)
