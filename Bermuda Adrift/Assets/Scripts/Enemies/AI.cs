@@ -13,20 +13,24 @@ public class AI : MonoBehaviour
     private Transform goal;
     private GameObject goalGO;
     private int Health;
+    private bool stop;
     private GameObject enemyManager;
 
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private bool noRotation;
+    private Animator animator;
 
     private void Start()
     {
         Health = enemy.getHealth();
         enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
-        if (healthSlider != null) healthSlider.maxValue = enemy.getHealth();
+        animator = gameObject.GetComponent<Animator>();
+        //if (healthSlider != null)
+        //    healthSlider.maxValue = enemy.getHealth();
 
         nearestEntrance();
 
-        if (goal != null)
+        if (goal != null && !noRotation)
         {
             float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
             movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
@@ -55,6 +59,18 @@ public class AI : MonoBehaviour
                 distance = curDistance;
             }
         }
+
+        if ((goal.position.x < 0 || goal.position.y > 0) && gameObject.GetComponent<DirectionalAnimations>() == null)
+        {
+            if (noRotation)
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipY = !gameObject.GetComponent<SpriteRenderer>().flipY;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -63,21 +79,26 @@ public class AI : MonoBehaviour
         if (Input.GetKeyDown("a"))
         {
             TakeDamage(1);
+        } else if (Input.GetKeyDown("p"))
+        {
+            TakeDamage(Health);
         }
 
         if (!arrived)
         {
-            if (goal != null)
+            if (goal != null && !stop)
             {
                 movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f);
                 if (movement.position == goal.position)
                     enteringChannel();
             }
+
             //Add interaction with barriers
 
             if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center
             {
                 arrived = true;
+                animator.SetBool("Attacking", true);
 
                 if (movement.position.x < 0)
                 {
@@ -106,7 +127,7 @@ public class AI : MonoBehaviour
             //Play attacking animation
             yield return new WaitForSeconds(1f);
 
-            if (goalGO != null)
+            if (goalGO != null && !stop)
             {
                 goalGO.SendMessage("CenterDamage", enemy.getDamage());
             }
@@ -117,22 +138,30 @@ public class AI : MonoBehaviour
     {
         goalGO = GameObject.FindGameObjectWithTag("Center");
         goal = goalGO.transform;
+
+        animator.SetTrigger("InChannel");
+
+        if (!noRotation)
+        {
         float z = (Mathf.Atan2(movement.position.y, movement.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
         movement.rotation = Quaternion.Euler(0, 0, z);  //Faces towards center (If sprites faces left)
+        }
     }
 
     private void TakeDamage(int damage)
     {
         Health -= damage;
-        Debug.Log(Health);
+
+        animator.SetTrigger("TookDamage");
+
         //if (healthSlider != null) healthSlider.value = Health;
         //onEnemyTakeDmg?.Invoke(damage);
-        if (Health <= 0)
+        if (Health <= 0 && !stop)
         {
-            enemyManager.SendMessage("EnemyDown");
             death();
         }
     }
+
     public void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
     {
         Health += health;
@@ -140,9 +169,23 @@ public class AI : MonoBehaviour
 
     private void death()
     {
-        //Play death animation
-        Destroy(gameObject);
+        enemyManager.SendMessage("EnemyDown");
+        stop = true;
+
+        animator.SetBool("Dead", true);
         //Add XP
         //Add Scrap
+        StartCoroutine(DeathAnim());
+    }
+
+    IEnumerator DeathAnim()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+    public Transform getGoal()
+    {
+        return goal;
     }
 }

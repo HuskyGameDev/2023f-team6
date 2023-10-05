@@ -17,7 +17,5 @@ MonoBehaviour:
   Damage: 1
   Speed: 3
   xp: 5
-  scrap: 1
-  animator: {fileID: 0}
-  sprite: {fileID: 0}
+  scrap: 2
   rarity: 0.333

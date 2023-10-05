@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
     private void endRound()
     {
         //Enable next-round button
-        //Or wait a certain amount of time between trounds
-        Debug.Log("End round");
+        //Or wait a certain amount of time between rounds
         state = GameState.Idle;
     }
 }

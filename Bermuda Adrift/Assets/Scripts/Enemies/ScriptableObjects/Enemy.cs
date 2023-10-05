@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class Enemy : ScriptableObject
 {
-    private enum Types { Underwater, Surface, Airborne, Center };
+    private enum Types { Underwater, Airborne, Boss };
 
     [SerializeField] private Types Type;
 

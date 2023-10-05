@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Shark
   m_EditorClassIdentifier: 
   Type: 0
-  Health: 1000
-  Damage: 100
-  Speed: 100
+  Health: 100
+  Damage: 10
+  Speed: 1
   xp: 500
   scrap: 10
-  rarity: 0.1
+  rarity: 0.1085

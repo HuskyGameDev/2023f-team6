@@ -13,25 +13,57 @@ public class EnemyManager : MonoBehaviour
     private Camera camera;
     private int total;
     private int Round;
+    private int loopSpot;
 
-    [SerializeField] private GameObject[] prefabs;
+    private GameObject[] prefabs;
+    [SerializeField] private GameObject[] set1;
+    [SerializeField] private GameObject[] set2;
+    [SerializeField] private GameObject[] set3;
+    [SerializeField] private GameObject[] Bosses;
 
     private void Start()
     {
         camera = Camera.main;
         Round = 1;
+        loopSpot = 1;
+        prefabs = set1; //Always start with set 1
     }
     public void SpawnEnemies()
     {
-        total = Random.Range(2 * Round, 3 * Round);
-        int i = 0;
-        for (; i < total / 2; i++)
+
+        if (Round % 10 == 0)
         {
-            Instantiate(prefabs[randomEnemy()], new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
-        }
-        for (; i < total; i++)
+            prefabs = Bosses;
+            int i = (Round - 10) / 10;
+            while (i >= prefabs.Length)      //Cycle through bosses predictably (so we can put stronger bosses later)
+            {
+                i -= prefabs.Length;
+            }
+
+            Instantiate(prefabs[i], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);
+
+            //Change the enemy set for the next 10 rounds
+            i = Random.Range(0, 3);
+            if (i == 0)
+                prefabs = set1;
+            else if (i == 1)
+                prefabs = set2;
+            else
+                prefabs = set3;
+
+            loopSpot = 1;
+        } else
         {
-            Instantiate(prefabs[randomEnemy()], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
+            total = loopSpot * 3;
+            int i = 0;
+            for (; i < total / 2; i++)
+            {
+                Instantiate(prefabs[randomEnemy()], new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
+            }
+            for (; i < total; i++)
+            {
+                Instantiate(prefabs[randomEnemy()], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
+            }
         }
     }
     private int randomEnemy()
@@ -52,6 +84,7 @@ public class EnemyManager : MonoBehaviour
         {
             gameObject.SendMessage("endRound");
             Round++;
+            loopSpot++;
             onRoundEnd?.Invoke(Round);
         }
         //Add Score points
@@ -74,5 +107,10 @@ public class EnemyManager : MonoBehaviour
     private float leftBound()
     {
         return (camera.transform.position.x - camera.orthographicSize) * 2f;
+    }
+
+    public int getRound()
+    {
+        return Round;
     }
 }
