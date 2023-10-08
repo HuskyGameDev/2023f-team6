@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         {
             state = GameState.Defend;
             gameObject.SendMessage("SpawnEnemies");
+            //Broadcast "StartRound" to all towers
         } else
             Debug.Log("Not idling");
     }
@@ -58,5 +59,10 @@ public class GameManager : MonoBehaviour
         //Enable next-round button
         //Or wait a certain amount of time between rounds
         state = GameState.Idle;
+    }
+
+    public GameState getGameState()
+    {
+        return state;
     }
 }

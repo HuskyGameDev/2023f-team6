@@ -19,6 +19,8 @@ public class AI : MonoBehaviour
     [SerializeField] private bool noRotation;
     private Animator animator;
 
+    private GameObject lastAttack;
+
     private void Start()
     {
         Health = enemy.getHealth();

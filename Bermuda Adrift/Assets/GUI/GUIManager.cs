@@ -15,7 +15,6 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd += addToRound;
         EnemyManager.onEnemyDeath += updateEnemyCount;
         EnemyManager.onEnemySpawn += updateEnemyCount;
-        EnemyBase.onEnemyTakeDmg += showDamageTick;
     }
 
     private void OnDisable()
@@ -23,7 +22,6 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd -= addToRound;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
         EnemyManager.onEnemySpawn -= updateEnemyCount;
-        EnemyBase.onEnemyTakeDmg -= showDamageTick;
     }
 
     private void Start()

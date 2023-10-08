@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2224083899782959538}
   m_Layer: 0
   m_Name: Fish_Man_Purple
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

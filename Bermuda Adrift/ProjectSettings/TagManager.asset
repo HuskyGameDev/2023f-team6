@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Entrance
   - Managers
+  - Barrier
   layers:
   - Default
   - TransparentFX
