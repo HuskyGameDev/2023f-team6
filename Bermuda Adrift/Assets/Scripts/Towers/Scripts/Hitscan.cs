@@ -33,6 +33,7 @@ public class Hitscan : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.SendMessage("TakeDamage", damage);
+            Destroy(gameObject);
         }
     }
 }

@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         camera = Camera.main;
-        Round = 1;
+        Round = 10;
         loopSpot = 1;
         prefabs = set1; //Always start with set 1
     }
@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour
 
         if (Round % 10 == 0)
         {
+            total = 1;
             prefabs = Bosses;
             int i = (Round - 10) / 10;
             while (i >= prefabs.Length)      //Cycle through bosses predictably (so we can put stronger bosses later)
@@ -79,9 +80,11 @@ public class EnemyManager : MonoBehaviour
     private void EnemyDown()
     {
         total--;
+        Debug.Log(total);
         onEnemyDeath?.Invoke(total);
         if (total <= 0)
         {
+            Debug.Log("End round");
             gameObject.SendMessage("endRound");
             Round++;
             loopSpot++;
@@ -112,5 +115,11 @@ public class EnemyManager : MonoBehaviour
     public int getRound()
     {
         return Round;
+    }
+
+    public void newEnemies()
+    {
+        total ++;
+        Debug.Log("New Total is " + total);
     }
 }

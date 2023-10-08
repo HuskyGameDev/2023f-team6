@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3512125936524640233}
   m_Layer: 0
   m_Name: Machine Gun Base
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,6 @@ MonoBehaviour:
   pivot: {fileID: 2738709686781163821}
   bullet: {fileID: 3903083542384844113, guid: c8fc10f8511c62441a88c8a766562279, type: 3}
   nozzle: {fileID: 5283092417139266265}
-  gameManager: {fileID: 0}
 --- !u!1 &7167217446946329371
 GameObject:
   m_ObjectHideFlags: 0

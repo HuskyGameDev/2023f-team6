@@ -11,16 +11,20 @@ public class TowerAI : MonoBehaviour
     [SerializeField] private Transform nozzle;
     private int health;
     private GameObject target = null;
-    [SerializeField] private GameManager gameManager;
+    private GameManager gameManager;
 
     private void Start()
     {
         health = tower.getHealth();
+        gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
 
-        if (gameObject.tag != "Barrier") // && gameManager.getGameState() == GameManager.GameState.Defend)
+        if (gameObject.tag != "Barrier")
         {
-            newTarget();
-            StartRound();
+            if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
+            {
+                newTarget();
+                StartRound();
+            }
         }
     }
 
@@ -32,6 +36,11 @@ public class TowerAI : MonoBehaviour
         {
             targetPoint();
         }
+
+        if (gameManager.getGameState() == GameManager.GameState.BossRound)
+        {
+            newTarget();    //Constantly target the closest enemy in a boss round
+        }
     }
 
     public void place()
@@ -39,28 +48,29 @@ public class TowerAI : MonoBehaviour
 
     }
 
-    private void StartRound()
+    public void StartRound()
     {
+        if (target == null)
+            newTarget();
         StartCoroutine(firing());
     }
 
     private void targetPoint()
     {
         pivot.rotation = Quaternion.Lerp(pivot.rotation, pointAtTarget(), tower.getTurnSpeed());
-        //pivot.Rotate(Quaternion.Lerp(pivot.rotation, pointAtTarget(), tower.getTurnSpeed()).eulerAngles);
     }
 
     private Quaternion pointAtTarget()
     {
         Vector3 offset = target.transform.position - transform.position;
-        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset);
+        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
         return output;
 
     }
 
     private IEnumerator firing()
     {
-        if (gameManager.getGameState() == GameManager.GameState.Defend)
+        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
         {
             newTarget();
         }
@@ -73,11 +83,13 @@ public class TowerAI : MonoBehaviour
             yield return new WaitForSeconds(tower.getFireRate());
         }
         target = null;
+        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
+            StartCoroutine(firing());
     }
 
     private void enemyKilled()
     {
-        if (gameManager.getGameState() == GameManager.GameState.Defend)
+        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
         {
             newTarget();
         }
@@ -87,6 +99,13 @@ public class TowerAI : MonoBehaviour
 
     private void newTarget()    //Set target to closest enemy
     {
+        try
+        {
+            GameObject[] e = GameObject.FindGameObjectsWithTag("Enemy");
+        } catch (StackOverflowException e)
+        {
+            return;
+        }
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         float distance = Mathf.Infinity;

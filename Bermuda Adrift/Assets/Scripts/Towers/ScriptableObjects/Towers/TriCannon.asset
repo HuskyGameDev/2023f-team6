@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMult: 1
   fireRate: 1
-  turnSpeed: 0.25
+  turnSpeed: 0.05
   range: -1
   barrierHealth: 0
   cost: 150

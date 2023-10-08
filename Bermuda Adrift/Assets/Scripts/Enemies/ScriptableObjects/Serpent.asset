@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serpent
   m_EditorClassIdentifier: 
   Type: 2
-  Health: 100
+  Health: 1000
   Damage: 30
   Speed: 1
   xp: 100

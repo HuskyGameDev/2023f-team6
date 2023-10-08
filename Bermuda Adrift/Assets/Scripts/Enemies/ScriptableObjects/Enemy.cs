@@ -35,4 +35,7 @@ public class Enemy : ScriptableObject
     {
         return Speed;
     }
+
+    public int getScrap() { return scrap; }
+    public int getXP() { return xp; }
 }

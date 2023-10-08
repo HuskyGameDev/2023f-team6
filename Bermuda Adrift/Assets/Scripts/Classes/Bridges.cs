@@ -12,15 +12,8 @@ public class Bridges : MonoBehaviour
     {
         tmp = GetComponent<SpriteRenderer>().color;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("This worked");
         if(collision.CompareTag("Enemy"))
         {
             tmp.a = 0.5f;
@@ -29,7 +22,10 @@ public class Bridges : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        tmp.a = 1;
-        GetComponent<SpriteRenderer>().color = tmp;
+        if (collision.CompareTag("Enemy"))
+        {
+            tmp.a = 1;
+            GetComponent<SpriteRenderer>().color = tmp;
+        }
     }
 }

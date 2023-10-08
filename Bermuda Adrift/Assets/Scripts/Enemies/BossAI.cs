@@ -36,13 +36,10 @@ public class BossAI : MonoBehaviour
             movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
         }
 
-        StartCoroutine(Minions());
+        StartCoroutine(randomAttacks());
     }
 
-    public Enemy getEnemy()
-    {
-        return enemy;
-    }
+    public Enemy getEnemy() { return enemy; }
 
     private void nearestEntrance()
     {
@@ -62,11 +59,12 @@ public class BossAI : MonoBehaviour
             }
         }
 
+        gameObject.GetComponent<SpriteRenderer>().flipX = true;
         if ((goal.position.x < 0 || goal.position.y > 0) && gameObject.GetComponent<DirectionalAnimations>() == null)
         {
             if (noRotation)
             {
-                gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
@@ -125,49 +123,111 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    IEnumerator Minions()
+
+    IEnumerator randomAttacks()
     {
         while (gameObject.active)
         {
-            yield return new WaitForSeconds(10f);   //Every 10 seconds, spawn minions
+            yield return new WaitForSeconds(10f);
 
-            stop = true;
-            int total = enemyManager.GetComponent<EnemyManager>().getRound() / 10 + 2;
+            if (Mathf.Abs(gameObject.transform.position.x) < 8)
+                break;
 
-            if (gameObject.transform.position.x < -4)
-            {
-                for (int i = 0; i < total; i++)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);
+            int random = Random.Range(0, 3);
+            if (random == 0)
+                StartCoroutine(Minions());
 
-                    i++;
-                    if (i < total)
-                    {
-                        yield return new WaitForSeconds(0.5f);
-                        Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
-                    }
-                }
-            }
-            else if (gameObject.transform.position.x > 4)
-            {
-                for (int i = 0; i < total; i++)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
+            else if (random == 1)
+                StartCoroutine(heal());
 
-                    i++;
-                    if (i < total)
-                    {
-                        yield return new WaitForSeconds(0.5f);
-                        Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
-                    }
-                }
-            }
-
-            stop = false;
+            else if (random == 2)
+                StartCoroutine(Resurface());
         }
     }
+
+    IEnumerator Minions()
+    {
+        Debug.Log("Minions");
+        stop = true;
+        int total = enemyManager.GetComponent<EnemyManager>().getRound() / 10 + 2;
+
+        if (gameObject.transform.position.x < -4)
+        {
+            for (int i = 0; i < total; i++)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);
+                enemyManager.GetComponent<EnemyManager>().newEnemies();
+
+                i++;
+                if (i < total)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                    enemyManager.GetComponent<EnemyManager>().newEnemies();
+                }
+            }
+        }
+        else if (gameObject.transform.position.x > 4)
+        {
+            for (int i = 0; i < total; i++)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
+
+                i++;
+                if (i < total)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                }
+            }
+        }
+
+        stop = false;
+    }
+
+    IEnumerator Resurface()
+    {
+        Debug.Log("Resurface");
+        stop = true;
+        if (gameObject.transform.position.x < 0)
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            //Play going-under animation
+            yield return new WaitForSeconds(1f);
+            gameObject.transform.position = new Vector3(Random.Range(8f, 20f), Random.Range(-10f, 10f));
+            nearestEntrance();
+            yield return new WaitForSeconds(1f);
+            //Play coming up animation
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        } else
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            //Play going-under animation
+            yield return new WaitForSeconds(1f);
+            gameObject.transform.position = new Vector3(Random.Range(-20f, -8f), Random.Range(-10f, 10f));
+            nearestEntrance();
+            yield return new WaitForSeconds(1f);
+            //Play coming up animation
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        stop = false;
+    }
+
+    IEnumerator heal()
+    {
+        Debug.Log("Heal");
+        stop = true;
+        yield return new WaitForSeconds(1f);
+
+        Health += (int)(Health * 0.1f);
+
+        yield return new WaitForSeconds(1f);
+
+        stop = false;
+    }
+
 
     IEnumerator Attacking()
     {
@@ -201,6 +261,7 @@ public class BossAI : MonoBehaviour
     private void TakeDamage(int damage)
     {
         Health -= damage;
+        //Debug.Log(Health);
 
         animator.SetTrigger("TookDamage");
 
@@ -210,11 +271,6 @@ public class BossAI : MonoBehaviour
         {
             death();
         }
-    }
-
-    public void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
-    {
-        Health += health;
     }
 
     private void death()

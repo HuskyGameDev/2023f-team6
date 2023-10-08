@@ -164,7 +164,7 @@ public class AI : MonoBehaviour
         }
     }
 
-    public void heal(int health)   //For repairing the raft, or maybe an enemy that heals other enemies?
+    public void heal(int health)   //maybe an enemy that heals other enemies?
     {
         Health += health;
     }
@@ -175,8 +175,10 @@ public class AI : MonoBehaviour
         stop = true;
 
         animator.SetBool("Dead", true);
-        //Add XP
-        //Add Scrap
+
+        enemyManager.SendMessage("addScrap", enemy.getScrap());
+        enemyManager.SendMessage("addXP", enemy.getXP());
+
         StartCoroutine(DeathAnim());
     }
 

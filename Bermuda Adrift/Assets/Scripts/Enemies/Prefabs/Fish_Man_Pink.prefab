@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7778629732646524359}
   - component: {fileID: 3791891063080449144}
   - component: {fileID: 7429840431149475439}
-  - component: {fileID: -4731195560703195130}
   m_Layer: 0
   m_Name: Fish_Man_Pink
   m_TagString: Enemy
@@ -181,30 +180,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.09375, y: 2.125}
   m_EdgeRadius: 0
---- !u!50 &-4731195560703195130
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2897492569991715220}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
