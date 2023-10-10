@@ -8,8 +8,11 @@ public class Bullet : ScriptableObject
     [SerializeField] private int projectileSpeed;
     [SerializeField] private int damage;
     [SerializeField] private float AOE; //radius of the aoe from the bullet landing. 0 to only damage enemies that were directly hit
+    [SerializeField] private int effect;
 
     public int getProjectileSpeed() { return projectileSpeed; }
 
     public int getDamage() { return damage; }
+    public float getAOE() { return AOE; }
+    public int getEffect() { return effect; }
 }
