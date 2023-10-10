@@ -7,7 +7,7 @@ using TMPro;
 
 public class GUIManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] obj;
+
     Resolution[] resolutions;
 
     private void OnEnable()
@@ -46,16 +46,11 @@ public class GUIManager : MonoBehaviour
 
     public void addToRound(int round)
     {
-        obj[0].GetComponent<TextMeshProUGUI>().text = "Round " + round;
+        //obj[0].GetComponent<TextMeshProUGUI>().text = "Round " + round;
     }
 
     public void updateEnemyCount(int count)
     {
-        obj[1].GetComponent<TextMeshProUGUI>().text = "Enemies Remaining: " + count;
-    }
-
-    public void showDamageTick(int dmg)
-    {
-
+       // obj[1].GetComponent<TextMeshProUGUI>().text = "Enemies Remaining: " + count;
     }
 }

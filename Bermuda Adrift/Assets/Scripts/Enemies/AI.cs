@@ -160,7 +160,6 @@ public class AI : MonoBehaviour
     private void TakeDamage(int damage)
     {
         Health -= damage;
-
         animator.SetTrigger("TookDamage");
 
         //if (healthSlider != null) healthSlider.value = Health;
