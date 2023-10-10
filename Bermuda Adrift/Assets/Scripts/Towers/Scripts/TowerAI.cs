@@ -12,7 +12,6 @@ public class TowerAI : MonoBehaviour
     private int health;
     private GameObject target = null;
     private GameManager gameManager;
-    [SerializeField] private Animator anim;
 
     private void Start()
     {
@@ -74,8 +73,6 @@ public class TowerAI : MonoBehaviour
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
         {
             newTarget();
-            new WaitForSeconds(0.0833f);
-            anim.SetTrigger("TargetFound");
         }
         while (target != null && target.active)
         {
@@ -86,7 +83,6 @@ public class TowerAI : MonoBehaviour
             yield return new WaitForSeconds(tower.getFireRate());
         }
         target = null;
-        anim.SetTrigger("TargetLost");
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
             StartCoroutine(firing());
     }
@@ -103,6 +99,13 @@ public class TowerAI : MonoBehaviour
 
     private void newTarget()    //Set target to closest enemy
     {
+        try
+        {
+            GameObject[] e = GameObject.FindGameObjectsWithTag("Enemy");
+        } catch (StackOverflowException e)
+        {
+            return;
+        }
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         float distance = Mathf.Infinity;
