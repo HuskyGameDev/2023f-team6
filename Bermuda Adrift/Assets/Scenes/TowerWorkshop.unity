@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3008083785305734932, guid: 5362d7c74e4c6e34dbd813183194659c, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1250725142}
     - target: {fileID: 5950825902407884402, guid: 5362d7c74e4c6e34dbd813183194659c, type: 3}
       propertyPath: m_Name
       value: Tri-Cannon base
@@ -547,7 +551,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123796644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d102d819ecd3684c9480c198e6cc936, type: 3}
   m_Name: 
@@ -556,6 +560,7 @@ MonoBehaviour:
   pivot: {fileID: 2053526345}
   bullet: {fileID: 479364128467245496, guid: 46ed9080198f804409863546cb0f2443, type: 3}
   nozzle: {fileID: 440058058}
+  anim: {fileID: 0}
 --- !u!212 &1123796646
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -624,6 +629,11 @@ Transform:
   - {fileID: 2053526345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1250725142 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4247800990433956435, guid: 5362d7c74e4c6e34dbd813183194659c, type: 3}
+  m_PrefabInstance: {fileID: 71724321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1856677170
 GameObject:
   m_ObjectHideFlags: 0
