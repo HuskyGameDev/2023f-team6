@@ -13,4 +13,14 @@ public class Centerpiece : MonoBehaviour
         if (Health <= 0)
             manager.SendMessage("GameEnd");
     }
+
+    public int getHealth()
+    {
+        return Health;
+    }
+
+    public void setHealth(int health)
+    {
+        Health = health;
+    }
 }
