@@ -7,19 +7,26 @@ public class Hitscan : MonoBehaviour
     [SerializeField] private Bullet bullet;
     private int damage;
     private Camera camera;
+    [SerializeField] private GameObject aoePrefab;
+    private bool landed = false;
+    private bool stop = false;
     private void Start()
     {
         camera = Camera.main;
         damage = bullet.getDamage();
+        //aoe = GameObject.Find("AOEHitbox");
         gameObject.transform.Rotate(-gameObject.transform.rotation.eulerAngles / 2);
     }
     private void Update()
     {
-        gameObject.transform.Translate(transform.up * bullet.getProjectileSpeed() * Time.deltaTime);
-
-        if (Mathf.Abs(gameObject.transform.position.x) >= Mathf.Abs((camera.transform.position.x - camera.orthographicSize) * 2f) || Mathf.Abs(gameObject.transform.position.y) >= Mathf.Abs(camera.transform.position.y - camera.orthographicSize * 1.15f))
+        if (!stop)
         {
-            Destroy(gameObject);
+            gameObject.transform.Translate(transform.up * bullet.getProjectileSpeed() * Time.deltaTime);
+
+            if (Mathf.Abs(gameObject.transform.position.x) >= Mathf.Abs((camera.transform.position.x - camera.orthographicSize) * 2f) || Mathf.Abs(gameObject.transform.position.y) >= Mathf.Abs(camera.transform.position.y - camera.orthographicSize * 1.15f))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -32,7 +39,32 @@ public class Hitscan : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.SendMessage("TakeDamage", damage);
+            if (bullet.getAOE() == 0 || landed)
+            {
+                collision.gameObject.SendMessage("TakeDamage", damage);
+            } else
+            {
+                /*var Hitbox = Instantiate(aoePrefab, gameObject.transform);
+                Debug.Log(Hitbox);
+                new WaitForEndOfFrame();
+                Debug.Log(Hitbox);
+                float[] toGo = { bullet.getAOE(), 2, bullet.getEffect(), bullet.getDamage() };
+                Hitbox.
+                    SendMessage("AOEHit", toGo);
+                */
+                gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
+
+                if (bullet.getEffect() == 0)
+                {
+                    stop = true;
+                    //Play shrapnel animation
+                    landed = true;
+                    collision.gameObject.SendMessage("TakeDamage", damage);
+                }
+
+            }
+
+            new WaitForEndOfFrame();
             Destroy(gameObject);
         }
     }
