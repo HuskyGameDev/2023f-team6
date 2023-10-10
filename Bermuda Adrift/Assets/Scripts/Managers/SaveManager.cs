@@ -31,9 +31,9 @@ public class SaveManager : MonoBehaviour
     public void LoadPlayer(){
         PlayerData data = SaveSystem.loadPlayer();
 
-        enemies.setTotal(data.getTotal());
-        enemies.setRound(data.getRound());
+        //enemies.setTotal(data.getTotal());
+        //enemies.setRound(data.getRound());
 
-        center.setHealth(data.getHealth());
+        //center.setHealth(data.getHealth());
     }
 }

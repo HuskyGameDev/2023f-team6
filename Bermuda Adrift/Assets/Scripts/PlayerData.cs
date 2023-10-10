@@ -10,9 +10,9 @@ public class PlayerData {
     private int centerHealth;
 
     public PlayerData(EnemyManager enemies, Centerpiece center){
-        totalEnemies = enemies.getTotal();
-        round = enemies.getRound();
-        centerHealth = center.getHealth();
+        //totalEnemies = enemies.getTotal();
+        //round = enemies.getRound();
+        //centerHealth = center.getHealth();
     }
 
     public int getHealth(){
