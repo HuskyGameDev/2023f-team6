@@ -186,7 +186,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 0.9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -298,6 +298,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2830196611975098182, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830196611975098182, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Actions
       value: 
       objectReference: {fileID: -944628639613478452, guid: d6d4984427a00f84097192e1302e4912, type: 3}
@@ -348,6 +352,14 @@ PrefabInstance:
     - target: {fileID: 6895920643898610197, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913447402545608035, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913447402545608035, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: swordAttack
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

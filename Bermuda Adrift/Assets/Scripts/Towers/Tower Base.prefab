@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3129294144544831156}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.98, y: -3.32, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
-  nozzle: {fileID: 4446080577790633356, guid: 81d70ba956131434d9b37efa8bf4e109, type: 3}
+  nozzle: {fileID: 4446080577790633356, guid: 163d5edda8f860641a4b6a9d5c2c11f7, type: 3}
   bullet: {fileID: 3903083542384844113, guid: c8fc10f8511c62441a88c8a766562279, type: 3}
   bulletScript: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
-  testTower: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
