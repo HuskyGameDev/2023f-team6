@@ -6,34 +6,35 @@ using UnityEngine;
 public class TowerAI : MonoBehaviour
 {
     [SerializeField] private Tower tower;
-    [SerializeField] private Transform pivot;
+    [SerializeField] private GameObject nozzle;
+
     [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform nozzle;
-    private int health;
+    [SerializeField] private Bullet bulletScript;
+
     private GameObject target = null;
     private GameManager gameManager;
-    [SerializeField] private Animator anim;
+    private Animator anim;
 
     private void Start()
     {
-        health = tower.getHealth();
-        gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
+        //Play setting-up animation
+        nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        anim = nozzle.GetComponent<Animator>();
 
-        if (gameObject.tag != "Barrier")
+        gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
+        
+        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
         {
-            if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
-            {
-                newTarget();
-                StartRound();
-            }
+            newTarget();
+            StartRound();
         }
     }
 
     private void Update()
     {
-        //if (Input.GetKeyDown("b")) { place(); }
+        //if (Input.GetKeyDown("x")) { place(); }
 
-        if (gameObject.tag != "Barrier" && target != null)
+        if (target != null)
         {
             targetPoint();
         }
@@ -44,9 +45,13 @@ public class TowerAI : MonoBehaviour
         }
     }
 
-    public void place()
+    public void place(Tower towerType)
     {
+        tower = towerType;
+        bulletScript = tower.getDefaultBullet();
+        
 
+        nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();
     }
 
     public void StartRound()
@@ -58,7 +63,7 @@ public class TowerAI : MonoBehaviour
 
     private void targetPoint()
     {
-        pivot.rotation = Quaternion.Lerp(pivot.rotation, pointAtTarget(), tower.getTurnSpeed());
+        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, pointAtTarget(), tower.getTurnSpeed());
     }
 
     private Quaternion pointAtTarget()
@@ -79,16 +84,17 @@ public class TowerAI : MonoBehaviour
         }
         while (target != null && target.active)
         {
-            var boolet = Instantiate(bullet, nozzle.position, nozzle.rotation);
+            var boolet = Instantiate(bullet, nozzle.transform.position, nozzle.transform.rotation);
             yield return new WaitForEndOfFrame();
+            boolet.SendMessage("setBullet", bulletScript);
             boolet.SendMessage("Mult", tower.getDamageMult());
 
             yield return new WaitForSeconds(tower.getFireRate());
         }
         target = null;
-        anim.SetTrigger("TargetLost");
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
             StartCoroutine(firing());
+        anim.SetTrigger("TargetLost");
     }
 
     private void enemyKilled()
@@ -108,7 +114,7 @@ public class TowerAI : MonoBehaviour
         float distance = Mathf.Infinity;
         foreach (GameObject enemy in enemies)
         {
-            Vector3 diff = enemy.transform.position - pivot.position;
+            Vector3 diff = enemy.transform.position - nozzle.transform.position;
             float curDistance = diff.sqrMagnitude;
             if (tower.getRange() > 0)
             {
@@ -125,14 +131,6 @@ public class TowerAI : MonoBehaviour
                     distance = curDistance;
                 }
             }
-        }
-    }
-    public void barrierDamage(int damage)
-    {
-        health -= damage;
-        if (health <= 0)
-        {
-            Destroy(gameObject);
         }
     }
 }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Cannon
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 1.5
+  fireRate: 3
   turnSpeed: 0.05
   range: -1
-  barrierHealth: 0
+  anim: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
   cost: 50
   rarity: 0

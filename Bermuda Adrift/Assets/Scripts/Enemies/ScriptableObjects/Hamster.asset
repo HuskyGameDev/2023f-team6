@@ -19,3 +19,6 @@ MonoBehaviour:
   xp: 30
   scrap: 30
   rarity: 0.1
+  anim: {fileID: 9100000, guid: c696af6428accba459576fd2cd289a30, type: 2}
+  xSize: 1
+  ySize: 1.25

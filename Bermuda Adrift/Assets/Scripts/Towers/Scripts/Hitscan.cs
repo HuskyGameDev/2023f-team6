@@ -4,21 +4,36 @@ using UnityEngine;
 
 public class Hitscan : MonoBehaviour
 {
-    [SerializeField] private Bullet bullet;
+    private Bullet bullet;
     private int damage;
-    private Camera camera;
-    [SerializeField] private GameObject aoePrefab;
+    private float timer;
+    private RuntimeAnimatorController animator;
+
     private bool landed = false;
     private bool stop = false;
+
+    private Camera camera;
+
     private void Start()
     {
         camera = Camera.main;
-        damage = bullet.getDamage();
-        //aoe = GameObject.Find("AOEHitbox");
+
         gameObject.transform.Rotate(-gameObject.transform.rotation.eulerAngles / 2);
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = animator;
     }
     private void Update()
     {
+        if (timer <= 0)
+        {
+            BoxCollider2D trigger = GameObject.FindGameObjectWithTag("Enemy").GetComponent<BoxCollider2D>();
+            if (trigger == null)
+                Destroy(gameObject);
+            else
+                OnTriggerEnter2D(trigger);
+        } else
+            timer -= Time.deltaTime;
+
+
         if (!stop)
         {
             gameObject.transform.Translate(transform.up * bullet.getProjectileSpeed() * Time.deltaTime);
@@ -35,14 +50,32 @@ public class Hitscan : MonoBehaviour
         damage *= mult;
     }
 
+    public void setBullet(Bullet newBullet) 
+    { 
+        bullet = newBullet;
+
+        damage = bullet.getDamage();
+        gameObject.GetComponent<SpriteRenderer>().sprite = bullet.getSprite();
+        animator = bullet.getAnimator();
+        timer = bullet.getTimer();
+
+        if (bullet.getTimer() == -1)
+            timer = float.MaxValue;
+        else
+            timer = bullet.getTimer();
+
+        gameObject.transform.localScale = new Vector3(bullet.getScale(), bullet.getScale()); 
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || (collision.gameObject.GetComponent<Bullet>() != null && collision.gameObject.GetComponent<Bullet>().getFriendlyFire()))
         {
             if (bullet.getAOE() == 0 || landed)
             {
-                collision.gameObject.SendMessage("TakeDamage", damage);
-            } else
+                collision.gameObject.SendMessage("TakeDamage", damage);                         //Basic bullet hit
+            }
+            else
             {
                 /*var Hitbox = Instantiate(aoePrefab, gameObject.transform);
                 Debug.Log(Hitbox);
@@ -54,11 +87,21 @@ public class Hitscan : MonoBehaviour
                 */
                 gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
 
-                if (bullet.getEffect() == 0)
+                if (bullet.getEffect() == 0)                                                    //0 - Basic bullet hit with shrapnel
                 {
                     stop = true;
                     //Play shrapnel animation
                     landed = true;
+                    collision.gameObject.SendMessage("TakeDamage", damage);
+                } else if (bullet.getEffect() == 1)                                             //1 - Explosion that shakes the screen and leaves lasting AOE that damages one more time after a second
+                {
+                    Debug.Log("Explosion");
+                    camera.SendMessage("cameraShake", 0.25f);
+                    stop = true;
+                    landed = true;
+                    collision.gameObject.SendMessage("TakeDamage", damage);
+
+                    new WaitForSeconds(1f);
                     collision.gameObject.SendMessage("TakeDamage", damage);
                 }
 

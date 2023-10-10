@@ -16,6 +16,7 @@ MonoBehaviour:
   fireRate: 0.1
   turnSpeed: 0.02
   range: -1
-  barrierHealth: 0
+  anim: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   cost: 0
   rarity: 0

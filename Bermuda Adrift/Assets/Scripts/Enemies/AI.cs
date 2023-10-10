@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AI : MonoBehaviour
 {
-    public Enemy enemy;
+    private Enemy enemy;
 
     private Transform movement;
     private bool arrived;
@@ -16,19 +16,16 @@ public class AI : MonoBehaviour
     private bool stop;
     private GameObject enemyManager;
 
-    [SerializeField] private bool noRotation;
+    private bool noRotation;
     private Animator animator;
 
     private GameObject lastAttack;
 
     private void Start()
     {
-        Health = enemy.getHealth();
+        animator = gameObject.GetComponent<Animator>();
         enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
-        animator = gameObject.GetComponent<Animator>();
-        //if (healthSlider != null)
-        //    healthSlider.maxValue = enemy.getHealth();
 
         nearestEntrance();
 
@@ -37,6 +34,16 @@ public class AI : MonoBehaviour
             float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
             movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
         }
+    }
+
+    public void setEnemy(Enemy newEnemy)
+    {
+        enemy = newEnemy;
+
+        Health = Health = enemy.getHealth();
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
+
+        gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());
     }
 
     public Enemy getEnemy()

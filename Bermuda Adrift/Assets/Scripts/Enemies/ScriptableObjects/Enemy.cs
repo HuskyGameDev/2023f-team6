@@ -18,24 +18,19 @@ public class Enemy : ScriptableObject
 
     //0 for no spawn, 1 for guaranteed spawn
     [SerializeField] private float rarity;
-    
-    public int getDamage()
-    {
-        return Damage;
-    }
-    public int getHealth()
-    {
-        return Health;
-    }
-    public float getRarity()
-    {
-        return rarity;
-    }
-    public float getSpeed()
-    {
-        return Speed;
-    }
 
-    public int getScrap() { return scrap; }
+    [SerializeField] private RuntimeAnimatorController anim;
+    [SerializeField] private float xSize;
+    [SerializeField] private float ySize;
+
+
+    public int getHealth() { return Health; }
+    public int getDamage() { return Damage; }
+    public float getSpeed() { return Speed; }
     public int getXP() { return xp; }
+    public int getScrap() { return scrap; }
+    public float getRarity() { return rarity; }
+    public RuntimeAnimatorController getAnim() { return anim; }
+    public float getXSize() { return xSize; }
+    public float getYSize() { return ySize; }
 }

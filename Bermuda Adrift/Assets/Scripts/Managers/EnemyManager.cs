@@ -15,18 +15,21 @@ public class EnemyManager : MonoBehaviour
     private int Round;
     private int loopSpot;
 
-    private GameObject[] prefabs;
-    [SerializeField] private GameObject[] set1;
-    [SerializeField] private GameObject[] set2;
-    [SerializeField] private GameObject[] set3;
-    [SerializeField] private GameObject[] Bosses;
+    [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject bossPrefab;
+    private Enemy[] enemySet;
+    [SerializeField] private Enemy[] set1;
+    [SerializeField] private Enemy[] set2;
+    [SerializeField] private Enemy[] set3;
+    [SerializeField] private Enemy[] minions;
+    [SerializeField] private Enemy[] Bosses;
 
     private void Start()
     {
         camera = Camera.main;
         Round = 1;
         loopSpot = 1;
-        prefabs = set1; //Always start with set 1
+        enemySet = set1; //Always start with set 1
     }
     public void SpawnEnemies()
     {
@@ -34,23 +37,24 @@ public class EnemyManager : MonoBehaviour
         if (Round % 10 == 0)
         {
             total = 1;
-            prefabs = Bosses;
+            enemySet = Bosses;
             int i = (Round - 10) / 10;
-            while (i >= prefabs.Length)      //Cycle through bosses predictably (so we can put stronger bosses later)
-            {
-                i -= prefabs.Length;
-            }
+            i = i % enemySet.Length;
 
-            Instantiate(prefabs[i], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);
+            var boss = Instantiate(bossPrefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);
+
+            boss.SendMessage("setEnemy", enemySet[i]);
+
+            boss.SendMessage("setMinion", minions[randomEnemy() % minions.Length]);
 
             //Change the enemy set for the next 10 rounds
             i = Random.Range(0, 3);
             if (i == 0)
-                prefabs = set1;
+                enemySet = set1;
             else if (i == 1)
-                prefabs = set2;
+                enemySet = set2;
             else
-                prefabs = set3;
+                enemySet = set3;
 
             loopSpot = 1;
         } else
@@ -59,20 +63,23 @@ public class EnemyManager : MonoBehaviour
             int i = 0;
             for (; i < total / 2; i++)
             {
-                Instantiate(prefabs[randomEnemy()], new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
+                var tempEnemy = Instantiate(prefab, new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
+                tempEnemy.SendMessage("setEnemy", enemySet[randomEnemy()]);
+
             }
             for (; i < total; i++)
             {
-                Instantiate(prefabs[randomEnemy()], new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
+                var tempEnemy = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
+                tempEnemy.SendMessage("setEnemy", enemySet[randomEnemy()]);
             }
         }
     }
     private int randomEnemy()
     {
-        for (int i = 0; i < prefabs.Length; i++)
+        for (int i = 0; i < enemySet.Length; i++)
         {
             float random = Random.Range(0f, 1f);
-            if (prefabs[i].GetComponent<AI>().getEnemy().getRarity() >= random)
+            if (enemySet[i].getRarity() >= random)
                 return i;
         }
         return 0;
@@ -80,7 +87,7 @@ public class EnemyManager : MonoBehaviour
     private void EnemyDown()
     {
         total--;
-        Debug.Log(total);
+        //Debug.Log(total + " enemies left");
         onEnemyDeath?.Invoke(total);
         if (total <= 0)
         {
@@ -120,6 +127,5 @@ public class EnemyManager : MonoBehaviour
     public void newEnemies()
     {
         total ++;
-        Debug.Log("New Total is " + total);
     }
 }

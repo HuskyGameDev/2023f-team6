@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
-    public Enemy enemy;
+    private Enemy enemy;
 
     private Transform movement;
     private bool arrived;
@@ -14,8 +14,9 @@ public class BossAI : MonoBehaviour
     private bool stop;
     private GameObject enemyManager;
 
-    [SerializeField] private bool noRotation;
-    [SerializeField] private GameObject MinionPrefab;
+    private bool noRotation;
+    [SerializeField] private GameObject prefab;
+    private Enemy Minion;
     private Animator animator;
 
     private void Start()
@@ -24,10 +25,6 @@ public class BossAI : MonoBehaviour
         movement = gameObject.transform;
         animator = gameObject.GetComponent<Animator>();
 
-        Health = enemy.getHealth() + ((enemyManager.GetComponent<EnemyManager>().getRound() / 10 - 1) * (enemy.getHealth() / 2));   //Health scales with round number
-        //if (healthSlider != null)
-        //    healthSlider.maxValue = enemy.getHealth();
-
         nearestEntrance();
 
         if (goal != null && !noRotation)
@@ -35,8 +32,24 @@ public class BossAI : MonoBehaviour
             float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
             movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
         }
+    }
+
+    public void setEnemy(Enemy newEnemy)
+    {
+        enemy = newEnemy;
+
+        Health = enemy.getHealth() + ((GameObject.FindGameObjectWithTag("Managers").GetComponent<EnemyManager>().getRound() / 10 - 1) * (enemy.getHealth() / 2));   //Health scales with round number
+        Debug.Log("Health: " + Health);
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
+
+        gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());
 
         StartCoroutine(randomAttacks());
+    }
+
+    public void setMinion(Enemy newMinion)
+    {
+        Minion = newMinion;
     }
 
     public Enemy getEnemy() { return enemy; }
@@ -156,14 +169,16 @@ public class BossAI : MonoBehaviour
             for (int i = 0; i < total; i++)
             {
                 yield return new WaitForSeconds(0.5f);
-                Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);
+                var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);
+                minion.SendMessage("setEnemy", Minion);
                 enemyManager.GetComponent<EnemyManager>().newEnemies();
 
                 i++;
                 if (i < total)
                 {
                     yield return new WaitForSeconds(0.5f);
-                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                    minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                    minion.SendMessage("setEnemy", Minion);
                     enemyManager.GetComponent<EnemyManager>().newEnemies();
                 }
             }
@@ -173,13 +188,17 @@ public class BossAI : MonoBehaviour
             for (int i = 0; i < total; i++)
             {
                 yield return new WaitForSeconds(0.5f);
-                Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
+                var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
+                minion.SendMessage("setEnemy", Minion);
+                enemyManager.GetComponent<EnemyManager>().newEnemies();
 
                 i++;
                 if (i < total)
                 {
                     yield return new WaitForSeconds(0.5f);
-                    Instantiate(MinionPrefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                    minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
+                    minion.SendMessage("setEnemy", Minion);
+                    enemyManager.GetComponent<EnemyManager>().newEnemies();
                 }
             }
         }
