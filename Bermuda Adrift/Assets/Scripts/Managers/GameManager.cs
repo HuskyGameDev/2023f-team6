@@ -41,49 +41,47 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         //f to start a round
-        if (Input.GetKeyDown("f"))
+        if (Input.GetKeyDown("f"))  //Should probably be relaced by a UI element sometime soon
         {
             startRound();
         }
     }
 
-    private void startRound()
+    private void startRound()   //Sets up everything when a round starts
     {
-        if (state == GameState.Idle)
+        if (state == GameState.Idle)    //Only does anything when we're not in a round
         {
-            if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)
+            if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)   //Checks if it's a boss round
                 state = GameState.BossRound;
             else
                 state = GameState.Defend;
 
-            gameObject.SendMessage("SpawnEnemies");
+            gameObject.SendMessage("SpawnEnemies");     //Sends a message to the EnemyManager
 
             //Broadcast "StartRound" to all towers
             GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
-            foreach (GameObject tower in towers)
+            foreach (GameObject tower in towers)    //Not sure if there's a more efficient way to do things than this
             {
                 tower.SendMessage("StartRound");
             }
         } else
-            Debug.Log("Not idling");
+            Debug.Log("Not idling");    //Maybe disable the button when we get it until the round is over?
     }
 
-    private void endRound()
+    private void endRound() //Does everything that needs doing at the end of a round (received from enemyManager)
     {
         //Enable next-round button
-        //Or wait a certain amount of time between rounds
+        //Enable tower placing system
+        //Both could just be affected by game state
         state = GameState.Idle;
     }
 
-    public GameState getGameState()
-    {
-        return state;
-    }
+    public GameState getGameState() { return state; }   //Returns gameState; referenced a lot
 
-    public void addScrap(int newScrap) { scrap += newScrap; Debug.Log("Scrap is now " + scrap); }
-    public void addXP(int newXP) { XP += newXP; Debug.Log("XP is now " + XP); }
+    public void addScrap(int newScrap) { scrap += newScrap; Debug.Log("Scrap is now " + scrap); }   //Received from enemy AI in death()
+    public void addXP(int newXP) { XP += newXP; Debug.Log("XP is now " + XP); }     //Both don't do anything yet
 
-    public bool cost(int cost)
+    public bool cost(int cost)  //If you can afford it, place it, but if you can't, return false
     {
         if (cost < scrap)
         {

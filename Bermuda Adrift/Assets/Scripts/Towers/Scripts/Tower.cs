@@ -7,7 +7,7 @@ public class Tower : ScriptableObject
 {
     [SerializeField] private int damageMult;
     [SerializeField] private float fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
-    [SerializeField] private float turnSpeed;
+    [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private RuntimeAnimatorController anim;
     [SerializeField] private Bullet defaultBullet;
