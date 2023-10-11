@@ -69,7 +69,7 @@ public class Hitscan : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" || (collision.gameObject.GetComponent<Bullet>() != null && collision.gameObject.GetComponent<Bullet>().getFriendlyFire()))
+        if (collision.gameObject.tag == "Enemy")
         {
             if (bullet.getAOE() == 0 || landed)
             {
