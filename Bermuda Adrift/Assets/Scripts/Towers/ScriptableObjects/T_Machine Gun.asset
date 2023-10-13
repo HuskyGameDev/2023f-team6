@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
-  m_Name: Machine Gun
+  m_Name: T_Machine Gun
   m_EditorClassIdentifier: 
   damageMult: 1
   fireRate: 0.1

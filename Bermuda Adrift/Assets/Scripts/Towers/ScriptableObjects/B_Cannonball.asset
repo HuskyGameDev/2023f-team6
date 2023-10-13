@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: ExplosiveBarrel
+  m_Name: B_Cannonball
   m_EditorClassIdentifier: 
-  projectileSpeed: 5
-  damage: 25
-  AOE: 6
-  effect: 1
-  scale: 1
-  timer: 3
+  projectileSpeed: 20
+  damage: 5
+  AOE: 4
+  effect: 0
+  scale: 0.25
+  timer: -1
   sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   animator: {fileID: 0}
-  FriendlyFire: 0

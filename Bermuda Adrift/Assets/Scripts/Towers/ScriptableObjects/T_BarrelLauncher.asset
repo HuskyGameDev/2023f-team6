@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
-  m_Name: TriCannon
+  m_Name: T_BarrelLauncher
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 1
-  turnSpeed: 0.05
+  fireRate: 5
+  turnSpeed: 1
   range: -1
-  anim: {fileID: 9100000, guid: 3ecbcf65cc8dca746aae3755ec982d9f, type: 2}
-  defaultBullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
-  cost: 150
+  anim: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
+  cost: 0
   rarity: 0

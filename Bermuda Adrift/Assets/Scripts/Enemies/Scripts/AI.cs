@@ -173,4 +173,32 @@ public class AI : MonoBehaviour
     }
 
     public Transform getGoal() { return goal; } //Only used in the directional animation script, so might not be needed anymore
+
+    private IEnumerator Barrier(GameObject barrier)
+    {
+        if (barrier.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Blockade) {
+            stop = true;
+            animator.SetBool("Attacking", true);    //Start attacking animation
+
+            while (barrier != null)
+            {
+                yield return new WaitForSeconds(1f);    //Standardized damage speed?
+
+                if (barrier != null)
+                    barrier.SendMessage("takeDamage", enemy.getDamage());
+            }
+
+            animator.SetBool("Attacking", false);
+            stop = false;
+        }
+
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Barrier"))
+        {
+            StartCoroutine(Barrier(collision.gameObject));
+        }
+    }
 }
