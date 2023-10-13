@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion Setup
 
+    public static event Action<int> onScrapCollect;
+    public static event Action<int> onXPCollect;
+
     public enum GameState
     {
         Idle,
@@ -33,11 +37,14 @@ public class GameManager : MonoBehaviour
         BossRound,
         GameOver
     }
+
     private GameState state;
+   
     private void Start()
     {
         state = GameState.Idle;
     }
+    
     private void Update()
     {
         //f to start a round
@@ -78,8 +85,9 @@ public class GameManager : MonoBehaviour
 
     public GameState getGameState() { return state; }   //Returns gameState; referenced a lot
 
-    public void addScrap(int newScrap) { scrap += newScrap; Debug.Log("Scrap is now " + scrap); }   //Received from enemy AI in death()
-    public void addXP(int newXP) { XP += newXP; Debug.Log("XP is now " + XP); }     //Both don't do anything yet
+    public void addScrap(int newScrap) { scrap += newScrap; onScrapCollect?.Invoke(scrap); }   //Received from enemy AI in death()
+    
+    public void addXP(int newXP) { XP += newXP; onXPCollect?.Invoke(XP); }     //Both don't do anything yet
 
     public bool cost(int cost)  //If you can afford it, place it, but if you can't, return false
     {

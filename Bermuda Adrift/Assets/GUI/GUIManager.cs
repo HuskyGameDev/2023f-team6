@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class GUIManager : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI roundNo;
+    [SerializeField] TextMeshProUGUI enemyCnt;
+    [SerializeField] TextMeshProUGUI scrapAmt;
+    [SerializeField] TextMeshProUGUI xpAmt;
 
     Resolution[] resolutions;
 
@@ -15,6 +20,8 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd += addToRound;
         EnemyManager.onEnemyDeath += updateEnemyCount;
         EnemyManager.onEnemySpawn += updateEnemyCount;
+        GameManager.onScrapCollect += addScrap;
+        GameManager.onXPCollect += addXP;
     }
 
     private void OnDisable()
@@ -22,6 +29,8 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd -= addToRound;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
         EnemyManager.onEnemySpawn -= updateEnemyCount;
+        GameManager.onScrapCollect -= addScrap;
+        GameManager.onXPCollect -= addXP;
     }
 
     private void Start()
@@ -46,11 +55,25 @@ public class GUIManager : MonoBehaviour
 
     public void addToRound(int round)
     {
-        //obj[0].GetComponent<TextMeshProUGUI>().text = "Round " + round;
+        roundNo.text = "Round " + round;
     }
 
     public void updateEnemyCount(int count)
     {
-       // obj[1].GetComponent<TextMeshProUGUI>().text = "Enemies Remaining: " + count;
+       enemyCnt.text = count.ToString();
+    }
+
+    public void addScrap(int scrap)
+    {
+        string regexMatch = Regex.Match(scrapAmt.text, @"\d+").Value;
+        int resultNum = int.Parse(regexMatch);
+        scrapAmt.text = "Scrap: " + (resultNum += scrap).ToString();
+    }
+
+    public void addXP(int xp)
+    {
+        string regexMatch = Regex.Match(xpAmt.text, @"\d+").Value;
+        int resultNum = int.Parse(regexMatch);
+        xpAmt.text = "XP: " + (resultNum += xp).ToString();
     }
 }

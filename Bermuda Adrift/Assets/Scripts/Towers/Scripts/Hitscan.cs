@@ -32,9 +32,12 @@ public class Hitscan : MonoBehaviour
 
     private void countdown()    //Counts down a timer every frame
     {
+        BoxCollider2D trigger;
+
         if (timer <= 0)
         {
-            BoxCollider2D trigger = GameObject.FindGameObjectWithTag("Enemy").GetComponent<BoxCollider2D>();    //Reference a random enemy's hitbox. Might need a static hitbox with the enemy tag to avoid bugs with a timed explosion hitting an enemy outside its range
+            trigger = GameObject.FindGameObjectWithTag("Enemy").GetComponent<BoxCollider2D>();  //Reference a random enemy's hitbox. Might need a static hitbox with the enemy tag to avoid bugs with a timed explosion hitting an enemy outside its range
+
             if (trigger == null)
                 Destroy(gameObject);    //No point doing an explosion if the round is over. If we do the set hitbox, we could remove this and guarantee an explosion
             else

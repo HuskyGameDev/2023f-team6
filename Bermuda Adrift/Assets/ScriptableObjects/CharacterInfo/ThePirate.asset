@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dd7f4000aa5c840bebf787a4ea1039, type: 3}
+  m_Name: ThePirate
+  m_EditorClassIdentifier: 
+  name: The Pirate
+  description: A close-range fighter.
+  abilities:
+  - {fileID: 11400000, guid: 09b8a9c67385d8b42b55131736994cfe, type: 2}
+  - {fileID: 11400000, guid: 7c5dea9b2a8dbe64a9555f056c130b57, type: 2}
+  - {fileID: 11400000, guid: 22c6522396843c547b87684589abd420, type: 2}
+  loadout:
+  - {fileID: 0}

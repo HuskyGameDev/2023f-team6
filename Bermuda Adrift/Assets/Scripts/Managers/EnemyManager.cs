@@ -77,6 +77,8 @@ public class EnemyManager : MonoBehaviour
                 tempEnemy.SendMessage("setEnemy", enemySet[randomEnemy()]);
             }
         }
+
+        onEnemySpawn?.Invoke(total);
     }
     private int randomEnemy()   //Chooses a random enemy from the enemySet based on the rarity. Actual rarity is slightly different than the rarity in the enemy file
     {
@@ -91,7 +93,7 @@ public class EnemyManager : MonoBehaviour
     private void EnemyDown()    //Updates the total enemies and ends the round if there are none left
     {
         total--;
-        onEnemyDeath?.Invoke(total);    //Not sure what this does, someone else added it
+        onEnemyDeath?.Invoke(total);    // Event that triggers when enemy dies
         if (total <= 0)     //Doesn't actually count the enemies on screen. Enemies should be getting tracked with the total in SpawnEnemies or added with newEnemies if they are spawned another way
         {
             Debug.Log("End round");
