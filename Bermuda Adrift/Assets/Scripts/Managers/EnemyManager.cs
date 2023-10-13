@@ -16,7 +16,6 @@ public class EnemyManager : MonoBehaviour
     private int loopSpot;
 
     [SerializeField] private GameObject prefab;
-    [SerializeField] private GameObject bossPrefab;
 
     private Enemy[] enemySet;   //The set that's actually used to assign enemies
     [SerializeField] private Enemy[] set1;      //The sets that contain enemies that can be assigned
@@ -28,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         camera = Camera.main;
-        Round = 1;
+        Round = 10;
         loopSpot = 1;
         enemySet = set1; //Always start with set 1
     }
@@ -43,7 +42,7 @@ public class EnemyManager : MonoBehaviour
 
             //int i = (Round - 10) / 10;    //If we wanted to go in a specific order through the bosses
 
-            var boss = Instantiate(bossPrefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
+            var boss = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
 
             boss.SendMessage("setEnemy", enemySet[randomEnemy()]);  //Sets the boss to a random one in the set
 

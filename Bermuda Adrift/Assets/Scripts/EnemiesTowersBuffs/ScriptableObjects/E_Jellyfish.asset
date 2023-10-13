@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: E_Jellyfish
+  m_EditorClassIdentifier: 
+  Type: 0
+  Health: 10
+  Damage: 2
+  Speed: 1
+  xp: 25
+  scrap: 3
+  rarity: 0.333
+  anim: {fileID: 9100000, guid: b5e61dcc23bb775499a459aac9e40211, type: 2}
+  xSize: 0.75
+  ySize: 1
