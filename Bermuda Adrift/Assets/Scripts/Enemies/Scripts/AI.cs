@@ -176,7 +176,7 @@ public class AI : MonoBehaviour
 
     private IEnumerator Barrier(GameObject barrier)
     {
-        if (barrier.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Blockade) {
+        if (barrier.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Blockade && enemy.getType() != Enemy.Types.Airborne) {
             stop = true;
             animator.SetBool("Attacking", true);    //Start attacking animation
 
