@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 using System.Text.RegularExpressions;
 
@@ -12,6 +13,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI enemyCnt;
     [SerializeField] TextMeshProUGUI scrapAmt;
     [SerializeField] TextMeshProUGUI xpAmt;
+    [SerializeField] Button readyBtn;
 
     Resolution[] resolutions;
 
@@ -22,6 +24,7 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onEnemySpawn += updateEnemyCount;
         GameManager.onScrapCollect += addScrapGUI;
         GameManager.onXPCollect += addXPGUI;
+        GameManager.onRoundEnd += enableStrategizeGUI;
     }
 
     private void OnDisable()
@@ -31,6 +34,7 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onEnemySpawn -= updateEnemyCount;
         GameManager.onScrapCollect -= addScrapGUI;
         GameManager.onXPCollect -= addXPGUI;
+        GameManager.onRoundEnd -= enableStrategizeGUI;
     }
 
     private void Start()
@@ -71,5 +75,10 @@ public class GUIManager : MonoBehaviour
     public void addXPGUI(int xp)
     {
         xpAmt.text = "XP: " + xp.ToString();
+    }
+
+    public void enableStrategizeGUI()
+    {
+
     }
 }

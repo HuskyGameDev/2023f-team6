@@ -10,12 +10,12 @@ public class E_VisualFX : MonoBehaviour
 
     private void OnEnable()
     {
-
+        AI.onEnemyHurt += DamagePopupSetup;
     }
 
     private void OnDisable()
     {
-
+        AI.onEnemyHurt -= DamagePopupSetup;
     }
 
     private void Awake()

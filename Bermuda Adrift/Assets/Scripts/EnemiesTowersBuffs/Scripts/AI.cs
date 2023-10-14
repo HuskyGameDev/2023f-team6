@@ -25,7 +25,7 @@ public class AI : MonoBehaviour
     private int Health;
     private bool stop;
 
-    private bool noRotation;
+    [SerializeField] private bool noRotation;
     private Animator animator;
     private Buffs debuff;
     private Buffs debuffed;

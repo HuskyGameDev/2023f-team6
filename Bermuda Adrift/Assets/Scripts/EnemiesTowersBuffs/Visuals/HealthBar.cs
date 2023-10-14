@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
         AI.setupHealthBar -= this.setupHealthBar;
     }
 
-    void Start()
+    void Awake()
     {
         slider = gameObject.transform.GetChild(0).gameObject.GetComponent<Slider>();
         enemy = gameObject.transform.parent.GetComponent<AI>();

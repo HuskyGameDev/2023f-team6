@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public static event Action<int> onScrapCollect;
     public static event Action<int> onXPCollect;
+    public static event Action onRoundEnd;
 
     public enum GameState
     {
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void startRound()   //Sets up everything when a round starts
+    public void startRound()   //Sets up everything when a round starts
     {
         if (state == GameState.Idle)    //Only does anything when we're not in a round
         {
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
 
     private void endRound() //Does everything that needs doing at the end of a round (received from enemyManager)
     {
+        onRoundEnd?.Invoke();
         //Enable next-round button
         //Enable tower placing system
         //Both could just be affected by game state
