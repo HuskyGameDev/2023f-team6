@@ -7,20 +7,22 @@ public class E_VisualFX : MonoBehaviour
 {
     [SerializeField] GameObject dmgPopupTxt;
     private TextMeshPro textMesh;
+    private AI enemy;
 
     private void OnEnable()
     {
-        AI.onEnemyHurt += DamagePopupSetup;
+        enemy.OnEnemyHurt += DamagePopupSetup;
     }
 
     private void OnDisable()
     {
-        AI.onEnemyHurt -= DamagePopupSetup;
+        enemy.OnEnemyHurt -= DamagePopupSetup;
     }
 
     private void Awake()
     {
         textMesh = dmgPopupTxt.GetComponent<TextMeshPro>();
+        enemy = gameObject.GetComponent<AI>();
     }
 
     public void DamagePopupSetup(int damageAmount)

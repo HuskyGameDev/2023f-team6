@@ -21,25 +21,18 @@ public class DirectionalAnimations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        anim.SetInteger("Direction", direction());
+        direction();
     }
 
-    private int direction()
+    private void direction()
     {
         movingX = location.position.x - ai.getGoal().position.x;
         movingY = location.position.y - ai.getGoal().position.y;
 
-        if (Mathf.Abs(movingX) > Mathf.Abs(movingY))    //Pick between left and right
-        {
-            if (movingX < 0)
-                return 1;   //Right
-            return 0;       //Left
-        }
-        else                                            //Pick between up and down
-        {
-            if (movingY < 0)
-                return 2;   //Up
-            return 3;   //Down
-        }
+        Vector2 movementVec = new Vector2(movingX, movingY);
+        movementVec = movementVec.normalized;
+
+        anim.SetFloat("moveX", movementVec.x);
+        anim.SetFloat("moveY", movementVec.y);
     }
 }

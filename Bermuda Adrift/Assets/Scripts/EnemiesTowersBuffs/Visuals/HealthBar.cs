@@ -10,14 +10,14 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        AI.onEnemyHurt += updateHealthBar;
-        AI.setupHealthBar += this.setupHealthBar;
+        enemy.OnEnemyHurt += updateHealthBar;
+        enemy.SetupHealthBar += setupHealthBar;
     }
 
     private void OnDisable()
     {
-        AI.onEnemyHurt -= updateHealthBar;
-        AI.setupHealthBar -= this.setupHealthBar;
+        enemy.OnEnemyHurt -= updateHealthBar;
+        enemy.SetupHealthBar -= setupHealthBar;
     }
 
     void Awake()

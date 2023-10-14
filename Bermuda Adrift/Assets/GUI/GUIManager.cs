@@ -79,6 +79,6 @@ public class GUIManager : MonoBehaviour
 
     public void enableStrategizeGUI()
     {
-
+        readyBtn.gameObject.SetActive(true);
     }
 }
