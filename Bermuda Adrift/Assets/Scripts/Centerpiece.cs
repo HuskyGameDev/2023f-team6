@@ -9,9 +9,15 @@ public class Centerpiece : MonoBehaviour
 
     void CenterDamage(int damage)
     {
-        Health -= damage;
+        if (Health > 0)
+        {
+            Health -= damage;
+        }
+
         if (Health <= 0)
+        {
             manager.SendMessage("GameEnd");
+        }
     }
 
     public int getHealth()

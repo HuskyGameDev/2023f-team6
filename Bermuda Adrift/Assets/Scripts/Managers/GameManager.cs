@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public static event Action<int> onScrapCollect;
     public static event Action<int> onXPCollect;
     public static event Action onRoundEnd;
+    public static event Action OnGameEnd;
 
     public enum GameState
     {
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
    
     private void Start()
     {
+        Time.timeScale = 1;
         state = GameState.Idle;
     }
     
@@ -83,6 +85,12 @@ public class GameManager : MonoBehaviour
         //Enable tower placing system
         //Both could just be affected by game state
         state = GameState.Idle;
+    }
+
+    private void GameEnd()
+    {
+        OnGameEnd?.Invoke();
+        state = GameState.GameOver;
     }
 
     public GameState getGameState() { return state; }   //Returns gameState; referenced a lot

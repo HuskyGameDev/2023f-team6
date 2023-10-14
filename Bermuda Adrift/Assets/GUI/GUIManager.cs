@@ -14,6 +14,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scrapAmt;
     [SerializeField] TextMeshProUGUI xpAmt;
     [SerializeField] Button readyBtn;
+    [SerializeField] GameObject gameOverGUI;
 
     Resolution[] resolutions;
 
@@ -25,6 +26,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onScrapCollect += addScrapGUI;
         GameManager.onXPCollect += addXPGUI;
         GameManager.onRoundEnd += enableStrategizeGUI;
+        GameManager.OnGameEnd += enableGameOverUI;
     }
 
     private void OnDisable()
@@ -35,6 +37,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onScrapCollect -= addScrapGUI;
         GameManager.onXPCollect -= addXPGUI;
         GameManager.onRoundEnd -= enableStrategizeGUI;
+        GameManager.OnGameEnd -= enableGameOverUI;
     }
 
     private void Start()
@@ -80,5 +83,11 @@ public class GUIManager : MonoBehaviour
     public void enableStrategizeGUI()
     {
         readyBtn.gameObject.SetActive(true);
+    }
+
+    public void enableGameOverUI()
+    {
+        Time.timeScale = 0;
+        gameOverGUI.SetActive(true);
     }
 }
