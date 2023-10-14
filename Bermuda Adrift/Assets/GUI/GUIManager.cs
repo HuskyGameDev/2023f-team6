@@ -20,8 +20,8 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd += addToRound;
         EnemyManager.onEnemyDeath += updateEnemyCount;
         EnemyManager.onEnemySpawn += updateEnemyCount;
-        GameManager.onScrapCollect += addScrap;
-        GameManager.onXPCollect += addXP;
+        GameManager.onScrapCollect += addScrapGUI;
+        GameManager.onXPCollect += addXPGUI;
     }
 
     private void OnDisable()
@@ -29,8 +29,8 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd -= addToRound;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
         EnemyManager.onEnemySpawn -= updateEnemyCount;
-        GameManager.onScrapCollect -= addScrap;
-        GameManager.onXPCollect -= addXP;
+        GameManager.onScrapCollect -= addScrapGUI;
+        GameManager.onXPCollect -= addXPGUI;
     }
 
     private void Start()
@@ -63,17 +63,13 @@ public class GUIManager : MonoBehaviour
        enemyCnt.text = count.ToString();
     }
 
-    public void addScrap(int scrap)
+    public void addScrapGUI(int scrap)
     {
-        string regexMatch = Regex.Match(scrapAmt.text, @"\d+").Value;
-        int resultNum = int.Parse(regexMatch);
-        scrapAmt.text = "Scrap: " + (resultNum += scrap).ToString();
+        scrapAmt.text = "Scrap: " + scrap.ToString();
     }
 
-    public void addXP(int xp)
+    public void addXPGUI(int xp)
     {
-        string regexMatch = Regex.Match(xpAmt.text, @"\d+").Value;
-        int resultNum = int.Parse(regexMatch);
-        xpAmt.text = "XP: " + (resultNum += xp).ToString();
+        xpAmt.text = "XP: " + xp.ToString();
     }
 }

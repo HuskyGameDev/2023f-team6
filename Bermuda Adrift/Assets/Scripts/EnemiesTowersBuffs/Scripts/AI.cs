@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class AI : MonoBehaviour
 {
+    public static event Action<int> onEnemyHurt;
+    public static event Action<int> setupHealthBar;
+
     private Enemy enemy;
     private GameObject enemyManager;
 
@@ -34,6 +37,8 @@ public class AI : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
+        debuffed = defaultDebuff;
+        debuff = defaultDebuff;
 
         nearestEntrance();  //Sets the entrance to be going towards
 
@@ -100,6 +105,8 @@ public class AI : MonoBehaviour
         {
             StartCoroutine(randomAttacks());
         }
+
+        setupHealthBar?.Invoke(Health);
     }
     public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
     public Enemy getEnemy() { return enemy; }   //Returns the scriptable object. I don't know if any scripts use this anymore after the refactoring
@@ -274,6 +281,9 @@ public class AI : MonoBehaviour
     {
         Health -= (int) (damage * debuffed.getArmor());
         animator.SetTrigger("TookDamage");
+
+        onEnemyHurt?.Invoke(damage);
+
         if (Health <= 0 && !stop)
         {
             death();

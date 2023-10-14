@@ -1496,6 +1496,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 39dca041d5835f3459a36af0c22240ce, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: noBuff
+      value: 
+      objectReference: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
+    - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
       objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
@@ -10924,6 +10928,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: noBuff
+      value: 
+      objectReference: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
+    - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
       objectReference: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
@@ -11398,8 +11406,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -15}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 150, y: -15}
+  m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &385068948
 MonoBehaviour:
@@ -14146,7 +14154,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 25}
+  m_SizeDelta: {x: 300, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955488593
 MonoBehaviour:
@@ -28068,6 +28076,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: noBuff
+      value: 
+      objectReference: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
+    - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
       objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
@@ -31214,6 +31226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3398399399289917803, guid: 2fb1d2b8b7c9c0349a1c27ae343a8b28, type: 3}
+  dmgPopup: {fileID: -5290552107026356575, guid: a2c99df1b5d7e68489b446bb693cff51, type: 3}
   set1:
   - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
   - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}
