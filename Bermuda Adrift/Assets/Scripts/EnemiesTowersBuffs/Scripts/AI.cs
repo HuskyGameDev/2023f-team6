@@ -24,10 +24,11 @@ public class AI : MonoBehaviour
     private bool arrived;
     private int Health;
     private bool stop;
+    private bool distracted;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
-    private Buffs debuff;
+    private Buffs debuffToInflict;
     private Buffs debuffed;
     [SerializeField] private Buffs defaultDebuff;
 
@@ -38,16 +39,11 @@ public class AI : MonoBehaviour
         enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
         debuffed = defaultDebuff;
-        debuff = defaultDebuff;
+        debuffToInflict = defaultDebuff;
 
         nearestEntrance();  //Sets the entrance to be going towards
 
-        if (goal != null && !noRotation)    //Face towards goal. Default is noRotation being false now. This function can be modified once we standardize the artstyle and the default direction
-        {
-            //Only rotates once, so if we do knockback or something we'll have to put this in the Update function or the TakeDamage function
-            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
-        }
+        turn();
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
@@ -62,9 +58,10 @@ public class AI : MonoBehaviour
 
         if (!arrived)
         {
-            move();
-
-            //Add interaction with barriers
+            if (!distracted)
+                move();
+            else
+                distractedMove();
 
             if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
             {
@@ -81,14 +78,30 @@ public class AI : MonoBehaviour
         }
     }
 
+    private void turn() //Face towards current goal
+    {
+        if (goal != null && !noRotation)    //Face towards goal. Default is noRotation being false now. This function can be modified once we standardize the artstyle and the default direction
+        {
+            //Only rotates once, so if we do knockback or something we'll have to put this in the Update function or the TakeDamage function
+            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
+            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+        }
+    }
     private void move() //Moves towards the goal
     {
-        //Add functionality for "Distracted" debuff
         if (goal != null && !stop)
         {
             movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * debuffed.getSpeed());
             if (movement.position == goal.position)
                 enteringChannel();
+        }
+    }
+    private void distractedMove()
+    {
+        if (goal != null && !stop)
+        {
+            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * debuffed.getSpeed());
+            turn();
         }
     }
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
@@ -97,7 +110,7 @@ public class AI : MonoBehaviour
 
         Health = Health = enemy.getHealth();    //Maybe add health scaling later based on the number of times the set of enemies has been picked?
         gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
-        debuff = enemy.getDefuff();
+        debuffToInflict = enemy.getDefuff();
 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
 
@@ -266,15 +279,14 @@ public class AI : MonoBehaviour
     }
     void enteringChannel()  //Set the goal to be the centerpiece and rotate to point at it
     {
-        goalGO = GameObject.FindGameObjectWithTag("Center");
-        goal = goalGO.transform;    //Set new goal to the centerpiece. Could maybe just set the goal to be 0,0 for efficiency and so we don't need the centerpiece tag
-
-        animator.SetTrigger("InChannel");
-
-        if (!noRotation)    //Points towards new goal
+        if (Math.Abs(goal.position.x) <= 7.5 || Math.Abs(goal.position.y) <= 7.5)
         {
-        float z = (Mathf.Atan2(movement.position.y, movement.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-        movement.rotation = Quaternion.Euler(0, 0, z);  //Faces towards center (If sprites faces left)
+            goalGO = GameObject.FindGameObjectWithTag("Center");
+            goal = goalGO.transform;    //Set new goal to the centerpiece. Could maybe just set the goal to be 0,0 for efficiency and so we don't need the centerpiece tag
+
+            animator.SetTrigger("InChannel");
+
+            turn();
         }
     }
     private void TakeDamage(int damage) //Take damage as told, then die if health is below 0
@@ -288,7 +300,6 @@ public class AI : MonoBehaviour
         {
             death();
         }
-        Debug.Log("Took " + damage + " damage");
     }
     public void heal(int health)   //maybe an enemy that heals other enemies?
     {
@@ -318,7 +329,7 @@ public class AI : MonoBehaviour
             while (barrier != null)
             {
                 barrier.SendMessage("takeDamage", enemy.getDamage() * debuffed.getDamage());
-                barrier.SendMessage("InflictDebuff", debuff);   //Only inflicts debuffs on barriers
+                barrier.SendMessage("InflictDebuff", debuffToInflict);   //Only inflicts debuffs on barriers
 
                 yield return new WaitForSeconds(enemy.getAttackSpeed() * debuffed.getAttackSpeed());
             }
@@ -335,6 +346,8 @@ public class AI : MonoBehaviour
         int buffedHealth = (int) (Health * debuffed.getHealth());
         Health += buffedHealth;
         //Visual/particle effect
+        if (newDebuff.getDistracted())
+            baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
 
         while (Time.time < startTime + newDebuff.getDuration()) //Even if no DOT, still waits until the end of the duration
         {
@@ -346,6 +359,24 @@ public class AI : MonoBehaviour
         Health -= buffedHealth;
         debuffed = defaultDebuff;
     }
+    private IEnumerator baited(Vector3 bait)
+    {
+        if (!goal.CompareTag("Center")) //Won't work on enemies in the channels
+        {
+            goal.position = bait;
+            distracted = true;
+
+            yield return new WaitForSeconds(5f);
+
+            nearestEntrance();
+
+            yield return new WaitForSeconds(1f);
+
+            distracted = false;
+        }
+        
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)  //Trigger for hitting a barrier
     {
         if (collision.CompareTag("Barrier") && enemy.getType() != Enemy.Types.Airborne)

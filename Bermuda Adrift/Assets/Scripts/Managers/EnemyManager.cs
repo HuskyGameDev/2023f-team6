@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         camera = Camera.main;
-        Round = 10;
+        Round = 1;
         loopSpot = 1;
         enemySet = set1; //Always start with set 1
     }
