@@ -14,6 +14,7 @@ public class Bullet : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animator;
     [SerializeField] private bool FriendlyFire; //Could be used to let bullets activate other bullets' AOE effects, like shooting the barrel
     [SerializeField] private Buffs debuff;
+    [SerializeField] private int pierce;
 
     //Get Functions
     public int getProjectileSpeed() { return projectileSpeed; }

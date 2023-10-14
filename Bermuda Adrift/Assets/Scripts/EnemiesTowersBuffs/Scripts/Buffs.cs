@@ -16,7 +16,7 @@ public class Buffs : ScriptableObject
 
 
     //Applies only to Enemies
-    [SerializeField] private bool Distracted; //Wander away from the raft or in circles. Could also be used for 
+    [SerializeField] private bool Distracted; //Wander away from the raft or in circles
 
     //Applies to the player
     [SerializeField] private float Cooldowns;

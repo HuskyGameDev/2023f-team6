@@ -87,6 +87,8 @@ public class Hitscan : MonoBehaviour
             if (bullet.getAOE() == 0 || landed) //If a bullet has hit something, it won't do the AOE multiple times
             {
                 collision.gameObject.SendMessage("TakeDamage", damage);                         //Basic bullet hit or shrapnel/AOE hit
+                if (debuff != null)
+                    collision.SendMessage("InflictDebuff", debuff);
             }
             else
             {
@@ -98,10 +100,11 @@ public class Hitscan : MonoBehaviour
                     //Play shrapnel animation
                     landed = true;
                     collision.gameObject.SendMessage("TakeDamage", damage);
-                    collision.gameObject.SendMessage("InflictDebuff", debuff);
-                } else if (bullet.getEffect() == 1)                                             //1 - Explosion that shakes the screen and leaves lasting AOE that damages one more time after a second
+                    if (debuff != null)
+                        collision.gameObject.SendMessage("InflictDebuff", debuff);
+                } 
+                else if (bullet.getEffect() == 1)                                             //1 - Explosion that shakes the screen and leaves lasting AOE that damages one more time after a second
                 {
-                    Debug.Log("Explosion");
                     camera.SendMessage("cameraShake", 0.25f);
                     //Play explosion animation
 
@@ -113,6 +116,21 @@ public class Hitscan : MonoBehaviour
 
                     //Switch animator controller to the explosion/fire effects
                     collision.gameObject.SendMessage("InflictDebuff", debuff);
+                } 
+                else if (bullet.getEffect() == 2)                                             //2 is the bait effect
+                {
+                    if (stop)
+                    {
+                        collision.gameObject.SendMessage("baited", gameObject);
+                    }
+                    else
+                    {
+                        stop = true;
+                        collision.gameObject.SendMessage("baited", gameObject.transform.position);
+                        //Play bait-spreading animation
+                        gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
+                        new WaitForSeconds(5f);
+                    }
                 }
 
             }

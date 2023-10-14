@@ -101,3 +101,4 @@ MonoBehaviour:
   nozzle: {fileID: 4446080577790633356, guid: 163d5edda8f860641a4b6a9d5c2c11f7, type: 3}
   bullet: {fileID: 3903083542384844113, guid: c8fc10f8511c62441a88c8a766562279, type: 3}
   bulletScript: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
+  noBuff: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
