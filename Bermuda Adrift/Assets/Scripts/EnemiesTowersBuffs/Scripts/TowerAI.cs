@@ -18,7 +18,7 @@ public class TowerAI : MonoBehaviour
     private Buffs buff;
     [SerializeField] private Buffs noBuff;
 
-    //[SerializeField] Tower testTower;
+    [SerializeField] Tower testTower;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class TowerAI : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown("x")) { place(testTower); }  //Testing place function
+        if (Input.GetKeyDown("x")) { place(testTower); }  //Testing place function
 
         if (target != null) //Turn towards target every frame
         {
@@ -93,7 +93,8 @@ public class TowerAI : MonoBehaviour
         target = null;  //Reset so it can be reassigned or for the end of the round
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
             StartCoroutine(firing());
-        anim.SetTrigger("TargetLost");  //Should only happen when there are no targets left
+        else
+            anim.SetTrigger("TargetLost");  //Should only happen when there are no targets left
     }
 
     private void enemyKilled()      //Received whenever the target enemy dies so it picks a new target. Might be unnescessary

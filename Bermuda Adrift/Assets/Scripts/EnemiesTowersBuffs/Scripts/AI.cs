@@ -279,7 +279,7 @@ public class AI : MonoBehaviour
     }
     void enteringChannel()  //Set the goal to be the centerpiece and rotate to point at it
     {
-        if (Math.Abs(goal.position.x) <= 7.5 || Math.Abs(goal.position.y) <= 7.5)
+        if (Math.Abs(goal.position.x) == 7.5 || Math.Abs(goal.position.y) == 7.5)
         {
             goalGO = GameObject.FindGameObjectWithTag("Center");
             goal = goalGO.transform;    //Set new goal to the centerpiece. Could maybe just set the goal to be 0,0 for efficiency and so we don't need the centerpiece tag

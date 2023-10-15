@@ -10,6 +10,7 @@ public class Hitscan : MonoBehaviour
     private float timer;
     private RuntimeAnimatorController animator;
     [SerializeField] private Buffs debuff;
+    private int pierce;
 
     private bool landed = false;
     private bool stop = false;
@@ -71,6 +72,7 @@ public class Hitscan : MonoBehaviour
         animator = bullet.getAnimator();    //Animator automatically sets sprites
         timer = bullet.getTimer();
         debuff = bullet.getDebuff();
+        pierce = bullet.getPierce();
 
         timer = bullet.getTimer();
         if (timer == -1)        //-1 timer is no timer/max timer. The bullet will hit something or go off screen long before the timer runs out
@@ -84,6 +86,7 @@ public class Hitscan : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
+            pierce--;
             if (bullet.getAOE() == 0 || landed) //If a bullet has hit something, it won't do the AOE multiple times
             {
                 collision.gameObject.SendMessage("TakeDamage", damage);                         //Basic bullet hit or shrapnel/AOE hit
@@ -136,7 +139,8 @@ public class Hitscan : MonoBehaviour
             }
 
             new WaitForEndOfFrame();
-            Destroy(gameObject);    //After all AOE stuff, the bullet is deleted. If there is something requiring a lasting hitbox, turn the sprite invisible or something
+            if (pierce <= 0)
+                Destroy(gameObject);    //After all AOE stuff, the bullet is deleted. If there is something requiring a lasting hitbox, turn the sprite invisible or something
         }
     }
 }

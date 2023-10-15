@@ -26,4 +26,5 @@ public class Bullet : ScriptableObject
     public RuntimeAnimatorController getAnimator() { return animator; }
     public bool getFriendlyFire() { return FriendlyFire; }
     public Buffs getDebuff() { return debuff; }
+    public int getPierce() { return pierce; }
 }

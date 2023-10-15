@@ -693,15 +693,19 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: tower
       value: 
-      objectReference: {fileID: 11400000, guid: 39dca041d5835f3459a36af0c22240ce, type: 2}
+      objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: noBuff
       value: 
       objectReference: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: testTower
+      value: 
+      objectReference: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
+    - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: bulletScript
       value: 
-      objectReference: {fileID: 11400000, guid: 1a21192f09fc27d49983814deec21551, type: 2}
+      objectReference: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

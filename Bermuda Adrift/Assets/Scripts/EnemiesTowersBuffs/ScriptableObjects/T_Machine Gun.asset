@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: T_Machine Gun
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 0.1
+  fireRate: 0.16667
   turnSpeed: 0.02
   range: -1
-  anim: {fileID: 0}
+  anim: {fileID: 9100000, guid: 3edb11b17949f874fb74b309587e70eb, type: 2}
   defaultBullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   cost: 0
   rarity: 0
