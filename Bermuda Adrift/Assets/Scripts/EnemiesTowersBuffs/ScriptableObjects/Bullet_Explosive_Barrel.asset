@@ -15,9 +15,11 @@ MonoBehaviour:
   projectileSpeed: 5
   damage: 25
   AOE: 6
-  effect: 1
+  effect: 3
   scale: 1
   timer: 3
   animator: {fileID: 0}
   FriendlyFire: 0
   debuff: {fileID: 11400000, guid: f94cf0ac8e7c797468a6612194fc85d0, type: 2}
+  pierce: 0
+  AOETimer: 1

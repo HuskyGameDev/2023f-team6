@@ -15,6 +15,7 @@ public class Bullet : ScriptableObject
     [SerializeField] private bool FriendlyFire; //Could be used to let bullets activate other bullets' AOE effects, like shooting the barrel
     [SerializeField] private Buffs debuff;
     [SerializeField] private int pierce;
+    [SerializeField] private float AOETimer;
 
     //Get Functions
     public int getProjectileSpeed() { return projectileSpeed; }
@@ -27,4 +28,5 @@ public class Bullet : ScriptableObject
     public bool getFriendlyFire() { return FriendlyFire; }
     public Buffs getDebuff() { return debuff; }
     public int getPierce() { return pierce; }
+    public float getAOETimer() { return AOETimer; }
 }

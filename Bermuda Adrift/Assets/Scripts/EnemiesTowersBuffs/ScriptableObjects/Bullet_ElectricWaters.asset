@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_Bullet
+  m_Name: Bullet_ElectricWaters
   m_EditorClassIdentifier: 
-  projectileSpeed: 50
-  damage: 2
-  AOE: 0
-  effect: 0
-  scale: 0.05
-  timer: -1
+  projectileSpeed: 0
+  damage: 1
+  AOE: 12
+  effect: 1
+  scale: 0.1
+  timer: 0
   animator: {fileID: 0}
   FriendlyFire: 0
-  debuff: {fileID: 0}
-  pierce: 0
-  AOETimer: -1
+  debuff: {fileID: 11400000, guid: 0f00b56c540b5ef43804b2eb489c9389, type: 2}
+  pierce: -1
+  AOETimer: 3

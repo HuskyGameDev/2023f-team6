@@ -21,3 +21,5 @@ MonoBehaviour:
   animator: {fileID: 0}
   FriendlyFire: 0
   debuff: {fileID: 0}
+  pierce: 0
+  AOETimer: 5
