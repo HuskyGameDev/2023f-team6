@@ -7,6 +7,7 @@ public class Barriers : MonoBehaviour
     [SerializeField] private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private int health;
     private float armor = 1;
+    private Buffs debuff;
     
     // Start is called before the first frame update
     void Start()
@@ -17,13 +18,15 @@ public class Barriers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //While not placed, call Locate()
+        if (Input.GetKeyDown("b")) { setBarrier(barrier); }
+        //While not placed (following mouse to be places), call Locate()
     }
 
     private void setBarrier(BarrierScriptable newBarrier)   //Sets up barrier. For now only sets the health and calls Locate()
     {
         barrier = newBarrier;
         health = barrier.getHealth();
+        debuff = barrier.getDebuff();
         Locate();
     }
 
@@ -77,4 +80,5 @@ public class Barriers : MonoBehaviour
         armor = 1;
     }
     public BarrierScriptable.Effect getEffect() { return barrier.getEffect(); }
+    public Buffs getDebuff() { return debuff; }
 }

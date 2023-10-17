@@ -12,7 +12,6 @@ public class Hitscan : MonoBehaviour
     [SerializeField] private Buffs debuff;
     private int pierce;
     private float AOETimer;
-    private GameObject[] alreadyHit;
 
     private bool landed = false;
     private bool stop = false;
@@ -24,8 +23,6 @@ public class Hitscan : MonoBehaviour
         //For some reason setBullet() seems to run either before Start or faster than Start
 
         camera = Camera.main;   //Used for camera shake effects;
-
-        alreadyHit = new GameObject[5]; //Will pierce through up to 5 enemies. I don't think we'll need much more than that
 
         gameObject.transform.Rotate(-gameObject.transform.rotation.eulerAngles / 2);    //Need to rotate a little more to fire out the end of the barrel. Could maybe be included in the calculation that spawns the bullets
     }
@@ -47,7 +44,7 @@ public class Hitscan : MonoBehaviour
             if (trigger == null)
                 Destroy(gameObject);    //In case the offscreen hitbox isn't in the scene
             else
-                OnTriggerStay2D(trigger);
+                OnTriggerEnter2D(trigger);
         }
         else
             timer -= Time.deltaTime;
@@ -100,107 +97,65 @@ public class Hitscan : MonoBehaviour
         gameObject.GetComponent<Animator>().runtimeAnimatorController = animator;
     }
 
-    private void addToList(GameObject collision)
-    {
-        for (int i = 0; i < alreadyHit.Length; i++)
-        {
-            if (alreadyHit[i] == null)
-            {
-                Debug.Log("Adding " + collision.name + " at index " + i);
-                alreadyHit[i] = collision;
-                return;
-            }
-        }
-        Debug.Log("Full");
-    }
-
-    private bool contains(GameObject collision)
-    {
-        for (int i = 0; i < alreadyHit.Length; i++)
-        {
-            if (alreadyHit[i] == collision)
-            {
-                Debug.Log("Exists at index " + i + ", returning true");
-                return true;
-            }
-        }
-        Debug.Log("Returning false");
-        return false;
-    }
-
-    public void OnTriggerStay2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
+    public void OnTriggerEnter2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            if (!contains(collision.gameObject))
+            pierce--;
+            if (bullet.getAOE() == 0 || landed) //If a bullet has hit something, it won't do the AOE multiple times
             {
-                pierce--;
-                addToList(collision.gameObject);
-                if (bullet.getAOE() == 0 || landed) //If a bullet has hit something, it won't do the AOE multiple times
+                collision.gameObject.SendMessage("TakeDamage", damage);                         //Basic bullet hit or shrapnel/AOE hit
+                if (debuff != null)
+                    collision.SendMessage("InflictDebuff", debuff);
+            }
+            else
+            {
+                gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
+                
+                if (bullet.getEffect() == 0)                                                    //0 - Basic bullet hit with shrapnel
                 {
-                    Debug.Log("noAOE sending message");
-                    collision.gameObject.SendMessage("TakeDamage", damage);                         //Basic bullet hit or shrapnel/AOE hit
+                    stop = true;
+                    //Play shrapnel animation
+                    landed = true;
+
+                    collision.gameObject.SendMessage("TakeDamage", damage);
                     if (debuff != null)
-                        collision.SendMessage("InflictDebuff", debuff);
+                        collision.gameObject.SendMessage("InflictDebuff", debuff);
                 }
-                else
+                else if (bullet.getEffect() == 1)                                             //1 - Does damage in an area and Inflicts a debuff
                 {
-                    gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
+                    stop = true;
+                    landed = true;
+                    
+                    collision.gameObject.SendMessage("TakeDamage", damage);     //Hide the bullet after AOE, but leave the hitbox
+                    gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-                    if (bullet.getEffect() == 0)                                                    //0 - Basic bullet hit with shrapnel
-                    {
-                        stop = true;
-                        //Play shrapnel animation
-                        landed = true;
-
-                        Debug.Log("AOE 0 sending message");
-                        collision.gameObject.SendMessage("TakeDamage", damage);
-                        if (debuff != null)
-                            collision.gameObject.SendMessage("InflictDebuff", debuff);
-                    }
-                    else if (bullet.getEffect() == 1)                                             //1 - Does damage in an area and Inflicts a debuff
-                    {
-                        stop = true;
-                        landed = true;
-
-                        Debug.Log("Effect 1 sending message");
-                        collision.gameObject.SendMessage("TakeDamage", damage);     //Hide the bullet after AOE, but leave the hitbox
-                        gameObject.GetComponent<SpriteRenderer>().enabled = false;
-
-                        //Switch animator controller to the explosion/fire effects
-                        collision.gameObject.SendMessage("InflictDebuff", debuff);
-                    }
-                    else if (bullet.getEffect() == 2)                                             //2 is the bait effect
-                    {
-                        if (stop)
-                        {
-                            collision.gameObject.SendMessage("baited", gameObject);
-                        }
-                        else
-                        {
-                            stop = true;
-                            collision.gameObject.SendMessage("baited", gameObject.transform.position);
-                            //Play bait-spreading animation
-                            gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
-                        }
-                    }
-                    else if (bullet.getEffect() == 3)   //Explosion that shakes the screen and inflicts the debuff
-                    {
-                        camera.SendMessage("cameraShake", 0.25f);
-                        //Play explosion animation
-
-                        stop = true;
-                        landed = true;
-
-                        Debug.Log("Explosion sending message");
-                        collision.gameObject.SendMessage("TakeDamage", damage);     //Hide the bullet after the explosion, but leave the hitbox
-                        gameObject.GetComponent<SpriteRenderer>().enabled = false;
-
-                        //Switch animator controller to the explosion/fire effects
-                        collision.gameObject.SendMessage("InflictDebuff", debuff);
-                    }
-
+                    //Switch animator controller to the explosion/fire effects
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);
                 }
+                else if (bullet.getEffect() == 2)                                             //2 is the bait effect
+                {
+                        stop = true;
+                        collision.gameObject.SendMessage("baited", gameObject.transform.position);
+                        //Play bait-spreading animation
+                        gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
+                }
+                else if (bullet.getEffect() == 3)                                               // 3 is an explosion that shakes the screen and inflicts the debuff
+                {
+                    camera.SendMessage("cameraShake", 0.25f);
+                    //Play explosion animation
+                    
+                    stop = true;
+                    landed = true;
+
+                    collision.gameObject.SendMessage("TakeDamage", damage);     //Hide the bullet after the explosion, but leave the hitbox
+                    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
+
+                    //Switch animator controller to the explosion/fire effects
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);
+                }
+
             }
 
             new WaitForEndOfFrame();

@@ -23,87 +23,16 @@ public class AI : MonoBehaviour
 
     private bool arrived;
     private int Health;
+    private int damage;
     private bool stop;
-    private bool distracted;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
     private Buffs debuffToInflict;
-    private Buffs debuffed;
+    private Buffs[] debuffs;
     [SerializeField] private Buffs defaultDebuff;
 
-    private void Start()
-    {
-        //setEnemy seems to run faster than Start
-        animator = gameObject.GetComponent<Animator>();
-        enemyManager = GameObject.FindGameObjectWithTag("Managers");
-        movement = gameObject.transform;
-        debuffed = defaultDebuff;
-        debuffToInflict = defaultDebuff;
-
-        nearestEntrance();  //Sets the entrance to be going towards
-
-        turn();
-    }
-    void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
-    {
-        if (Input.GetKeyDown("o"))  //Temp buttons, o does 1 damage, p kills everything (a sort of "skip round" button)
-        {
-            TakeDamage(1);
-        }
-        else if (Input.GetKeyDown("p"))
-        {
-            TakeDamage(Health);
-        }
-
-        if (!arrived)
-        {
-            if (!distracted)
-                move();
-            else
-                distractedMove();
-
-            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
-            {
-                arrived = true;     //This section of code will only run once
-                animator.SetBool("Attacking", true);    //Start animations
-
-                if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2, 0), movement.rotation); }        //Left lane
-                else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2, 0), movement.rotation); }    //Right lane
-                else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2), movement.rotation); }    //Top lane
-                else { movement.SetPositionAndRotation(new Vector3(0, -2), movement.rotation); }                                //Bottom Lane
-
-                StartCoroutine(Attacking());
-            }
-        }
-    }
-
-    private void turn() //Face towards current goal
-    {
-        if (goal != null && !noRotation)    //Face towards goal. Default is noRotation being false now. This function can be modified once we standardize the artstyle and the default direction
-        {
-            //Only rotates once, so if we do knockback or something we'll have to put this in the Update function or the TakeDamage function
-            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
-        }
-    }
-    private void move() //Moves towards the goal
-    {
-        if (goal != null && !stop)
-        {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * debuffed.getSpeed());
-            if (movement.position == goal.position)
-                enteringChannel();
-        }
-    }
-    private void distractedMove()
-    {
-        if (goal != null && !stop)
-        {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * debuffed.getSpeed());
-            turn();
-        }
-    }
+    // Setup and Update
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
     {
         enemy = newEnemy;
@@ -114,17 +43,85 @@ public class AI : MonoBehaviour
 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
 
-        if (enemy.getType() == Enemy.Types.Boss)
-        {
+        if (enemy.getType() == Enemy.Types.Boss)    //Start attack cycle if it's a boss
             StartCoroutine(randomAttacks());
-        }
 
         SetupHealthBar?.Invoke(Health);
     }
     public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
+    private void Start()    //Set up what setEnemy didn't
+    {
+        //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
+        animator = gameObject.GetComponent<Animator>();
+        enemyManager = GameObject.FindGameObjectWithTag("Managers");
+        movement = gameObject.transform;
+        debuffs = new Buffs[10];
+
+        nearestEntrance();  //Sets the entrance to be going towards
+
+        turn();
+    }
+    void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
+    {
+        if (Input.GetKeyDown("o"))  //Temp buttons, o does 1 damage, p kills everything (a "skip round" button)
+            TakeDamage(1);
+        else if (Input.GetKeyDown("p"))
+            TakeDamage(Health);
+
+        //healthCheck();    //No debuffs affect health yet, so commented for performance
+
+        if (!arrived)
+        {
+            move();
+
+            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
+            {
+                nowArriving();
+            }
+        }
+    }
+
+
+    //Movement functions
+    private void move() //Moves towards the goal
+    {
+        turn();
+
+        if (goal != null && !stop)
+        {
+            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult());
+            if (movement.position == goal.position && !getDistracted())
+                enteringChannel();
+        }
+    }
+    private void turn() //Face towards current goal
+    {
+        if (goal != null && !noRotation)    //Face towards goal. Default is noRotation being false now. This function can be modified once we standardize the artstyle and the default direction
+        {
+            //Only rotates once, so if we do knockback or something we'll have to put this in the Update function or the TakeDamage function
+            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
+            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+        }
+    }
+    private void nowArriving()  //Sets the position that the enemy will be attacking the center form
+    {
+        arrived = true;     //This section of code will only run once
+        animator.SetBool("Attacking", true);    //Start animations
+
+        if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2, 0), movement.rotation); }        //Left lane
+        else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2, 0), movement.rotation); }    //Right lane
+        else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2), movement.rotation); }    //Top lane
+        else { movement.SetPositionAndRotation(new Vector3(0, -2), movement.rotation); }                                //Bottom Lane
+
+        StartCoroutine(attack(goal.gameObject));
+    }
+
+
+    //Not needed??
     public Enemy getEnemy() { return enemy; }   //Returns the scriptable object. I don't know if any scripts use this anymore after the refactoring
 
 
+    //Boss attack loop
     IEnumerator randomAttacks() //Every 10 seconds, pick a random attack to do
     {
         while (gameObject.active)
@@ -236,6 +233,7 @@ public class AI : MonoBehaviour
     }
 
 
+    //Functions that set the goal
     private void nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
     {
         GameObject[] entrances;
@@ -267,16 +265,6 @@ public class AI : MonoBehaviour
             }
         }
     }
-    IEnumerator Attacking() //Coroutine for attacking. Probably will include barrier attacking here
-    {
-        while (gameObject.active)   //Infinite loop until the enemy dies
-        {
-            //Attacking the center
-            yield return new WaitForSeconds(enemy.getAttackSpeed() * debuffed.getAttackSpeed());
-
-            if (goalGO != null && !stop) { goalGO.SendMessage("CenterDamage", enemy.getDamage() * debuffed.getDamage()); } //Maybe add animation here for what happens when the enemies succeed?
-        }
-    }
     void enteringChannel()  //Set the goal to be the centerpiece and rotate to point at it
     {
         if (Math.Abs(goal.position.x) == 7.5 || Math.Abs(goal.position.y) == 7.5)
@@ -289,21 +277,37 @@ public class AI : MonoBehaviour
             turn();
         }
     }
-    private void TakeDamage(int damage) //Take damage as told, then die if health is below 0
+
+
+    //Actions done by/done to the enemy
+    private void TakeDamage(int damage) //Receiver for damage numbers, go to debuff function if debuffed
     {
-        Health -= (int) (damage * debuffed.getArmor());
+        Health -= (int) (damage * getArmor());
+        damage += (int) (damage * getArmor());
         animator.SetTrigger("TookDamage");
 
         OnEnemyHurt?.Invoke(damage);
 
         if (Health <= 0 && !stop)
-        {
             death();
-        }
     }
-    public void heal(int health)   //maybe an enemy that heals other enemies?
+    private void heal(int health)   //maybe an enemy that heals other enemies?
     {
         Health += health;
+    }
+    private IEnumerator attack(GameObject recipient)
+    {
+        stop = true;
+
+        while (recipient != null)
+        {
+            recipient.SendMessage("takeDamage", (int)(enemy.getDamage() * getDamageMult()));
+
+            if (debuffToInflict != null)
+                recipient.SendMessage("InflictDebuff", debuffToInflict);
+
+            yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed());
+        }
     }
     private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
     {
@@ -318,61 +322,163 @@ public class AI : MonoBehaviour
         new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
         Destroy(gameObject);
     }
-    public Transform getGoal() { return goal; } //Only used in the directional animation script, so might not be needed anymore
 
-    private IEnumerator Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
+
+    //For the animator
+    public Transform getGoal() { return goal; } //Only used in the directional animation script
+
+
+    private void Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
     {
         if (barrier.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Blockade) {
-            stop = true;
             animator.SetBool("Attacking", true);    //Start attacking animation
 
-            while (barrier != null)
-            {
-                barrier.SendMessage("takeDamage", enemy.getDamage() * debuffed.getDamage());
-                barrier.SendMessage("InflictDebuff", debuffToInflict);   //Only inflicts debuffs on barriers
+            StartCoroutine(attack(barrier));    //Start attacking
 
-                yield return new WaitForSeconds(enemy.getAttackSpeed() * debuffed.getAttackSpeed());
-            }
+            while (barrier != null) new WaitForEndOfFrame();
 
             animator.SetBool("Attacking", false);
             stop = false;
+        } else
+        {
+            StartCoroutine(InflictDebuff(barrier.GetComponent<Barriers>().getDebuff()));
         }
 
     }
-    private IEnumerator InflictDebuff(Buffs newDebuff)  //Sets the "debuffed" variable and applies DOT
+
+
+    //Debuff Managing
+    private void addDebuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
-        float startTime = Time.time;
-        debuffed = newDebuff;   //Only DOT can stack
-        int buffedHealth = (int) (Health * debuffed.getHealth());
-        Health += buffedHealth;
-        //Visual/particle effect
-        if (newDebuff.getDistracted())
+        for (int i = 0; i < debuffs.Length; i++)
+        {
+            if (debuffs[i] == null)
+            {
+                debuffs[i] = debuff;
+                return;
+            }
+        }
+    }
+    private void removeDebuff(Buffs debuff) //Removes a debuff from the list of debuffs currently applied
+    {
+        int i = 0;
+        for (; i < debuffs.Length; i++)
+        {
+            if (debuffs[i] == debuff)
+            {
+                for (; i < debuffs.Length - 1; i++)
+                {
+                    debuffs[i] = debuffs[i + 1];
+                }
+                debuffs[i] = null;
+            }
+        }
+    }
+    private IEnumerator InflictDebuff(Buffs newDebuff)  //adds a debuff to the list
+    {
+        addDebuff(newDebuff);
+
+        if (getDistracted())
             baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
 
-        while (Time.time < startTime + newDebuff.getDuration()) //Even if no DOT, still waits until the end of the duration
-        {
-            TakeDamage(newDebuff.getDOT());
+        DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration());
 
-            yield return new WaitForSeconds(newDebuff.getDOTSpeed());
-        }
+        yield return new WaitForSeconds(newDebuff.getDuration());
 
-        Health -= buffedHealth;
-        debuffed = defaultDebuff;
+        removeDebuff(newDebuff);
     }
-    private IEnumerator baited(Vector3 bait)
+    private void healthCheck()
+    {
+        int expectedHealth = (int) (enemy.getHealth() * getHealthMult()) - damage;
+
+        if (expectedHealth < Health)    //Bring health down when the buff wears off
+        {
+            int tempDamage = damage;
+            TakeDamage(Health - expectedHealth);    //Could kill the enemy, which is taken care of in the take damage function
+            damage = tempDamage;
+        }
+    }
+
+
+
+    //Get functions.If no debuffs, most just return 1
+    private bool getDistracted()    //Tells whether one of the debuffs distracts the enemy
+    {
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            if (debuffs[i].getDistracted())
+                return true;
+        }
+        return false;
+    }
+    private float getSpeedMult()    //Gives total speed penalty/buff (multiplicative)
+    {
+        float speedMult = 1;
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            speedMult *= debuffs[i].getSpeed();
+        }
+        return speedMult;
+    }
+    private float getAttackSpeed()  //Gives total attack speed penalty/buff (multiplicative)
+    {
+        float attackSpeedMult = 1;
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            attackSpeedMult *= debuffs[i].getAttackSpeed();
+        }
+        return attackSpeedMult;
+    }
+    private float getDamageMult()   //Gives total damage penalty/buff (multiplicative)
+    {
+        float damageMult = 1;
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            damageMult *= debuffs[i].getDamage();
+        }
+        return damageMult;
+    }
+    private float getArmor()        //Gives total damage reduction/increase (multiplicative)
+    {
+        float armor = 1;
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            armor *= debuffs[i].getArmor();
+        }
+        return armor;
+    }
+    private float getHealthMult()   //Gives total percent health increase (multiplicative)
+    {
+        float mult = 1;
+        for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
+        {
+            mult *= debuffs[i].getHealth();
+        }
+        return mult;
+    }
+
+
+    private IEnumerator DOT(int damage, float speed, float duration)    //Does [damage] damage every [speed] seconds for [duration] seconds
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + duration) //Even if no DOT, still waits until the end of the duration
+        {
+            if (damage > 0)
+                TakeDamage(damage);
+
+            yield return new WaitForSeconds(speed);
+        }
+    }
+
+    private IEnumerator baited(Vector3 bait)    //Temporarily changes where the enemy thinks the goal is
     {
         if (!goal.CompareTag("Center")) //Won't work on enemies in the channels
         {
             goal.position = bait;
-            distracted = true;
 
             yield return new WaitForSeconds(5f);
 
             nearestEntrance();
-
-            yield return new WaitForSeconds(1f);
-
-            distracted = false;
         }
         
     }
@@ -381,7 +487,7 @@ public class AI : MonoBehaviour
     {
         if (collision.CompareTag("Barrier") && enemy.getType() != Enemy.Types.Airborne)
         {
-            StartCoroutine(Barrier(collision.gameObject));
+            Barrier(collision.gameObject);
         }
     }
 }

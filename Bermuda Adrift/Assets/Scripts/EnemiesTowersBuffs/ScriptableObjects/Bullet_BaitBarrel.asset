@@ -20,6 +20,6 @@ MonoBehaviour:
   timer: 3
   animator: {fileID: 0}
   FriendlyFire: 0
-  debuff: {fileID: 0}
+  debuff: {fileID: 11400000, guid: 625faa70b7ffe624f9cf9e5bc1fbc807, type: 2}
   pierce: 0
   AOETimer: 5

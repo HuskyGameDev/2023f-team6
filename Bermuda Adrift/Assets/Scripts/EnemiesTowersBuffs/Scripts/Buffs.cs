@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "(De)Buff", menuName = "ScriptableObjects/(De)buff")]
+[CreateAssetMenu(fileName = "Buff", menuName = "ScriptableObjects/(De)buff")]
 public class Buffs : ScriptableObject
 {
     //Time in seconds that the buff/debuff is active

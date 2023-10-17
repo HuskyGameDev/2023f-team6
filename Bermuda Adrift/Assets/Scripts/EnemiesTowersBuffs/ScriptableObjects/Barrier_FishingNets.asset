@@ -9,18 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
-  m_Name: Buff_Electrified
+  m_Script: {fileID: 11500000, guid: ad553b0c11f8f6f45920753d3eba1447, type: 3}
+  m_Name: Barrier_FishingNets
   m_EditorClassIdentifier: 
-  duration: 2
-  Distracted: 0
-  Cooldowns: 1
-  Speed: 1
-  AttackSpeed: 1
-  FireRate: 1
-  TurnSpeed: 1
-  DamageOverTime: 0
-  DOTSpeed: 0
-  Health: 1
-  Damage: 1
-  armor: 0.75
+  effect: 1
+  Health: 0
+  cost: 0
+  debuff: {fileID: 11400000, guid: 7ccd0a03f075bd047be3d51e52373c57, type: 2}

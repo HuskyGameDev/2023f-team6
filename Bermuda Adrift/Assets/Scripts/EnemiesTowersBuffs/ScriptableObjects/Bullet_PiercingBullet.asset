@@ -9,18 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
-  m_Name: Buff_Electrified
+  m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
+  m_Name: Bullet_PiercingBullet
   m_EditorClassIdentifier: 
-  duration: 2
-  Distracted: 0
-  Cooldowns: 1
-  Speed: 1
-  AttackSpeed: 1
-  FireRate: 1
-  TurnSpeed: 1
-  DamageOverTime: 0
-  DOTSpeed: 0
-  Health: 1
-  Damage: 1
-  armor: 0.75
+  projectileSpeed: 50
+  damage: 3
+  AOE: 0
+  effect: 0
+  scale: 0.05
+  timer: -1
+  animator: {fileID: 0}
+  FriendlyFire: 0
+  debuff: {fileID: 0}
+  pierce: -1
+  AOETimer: -1

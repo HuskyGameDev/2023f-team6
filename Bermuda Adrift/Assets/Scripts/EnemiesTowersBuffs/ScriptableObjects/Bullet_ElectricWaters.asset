@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bullet_ElectricWaters
   m_EditorClassIdentifier: 
   projectileSpeed: 0
-  damage: 1
+  damage: 5
   AOE: 12
   effect: 1
   scale: 0.1

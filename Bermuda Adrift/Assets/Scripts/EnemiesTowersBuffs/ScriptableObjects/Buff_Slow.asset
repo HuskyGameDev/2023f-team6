@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
-  m_Name: Buff_Electrified
+  m_Name: Buff_Slow
   m_EditorClassIdentifier: 
-  duration: 2
+  duration: 3
   Distracted: 0
   Cooldowns: 1
-  Speed: 1
+  Speed: 0.5
   AttackSpeed: 1
   FireRate: 1
   TurnSpeed: 1
@@ -23,4 +23,4 @@ MonoBehaviour:
   DOTSpeed: 0
   Health: 1
   Damage: 1
-  armor: 0.75
+  armor: 1
