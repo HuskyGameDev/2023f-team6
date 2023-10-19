@@ -1615,7 +1615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_Name
-      value: Tower Base (2)
+      value: Barrel Launcher
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_IsActive
@@ -1636,7 +1636,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
-      objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
+      objectReference: {fileID: 11400000, guid: 39dca041d5835f3459a36af0c22240ce, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: bulletScript
       value: 
@@ -11051,11 +11051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_Name
-      value: Tower Base
+      value: Tri Cannon
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3380677518438055797, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_SortingOrder
@@ -11068,7 +11068,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
-      objectReference: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
+      objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15361,7 +15361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1133017995
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15416,7 +15416,7 @@ Transform:
   m_GameObject: {fileID: 1133017994}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.83, y: 16.9, z: -0.097816944}
+  m_LocalPosition: {x: -47.24, y: 36.8, z: -0.097816944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28769,11 +28769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_Name
-      value: Tower Base (1)
+      value: Machine Gun
       objectReference: {fileID: 0}
     - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3380677518438055797, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_SortingOrder
@@ -28790,7 +28790,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: testTower
       value: 
-      objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
+      objectReference: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: bulletScript
       value: 
@@ -32291,25 +32291,25 @@ MonoBehaviour:
   prefab: {fileID: 3398399399289917803, guid: 2fb1d2b8b7c9c0349a1c27ae343a8b28, type: 3}
   set1:
   - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
-  - {fileID: 11400000, guid: b3e93273f28392d4f98cc0b1d4e7418d, type: 2}
-  - {fileID: 11400000, guid: bb3ee2f29fc633b4a9407f0449945540, type: 2}
-  - {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
   - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}
+  - {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
+  - {fileID: 11400000, guid: bb3ee2f29fc633b4a9407f0449945540, type: 2}
+  - {fileID: 11400000, guid: b3e93273f28392d4f98cc0b1d4e7418d, type: 2}
   set2:
   - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
+  - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
   - {fileID: 11400000, guid: 0875ed1d39b31ab4bad0d0a808de0faf, type: 2}
   - {fileID: 11400000, guid: f5b234e3189ca9842aba41874420e9a7, type: 2}
+  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
   - {fileID: 11400000, guid: 1f64bc60a2b4aef4fad5e00cbd44b802, type: 2}
-  - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
   set3:
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
+  - {fileID: 11400000, guid: 37bbed466e849184bbc0b4cd52a0bbe1, type: 2}
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
   - {fileID: 11400000, guid: b3999ec0ea08aaa46bf65ff2b0d418a5, type: 2}
-  - {fileID: 11400000, guid: 37bbed466e849184bbc0b4cd52a0bbe1, type: 2}
   minions:
   - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
   - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}

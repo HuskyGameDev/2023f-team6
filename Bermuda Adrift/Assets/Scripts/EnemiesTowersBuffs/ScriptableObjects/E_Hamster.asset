@@ -16,7 +16,7 @@ MonoBehaviour:
   Health: 100
   Damage: 0
   Speed: 1
-  attackSpeed: 0
+  attackSpeed: 1
   xp: 30
   scrap: 30
   rarity: 0.1

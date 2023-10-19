@@ -20,7 +20,7 @@ MonoBehaviour:
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 0
-  DOTSpeed: 0
+  DOTSpeed: 1
   Health: 1
-  Damage: 1
   armor: 0.75
+  Damage: 1

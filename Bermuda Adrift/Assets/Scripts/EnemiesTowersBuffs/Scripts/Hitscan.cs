@@ -70,7 +70,7 @@ public class Hitscan : MonoBehaviour
         }
     }
 
-    public void Mult(int mult) { damage *= mult; }  //Multiplies base damage of the bullet by the damage multiplier of the tower when it's created
+    public void Mult(float mult) { damage = (int) (damage * mult); }  //Multiplies base damage of the bullet by the damage multiplier of the tower when it's created
 
     public void setBullet(Bullet newBullet)     //Bullet is told what type of bullet it is and it sets up everything from there
     { 
@@ -139,6 +139,7 @@ public class Hitscan : MonoBehaviour
                         collision.gameObject.SendMessage("baited", gameObject.transform.position);
                         //Play bait-spreading animation
                         gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
+                        collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
                 }
                 else if (bullet.getEffect() == 3)                                               // 3 is an explosion that shakes the screen and inflicts the debuff
                 {
@@ -150,7 +151,6 @@ public class Hitscan : MonoBehaviour
 
                     collision.gameObject.SendMessage("TakeDamage", damage);     //Hide the bullet after the explosion, but leave the hitbox
                     gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                    collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
 
                     //Switch animator controller to the explosion/fire effects
                     collision.gameObject.SendMessage("InflictDebuff", debuff);

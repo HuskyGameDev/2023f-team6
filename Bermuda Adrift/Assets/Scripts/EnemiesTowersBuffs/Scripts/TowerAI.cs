@@ -15,8 +15,7 @@ public class TowerAI : MonoBehaviour
     private GameManager gameManager;
     private Animator anim;
 
-    private Buffs buff;
-    [SerializeField] private Buffs noBuff;
+    private Buffs[] buffs;
 
     [SerializeField] Tower testTower;
 
@@ -26,7 +25,7 @@ public class TowerAI : MonoBehaviour
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
-        buff = noBuff;
+        buffs = new Buffs[10];
         
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Could be removed if we can only place outside of a round
         {
@@ -40,14 +39,10 @@ public class TowerAI : MonoBehaviour
         if (Input.GetKeyDown("x")) { place(testTower); }  //Testing place function
 
         if (target != null) //Turn towards target every frame
-        {
             targetPoint();
-        }
 
-        if (gameManager.getGameState() == GameManager.GameState.BossRound)  //Constantly target the closest enemy in a boss round (so they'll aim at minions)
-        {
+        if (gameManager.getGameState() == GameManager.GameState.BossRound || gameManager.getGameState() == GameManager.GameState.Defend)
             newTarget();
-        }
     }
 
     public void place(Tower towerType)  //Setup function
@@ -63,7 +58,7 @@ public class TowerAI : MonoBehaviour
     {
         if (target == null)     //Should be null always, might not be needed
             newTarget();
-        StartCoroutine(firing());
+        anim.SetTrigger("TargetFound");
     }
 
     private void targetPoint()  //finds where/how to point to look at target and points that way
@@ -71,40 +66,21 @@ public class TowerAI : MonoBehaviour
         Vector3 offset = target.transform.position - transform.position;
         Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
 
-        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, tower.getTurnSpeed() * buff.getTurnSpeed());
+        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, tower.getTurnSpeed() * getTurnSpeed());
     }
 
-    private IEnumerator firing()    //Coroutine for creating the bullets as long as there's a target
+    private void fire()    //Coroutine for creating the bullets as long as there's a target
     {
-        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //If the round is still going, pick a new target
-        {
-            newTarget();
+        anim.speed = getFireRate();
+
+        if (gameManager.getGameState() != GameManager.GameState.BossRound && gameManager.getGameState() != GameManager.GameState.Defend)    //If not in a round
+            anim.SetTrigger("TargetLost");
+        else
             anim.SetTrigger("TargetFound");
-        }
-        while (target != null && target.active)     //Will keep firing on one target until that target is dead
-        {
-            var boolet = Instantiate(bullet, nozzle.transform.position, nozzle.transform.rotation);     //Create bullet
-            yield return new WaitForEndOfFrame();   //Wait for bullet's Start function to finish (might not be needed)
-            boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
-            boolet.SendMessage("Mult", tower.getDamageMult() * buff.getDamage());  //And how much damage it does
 
-            yield return new WaitForSeconds(tower.getFireRate() * buff.getFireRate());   //For some reason the tower won't turn until this is done. Maybe something to do with it being a Coroutine?
-        }
-        target = null;  //Reset so it can be reassigned or for the end of the round
-        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
-            StartCoroutine(firing());
-        else
-            anim.SetTrigger("TargetLost");  //Should only happen when there are no targets left
-    }
-
-    private void enemyKilled()      //Received whenever the target enemy dies so it picks a new target. Might be unnescessary
-    {
-        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
-        {
-            newTarget();
-        }
-        else
-            target = null; 
+        var boolet = Instantiate(bullet, nozzle.transform.position, nozzle.transform.rotation);     //Create bullet
+        boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
+        boolet.SendMessage("Mult", tower.getDamageMult() * getDamage());  //And how much damage it does
     }
 
     private void newTarget()    //Set target to closest enemy in range
@@ -134,10 +110,69 @@ public class TowerAI : MonoBehaviour
         }
     }
 
-    private void Buff(Buffs newBuff)
+    //Buff Managing
+    private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
-        buff = newBuff;
-        new WaitForSeconds(buff.getDuration());
-        buff = noBuff;
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] == null)
+            {
+                buffs[i] = debuff;
+                return;
+            }
+        }
+    }
+    private void removeBuff(Buffs debuff) //Removes a debuff from the list of debuffs currently applied
+    {
+        int i = 0;
+        for (; i < buffs.Length; i++)
+        {
+            if (buffs[i] == debuff)
+            {
+                for (; i < buffs.Length - 1; i++)
+                {
+                    buffs[i] = buffs[i + 1];
+                }
+                buffs[i] = null;
+            }
+        }
+    }
+    private IEnumerator Buff(Buffs newDebuff)  //adds a debuff to the list
+    {
+        addBuff(newDebuff);
+
+        yield return new WaitForSeconds(newDebuff.getDuration());
+
+        removeBuff(newDebuff);
+    }
+
+
+    //Get functions for buffs
+    private float getFireRate()    //Gives total speed penalty/buff (multiplicative)
+    {
+        float fireRate = 1;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            fireRate *= buffs[i].getFireRate();
+        }
+        return fireRate;
+    }
+    private float getTurnSpeed()    //Gives total speed penalty/buff (multiplicative)
+    {
+        float turnSpeed = 1;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            turnSpeed *= buffs[i].getTurnSpeed();
+        }
+        return turnSpeed;
+    }
+    private float getDamage()    //Gives total speed penalty/buff (multiplicative)
+    {
+        float damage = 1;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            damage *= buffs[i].getDamage();
+        }
+        return damage;
     }
 }

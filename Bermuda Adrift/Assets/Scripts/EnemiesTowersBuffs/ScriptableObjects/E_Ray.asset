@@ -16,9 +16,11 @@ MonoBehaviour:
   Health: 20
   Damage: 3
   Speed: 1.5
+  attackSpeed: 1
   xp: 30
   scrap: 10
   rarity: 1
   anim: {fileID: 9100000, guid: 870ac8520cad7944d91492abb9033119, type: 2}
   xSize: 2
   ySize: 1
+  debuff: {fileID: 0}

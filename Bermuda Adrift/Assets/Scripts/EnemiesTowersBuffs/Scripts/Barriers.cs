@@ -7,12 +7,14 @@ public class Barriers : MonoBehaviour
     [SerializeField] private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private int health;
     private float armor = 1;
-    private Buffs debuff;
+    private Buffs[] debuffs;
+    private Buffs debuffToInflict;
     
     // Start is called before the first frame update
     void Start()
     {
         health = barrier.getHealth();
+        debuffs = new Buffs[5];
     }
 
     // Update is called once per frame
@@ -26,7 +28,8 @@ public class Barriers : MonoBehaviour
     {
         barrier = newBarrier;
         health = barrier.getHealth();
-        debuff = barrier.getDebuff();
+        debuffToInflict = barrier.getDebuff();
+
         Locate();
     }
 
@@ -65,20 +68,55 @@ public class Barriers : MonoBehaviour
         }
     }
 
-    private IEnumerator InflictDebuff(Buffs debuff)
+    private void addDebuff(Buffs debuff)    //Add a debuff to the list of debuffs
+    {
+        for (int i = 0; i < debuffs.Length; i++)
+        {
+            if (debuffs[i] == null)
+            {
+                debuffs[i] = debuff;
+                return;
+            }
+        }
+    }
+    private void removeDebuff(Buffs debuff) //Removes a debuff from the list of debuffs currently applied
+    {
+        int i = 0;
+        for (; i < debuffs.Length; i++)
+        {
+            if (debuffs[i] == debuff)
+            {
+                for (; i < debuffs.Length - 1; i++)
+                {
+                    debuffs[i] = debuffs[i + 1];
+                }
+                debuffs[i] = null;
+            }
+        }
+    }
+    private IEnumerator InflictDebuff(Buffs newDebuff)  //adds a debuff to the list
+    {
+        addDebuff(newDebuff);
+
+        StartCoroutine(DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration()));
+
+        yield return new WaitForSeconds(newDebuff.getDuration());
+
+        removeDebuff(newDebuff);
+    }
+    private IEnumerator DOT(int damage, float speed, float duration)    //Does [damage] damage every [speed] seconds for [duration] seconds
     {
         float startTime = Time.time;
-        armor = debuff.getArmor();
-
-        while (Time.time < startTime + debuff.getDuration()) //Even if no DOT, still waits until the end of the duration
+        while (Time.time < startTime + duration) //Even if no DOT, still waits until the end of the duration
         {
-            takeDamage(debuff.getDOT());
+            if (damage > 0)
+                takeDamage(damage);
 
-            yield return new WaitForSeconds(debuff.getDOTSpeed());
+            yield return new WaitForSeconds(speed);
         }
-
-        armor = 1;
     }
+
+
     public BarrierScriptable.Effect getEffect() { return barrier.getEffect(); }
-    public Buffs getDebuff() { return debuff; }
+    public Buffs getDebuff() { return debuffToInflict; }
 }

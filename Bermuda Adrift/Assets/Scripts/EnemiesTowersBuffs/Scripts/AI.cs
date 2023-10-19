@@ -25,12 +25,12 @@ public class AI : MonoBehaviour
     private int Health;
     private int damage;
     private bool stop;
+    private bool dead;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
     private Buffs debuffToInflict;
     private Buffs[] debuffs;
-    [SerializeField] private Buffs defaultDebuff;
 
     // Setup and Update
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
@@ -280,15 +280,16 @@ public class AI : MonoBehaviour
 
 
     //Actions done by/done to the enemy
-    private void TakeDamage(int damage) //Receiver for damage numbers, go to debuff function if debuffed
+    private void TakeDamage(int moreDamage) //Receiver for damage numbers, go to debuff function if debuffed
     {
-        Health -= (int) (damage * getArmor());
-        damage += (int) (damage * getArmor());
+        Health -= (int) (moreDamage * getArmor());
+        damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
+        //Debug.Log(enemy.name + ": " + Health + " / " + enemy.getHealth());
 
-        OnEnemyHurt?.Invoke(damage);
+        OnEnemyHurt?.Invoke(moreDamage);
 
-        if (Health <= 0 && !stop)
+        if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
     private void heal(int health)   //maybe an enemy that heals other enemies?
@@ -307,12 +308,14 @@ public class AI : MonoBehaviour
                 recipient.SendMessage("InflictDebuff", debuffToInflict);
 
             yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed());
+            yield return new WaitForEndOfFrame();
         }
     }
     private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
     {
         enemyManager.SendMessage("EnemyDown");
         stop = true;
+        dead = true;
 
         animator.SetBool("Dead", true);
 
@@ -381,7 +384,7 @@ public class AI : MonoBehaviour
         if (getDistracted())
             baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
 
-        DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration());
+        StartCoroutine(DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration()));
 
         yield return new WaitForSeconds(newDebuff.getDuration());
 

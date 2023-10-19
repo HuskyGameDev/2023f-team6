@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         //Enable next-round button
         //Enable tower placing system
         //Both could just be affected by game state
+
         state = GameState.Idle;
     }
 

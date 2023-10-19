@@ -697,7 +697,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: tower
       value: 
-      objectReference: {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
+      objectReference: {fileID: 11400000, guid: 39dca041d5835f3459a36af0c22240ce, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: noBuff
       value: 
@@ -713,7 +713,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: bulletScript
       value: 
-      objectReference: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
+      objectReference: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

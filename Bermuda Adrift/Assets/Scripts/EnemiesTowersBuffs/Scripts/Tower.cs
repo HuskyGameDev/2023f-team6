@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower", order = 2)]
 public class Tower : ScriptableObject
 {
-    [SerializeField] private int damageMult;
+    [SerializeField] private float damageMult;
     [SerializeField] private float fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
@@ -16,7 +16,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up options
 
 
-    public int getDamageMult() { return damageMult; }
+    public float getDamageMult() { return damageMult; }
     public float getFireRate() { return fireRate; }
     public float getTurnSpeed() { return turnSpeed; }
     public float getRange() { return range; }

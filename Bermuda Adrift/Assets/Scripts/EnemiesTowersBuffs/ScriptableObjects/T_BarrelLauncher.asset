@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_BarrelLauncher
   m_EditorClassIdentifier: 
-  damageMult: 1
+  damageMult: 0.75
   fireRate: 5
   turnSpeed: 1
   range: -1
   anim: {fileID: 0}
   defaultBullet: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
-  cost: 0
+  cost: 300
   rarity: 0

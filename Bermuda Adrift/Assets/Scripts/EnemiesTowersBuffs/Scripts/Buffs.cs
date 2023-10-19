@@ -25,22 +25,21 @@ public class Buffs : ScriptableObject
     [SerializeField] private float Speed;
     [SerializeField] private float AttackSpeed;
 
-
-    //Applies only to towers/barriers
+    //Applies only to towers and barriers
     [SerializeField] private float FireRate;    // < 1 for faster
     [SerializeField] private float TurnSpeed;   // < 1 for slower
 
-    //Can apply to Enemies and Towers/barriers
+    //Can apply to Enemies and barriers
     [SerializeField] private int DamageOverTime;  //If there's multiple effects on an enemy, they can stack. Probably shouldn't stack on barriers
     [SerializeField] private float DOTSpeed;    //Low for faster damage
+    [SerializeField] private float Health;  //Probably best used as a health buff
+    [SerializeField] private float armor;   //Take more damage if > 1, less if < 1
 
     //Can apply to Player and Towers/barriers
-    
+
 
     //Can apply to all
-    [SerializeField] private float Health;  //Probably best used as a health buff
     [SerializeField] private float Damage;  //Weakness or a damage buff
-    [SerializeField] private float armor;   //Take more damage if > 1, less if < 1
 
 
 

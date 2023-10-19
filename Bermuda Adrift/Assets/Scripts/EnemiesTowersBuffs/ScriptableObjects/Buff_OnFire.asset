@@ -16,11 +16,11 @@ MonoBehaviour:
   Distracted: 0
   Cooldowns: 1
   Speed: 1
-  AttackSpeed: 0
+  AttackSpeed: 1
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 1
   DOTSpeed: 0.25
   Health: 1
+  armor: 1
   Damage: 1
-  armor: 0
