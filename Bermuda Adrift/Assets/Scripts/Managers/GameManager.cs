@@ -109,4 +109,22 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+
+    public void setScrap(int newScrap) {
+        scrap = newScrap;
+        onScrapCollect?.Invoke(scrap);
+    }
+
+    public void setXP(int newXP) {
+        XP = newXP;
+        onXPCollect?.Invoke(XP);
+    }
+
+    public int getScrap(){
+        return scrap;
+    }
+
+    public int getXP(){
+        return XP;
+    }
 }

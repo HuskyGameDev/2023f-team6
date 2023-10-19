@@ -4,12 +4,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem {
     
-    public static void savePlayer(EnemyManager enemies, Centerpiece center){
+    public static void savePlayer(EnemyManager enemies, Centerpiece center, GameManager game){
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.data";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        PlayerData data = new PlayerData(enemies, center);
+        PlayerData data = new PlayerData(enemies, center, game);
 
         formatter.Serialize(stream, data);
         stream.Close();

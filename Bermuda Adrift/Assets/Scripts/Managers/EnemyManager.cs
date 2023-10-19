@@ -125,4 +125,15 @@ public class EnemyManager : MonoBehaviour
         return Round;
     }
     public void newEnemies() { total++; }   //Updates the enemy count when spawning enemies in a way other than SpawnEnemies
+
+    public int getTotal() {
+        return total;
+    }
+    public void setRound(int newRound) {
+        Round = newRound;
+        onRoundEnd?.Invoke(Round);
+    }
+    public void setTotal(int newTotal) {
+        total = newTotal;
+    }
 }

@@ -25,15 +25,20 @@ public class SaveManager : MonoBehaviour
     }
 
     public void SavePlayer(){
-        SaveSystem.savePlayer(enemies, center);
+        PlayerData data = SaveSystem.loadPlayer();
+        if(data.getRound() > 1){
+            SaveSystem.savePlayer(enemies, center, game);
+        }
     }
 
     public void LoadPlayer(){
         PlayerData data = SaveSystem.loadPlayer();
 
-        //enemies.setTotal(data.getTotal());
-        //enemies.setRound(data.getRound());
+        enemies.setRound(data.getRound());
 
-        //center.setHealth(data.getHealth());
+        center.setHealth(data.getHealth());
+
+        game.setScrap(data.getScrap());
+        game.setXP(data.getXP());
     }
 }

@@ -5,25 +5,31 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData {
     
-    private int totalEnemies;
     private int round;
     private int centerHealth;
+    private int xp;
+    private int scrap;
 
-    public PlayerData(EnemyManager enemies, Centerpiece center){
-        //totalEnemies = enemies.getTotal();
-        //round = enemies.getRound();
-        //centerHealth = center.getHealth();
+    public PlayerData(EnemyManager enemies, Centerpiece center, GameManager game){
+        round = enemies.getRound();
+        centerHealth = center.getHealth();
+        xp = game.getXP();
+        scrap = game.getScrap();
     }
 
     public int getHealth(){
         return centerHealth;
     }
 
-    public int getTotal(){
-        return totalEnemies;
-    }
-
     public int getRound(){
         return round;
+    }
+
+    public int getXP(){
+        return xp;
+    }
+
+    public int getScrap(){
+        return scrap;
     }
 }
