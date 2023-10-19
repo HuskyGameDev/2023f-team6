@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TowerAI : MonoBehaviour
 {
@@ -19,10 +21,15 @@ public class TowerAI : MonoBehaviour
 
     [SerializeField] Tower testTower;
 
+    private Boolean placed = false;
+    private BoxCollider2D[] colliders;
+
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
+        colliders = new BoxCollider2D[1];
+        colliders[0] = gameObject.GetComponent<BoxCollider2D>();
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buffs = new Buffs[10];
@@ -34,8 +41,32 @@ public class TowerAI : MonoBehaviour
         }
     }
 
+
+    public void OnMouseDown(){
+        if ((Mathf.Abs(transform.position.x) < 6.5 && Mathf.Abs(transform.position.x) > 1.5) && (Mathf.Abs(transform.position.y) < 6.5 && Mathf.Abs(transform.position.y) > 1.5)) { 
+            placed = true;
+            Debug.Log("Clicked, legal position");
+        }
+        Debug.Log("Clicked, not legal position");
+    }
+
     private void Update()
     {
+        if (!placed)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnMouseDown();
+            }
+
+            var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPosition.z = 0f;
+            Debug.Log(Input.mousePosition.x + ", " + Input.mousePosition.y);
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x) + .5f, Mathf.Round(mouseWorldPosition.y) - .5f);
+            
+            return;
+        }
+
         if (Input.GetKeyDown("x")) { place(testTower); }  //Testing place function
 
         if (target != null) //Turn towards target every frame
@@ -175,4 +206,6 @@ public class TowerAI : MonoBehaviour
         }
         return damage;
     }
+
+    public bool getPlaced() { return placed; }
 }
