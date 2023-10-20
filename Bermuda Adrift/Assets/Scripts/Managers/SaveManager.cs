@@ -8,6 +8,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField] Centerpiece center;
     [SerializeField] GameManager game;
     private GameManager.GameState state;
+    bool saved = false;
 
     private void Start(){
         state = game.getGameState();
@@ -15,19 +16,27 @@ public class SaveManager : MonoBehaviour
 
     private void Update(){
         state = game.getGameState();
-        if(state == GameManager.GameState.Idle){
-            SavePlayer();
+        if(state == GameManager.GameState.Defend){
+            beginRoundSave();
         }
 
         if(Input.GetKeyDown("m")){
             LoadPlayer();
         }
+
+        if(Input.GetKeyDown(";")){
+            DeletePlayer();
+        }
     }
 
-    public void SavePlayer(){
-        PlayerData data = SaveSystem.loadPlayer();
-        if(data.getRound() > 1){
+    private void OnEnable(){
+        EnemyManager.onRoundEnd += endRoundSave;
+    }
+
+    public void beginRoundSave(){
+        if(!saved){
             SaveSystem.savePlayer(enemies, center, game);
+            saved = true;
         }
     }
 
@@ -40,5 +49,14 @@ public class SaveManager : MonoBehaviour
 
         game.setScrap(data.getScrap());
         game.setXP(data.getXP());
+    }
+
+    public void endRoundSave(int bugFix){
+        SaveSystem.savePlayer(enemies, center, game);
+        Debug.Log("            Saved at end of round");
+    }
+
+    public void DeletePlayer(){
+        SaveSystem.deletePlayer();
     }
 }

@@ -32,4 +32,15 @@ public static class SaveSystem {
             return null;
         }
     }
+
+    public static void deletePlayer(){
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/save.data";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        PlayerData data = new PlayerData();
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
 }

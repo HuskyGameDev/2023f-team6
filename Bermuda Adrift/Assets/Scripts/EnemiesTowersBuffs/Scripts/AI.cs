@@ -313,14 +313,14 @@ public class AI : MonoBehaviour
     }
     private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
     {
+        enemyManager.SendMessage("addScrap", enemy.getScrap());
+        enemyManager.SendMessage("addXP", enemy.getXP());
+
         enemyManager.SendMessage("EnemyDown");
         stop = true;
         dead = true;
 
         animator.SetBool("Dead", true);
-
-        enemyManager.SendMessage("addScrap", enemy.getScrap());
-        enemyManager.SendMessage("addXP", enemy.getXP());
 
         new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
         Destroy(gameObject);
