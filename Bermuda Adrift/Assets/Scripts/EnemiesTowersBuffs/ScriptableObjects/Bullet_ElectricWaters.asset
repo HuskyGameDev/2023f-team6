@@ -23,3 +23,5 @@ MonoBehaviour:
   debuff: {fileID: 11400000, guid: 0f00b56c540b5ef43804b2eb489c9389, type: 2}
   pierce: -1
   AOETimer: 3
+  UnderwaterDamage: 1
+  AirborneDamage: 1

@@ -122,7 +122,7 @@ public class Hitscan : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
     {
-        if (collision.gameObject.tag != "Enemy") { return; }
+        if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; }
 
         pierce--;
         if (bullet.getAOE() == 0 || landed || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times

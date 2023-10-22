@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         state = GameState.Idle;
 
-        scrap = 150;
+        scrap = 200;
         onScrapCollect?.Invoke(scrap);
     }
     

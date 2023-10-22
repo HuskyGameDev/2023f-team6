@@ -30,6 +30,7 @@ public class TowerAI : MonoBehaviour
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
         colliders = new BoxCollider2D[1];
         colliders[0] = gameObject.GetComponent<BoxCollider2D>();
+        gameObject.GetComponent<SpriteRenderer>().sprite = tower.getBaseSprite();
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buffs = new Buffs[10];
@@ -44,6 +45,7 @@ public class TowerAI : MonoBehaviour
     public void OnMouseDown(){
         if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) >= 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) >= 1)) { 
             placed = true;
+            anim.SetTrigger("Placed");
             gameManager.spendScrap(tower.getCost());
         }
     }
@@ -105,9 +107,9 @@ public class TowerAI : MonoBehaviour
         anim.speed = getFireRate();
 
         if (gameManager.getGameState() != GameManager.GameState.BossRound && gameManager.getGameState() != GameManager.GameState.Defend)    //If not in a round
-            anim.SetTrigger("TargetLost");
+            anim.SetBool("TargetFound", false);
         else
-            anim.SetTrigger("TargetFound");
+            anim.SetBool("TargetFound", true);
 
         Quaternion bulletRotation = Quaternion.Euler(nozzle.transform.rotation.eulerAngles - (nozzle.transform.rotation.eulerAngles / 2));
         var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet

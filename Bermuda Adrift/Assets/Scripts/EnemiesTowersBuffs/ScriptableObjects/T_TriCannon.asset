@@ -17,6 +17,7 @@ MonoBehaviour:
   turnSpeed: 0.05
   range: -1
   anim: {fileID: 9100000, guid: 3ecbcf65cc8dca746aae3755ec982d9f, type: 2}
+  baseSprite: {fileID: 21300000, guid: 0261996045f1faa458a3c0feb3308b97, type: 3}
   defaultBullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
   cost: 150
   rarity: 0

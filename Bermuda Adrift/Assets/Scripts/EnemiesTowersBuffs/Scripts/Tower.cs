@@ -10,6 +10,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private RuntimeAnimatorController anim;
+    [SerializeField] private Sprite baseSprite;
     [SerializeField] private Bullet defaultBullet;
 
     [SerializeField] private int cost;
@@ -21,6 +22,7 @@ public class Tower : ScriptableObject
     public float getTurnSpeed() { return turnSpeed; }
     public float getRange() { return range; }
     public RuntimeAnimatorController getAnim() { return anim; }
+    public Sprite getBaseSprite() { return baseSprite; }
     public Bullet getDefaultBullet() { return defaultBullet; }
 
     public int getCost() { return cost; }

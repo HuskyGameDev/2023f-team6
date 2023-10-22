@@ -328,7 +328,7 @@ public class AI : MonoBehaviour
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
 
-        OnEnemyHurt?.Invoke(damage);
+        OnEnemyHurt?.Invoke(moreDamage);
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();

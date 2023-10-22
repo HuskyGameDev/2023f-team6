@@ -9,6 +9,7 @@ public class Barriers : MonoBehaviour
     private float armor = 1;
     private Buffs[] debuffs;
     private Buffs debuffToInflict;
+    private Animator animator;
 
     private bool placed = false;
     
@@ -55,7 +56,13 @@ public class Barriers : MonoBehaviour
         health = barrier.getHealth();
         debuffToInflict = barrier.getDebuff();
 
-        Locate();
+        if (gameObject.GetComponent<Animator>() != null)
+        {
+            animator = gameObject.GetComponent<Animator>();
+            animator.runtimeAnimatorController = barrier.getAnimator();
+        }
+        
+        gameObject.GetComponent<SpriteRenderer>().sprite = barrier.getStartingSprite();
     }
 
     private void TakeDamage(int damage)
@@ -70,27 +77,13 @@ public class Barriers : MonoBehaviour
 
     private void Locate()   //Changes the animation based on which channel the barrier is in
     {
-        if (Mathf.Abs(gameObject.transform.position.x) < 3)
-        {
-            if (gameObject.transform.position.y > 0)
-            {
-                //Up Animation
-            } 
-            else
-            {
-                //Down Animation
-            }
-        } else
-        {
-            if (gameObject.transform.position.x < 0)
-            {
-                //Left Animation
-            }
-            else
-            {
-                //Right Animation
-            }
-        }
+        if (animator == null) { return; }
+
+        Vector2 movementVec = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        movementVec = movementVec.normalized;
+
+        animator.SetFloat("x", movementVec.x);
+        animator.SetFloat("y", movementVec.y);
     }
 
     private void addDebuff(Buffs debuff)    //Add a debuff to the list of debuffs
