@@ -16,9 +16,7 @@ public class PlayerData {
         total = enemies.getTotal();
         centerHealth = center.getHealth();
         xp = game.getXP();
-        Debug.Log("            Saved XP: " + xp);
         scrap = game.getScrap();
-        Debug.Log("            Saved Scrap: " + scrap);
     }
 
     public PlayerData(){

@@ -33,7 +33,7 @@ public static class SaveSystem {
         }
     }
 
-    public static void deletePlayer(){
+    public static void resetPlayer(){
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.data";
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -42,5 +42,19 @@ public static class SaveSystem {
 
         formatter.Serialize(stream, data);
         stream.Close();
+    }
+
+    public static void deletePlayer(){
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/save.data";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        PlayerData data = new PlayerData();
+
+        formatter.Serialize(stream, data);
+
+        stream.Close();
+        File.Delete(path);
+
     }
 }
