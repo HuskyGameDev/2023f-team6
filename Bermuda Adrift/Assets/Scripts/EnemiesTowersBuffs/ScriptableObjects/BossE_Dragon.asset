@@ -9,14 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
-  m_Name: T_LightningRod
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_Dragon
   m_EditorClassIdentifier: 
-  damageMult: 1
-  fireRate: 1
-  turnSpeed: 0
-  range: -1
-  anim: {fileID: 0}
-  defaultBullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
-  cost: 0
+  Type: 0
+  Health: 0
+  Damage: 0
+  Speed: 0
+  attackSpeed: 0
+  xp: 0
+  scrap: 0
   rarity: 0
+  anim: {fileID: 0}
+  xSize: 0
+  ySize: 0
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}

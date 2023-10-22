@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: T_BarrelLauncher
   m_EditorClassIdentifier: 
   damageMult: 0.75
-  fireRate: 5
+  fireRate: 1
   turnSpeed: 1
   range: -1
   anim: {fileID: 0}

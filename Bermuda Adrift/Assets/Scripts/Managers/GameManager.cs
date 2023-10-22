@@ -46,12 +46,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         state = GameState.Idle;
+
+        scrap = 150;
+        onScrapCollect?.Invoke(scrap);
     }
     
     private void Update()
     {
         //f to start a round
-        if (Input.GetKeyDown("f"))  //Should probably be relaced by a UI element sometime soon
+        if (Input.GetKeyDown("f"))  //Replaced in the main scene, but still useful for testing in other scenes
         {
             startRound();
         }
@@ -102,12 +105,17 @@ public class GameManager : MonoBehaviour
 
     public bool cost(int cost)  //If you can afford it, place it, but if you can't, return false
     {
-        if (cost < scrap)
+        if (cost <= scrap)
         {
-            scrap -= cost;
             return true;
         }
         return false;
+    }
+
+    public void spendScrap(int cost)
+    {
+        scrap -= cost;
+        onScrapCollect?.Invoke(scrap);
     }
 
     public void setScrap(int newScrap) {

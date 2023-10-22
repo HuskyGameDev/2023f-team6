@@ -13,5 +13,6 @@ public class BarrierScriptable : ScriptableObject
 
     public Effect getEffect() { return effect; }
     public int getHealth() { return Health; }
+    public int getCost() { return cost; }
     public Buffs getDebuff() { return debuff; }
 }

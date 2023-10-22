@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 175839720}
   - component: {fileID: 175839719}
   - component: {fileID: 175839721}
+  - component: {fileID: 175839722}
   m_Layer: 0
   m_Name: Center
   m_TagString: Center
@@ -221,7 +222,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
-  manager: {fileID: 1072894503}
+--- !u!61 &175839722
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175839718}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &469611208
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +696,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1552961099775927051, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552961099775927051, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552961099775927051, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
       objectReference: {fileID: 0}
@@ -694,10 +747,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower Base
       objectReference: {fileID: 0}
+    - target: {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: tower
       value: 
-      objectReference: {fileID: 11400000, guid: 39dca041d5835f3459a36af0c22240ce, type: 2}
+      objectReference: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: noBuff
       value: 
@@ -713,7 +770,7 @@ PrefabInstance:
     - target: {fileID: 7356761778881952943, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
       propertyPath: bulletScript
       value: 
-      objectReference: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
+      objectReference: {fileID: 11400000, guid: eb94cfcbaf05de049b35868b39c2d720, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

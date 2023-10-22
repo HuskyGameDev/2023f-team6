@@ -15,7 +15,7 @@ MonoBehaviour:
   projectileSpeed: 20
   damage: 5
   AOE: 4
-  effect: 0
+  effect: 1
   scale: 0.25
   timer: -1
   animator: {fileID: 0}

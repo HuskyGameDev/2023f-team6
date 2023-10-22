@@ -41,13 +41,11 @@ public class TowerAI : MonoBehaviour
         }
     }
 
-
     public void OnMouseDown(){
-        if ((Mathf.Abs(transform.position.x) < 6.5 && Mathf.Abs(transform.position.x) > 1.5) && (Mathf.Abs(transform.position.y) < 6.5 && Mathf.Abs(transform.position.y) > 1.5)) { 
+        if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) >= 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) >= 1)) { 
             placed = true;
-            Debug.Log("Clicked, legal position");
+            gameManager.spendScrap(tower.getCost());
         }
-        Debug.Log("Clicked, not legal position");
     }
 
     private void Update()
@@ -58,16 +56,18 @@ public class TowerAI : MonoBehaviour
             {
                 OnMouseDown();
             }
+            else if (Input.GetMouseButtonDown(1))
+                Destroy(gameObject);
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            Debug.Log(Input.mousePosition.x + ", " + Input.mousePosition.y);
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x) + .5f, Mathf.Round(mouseWorldPosition.y) - .5f);
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+
+            if (gameManager.getGameState() != GameManager.GameState.Idle)
+                Destroy(gameObject);
             
             return;
         }
-
-        if (Input.GetKeyDown("x")) { place(testTower); }  //Testing place function
 
         if (target != null) //Turn towards target every frame
             targetPoint();
@@ -109,7 +109,9 @@ public class TowerAI : MonoBehaviour
         else
             anim.SetTrigger("TargetFound");
 
-        var boolet = Instantiate(bullet, nozzle.transform.position, nozzle.transform.rotation);     //Create bullet
+        Quaternion bulletRotation = Quaternion.Euler(nozzle.transform.rotation.eulerAngles - (nozzle.transform.rotation.eulerAngles / 2));
+        var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet
+
         boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
         boolet.SendMessage("Mult", tower.getDamageMult() * getDamage());  //And how much damage it does
     }

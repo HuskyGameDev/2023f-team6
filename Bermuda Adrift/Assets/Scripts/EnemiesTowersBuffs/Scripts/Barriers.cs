@@ -9,6 +9,8 @@ public class Barriers : MonoBehaviour
     private float armor = 1;
     private Buffs[] debuffs;
     private Buffs debuffToInflict;
+
+    private bool placed = false;
     
     // Start is called before the first frame update
     void Start()
@@ -20,8 +22,31 @@ public class Barriers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("b")) { setBarrier(barrier); }
-        //While not placed (following mouse to be places), call Locate()
+        if (!placed) {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Mathf.Abs(gameObject.transform.position.x) < 7 && Mathf.Abs(gameObject.transform.position.x) > 1 && (Mathf.Abs(gameObject.transform.position.y) < 1)    // Left/Right channels
+                    ||
+                    Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))   //Top and Bottom channels
+                {
+                    placed = true;
+                    GameObject.Find("Managers").GetComponent<GameManager>().spendScrap(barrier.getCost());
+                }
+            }
+            else if (Input.GetMouseButtonDown(1))
+                Destroy(gameObject);
+
+            var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPosition.z = 0f;
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+
+            Locate();
+
+            if (GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.Idle)
+                Destroy(gameObject);
+
+            return;
+        }
     }
 
     private void setBarrier(BarrierScriptable newBarrier)   //Sets up barrier. For now only sets the health and calls Locate()
@@ -33,7 +58,7 @@ public class Barriers : MonoBehaviour
         Locate();
     }
 
-    private void takeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         health -= (int) (damage * armor);
         if (health <= 0)
@@ -49,11 +74,11 @@ public class Barriers : MonoBehaviour
         {
             if (gameObject.transform.position.y > 0)
             {
-                //North Animation
+                //Up Animation
             } 
             else
             {
-                //South Animation
+                //Down Animation
             }
         } else
         {
@@ -110,7 +135,7 @@ public class Barriers : MonoBehaviour
         while (Time.time < startTime + duration) //Even if no DOT, still waits until the end of the duration
         {
             if (damage > 0)
-                takeDamage(damage);
+                TakeDamage(damage);
 
             yield return new WaitForSeconds(speed);
         }
@@ -119,4 +144,5 @@ public class Barriers : MonoBehaviour
 
     public BarrierScriptable.Effect getEffect() { return barrier.getEffect(); }
     public Buffs getDebuff() { return debuffToInflict; }
+    public bool getPlaced() { return placed; }
 }

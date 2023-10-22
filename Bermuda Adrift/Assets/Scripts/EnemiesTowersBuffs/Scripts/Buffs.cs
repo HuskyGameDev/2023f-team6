@@ -17,6 +17,7 @@ public class Buffs : ScriptableObject
 
     //Applies only to Enemies
     [SerializeField] private bool Distracted; //Wander away from the raft or in circles
+    [SerializeField] private bool Stunned;
 
     //Applies to the player
     [SerializeField] private float Cooldowns;
@@ -32,6 +33,8 @@ public class Buffs : ScriptableObject
     //Can apply to Enemies and barriers
     [SerializeField] private int DamageOverTime;  //If there's multiple effects on an enemy, they can stack. Probably shouldn't stack on barriers
     [SerializeField] private float DOTSpeed;    //Low for faster damage
+    [SerializeField] private float percentDOT;
+
     [SerializeField] private float Health;  //Probably best used as a health buff
     [SerializeField] private float armor;   //Take more damage if > 1, less if < 1
 
@@ -45,6 +48,7 @@ public class Buffs : ScriptableObject
 
     public float getDuration() { return duration; }
     public bool getDistracted() { return Distracted; }
+    public bool getStunned() { return Stunned; }
     public float getCooldowns() { return Cooldowns; }
     public float getSpeed() { return Speed; }
     public float getAttackSpeed() { return AttackSpeed; }
@@ -52,6 +56,7 @@ public class Buffs : ScriptableObject
     public float getTurnSpeed() { return TurnSpeed; }
     public int getDOT() { return DamageOverTime; }
     public float getDOTSpeed() { return DOTSpeed; }
+    public float getPercentDOT() { return percentDOT; }
     public float getHealth() { return Health; }
     public float getDamage() { return Damage; }
     public float getArmor() { return armor; }

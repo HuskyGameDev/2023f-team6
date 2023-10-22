@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_Explosive_Barrel
+  m_Name: Bullet_Extreme_BleedCannonball
   m_EditorClassIdentifier: 
-  projectileSpeed: 5
-  damage: 25
-  AOE: 6
-  effect: 4
-  scale: 1
-  timer: 3
+  projectileSpeed: 20
+  damage: 5
+  AOE: 4
+  effect: 1
+  scale: 0.25
+  timer: -1
   animator: {fileID: 0}
   FriendlyFire: 0
-  debuff: {fileID: 11400000, guid: f94cf0ac8e7c797468a6612194fc85d0, type: 2}
-  pierce: 3
-  AOETimer: 1
+  debuff: {fileID: 11400000, guid: e1e8581dd5c8c594b9cc2aa266d79531, type: 2}
+  pierce: 0
+  AOETimer: -1

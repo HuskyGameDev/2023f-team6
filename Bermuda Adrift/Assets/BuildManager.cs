@@ -9,36 +9,72 @@ public class BuildManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject[] towerPrefabs;
 
-    private int selectedTower = 0;
+    private int selectedTower = 0;  //Not sure what this is for - JD
 
-    [SerializeField] private Tower testTower;
+    private GameManager gameManager;
+    private GameObject mostRecent;
+
+    [SerializeField] private Tower[] towers;
+    [SerializeField] private BarrierScriptable[] barriers;
 
     public GameObject GetSelectedTower() { 
         return towerPrefabs[selectedTower];
     }
 
-    public void placeTower(int selecction, Tower scriptable)
+    public void placeTower(Tower scriptable)
     {
-        var tower = Instantiate(towerPrefabs[selecction]);
+        mostRecent = Instantiate(towerPrefabs[0]);
 
-        //while (!tower.GetComponent<TowerAI>().getPlaced()) { }
+        mostRecent.SendMessage("place", scriptable);
+    }
 
-        tower.SendMessage("place", scriptable);
+    public void placeBarrier(BarrierScriptable scriptable)
+    {
+        mostRecent = Instantiate(towerPrefabs[1]);
+        mostRecent.SendMessage("setBarrier", scriptable);
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = gameObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("l"))
+        if (Input.GetKeyDown("1"))
         {
-            placeTower(0, testTower);
+            if (gameManager.cost(towers[0].getCost()) && recentWasPlaced())
+                placeTower(towers[0]);
         }
+        else if (Input.GetKeyDown("2"))
+        {
+            if (gameManager.cost(towers[1].getCost()) && recentWasPlaced())
+                placeTower(towers[1]);
+        }
+        else if (Input.GetKeyDown("3"))
+        {
+            if (gameManager.cost(barriers[0].getCost()) && recentWasPlaced())
+                placeBarrier(barriers[0]);
+        }
+        else if (Input.GetKeyDown("4"))
+        {
+            if (gameManager.cost(barriers[1].getCost()) && recentWasPlaced())
+                placeBarrier(barriers[1]);
+        }
+    }
+
+    private bool recentWasPlaced()  //Checks if previous tower selected was placed. If cancelled, both will be null and it will return true
+    {
+        if (mostRecent == null)
+            return true;
+
+        if (mostRecent.GetComponent<TowerAI>() != null)
+            return mostRecent.GetComponent<TowerAI>().getPlaced();
+        else if (mostRecent.GetComponent<Barriers>())
+            return mostRecent.GetComponent<Barriers>().getPlaced();
+        return true;
     }
 }

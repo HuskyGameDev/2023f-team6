@@ -23,4 +23,6 @@ MonoBehaviour:
   anim: {fileID: 9100000, guid: c696af6428accba459576fd2cd289a30, type: 2}
   xSize: 1
   ySize: 1.25
-  debuff: {fileID: 0}
+  debuff: {fileID: 11400000, guid: f51c1f83587c21241a7314f91ef6bd20, type: 2}
+  extra: {fileID: 2066208556199720336, guid: e2f1f3fc2ba2683428f550c057f95699, type: 3}
+  bullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}

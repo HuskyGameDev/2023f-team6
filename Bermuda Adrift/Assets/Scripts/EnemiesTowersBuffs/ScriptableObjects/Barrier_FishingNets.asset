@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: 1
   Health: 0
-  cost: 0
+  cost: 200
   debuff: {fileID: 11400000, guid: 7ccd0a03f075bd047be3d51e52373c57, type: 2}

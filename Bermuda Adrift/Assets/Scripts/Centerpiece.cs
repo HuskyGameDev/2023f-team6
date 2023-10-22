@@ -5,9 +5,10 @@ using UnityEngine;
 public class Centerpiece : MonoBehaviour
 {
     [SerializeField] private int Health;
-    [SerializeField] private GameObject manager;
+    private GameObject manager;
 
-    void takeDamage(int damage)
+    private void Start() { manager = GameObject.FindGameObjectWithTag("Managers"); }
+    void TakeDamage(int damage)
     {
         Health -= damage;
 

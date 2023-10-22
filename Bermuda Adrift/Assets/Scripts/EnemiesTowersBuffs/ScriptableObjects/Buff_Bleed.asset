@@ -9,14 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
-  m_Name: T_LightningRod
+  m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
+  m_Name: Buff_Bleed
   m_EditorClassIdentifier: 
-  damageMult: 1
-  fireRate: 1
-  turnSpeed: 0
-  range: -1
-  anim: {fileID: 0}
-  defaultBullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
-  cost: 0
-  rarity: 0
+  duration: 1
+  Distracted: 0
+  Cooldowns: 1
+  Speed: 1
+  AttackSpeed: 1
+  FireRate: 1
+  TurnSpeed: 1
+  DamageOverTime: 0
+  DOTSpeed: 0.1
+  percentDOT: 0.1
+  Health: 1
+  armor: 1
+  Damage: 1

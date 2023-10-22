@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class Enemy : ScriptableObject
 {
-    public enum Types { Underwater, Airborne, Boss };  //When we add more bosses, maybe we should have an underwater boss vs airborne boss types in the enum
+    public enum Types { Underwater, Airborne, WaterBoss, AirborneBoss };  //When we add more bosses, maybe we should have an underwater boss vs airborne boss types in the enum
 
     [SerializeField] private Types Type;
 
@@ -27,6 +27,9 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private Buffs debuff;  //Probably won't be used much other than something like making barriers take more damage or making them take damage over time
 
+    [SerializeField] private GameObject extra;
+    [SerializeField] private Bullet bullet;
+
 
     public Types getType() { return Type; }
     public int getHealth() { return Health; }
@@ -40,4 +43,6 @@ public class Enemy : ScriptableObject
     public float getXSize() { return xSize; }
     public float getYSize() { return ySize; }
     public Buffs getDefuff() { return debuff; }
+    public GameObject getExtra() { return extra; }
+    public Bullet getBullet() { return bullet; }
 }
