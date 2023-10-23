@@ -1,8 +1,23 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 99c1d58313e0bfb4a9516bcff4d73154
+=======
+<<<<<<< HEAD:Bermuda Adrift/Assets/Art/Sprites/TowerAnimations.meta
+<<<<<<< Updated upstream
+guid: b2adce8b323a4f54eae8b2845999a4cc
+=======
+guid: 99c1d58313e0bfb4a9516bcff4d73154
+>>>>>>> e66eb0adf2d06654c4ac8a2286bd8ffd6ed1309e:Bermuda Adrift/Assets/Art/Towers.meta
+>>>>>>> Stashed changes
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
+=======
+=======
+guid: 60a913fffc7668949ba7aea818891745
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

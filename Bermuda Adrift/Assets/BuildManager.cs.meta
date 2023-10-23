@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Bermuda Adrift/Assets/BuildManager.cs.meta
 guid: df82b7022d54e8e48b0c1ffe03a45ed5
+========
+guid: 63c107f25349931429fe87695ea080ce
+>>>>>>>> Stashed changes:Bermuda Adrift/Assets/Attack.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

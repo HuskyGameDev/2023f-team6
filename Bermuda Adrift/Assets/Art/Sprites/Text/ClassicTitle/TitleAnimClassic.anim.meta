@@ -1,8 +1,27 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Bermuda Adrift/Assets/Art/Sprites/Text/ClassicTitle/TitleAnimClassic.anim.meta
 guid: 1166c941cefafb34f8412ec64055710d
+========
+guid: a5bbf2c373ab431469160ef43e631959
+>>>>>>>> Stashed changes:Bermuda Adrift/Assets/Art/Sprites/Text/TitleWBorder/TitleWBorderAnim.anim.meta
+=======
+<<<<<<< HEAD:Bermuda Adrift/Assets/Art/Sprites/TowerAnimations/Animations/TripleCannon.anim.meta
+<<<<<<< Updated upstream
+guid: 581461f27e545d9498690941cdb7e52a
+=======
+guid: 1166c941cefafb34f8412ec64055710d
+>>>>>>> e66eb0adf2d06654c4ac8a2286bd8ffd6ed1309e:Bermuda Adrift/Assets/Art/Sprites/Text/ClassicTitle/TitleAnimClassic.anim.meta
+>>>>>>> Stashed changes
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
+=======
+=======
+guid: 8f7abfe0960c69d44b94f92b8bbd3ac6
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
