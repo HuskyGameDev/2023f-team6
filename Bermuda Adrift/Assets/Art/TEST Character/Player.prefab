@@ -27,12 +27,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910506028310121231}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.006, y: -0.267, z: 0}
-  m_LocalScale: {x: 0.46657768, y: 0.33257872, z: 0.21554647}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0060000024, y: -0.26700002, z: 0}
+  m_LocalScale: {x: 0.4665777, y: 0.33257872, z: 0.21554647}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5950647970032822843}
+  m_Father: {fileID: 6895920643898610197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6426236918213194484
 SpriteRenderer:
@@ -176,8 +176,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1403379469887314423}
+  m_Children: []
   m_Father: {fileID: 6895920643898610197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5896942090370527254
@@ -216,6 +215,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5950647970032822843}
+  - {fileID: 1403379469887314423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8846897387898369027
@@ -392,5 +392,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Melee: {fileID: 910506028310121231}
   Aim: {fileID: 5950647970032822843}
+  bulletPrefab: {fileID: 0}
   bullet: {fileID: 5537065117744473923, guid: dcf9d668fbe137841a2b82665a006d74, type: 3}
   fireForce: 10
