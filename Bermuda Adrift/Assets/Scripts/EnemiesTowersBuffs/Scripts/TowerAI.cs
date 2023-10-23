@@ -24,6 +24,8 @@ public class TowerAI : MonoBehaviour
     private Boolean placed = false;
     private BoxCollider2D[] colliders;
 
+    private bool temp = false;
+
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
@@ -43,7 +45,7 @@ public class TowerAI : MonoBehaviour
     }
 
     public void OnMouseDown(){
-        if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) >= 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) >= 1)) { 
+        if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1)) { 
             placed = true;
             anim.SetTrigger("Placed");
             gameManager.spendScrap(tower.getCost());
@@ -70,6 +72,8 @@ public class TowerAI : MonoBehaviour
             
             return;
         }
+
+        if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
 
         if (target != null) //Turn towards target every frame
             targetPoint();
@@ -117,6 +121,23 @@ public class TowerAI : MonoBehaviour
         boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
         boolet.SendMessage("Mult", tower.getDamageMult() * getDamage());  //And how much damage it does
     }
+
+    #region Upgrade Methods
+    private void upgrade(bool path)  //true for path a, false for path b
+    {
+        if (!gameManager.cost(300) || temp || tower.name != "T_Machine Gun")
+            return;
+
+        temp = true;
+
+        //Maybe just change to another tower?
+        if (path)
+            anim.SetTrigger("UpgradeA");    //Will need functionality for changing bullets, stats, etc, only have an animation for now
+        else
+            anim.SetTrigger("UpgradeB");
+        gameManager.spendScrap(300);
+    }
+    #endregion
 
     private void newTarget()    //Set target to closest enemy in range
     {

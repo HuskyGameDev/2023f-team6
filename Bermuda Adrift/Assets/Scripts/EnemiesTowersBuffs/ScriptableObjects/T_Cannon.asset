@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
+  m_Name: T_Cannon
+  m_EditorClassIdentifier: 
+  damageMult: 1
+  fireRate: 1
+  turnSpeed: 0.05
+  range: -1
+  anim: {fileID: 0}
+  baseSprite: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
+  cost: 50
+  rarity: 0

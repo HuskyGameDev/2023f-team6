@@ -53,7 +53,10 @@ public class AI : MonoBehaviour
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
 
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)    //Start attack cycle if it's a boss
+        {    
             StartCoroutine(randomAttacks());
+            Health = (int) (Health * Mathf.Pow(1.25f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+        }
 
         if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
             StartCoroutine(Buffs());
