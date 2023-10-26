@@ -26,9 +26,11 @@ public class Barriers : MonoBehaviour
         if (!placed) {
             if (Input.GetMouseButtonDown(0))
             {
-                if (Mathf.Abs(gameObject.transform.position.x) < 7 && Mathf.Abs(gameObject.transform.position.x) > 1 && (Mathf.Abs(gameObject.transform.position.y) < 1)    // Left/Right channels
+                if ((Mathf.Abs(gameObject.transform.position.x) < 7 && Mathf.Abs(gameObject.transform.position.x) > 1 && (Mathf.Abs(gameObject.transform.position.y) < 1)    // Left/Right channels
                     ||
-                    Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))   //Top and Bottom channels
+                    Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
+                    &&
+                    GameObject.Find("Managers").GetComponent<BuildManager>().approvePosition(transform.position))   
                 {
                     placed = true;
                     GameObject.Find("Managers").GetComponent<GameManager>().spendScrap(barrier.getCost());

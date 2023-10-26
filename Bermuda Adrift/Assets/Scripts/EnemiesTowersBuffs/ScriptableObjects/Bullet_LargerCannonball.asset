@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_Extreme_BleedCannonball
+  m_Name: Bullet_LargerCannonball
   m_EditorClassIdentifier: 
   projectileSpeed: 20
   damage: 5
@@ -20,7 +20,7 @@ MonoBehaviour:
   timer: -1
   animator: {fileID: 0}
   FriendlyFire: 0
-  debuff: {fileID: 11400000, guid: e1e8581dd5c8c594b9cc2aa266d79531, type: 2}
+  debuff: {fileID: 0}
   pierce: 0
   AOETimer: -1
   UnderwaterDamage: 1

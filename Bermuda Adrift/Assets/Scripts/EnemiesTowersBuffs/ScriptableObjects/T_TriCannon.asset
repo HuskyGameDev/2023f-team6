@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: T_TriCannon
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 1
   turnSpeed: 0.05
   range: -1
   anim: {fileID: 9100000, guid: 3ecbcf65cc8dca746aae3755ec982d9f, type: 2}
@@ -21,3 +20,28 @@ MonoBehaviour:
   defaultBullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
   cost: 150
   rarity: 0
+  U1damageMult: 1
+  U1turnSpeed: 0.05
+  U1range: -1
+  U1Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
+  U1cost: 200
+  UA1damageMult: 1
+  UA1turnSpeed: 0.05
+  UA1range: -1
+  UA1Bullet: {fileID: 11400000, guid: 8023c4e255bc85843be12a19e65a19c0, type: 2}
+  UA1cost: 400
+  UA2damageMult: 1
+  UA2turnSpeed: 0.05
+  UA2range: -1
+  UA2Bullet: {fileID: 11400000, guid: eb94cfcbaf05de049b35868b39c2d720, type: 2}
+  UA2cost: 400
+  UB1damageMult: 1
+  UB1turnSpeed: 0.05
+  UB1range: -1
+  UB1Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
+  UB1cost: 250
+  UB2damageMult: 1
+  UB2turnSpeed: 0.05
+  UB2range: -1
+  UB2Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
+  UB2cost: 350

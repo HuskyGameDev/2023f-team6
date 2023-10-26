@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: T_Machine Gun
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 1
   turnSpeed: 0.02
   range: -1
   anim: {fileID: 9100000, guid: 6d92e8901d82e1d4e9985e8334c133af, type: 2}
@@ -21,3 +20,28 @@ MonoBehaviour:
   defaultBullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   cost: 100
   rarity: 0
+  U1damageMult: 1
+  U1turnSpeed: 0.02
+  U1range: -1
+  U1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
+  U1cost: 300
+  UA1damageMult: 1
+  UA1turnSpeed: 0.02
+  UA1range: -1
+  UA1Bullet: {fileID: 11400000, guid: 6e2f38178b70c5c47895e910fe856be8, type: 2}
+  UA1cost: 200
+  UA2damageMult: 1
+  UA2turnSpeed: 0.02
+  UA2range: -1
+  UA2Bullet: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
+  UA2cost: 300
+  UB1damageMult: 2
+  UB1turnSpeed: 0.02
+  UB1range: -1
+  UB1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
+  UB1cost: 350
+  UB2damageMult: 2
+  UB2turnSpeed: 0.02
+  UB2range: -1
+  UB2Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
+  UB2cost: 400

@@ -7,19 +7,22 @@ using UnityEngine.Tilemaps;
 
 public class TowerAI : MonoBehaviour
 {
-    [SerializeField] private Tower tower;   //Shouldn't need to be serialized after the placing is set up
+    private Tower tower;
     [SerializeField] private GameObject nozzle;
 
     [SerializeField] private GameObject bullet;
-    [SerializeField] private Bullet bulletScript;   //Same as the tower
+    private Bullet bulletScript;
+
+    private int upgradeLevel = 0;
+    private float damageMult;
+    private float turnSpeed;
+    private float range;
 
     private GameObject target = null;
     private GameManager gameManager;
     private Animator anim;
 
     private Buffs[] buffs;
-
-    [SerializeField] Tower testTower;
 
     private Boolean placed = false;
     private BoxCollider2D[] colliders;
@@ -44,23 +47,20 @@ public class TowerAI : MonoBehaviour
         }
     }
 
-    public void OnMouseDown(){
-        if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1)) { 
-            placed = true;
-            anim.SetTrigger("Placed");
-            gameManager.spendScrap(tower.getCost());
-        }
-    }
-
     private void Update()
     {
         if (!placed)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                OnMouseDown();
+                if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && gameManager.gameObject.GetComponent<BuildManager>().approvePosition(transform.position))
+                {
+                    placed = true;
+                    anim.SetTrigger("Placed");
+                    gameManager.spendScrap(tower.getCost());
+                }
             }
-            else if (Input.GetMouseButtonDown(1))
+            else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown("escape"))
                 Destroy(gameObject);
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -87,6 +87,10 @@ public class TowerAI : MonoBehaviour
         tower = towerType;
         bulletScript = tower.getDefaultBullet(); //Just tell the base what tower it needs to be and it will set up everything else.
 
+        damageMult = tower.getDamageMult();
+        turnSpeed = tower.getTurnSpeed();
+        range = tower.getRange();
+
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
@@ -103,7 +107,7 @@ public class TowerAI : MonoBehaviour
         Vector3 offset = target.transform.position - transform.position;
         Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
 
-        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, tower.getTurnSpeed() * getTurnSpeed());
+        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
     }
 
     private void fire()    //Coroutine for creating the bullets as long as there's a target
@@ -119,23 +123,92 @@ public class TowerAI : MonoBehaviour
         var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet
 
         boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
-        boolet.SendMessage("Mult", tower.getDamageMult() * getDamage());  //And how much damage it does
+        boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
     }
 
     #region Upgrade Methods
     private void upgrade(bool path)  //true for path a, false for path b
     {
-        if (!gameManager.cost(300) || temp || tower.name != "T_Machine Gun")
+        if (upgradeLevel >= 3)
             return;
 
-        temp = true;
+        if (upgradeLevel == 0)  //Upgrade 1
+        {
+            if (!gameManager.cost(tower.U1getCost())) { return; }
 
-        //Maybe just change to another tower?
-        if (path)
-            anim.SetTrigger("UpgradeA");    //Will need functionality for changing bullets, stats, etc, only have an animation for now
-        else
-            anim.SetTrigger("UpgradeB");
-        gameManager.spendScrap(300);
+            anim.SetTrigger("UpgradeA");    //Default upgrade path
+            upgradeLevel++;
+
+            bulletScript = tower.U1getBullet();
+            damageMult = tower.U1getDamageMult();
+            turnSpeed = tower.U1getTurnSpeed();
+            range = tower.U1getRange();
+
+            gameManager.spendScrap(tower.U1getCost());
+
+        }
+        else if (upgradeLevel == 1) //Upgrade A1 or B1
+        {
+            if (path)   //Only spot the bool matters
+            {
+                if (!gameManager.cost(tower.UA1getCost())) { return; }
+
+                anim.SetTrigger("UpgradeA");
+                upgradeLevel++; //Sets upgrade level to 2
+
+                bulletScript = tower.UA1getBullet();
+                damageMult = tower.UA1getDamageMult();
+                turnSpeed = tower.UA1getTurnSpeed();
+                range = tower.UA1getRange();
+
+                gameManager.spendScrap(tower.UA1getCost());
+            }
+            else
+            {
+                if (!gameManager.cost(tower.UB1getCost())) { return; }
+
+                anim.SetTrigger("UpgradeB");
+                upgradeLevel += 2;  //Sets upgrade level to 3
+
+                bulletScript = tower.UB1getBullet();
+                damageMult = tower.UB1getDamageMult();
+                turnSpeed = tower.UB1getTurnSpeed();
+                range = tower.UB1getRange();
+
+                gameManager.spendScrap(tower.UB1getCost());
+            }
+        }
+        else    //Upgrade A2 or B2
+        {
+            if (upgradeLevel == 2)  //Goes based off upgrade level instead of boolean so stats don't get messed up if given the wrong boolean
+            {
+                if (!gameManager.cost(tower.UA2getCost())) { return; }
+
+                anim.SetTrigger("UpgradeA");    //Default upgrade path
+                upgradeLevel += 2;  //Fully upgraded A branch is 4
+
+                bulletScript = tower.UA2getBullet();
+                damageMult = tower.UA2getDamageMult();
+                turnSpeed = tower.UA2getTurnSpeed();
+                range = tower.UA2getRange();
+
+                gameManager.spendScrap(tower.UA2getCost());
+            }
+            else
+            {
+                if (!gameManager.cost(tower.UB2getCost())) { return; }
+
+                anim.SetTrigger("UpgradeA");    //Default upgrade path, don't need to differentiate after the branch
+                upgradeLevel += 2;  //Fully upgraded B branch is 5
+
+                bulletScript = tower.UB2getBullet();
+                damageMult = tower.UB2getDamageMult();
+                turnSpeed = tower.UB2getTurnSpeed();
+                range = tower.UB2getRange();
+
+                gameManager.spendScrap(tower.UB2getCost());
+            }
+        }
     }
     #endregion
 
@@ -148,9 +221,9 @@ public class TowerAI : MonoBehaviour
         {
             Vector3 diff = enemy.transform.position - nozzle.transform.position;
             float curDistance = diff.sqrMagnitude;
-            if (tower.getRange() > 0)
+            if (range > 0)
             {
-                if (curDistance < distance && curDistance < tower.getRange())   //Only pick targets in a range
+                if (curDistance < distance && curDistance < range)   //Only pick targets in a range
                 {
                     target = enemy;
                     distance = curDistance;
@@ -233,4 +306,5 @@ public class TowerAI : MonoBehaviour
     }
 
     public bool getPlaced() { return placed; }
+    public int getUpgradeLevel() { return upgradeLevel; }
 }

@@ -13,6 +13,8 @@ public class BuildManager : MonoBehaviour
 
     private GameManager gameManager;
     private GameObject mostRecent;
+    private Vector3[] positions;
+    private int activeIndex;
 
     [SerializeField] private Tower[] towers;
     [SerializeField] private BarrierScriptable[] barriers;
@@ -26,12 +28,16 @@ public class BuildManager : MonoBehaviour
         mostRecent = Instantiate(towerPrefabs[0]);
 
         mostRecent.SendMessage("place", scriptable);
+
+        StartCoroutine(positionTracker());
     }
 
     public void placeBarrier(BarrierScriptable scriptable)
     {
         mostRecent = Instantiate(towerPrefabs[1]);
         mostRecent.SendMessage("setBarrier", scriptable);
+
+        StartCoroutine(positionTracker());
     }
 
 
@@ -39,11 +45,14 @@ public class BuildManager : MonoBehaviour
     void Start()
     {
         gameManager = gameObject.GetComponent<GameManager>();
+        positions = new Vector3[48];
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (positions[47] != Vector3.zero) { return; }  //Won't let you place more than 48 towers
+
         if (Input.GetKeyDown("1"))
         {
             if (gameManager.cost(towers[0].getCost()) && recentWasPlaced())
@@ -77,4 +86,44 @@ public class BuildManager : MonoBehaviour
             return mostRecent.GetComponent<Barriers>().getPlaced();
         return true;
     }
+
+    private IEnumerator positionTracker()
+    {
+        int i = 0;
+        for (; i < positions.Length; i++)   //Find next spot to insert a position
+        {
+            if (positions[i] == Vector3.zero)
+                break;
+        }
+
+        activeIndex = i;
+
+        while (mostRecent != null && (mostRecent.GetComponent<TowerAI>() != null && !mostRecent.GetComponent<TowerAI>().getPlaced() || mostRecent.GetComponent<Barriers>() != null && !mostRecent.GetComponent<Barriers>().getPlaced()))
+        {
+            positions[i] = mostRecent.transform.position;
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (mostRecent == null)
+            positions[i] = Vector3.zero;
+    }
+
+    public bool approvePosition(Vector3 position)
+    {
+        Vector3 temp = Vector3.zero;
+        for (int i = 0; i < activeIndex; i++)
+        {
+            if (positions[i] == Vector3.zero) { return true; }
+
+            temp.x = position.x - positions[i].x;
+            temp.y = position.y - positions[i].y;
+            if (temp.magnitude < 2 ) {
+                //Debug.Log("Denied - too close to tower " + i);
+                return false; 
+            }
+        }
+        return true;
+    }
+
+    public Vector3[] getPositions() { return positions; }
 }
