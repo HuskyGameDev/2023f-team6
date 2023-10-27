@@ -10904,6 +10904,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: buff
+      value: 
+      objectReference: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
+    - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: bullet
       value: 
       objectReference: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
@@ -10911,6 +10915,14 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 3903083542384844113, guid: c8fc10f8511c62441a88c8a766562279, type: 3}
+    - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: specialBullet
+      value: 
+      objectReference: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
+    - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: secondaryBullet
+      value: 
+      objectReference: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
     - target: {fileID: 1403379469887314423, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.004

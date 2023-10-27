@@ -15,10 +15,22 @@ public class Attack : MonoBehaviour
     //ranged attacks
     //public Transform Aim;
     public GameObject bulletPrefab;
-    public Bullet bullet;
-    public float fireForce = 10f;
-    float shootCooldown = 0.25f;
-    float shootTimer = 0.5f;
+    public Bullet primaryBullet;
+    [SerializeField] private Bullet secondaryBullet;
+    [SerializeField] private Buffs buff;
+    [SerializeField] private Bullet specialBullet;
+
+
+    private bool primaryOnCooldown;
+
+    private bool secondaryOnCooldown;
+    float secondaryCooldown = 0.25f;
+
+    private bool buffOnCooldown;
+    private float buffCooldown = 5f;
+
+    private bool specialOnCooldown;
+    private float specialCooldown = 10f;
 
     private void Start()
     {
@@ -35,29 +47,63 @@ public class Attack : MonoBehaviour
     {
         if (GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.Defend && GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.BossRound)
             return;
-        //CheckMeleeTimer();
-        shootTimer += Time.deltaTime;
 
         if(Input.GetMouseButtonDown(0)) {
             StartCoroutine(OnAttack());
         }
-        if(Input.GetMouseButtonDown(1)) {
-            OnShoot();
+        else if(Input.GetMouseButtonDown(1)) {
+            StartCoroutine(OnShoot(1));
+        }
+        else if (Input.GetKeyDown("q"))
+        {
+            StartCoroutine(Buff());
+        }
+        else if (Input.GetKeyDown("r"))
+        {
+            StartCoroutine(OnShoot(3));
         }
     }
 
-    void OnShoot() {
-        if(shootTimer > shootCooldown) {
-            shootTimer = 0;
+    IEnumerator OnShoot(int slot) {
+
+        if(slot == 1 && !secondaryOnCooldown) {
+            secondaryOnCooldown = true;
 
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
             Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
             output = Quaternion.Euler(output.eulerAngles / 2);
 
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
-            intBullet.SendMessage("setBullet", bullet);
-            //intBullet.GetComponent<Rigidbody2D>().AddForce(-Aim.up * fireForce, ForceMode2D.Impulse);
-            //Destroy(intBullet, 2f);
+            intBullet.SendMessage("setBullet", secondaryBullet);
+
+            yield return new WaitForSeconds(secondaryCooldown);
+            secondaryOnCooldown = false;
+        } 
+        else if (slot == 3 && !specialOnCooldown)
+        {
+            specialOnCooldown = true;
+
+            Vector3 offset = gameObject.GetComponent<Movement>().getAim();
+            Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
+            output = Quaternion.Euler(output.eulerAngles / 2);
+
+            GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
+            intBullet.SendMessage("setBullet", specialBullet);
+
+            yield return new WaitForSeconds(secondaryCooldown);
+            specialOnCooldown = false;
+        }
+    }
+
+    IEnumerator Buff()
+    {
+        if (!buffOnCooldown)
+        {
+            buffOnCooldown = true;
+            gameObject.SendMessage("buff", buff);
+
+            yield return new WaitForSeconds(buffCooldown);
+            buffOnCooldown = false;
         }
     }
 
@@ -72,17 +118,6 @@ public class Attack : MonoBehaviour
 
             isAttacking = false;
             Melees[i].SetActive(false);
-        }
-    }
-
-    void CheckMeleeTimer() {
-        if (isAttacking) {
-            atkTimer += Time.deltaTime;
-            if(atkTimer >= atkDuration) {
-                atkTimer = 0;
-                isAttacking = false;
-                Melees[directionalHitbox()].SetActive(false);
-            }
         }
     }
 
