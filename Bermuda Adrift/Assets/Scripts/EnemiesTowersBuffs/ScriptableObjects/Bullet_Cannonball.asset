@@ -16,9 +16,9 @@ MonoBehaviour:
   damage: 5
   AOE: 4
   effect: 1
-  scale: 0.25
+  scale: 0.75
   timer: -1
-  animator: {fileID: 0}
+  animator: {fileID: 9100000, guid: 5c7e3d02dff0c9d438c3c599926f8fbf, type: 2}
   FriendlyFire: 0
   debuff: {fileID: 0}
   pierce: 0

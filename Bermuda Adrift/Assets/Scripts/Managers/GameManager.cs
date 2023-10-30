@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         {
             startRound();
         }
+        else if (Input.GetKeyDown("n"))
+            addScrap(100);
     }
 
     public void startRound()   //Sets up everything when a round starts

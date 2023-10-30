@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 0.5f;
-    public Rigidbody2D rb;
+    [SerializeField] private float speed;
+    private Rigidbody2D rb;
     private Vector2 input;
 
     Animator anim;
@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         AimVector = new Vector3();
     }

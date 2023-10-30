@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_PiercingBullet
+  m_Name: Bullet_InfPiercingBullet
   m_EditorClassIdentifier: 
   projectileSpeed: 50
   damage: 3
   AOE: 0
   effect: 0
-  scale: 0.05
+  scale: 0.3
   timer: -1
-  animator: {fileID: 0}
+  animator: {fileID: 9100000, guid: e5c3517dac166904a85386116e3e9ad7, type: 2}
   FriendlyFire: 0
   debuff: {fileID: 0}
   pierce: -1

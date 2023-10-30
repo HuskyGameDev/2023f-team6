@@ -14,6 +14,8 @@ public class Hitscan : MonoBehaviour
     private float AOETimer;
     private Bullet.Effects effect;
 
+    [SerializeField] private Transform sprite;
+
     private bool landed;
     private bool stop;
 
@@ -77,6 +79,8 @@ public class Hitscan : MonoBehaviour
     {
         bullet = newBullet;
 
+        sprite = transform.GetChild(0);
+
         damage = bullet.getDamage();        
         animator = bullet.getAnimator();    //Animator automatically sets sprites
         timer = bullet.getTimer();
@@ -96,7 +100,8 @@ public class Hitscan : MonoBehaviour
             AOETimer = float.MaxValue;
 
         gameObject.transform.localScale = new Vector3(bullet.getScale(), bullet.getScale());    //Size of the bullet
-        gameObject.GetComponent<Animator>().runtimeAnimatorController = animator;
+        sprite.GetComponent<Animator>().runtimeAnimatorController = animator;
+        sprite.rotation = Quaternion.Euler(sprite.rotation.eulerAngles * 2);
     }
 
     private void setEffect(Bullet.Effects newEffect) { effect = newEffect; }    //Sets type of bullet. Mainly used for shotgun
@@ -120,6 +125,11 @@ public class Hitscan : MonoBehaviour
             collision.gameObject.SendMessage("TakeDamage", damage);
     }
 
+    private void destroyBullet() 
+    {
+        Destroy(gameObject); 
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
     {
         if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; }
@@ -133,6 +143,7 @@ public class Hitscan : MonoBehaviour
         }
         else
         {
+            sprite.GetComponent<Animator>().SetTrigger("Hit");
             gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
             
             if (effect == Bullet.Effects.Shrapnel)                                               //0 - Basic bullet hit with shrapnel
@@ -152,7 +163,7 @@ public class Hitscan : MonoBehaviour
                 landed = true;
 
                 dealDamage(collision);
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                //gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
                 //Switch animator controller to the explosion/fire effects
                 collision.gameObject.SendMessage("InflictDebuff", debuff);
@@ -162,7 +173,7 @@ public class Hitscan : MonoBehaviour
                     stop = true;
                     collision.gameObject.SendMessage("baited", gameObject.transform.position);
                     //Play bait-spreading animation
-                    gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
+                    //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
                     collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
@@ -174,7 +185,7 @@ public class Hitscan : MonoBehaviour
                 landed = true;
 
                 dealDamage(collision); 
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Hide the bullet after the explosion, but leave the hitbox
+                //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Hide the bullet after the explosion, but leave the hitbox
 
                 //Switch animator controller to the explosion/fire effects
                 collision.gameObject.SendMessage("InflictDebuff", debuff);
@@ -224,7 +235,7 @@ public class Hitscan : MonoBehaviour
         }
 
         new WaitForEndOfFrame();
-        if (pierce <= 0 || AOETimer <= 0)
+        if ((pierce <= 0 || AOETimer <= 0) && effect == Bullet.Effects.None)
             Destroy(gameObject);    //After all AOE stuff, the bullet is deleted. If there is something requiring a lasting hitbox, turn the sprite invisible or something
     }
 }
