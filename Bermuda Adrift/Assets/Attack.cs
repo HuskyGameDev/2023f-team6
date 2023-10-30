@@ -7,7 +7,6 @@ public class Attack : MonoBehaviour
 
     //melee attacks
     private GameObject[] Melees;
-    bool isAttacking = false;
     float atkDuration = 0.3f;
     float atkTimer = 0f;
 
@@ -20,7 +19,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private Buffs buff;
     [SerializeField] private Bullet specialBullet;
 
-
+    private Animator anim;
+    private Movement movement;
     private bool primaryOnCooldown;
 
     private bool secondaryOnCooldown;
@@ -40,6 +40,9 @@ public class Attack : MonoBehaviour
             Melees[i] = gameObject.transform.GetChild(i).gameObject;
             Melees[i].SetActive(false);
         }
+
+        movement = gameObject.GetComponent<Movement>();
+        anim = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -49,10 +52,10 @@ public class Attack : MonoBehaviour
             return;
 
         if(Input.GetMouseButtonDown(0)) {
-            StartCoroutine(OnAttack());
+            anim.SetTrigger("Primary");
         }
         else if(Input.GetMouseButtonDown(1)) {
-            StartCoroutine(OnShoot(1));
+            anim.SetTrigger("Secondary");
         }
         else if (Input.GetKeyDown("q"))
         {
@@ -62,11 +65,18 @@ public class Attack : MonoBehaviour
         {
             StartCoroutine(OnShoot(3));
         }
+
+        if (!movement.stopped())
+        {
+            anim.SetFloat("AttackDirectionX", movement.getAim().x);
+            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+        }
     }
 
-    IEnumerator OnShoot(int slot) {
+    public void shoot(int slot) { StartCoroutine(OnShoot(slot)); }
+    private IEnumerator OnShoot(int slot) {
+        if (slot == 1 && !secondaryOnCooldown) {
 
-        if(slot == 1 && !secondaryOnCooldown) {
             secondaryOnCooldown = true;
 
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
@@ -81,6 +91,8 @@ public class Attack : MonoBehaviour
         } 
         else if (slot == 3 && !specialOnCooldown)
         {
+            anim.SetTrigger("Special");
+
             specialOnCooldown = true;
 
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
@@ -90,15 +102,16 @@ public class Attack : MonoBehaviour
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", specialBullet);
 
-            yield return new WaitForSeconds(secondaryCooldown);
+            yield return new WaitForSeconds(specialCooldown);
             specialOnCooldown = false;
         }
     }
 
-    IEnumerator Buff()
+    private IEnumerator Buff()
     {
         if (!buffOnCooldown)
         {
+            anim.SetTrigger("Buff");
             buffOnCooldown = true;
             gameObject.SendMessage("buff", buff);
 
@@ -107,18 +120,15 @@ public class Attack : MonoBehaviour
         }
     }
 
-    IEnumerator OnAttack() {
-        if(!isAttacking) {
-            int i = directionalHitbox();
-            Melees[i].SetActive(true);
-            isAttacking = true;
-            //Set animation trigger
+    public void OnAttack(int i) {
+        anim.ResetTrigger("Primary");
+        Melees[i].SetActive(true);
+        //Set animation trigger
+    }
 
-            yield return new WaitForSeconds(atkDuration);
-
-            isAttacking = false;
-            Melees[i].SetActive(false);
-        }
+    public void attackFinish(int i) 
+    { 
+        Melees[i].SetActive(false);
     }
 
     private int directionalHitbox() //Will probably link the hitboxes to animations later

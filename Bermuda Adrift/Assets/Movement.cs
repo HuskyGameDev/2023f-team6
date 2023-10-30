@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     Animator anim;
     private Vector2 lastMoveDirection;
     private bool facingLeft = true;
+    private int stop = 1;
 
     //public Transform Aim;
     private Vector3 AimVector;
@@ -24,19 +25,9 @@ public class Movement : MonoBehaviour
         AimVector = new Vector3();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Animate();
-
-        if (input.x < 0 && facingLeft || input.x > 0 && !facingLeft) {
-            Flip();
-        }
-    }
-
     private void FixedUpdate() {
         ProccessInputs();
-        rb.velocity = input * speed * Time.fixedDeltaTime;
+        rb.velocity = input * speed * Time.fixedDeltaTime * stop;
         
         if(isWalking) {
             AimVector = input;
@@ -63,23 +54,20 @@ public class Movement : MonoBehaviour
 
         input.Normalize();
 
-        anim.SetFloat("MoveX", input.x);
-        anim.SetFloat("MoveY", input.y);
-    }
-
-    void Animate() {
-        
-        anim.SetFloat("MoveMagnitude", input.magnitude);
-        anim.SetFloat("LastMoveX", lastMoveDirection.x);
-        anim.SetFloat("LastMoveY", lastMoveDirection.y);
-    }
-
-    void Flip() {
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-        facingLeft = !facingLeft;
+        if (isWalking)
+        {
+            anim.SetFloat("MoveX", input.x);
+            anim.SetFloat("MoveY", input.y);
+        }
     }
 
     public Vector3 getAim() { return AimVector; }
+    public bool stopped()
+    {
+        if (stop == 0)
+            return false;
+        return true;
+    }
+    public void Stop() { stop = 0; }
+    public void resume() { stop = 1; }
 }
