@@ -144,7 +144,7 @@ public class Hitscan : MonoBehaviour
         else
         {
             sprite.GetComponent<Animator>().SetTrigger("Hit");
-            gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();
+            gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();    //Grow the hitbox to match the AOE
             
             if (effect == Bullet.Effects.Shrapnel)                                               //0 - Basic bullet hit with shrapnel
             {
@@ -234,7 +234,13 @@ public class Hitscan : MonoBehaviour
 
         }
 
-        new WaitForEndOfFrame();
+        StartCoroutine(destroyCheck());
+    }
+
+    private IEnumerator destroyCheck()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         if ((pierce <= 0 || AOETimer <= 0) && effect == Bullet.Effects.None)
             Destroy(gameObject);    //After all AOE stuff, the bullet is deleted. If there is something requiring a lasting hitbox, turn the sprite invisible or something
     }

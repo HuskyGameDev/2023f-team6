@@ -17,10 +17,12 @@ public class Movement : MonoBehaviour
     private Vector3 AimVector;
     bool isWalking = false;
 
-    
+    private Buffs[] buffs;
+
     // Start is called before the first frame update
     void Start()
     {
+        buffs = new Buffs[10];
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         AimVector = new Vector3();
@@ -28,7 +30,7 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() {
         ProccessInputs();
-        rb.velocity = input * speed * Time.fixedDeltaTime * stop;
+        rb.velocity = input * speed * getSpeed() * Time.fixedDeltaTime * stop;
         
         if(isWalking) {
             AimVector = input;
@@ -71,4 +73,51 @@ public class Movement : MonoBehaviour
     }
     public void Stop() { stop = 0; }
     public void resume() { stop = 1; }
+
+
+    public void buff(Buffs buff) { StartCoroutine(selfBuff(buff)); }
+    private IEnumerator selfBuff(Buffs buff)
+    {
+        addBuff(buff);
+
+        yield return new WaitForSeconds(buff.getDuration());
+
+        removeBuff(buff);
+    }
+    private void addBuff(Buffs buff)
+    {
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] == null)
+            {
+                buffs[i] = buff;
+                return;
+            }
+        }
+    }
+    private void removeBuff(Buffs buff)
+    {
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] == buff)
+            {
+                for (int j = i; j < buffs.Length - 1; j++)
+                {
+                    buffs[i] = buffs[i + 1];
+                }
+                buffs[buffs.Length - 1] = null;
+                return;
+            }
+        }
+    }
+
+    private float getSpeed()
+    {
+        float speed = 1;
+        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        {
+            speed *= buffs[i].getSpeed();
+        }
+        return speed;
+    }
 }

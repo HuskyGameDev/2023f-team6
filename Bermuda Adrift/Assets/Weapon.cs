@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float damage = 1;
+    [SerializeField] private float damage;
+    private float dmgMult;
     public enum WeaponType { Melee, Bullet }
     public WeaponType weaponType;
 
+    public void damageMult(float mult)
+    {
+        dmgMult = mult;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
-        /*Enemy1 enemy = collision.GetComponent<Enemy1>();
-        if(enemy != null) {
-            enemy.TakeDamage(damage);
-            if(weaponType == WeaponType.Bullet) {
-                Destroy(gameObject);
-            }
-        }
-        */
         if (!collision.CompareTag("Enemy"))
             return;
 
-        collision.SendMessage("TakeDamage", damage);
+        collision.SendMessage("TakeDamage", damage * dmgMult);
     }
 }

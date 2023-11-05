@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
   m_Name: Buff_Rum
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 5
   Distracted: 0
+  Stunned: 0
   Cooldowns: 1
   Speed: 1.5
   AttackSpeed: 1.25
@@ -21,6 +22,7 @@ MonoBehaviour:
   TurnSpeed: 1
   DamageOverTime: 0
   DOTSpeed: 1
+  percentDOT: 0
   Health: 1
   armor: 1
   Damage: 1.5

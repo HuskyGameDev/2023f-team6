@@ -91,7 +91,7 @@ public class AI : MonoBehaviour
         {
             move();
 
-            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 1)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
+            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 2.5)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
             {
                 nowArriving();
             }
@@ -126,10 +126,10 @@ public class AI : MonoBehaviour
         arrived = true;     //This section of code will only run once
         animator.SetBool("Attacking", true);    //Start animations
 
-        if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2, 0), movement.rotation); }        //Left lane
-        else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2, 0), movement.rotation); }    //Right lane
-        else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2), movement.rotation); }    //Top lane
-        else { movement.SetPositionAndRotation(new Vector3(0, -2), movement.rotation); }                                //Bottom Lane
+        if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2.5f, 0), movement.rotation); }        //Left lane
+        else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2.5f, 0), movement.rotation); }    //Right lane
+        else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2.5f), movement.rotation); }    //Top lane
+        else { movement.SetPositionAndRotation(new Vector3(0, -2.5f), movement.rotation); }                                //Bottom Lane
 
         StartCoroutine(attack(goal.gameObject));
     }
@@ -331,7 +331,7 @@ public class AI : MonoBehaviour
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
 
-        OnEnemyHurt?.Invoke(moreDamage);
+        OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();

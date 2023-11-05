@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
     public GameObject bulletPrefab;
     public Bullet primaryBullet;
     [SerializeField] private Bullet secondaryBullet;
-    [SerializeField] private Buffs buff;
+    [SerializeField] private Buffs selfBuff;
     [SerializeField] private Bullet specialBullet;
 
     private Animator anim;
@@ -32,9 +32,13 @@ public class Attack : MonoBehaviour
     private bool specialOnCooldown;
     private float specialCooldown = 10f;
 
+    private Buffs[] buffs;
+
     private void Start()
     {
         Melees = new GameObject[8];
+        buffs = new Buffs[10];
+
         for (int i = 0; i < 8; i++)
         {
             Melees[i] = gameObject.transform.GetChild(i).gameObject;
@@ -51,10 +55,14 @@ public class Attack : MonoBehaviour
         if (GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.Defend && GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.BossRound)
             return;
 
-        if(Input.GetMouseButtonDown(0)) {
+        anim.speed = getAttackSpeed();
+
+        if (Input.GetMouseButton(0))
+        {
             anim.SetTrigger("Primary");
         }
-        else if(Input.GetMouseButtonDown(1)) {
+        else if (Input.GetMouseButtonDown(1))
+        {
             if (!secondaryOnCooldown)
                 anim.SetTrigger("Secondary");
         }
@@ -68,6 +76,8 @@ public class Attack : MonoBehaviour
             if (!specialOnCooldown)
                 anim.SetTrigger("Special");
         }
+        else
+            anim.ResetTrigger("Primary");
 
         if (!movement.stopped())
         {
@@ -88,8 +98,9 @@ public class Attack : MonoBehaviour
 
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", secondaryBullet);
+            intBullet.SendMessage("Mult", getDamageMult());
 
-            yield return new WaitForSeconds(secondaryCooldown);
+            yield return new WaitForSeconds(secondaryCooldown * getCooldowns());
             secondaryOnCooldown = false;
         } 
         else if (slot == 3 && !specialOnCooldown)
@@ -102,58 +113,100 @@ public class Attack : MonoBehaviour
 
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", specialBullet);
+            intBullet.SendMessage("Mult", getDamageMult());
 
-            yield return new WaitForSeconds(specialCooldown);
+            yield return new WaitForSeconds(specialCooldown * getCooldowns());
             specialOnCooldown = false;
         }
     }
 
-    public void startBuff() { StartCoroutine(Buff()); }
-
-    private IEnumerator Buff()
+    public void startBuff() 
     {
-        if (!buffOnCooldown)
-        {
-            buffOnCooldown = true;
-            gameObject.SendMessage("buff", buff);
+        StartCoroutine(Buff(selfBuff));
+        movement.buff(selfBuff);
+    }
 
-            yield return new WaitForSeconds(buffCooldown);
-            buffOnCooldown = false;
-        }
+    private IEnumerator Buff(Buffs buff)
+    {
+        buffOnCooldown = true;
+        addBuff(buff);
+
+        yield return new WaitForSeconds(buff.getDuration());
+
+        removeBuff(buff);
+
+        if (buffCooldown * getCooldowns() > buff.getDuration())
+            yield return new WaitForSeconds(buffCooldown * getCooldowns() - buff.getDuration());
+
+        buffOnCooldown = false;
     }
 
     public void OnAttack(int i) {
-        anim.ResetTrigger("Primary");
+        Melees[i].GetComponent<Weapon>().damageMult(getDamageMult());
         Melees[i].SetActive(true);
         //Set animation trigger
     }
 
-    public void attackFinish(int i) 
-    { 
-        Melees[i].SetActive(false);
+    public void attackFinish() 
+    {
+        for (int i = 0; i < Melees.Length; i++)
+        {
+            Melees[i].SetActive(false);
+        }
     }
 
-    private int directionalHitbox() //Will probably link the hitboxes to animations later
+    private void addBuff(Buffs buff)
     {
-        Vector3 aim = gameObject.GetComponent<Movement>().getAim();
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] == null)
+            {
+                buffs[i] = buff;
+                return;
+            }
+        }
+    }
+    private void removeBuff(Buffs buff)
+    {
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] == buff)
+            {
+                for (int j = i; j < buffs.Length - 1; j++)
+                {
+                    buffs[i] = buffs[i + 1];
+                }
+                buffs[buffs.Length - 1] = null;
+                return;
+            }
+        }
+    }
 
-        if (aim.x == 0 && aim.y < 0)        //Down Hitbox
-            return 0;
-        else if (aim.x < 0 && aim.y < 0)    //Down Left Hitbox
-            return 1;
-        else if (aim.x < 0 && aim.y == 0)   //Left Hitbox
-            return 2;
-        else if (aim.x < 0 && aim.y > 0)    //Up Left Hitbox
-            return 3;
-        else if (aim.x == 0 && aim.y > 0)   //Up Hitbox
-            return 4;
-        else if (aim.x > 0 && aim.y > 0)    //Up Right Hitbox
-            return 5;
-        else if (aim.x > 0 && aim.y == 0)   //Right Hitbox
-            return 6;
-        else if (aim.x > 0 && aim.y < 0)    //Down Right Hitbox
-            return 7;
-        else        //Start facing down
-            return 0;
+    private float getCooldowns()
+    {
+        float cooldowns = 1;
+        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        {
+            cooldowns *= buffs[i].getCooldowns();
+        }
+        return cooldowns;
+    }
+    private float getAttackSpeed()
+    {
+        float attackSpeed = 1;
+        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        {
+            attackSpeed *= buffs[i].getAttackSpeed();
+        }
+        return attackSpeed;
+    }
+    private float getDamageMult()
+    {
+        float mult = 1;
+        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        {
+            mult *= buffs[i].getDamage();
+        }
+        return mult;
     }
 }

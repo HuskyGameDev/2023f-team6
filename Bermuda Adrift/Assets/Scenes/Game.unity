@@ -11468,6 +11468,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
     - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: selfBuff
+      value: 
+      objectReference: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
+    - target: {fileID: 1234089511973105022, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
@@ -11626,6 +11630,14 @@ PrefabInstance:
     - target: {fileID: 6895920643898610197, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760310037195029696, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760310037195029696, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8846897387898369027, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Sprite
@@ -36756,7 +36768,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Cost: 500 Scrap'
+  m_text: 'Cost: 200 Scrap'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bee47d0e41e2a92489b89cd0672e08e1, type: 2}
   m_sharedMaterial: {fileID: -422238810104299511, guid: bee47d0e41e2a92489b89cd0672e08e1, type: 2}
