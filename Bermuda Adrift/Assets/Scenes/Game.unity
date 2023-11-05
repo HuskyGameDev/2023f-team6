@@ -747,7 +747,8 @@ PolygonCollider2D:
     - - {x: 0.84127355, y: -0.114602596}
       - {x: 0.3350212, y: -0.10545085}
       - {x: -0.16294484, y: -0.3627041}
-      - {x: -0.562671, y: -0.80256766}
+      - {x: -0.9619718, y: -0.28341183}
+      - {x: -1.0416211, y: -0.7368292}
       - {x: -0.09683822, y: -0.81136614}
       - {x: 0.33705544, y: -0.6803595}
   m_UseDelaunayMesh: 0
@@ -11500,15 +11501,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 3cbb698435b0de246ae17e8fe425adb6, type: 2}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
-      value: 0.50728106
+      value: 0.59180164
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
-      value: -0.18447304
+      value: 0.08317566
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
@@ -11520,43 +11521,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
-      value: -0.43517327
+      value: -0.42632198
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].y
-      value: -0.20515203
+      value: -0.24219894
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
-      value: -0.82723093
+      value: -0.57604074
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
-      value: -0.48310798
+      value: 0.006149292
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].x
-      value: -0.37568164
+      value: -1.0056632
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
-      value: -0.6318631
+      value: -0.32815355
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].x
-      value: 0.59747434
+      value: -0.4695933
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].y
-      value: -0.66810894
+      value: -0.6741233
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].x
-      value: 0.8793982
+      value: 0.3439126
       objectReference: {fileID: 0}
     - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].y
-      value: -0.4072289
+      value: -0.66810894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
+      value: 0.69627035
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697982953898980231, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].y
+      value: -0.38375086
       objectReference: {fileID: 0}
     - target: {fileID: 4026453975681405100, guid: 22f1c4f652e57744483233044be361ac, type: 3}
       propertyPath: damage
@@ -14458,17 +14467,17 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.4794316, y: 0.04152274}
-      - {x: 0.023086138, y: -0.28710553}
-      - {x: -0.313997, y: -0.36699608}
-      - {x: -0.40792733, y: -0.064684615}
-      - {x: -0.40925363, y: 0.47338128}
-      - {x: -0.8099388, y: 0.44167185}
+    - - {x: 0.97246844, y: 0.15891218}
+      - {x: 0.6757729, y: 0.112018794}
+      - {x: 0.4138188, y: -0.46560398}
+      - {x: -0.3844495, y: -0.43563578}
+      - {x: -0.6956849, y: 0.09773436}
+      - {x: -0.38264054, y: 0.3008039}
       - {x: -0.9731644, y: 0.2910393}
-      - {x: -0.82159305, y: -0.4114504}
-      - {x: -0.51543516, y: -0.7833497}
-      - {x: 0.16027144, y: -0.83560467}
-      - {x: 0.48119846, y: -0.47667876}
+      - {x: -0.96715623, y: -0.49597114}
+      - {x: -0.5717822, y: -0.91952145}
+      - {x: 0.3433993, y: -0.8966471}
+      - {x: 0.90380126, y: -0.650416}
   m_UseDelaunayMesh: 0
 --- !u!212 &627219467
 SpriteRenderer:
@@ -17625,12 +17634,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.19312203, y: -0.14250413}
-      - {x: 0.30644748, y: 0.15455149}
+    - - {x: 0.27854878, y: -0.12742881}
+      - {x: 0.52252674, y: 0.12942621}
       - {x: 0.126882, y: 0.70424086}
       - {x: -0.13716042, y: 0.44166666}
-      - {x: -0.51572573, y: 0.34922084}
-      - {x: -0.7385389, y: 0.061527967}
+      - {x: -0.6664789, y: 0.55022466}
+      - {x: -0.95964324, y: 0.18213004}
       - {x: -0.42172706, y: -0.30669332}
       - {x: -0.06843111, y: -0.44092572}
   m_UseDelaunayMesh: 0
@@ -30643,6 +30652,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e66f7211b4a22642877c3df4b463ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  main: {fileID: 0}
+  settings: {fileID: 0}
+  sound: {fileID: 0}
+  controls: {fileID: 0}
+  video: {fileID: 0}
+  credits: {fileID: 0}
 --- !u!1 &1272625004
 GameObject:
   m_ObjectHideFlags: 0
@@ -33161,12 +33177,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.100273654, y: -0.11515427}
-      - {x: -0.04800953, y: -0.30391902}
-      - {x: -0.59087276, y: -0.32000178}
-      - {x: -0.78863585, y: -0.7772461}
-      - {x: 0.20473182, y: -0.79687697}
-      - {x: 0.6504102, y: -0.3764059}
+    - - {x: 0.0674043, y: 0.09614706}
+      - {x: -0.11844363, y: -0.17244262}
+      - {x: -0.48756984, y: 0.06973201}
+      - {x: -0.7316767, y: -0.315361}
+      - {x: -0.6242906, y: -0.75846374}
+      - {x: 0.5334228, y: -0.76870346}
+      - {x: 0.56119394, y: -0.25901622}
   m_UseDelaunayMesh: 0
 --- !u!212 &1704979874
 SpriteRenderer:

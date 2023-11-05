@@ -55,15 +55,18 @@ public class Attack : MonoBehaviour
             anim.SetTrigger("Primary");
         }
         else if(Input.GetMouseButtonDown(1)) {
-            anim.SetTrigger("Secondary");
+            if (!secondaryOnCooldown)
+                anim.SetTrigger("Secondary");
         }
         else if (Input.GetKeyDown("q"))
         {
-            StartCoroutine(Buff());
+            if (!buffOnCooldown)
+                anim.SetTrigger("Buff");
         }
         else if (Input.GetKeyDown("r"))
         {
-            StartCoroutine(OnShoot(3));
+            if (!specialOnCooldown)
+                anim.SetTrigger("Special");
         }
 
         if (!movement.stopped())
@@ -91,8 +94,6 @@ public class Attack : MonoBehaviour
         } 
         else if (slot == 3 && !specialOnCooldown)
         {
-            anim.SetTrigger("Special");
-
             specialOnCooldown = true;
 
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
@@ -107,11 +108,12 @@ public class Attack : MonoBehaviour
         }
     }
 
+    public void startBuff() { StartCoroutine(Buff()); }
+
     private IEnumerator Buff()
     {
         if (!buffOnCooldown)
         {
-            anim.SetTrigger("Buff");
             buffOnCooldown = true;
             gameObject.SendMessage("buff", buff);
 

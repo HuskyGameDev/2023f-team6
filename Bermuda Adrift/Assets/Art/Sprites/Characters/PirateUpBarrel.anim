@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PirateLeftSwordDraw
+  m_Name: PirateUpBarrel
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1511732125, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+      value: {fileID: 960172693, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
     - time: 0.083333336
-      value: {fileID: -1226739800, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+      value: {fileID: 1884532095, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - time: 0.33333334
+      value: {fileID: 1431040659, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - time: 0.5833333
+      value: {fileID: 1231683819, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - time: 0.75
+      value: {fileID: -847652476, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,14 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1511732125, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
-    - {fileID: -1226739800, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - {fileID: 960172693, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - {fileID: 1884532095, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - {fileID: 1431040659, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - {fileID: 1231683819, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
+    - {fileID: -847652476, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.8333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -75,6 +84,20 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: Stop
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: OnShoot
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 3
+    messageOptions: 0
+  - time: 0.75
+    functionName: resume
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
