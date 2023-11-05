@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8dd7f4000aa5c840bebf787a4ea1039, type: 3}
   m_Name: ThePirate
   m_EditorClassIdentifier: 
-  name: The Pirate
+  charName: The Pirate
   description: A close-range fighter.
   abilities:
   - {fileID: 11400000, guid: 09b8a9c67385d8b42b55131736994cfe, type: 2}

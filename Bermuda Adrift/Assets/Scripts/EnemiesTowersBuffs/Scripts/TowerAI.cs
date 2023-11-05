@@ -7,6 +7,9 @@ using UnityEngine.Tilemaps;
 
 public class TowerAI : MonoBehaviour
 {
+    public static event Action OnCancel;
+    public static event Action OnTowerPlaced;
+
     private Tower tower;
     [SerializeField] private GameObject nozzle;
 
@@ -55,17 +58,21 @@ public class TowerAI : MonoBehaviour
             {
                 if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && gameManager.gameObject.GetComponent<BuildManager>().approvePosition(transform.position))
                 {
+                    OnTowerPlaced?.Invoke();
                     placed = true;
                     anim.SetTrigger("Placed");
                     gameManager.spendScrap(tower.getCost());
                 }
             }
             else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown("escape"))
+            {
+                OnCancel?.Invoke();
                 Destroy(gameObject);
+            }
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 0.5f) * 2f, Mathf.Round(mouseWorldPosition.y * 0.5f) * 2f);
 
             if (gameManager.getGameState() != GameManager.GameState.Idle)
                 Destroy(gameObject);

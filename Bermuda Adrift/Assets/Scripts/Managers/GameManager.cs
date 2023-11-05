@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public static event Action<int> onScrapCollect;
     public static event Action<int> onXPCollect;
     public static event Action onRoundEnd;
+    public static event Action OnRoundStart;
     public static event Action OnGameEnd;
 
     public enum GameState
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour
         state = GameState.Idle;
 
         scrap = 0;
-        onScrapCollect?.Invoke(scrap);
     }
     
     private void Update()
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void startRound()   //Sets up everything when a round starts
     {
+        OnRoundStart?.Invoke();
         if (state == GameState.Idle)    //Only does anything when we're not in a round
         {
             if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)   //Checks if it's a boss round
@@ -136,5 +137,10 @@ public class GameManager : MonoBehaviour
 
     public int getXP(){
         return XP;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

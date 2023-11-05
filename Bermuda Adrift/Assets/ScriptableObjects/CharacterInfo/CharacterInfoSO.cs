@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CharacterInfo", menuName = "ScriptableObjects/CharacterInfo", order = 1)]
-public class CharacterInfo : ScriptableObject
+public class CharacterInfoSO : ScriptableObject
 {
     [Header("Name")]
-    [SerializeField] string name;
+    [SerializeField] public string charName;
     [Header("Description")]
     [TextArea]
-    [SerializeField] string description;
+    [SerializeField]public string description;
     [Header("Abilities")]
-    [SerializeField] ScriptableObject[] abilities;
+    [SerializeField] public AbilitySO[] abilities;
     [Header("Loadout")]
-    [SerializeField] GameObject[] loadout;
+    [SerializeField] public GameObject[] loadout;
 }

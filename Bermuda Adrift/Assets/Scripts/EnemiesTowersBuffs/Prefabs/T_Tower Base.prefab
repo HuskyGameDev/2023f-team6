@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,8 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d102d819ecd3684c9480c198e6cc936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   nozzle: {fileID: 4446080577790633356, guid: 163d5edda8f860641a4b6a9d5c2c11f7, type: 3}
   bullet: {fileID: 3903083542384844113, guid: c8fc10f8511c62441a88c8a766562279, type: 3}
-  bulletScript: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
-  testTower: {fileID: 0}

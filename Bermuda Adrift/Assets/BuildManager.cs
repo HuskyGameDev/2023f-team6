@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
+    public static event Action OnTowerPicked;
+
     public static BuildManager main;
 
     [Header("References")]
@@ -25,19 +28,27 @@ public class BuildManager : MonoBehaviour
 
     public void placeTower(Tower scriptable)
     {
-        mostRecent = Instantiate(towerPrefabs[0]);
+        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
+        {
+            OnTowerPicked?.Invoke();
+            mostRecent = Instantiate(towerPrefabs[0]);
 
-        mostRecent.SendMessage("place", scriptable);
+            mostRecent.SendMessage("place", scriptable);
 
-        StartCoroutine(positionTracker());
+            StartCoroutine(positionTracker());
+        }
     }
 
     public void placeBarrier(BarrierScriptable scriptable)
     {
-        mostRecent = Instantiate(towerPrefabs[1]);
-        mostRecent.SendMessage("setBarrier", scriptable);
+        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
+        {
+            OnTowerPicked?.Invoke();
+            mostRecent = Instantiate(towerPrefabs[1]);
+            mostRecent.SendMessage("setBarrier", scriptable);
 
-        StartCoroutine(positionTracker());
+            StartCoroutine(positionTracker());
+        }
     }
 
 
@@ -52,29 +63,29 @@ public class BuildManager : MonoBehaviour
     void Update()
     {
         if (positions[47] != Vector3.zero) { return; }  //Won't let you place more than 48 towers
-
-        if (Input.GetKeyDown("1"))
-        {
-            if (gameManager.cost(towers[0].getCost()) && recentWasPlaced())
-                placeTower(towers[0]);
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            if (gameManager.cost(towers[1].getCost()) && recentWasPlaced())
-                placeTower(towers[1]);
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            if (gameManager.cost(barriers[0].getCost()) && recentWasPlaced())
-                placeBarrier(barriers[0]);
-        }
-        else if (Input.GetKeyDown("4"))
-        {
-            if (gameManager.cost(barriers[1].getCost()) && recentWasPlaced())
-                placeBarrier(barriers[1]);
-        }
     }
 
+    #region Tower/Barrier Placements
+    public void PlaceMachineGun()
+    {
+        placeTower(towers[1]);
+    }
+
+    public void PlaceTricannon()
+    {
+        placeTower(towers[0]);
+    }
+
+    public void PlaceBarrier()
+    {
+        placeBarrier(barriers[0]);
+    }
+
+    public void PlaceFishNet()
+    {
+        placeBarrier(barriers[1]);
+    }
+    #endregion
     private bool recentWasPlaced()  //Checks if previous tower selected was placed. If cancelled, both will be null and it will return true
     {
         if (mostRecent == null)

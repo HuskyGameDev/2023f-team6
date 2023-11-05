@@ -6,9 +6,9 @@ using UnityEngine;
 public class AbilitySO : ScriptableObject
 {
     [Header("Name")]
-    [SerializeField] string name;
+    [SerializeField] public string name;
     [Header("Description")]
     [TextArea]
-    [SerializeField] string description;
-    [SerializeField] Sprite image;
+    [SerializeField] public string description;
+    [SerializeField] public Sprite image;
 }
