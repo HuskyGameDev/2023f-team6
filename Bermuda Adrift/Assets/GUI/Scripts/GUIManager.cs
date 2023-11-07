@@ -12,6 +12,8 @@ public class GUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI enemyCnt;
     [SerializeField] TextMeshProUGUI scrapAmt;
     [SerializeField] TextMeshProUGUI xpAmt;
+    [SerializeField] TextMeshProUGUI playerLvl;
+    [SerializeField] Slider xpSlider;
     [SerializeField] Button readyBtn;
     [SerializeField] GameObject gameOverGUI;
 
@@ -26,6 +28,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onXPCollect += addXPGUI;
         GameManager.onRoundEnd += enableStrategizeGUI;
         GameManager.OnGameEnd += enableGameOverUI;
+        GameManager.OnLevelUp += addLevelGUI;
     }
 
     private void OnDisable()
@@ -37,6 +40,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onXPCollect -= addXPGUI;
         GameManager.onRoundEnd -= enableStrategizeGUI;
         GameManager.OnGameEnd -= enableGameOverUI;
+        GameManager.OnLevelUp -= addLevelGUI;
     }
 
     private void Start()
@@ -74,9 +78,17 @@ public class GUIManager : MonoBehaviour
         scrapAmt.text = "Scrap: " + scrap.ToString();
     }
 
-    public void addXPGUI(int xp)
+    public void addXPGUI(int xp, float xpNeeded)
     {
         xpAmt.text = "XP: " + xp.ToString();
+
+        xpSlider.maxValue = xpNeeded;
+        xpSlider.value = xp;
+    }
+
+    public void addLevelGUI(int level)
+    {
+        playerLvl.text = "Lv. " + level.ToString();
     }
 
     public void enableStrategizeGUI()

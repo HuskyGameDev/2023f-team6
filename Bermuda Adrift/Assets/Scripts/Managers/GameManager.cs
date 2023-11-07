@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int XP;
+    public float XPNeeded;
     public int scrap;
+    public int level;
 
     // If there is an instance, and it's not me, destroy myself.
 
@@ -27,10 +29,11 @@ public class GameManager : MonoBehaviour
     #endregion Setup
 
     public static event Action<int> onScrapCollect;
-    public static event Action<int> onXPCollect;
+    public static event Action<int, float> onXPCollect;
     public static event Action onRoundEnd;
     public static event Action OnRoundStart;
     public static event Action OnGameEnd;
+    public static event Action<int> OnLevelUp;
 
     public enum GameState
     {
@@ -48,7 +51,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         state = GameState.Idle;
 
+        level = 1;
         scrap = 0;
+        XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
     }
     
     private void Update()
@@ -60,6 +65,10 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown("n"))
             addScrap(100);
+        else if (Input.GetKeyDown("b"))
+            addXP(100);
+
+        levelUp();
     }
 
     public void startRound()   //Sets up everything when a round starts
@@ -104,7 +113,18 @@ public class GameManager : MonoBehaviour
 
     public void addScrap(int newScrap) { scrap += newScrap; onScrapCollect?.Invoke(scrap); }   //Received from enemy AI in death()
     
-    public void addXP(int newXP) { XP += newXP; onXPCollect?.Invoke(XP); }     //Both don't do anything yet
+    public void addXP(int newXP) { XP += newXP; onXPCollect?.Invoke(XP, XPNeeded); }     //Both don't do anything yet
+
+    public void levelUp()
+    {
+        if (getXP() > XPNeeded)
+        {
+            setLevel(level += 1);
+            OnLevelUp?.Invoke(getLevel());
+            setXP(0);
+            XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+        }
+    }
 
     public bool cost(int cost)  //If you can afford it, place it, but if you can't, return false
     {
@@ -128,7 +148,12 @@ public class GameManager : MonoBehaviour
 
     public void setXP(int newXP) {
         XP = newXP;
-        onXPCollect?.Invoke(XP);
+        onXPCollect?.Invoke(XP, XPNeeded);
+    }
+
+    public void setLevel(int newLevel)
+    {
+        level = newLevel;
     }
 
     public int getScrap(){
@@ -137,6 +162,11 @@ public class GameManager : MonoBehaviour
 
     public int getXP(){
         return XP;
+    }
+
+    public int getLevel()
+    {
+        return level;
     }
 
     public void QuitGame()
