@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3398399399289917803}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
   noRotation: 1
-  defaultDebuff: {fileID: 11400000, guid: 07fe562b3d14a10409e21babbb3280eb, type: 2}
 --- !u!61 &7883539249785375889
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 5
   damage: 25
-  AOE: 6
+  AOE: 3
   effect: 4
   scale: 1
   timer: 3

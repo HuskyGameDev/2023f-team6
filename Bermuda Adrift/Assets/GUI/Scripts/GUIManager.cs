@@ -16,6 +16,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] Slider xpSlider;
     [SerializeField] Button readyBtn;
     [SerializeField] GameObject gameOverGUI;
+    [SerializeField] GameObject CooldownIndicatorGUI;
 
     Resolution[] resolutions;
 
@@ -27,6 +28,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onScrapCollect += addScrapGUI;
         GameManager.onXPCollect += addXPGUI;
         GameManager.onRoundEnd += enableStrategizeGUI;
+        GameManager.OnRoundStart += activateCooldownIndicators;
         GameManager.OnGameEnd += enableGameOverUI;
         GameManager.OnLevelUp += addLevelGUI;
     }
@@ -39,6 +41,7 @@ public class GUIManager : MonoBehaviour
         GameManager.onScrapCollect -= addScrapGUI;
         GameManager.onXPCollect -= addXPGUI;
         GameManager.onRoundEnd -= enableStrategizeGUI;
+        GameManager.OnRoundStart -= activateCooldownIndicators;
         GameManager.OnGameEnd -= enableGameOverUI;
         GameManager.OnLevelUp -= addLevelGUI;
     }
@@ -91,9 +94,15 @@ public class GUIManager : MonoBehaviour
         playerLvl.text = "Lv. " + level.ToString();
     }
 
+    public void activateCooldownIndicators()
+    {
+        CooldownIndicatorGUI.SetActive(true);
+    }
+
     public void enableStrategizeGUI()
     {
         readyBtn.gameObject.SetActive(true);
+        CooldownIndicatorGUI.SetActive(false);
     }
 
     public void enableGameOverUI()

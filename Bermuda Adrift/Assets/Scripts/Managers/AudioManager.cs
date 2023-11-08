@@ -10,9 +10,24 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider SFXSlider;
 
+    [SerializeField] AudioClip backgroundMusic; //Will need to change when there's more songs
+    [SerializeField] AudioSource source;
+
+    private void Awake()
+    {
+        source = gameObject.GetComponent<AudioSource>();
+
+        source.clip = backgroundMusic;
+    }
+
     public void PlaySound()
     {
+        source.Play();
+    }
 
+    public void StopSound()
+    {
+        source.Stop();
     }
 
     public void ChangeSFXVolume()

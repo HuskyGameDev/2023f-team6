@@ -179,7 +179,7 @@ public class Hitscan : MonoBehaviour
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
                 camera.SendMessage("cameraShake", 0.25f);
-                //Play explosion animation
+                sprite.localScale = new Vector2(bullet.getAOE() * 2, bullet.getAOE() * 2);
                 
                 stop = true;
                 landed = true;

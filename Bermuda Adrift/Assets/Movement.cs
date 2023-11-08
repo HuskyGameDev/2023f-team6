@@ -101,12 +101,7 @@ public class Movement : MonoBehaviour
         {
             if (buffs[i] == buff)
             {
-                for (int j = i; j < buffs.Length - 1; j++)
-                {
-                    buffs[i] = buffs[i + 1];
-                }
-                buffs[buffs.Length - 1] = null;
-                return;
+                buffs[i] = null;
             }
         }
     }
@@ -114,9 +109,10 @@ public class Movement : MonoBehaviour
     private float getSpeed()
     {
         float speed = 1;
-        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Length; i++)
         {
-            speed *= buffs[i].getSpeed();
+            if (buffs[i] != null)
+                speed *= buffs[i].getSpeed();
         }
         return speed;
     }

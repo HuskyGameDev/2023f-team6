@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    public static event Action<float, CooldownIndicator.position> updateCooldowns;
 
     //melee attacks
     private GameObject[] Melees;
@@ -22,18 +24,27 @@ public class Attack : MonoBehaviour
     private Animator anim;
     private Movement movement;
     private bool primaryOnCooldown;
+    private float primaryCooldown;
 
     private bool secondaryOnCooldown;
-    float secondaryCooldown = 0.25f;
+    private float secondaryCooldown = 1f;
 
     private bool buffOnCooldown;
-    private float buffCooldown = 5f;
+    private float buffCooldown = 6f;
 
     private bool specialOnCooldown;
     private float specialCooldown = 10f;
 
     private Buffs[] buffs;
 
+    private void OnEnable()
+    {
+        CooldownIndicator.cooldownComplete += cooldownFinished;
+    }
+    private void OnDisable()
+    {
+        CooldownIndicator.cooldownComplete -= cooldownFinished;
+    }
     private void Start()
     {
         Melees = new GameObject[8];
@@ -59,22 +70,19 @@ public class Attack : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            anim.SetTrigger("Primary");
+            primary();
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            if (!secondaryOnCooldown)
-                anim.SetTrigger("Secondary");
+            secondary();
         }
         else if (Input.GetKeyDown("q"))
         {
-            if (!buffOnCooldown)
-                anim.SetTrigger("Buff");
+            utility();
         }
         else if (Input.GetKeyDown("r"))
         {
-            if (!specialOnCooldown)
-                anim.SetTrigger("Special");
+            special();
         }
         else
             anim.ResetTrigger("Primary");
@@ -84,14 +92,49 @@ public class Attack : MonoBehaviour
             anim.SetFloat("AttackDirectionX", movement.getAim().x);
             anim.SetFloat("AttackDirectionY", movement.getAim().y);
         }
+
+        if (primaryOnCooldown)
+            updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
+        if (secondaryOnCooldown)
+            updateCooldowns?.Invoke(secondaryCooldown * getCooldowns(), CooldownIndicator.position.secondary);
+        if (buffOnCooldown)
+            updateCooldowns?.Invoke(buffCooldown * getCooldowns(), CooldownIndicator.position.utility);
+        if (specialOnCooldown)
+            updateCooldowns?.Invoke(specialCooldown * getCooldowns(), CooldownIndicator.position.special);
     }
 
-    public void shoot(int slot) { StartCoroutine(OnShoot(slot)); }
-    private IEnumerator OnShoot(int slot) {
-        if (slot == 1 && !secondaryOnCooldown) {
-
+    public void primary() 
+    {
+        anim.SetTrigger("Primary");
+    }
+    public void secondary()
+    {
+        if (!secondaryOnCooldown)
+        {
             secondaryOnCooldown = true;
+            anim.SetTrigger("Secondary");
+        }
+    }
+    public void utility()
+    {
+        if (!buffOnCooldown)
+        {
+            buffOnCooldown = true;
+            anim.SetTrigger("Buff");
+        }
+    }
+    public void special()
+    {
+        if (!specialOnCooldown)
+        {
+            specialOnCooldown = true;
+            anim.SetTrigger("Special");
+        }
+    }
 
+    public void shoot(int slot) { OnShoot(slot); }
+    private void OnShoot(int slot) {
+        if (slot == 1) {
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
             Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
             output = Quaternion.Euler(output.eulerAngles / 2);
@@ -99,14 +142,9 @@ public class Attack : MonoBehaviour
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", secondaryBullet);
             intBullet.SendMessage("Mult", getDamageMult());
-
-            yield return new WaitForSeconds(secondaryCooldown * getCooldowns());
-            secondaryOnCooldown = false;
         } 
-        else if (slot == 3 && !specialOnCooldown)
+        else if (slot == 3)
         {
-            specialOnCooldown = true;
-
             Vector3 offset = gameObject.GetComponent<Movement>().getAim();
             Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
             output = Quaternion.Euler(output.eulerAngles / 2);
@@ -114,9 +152,6 @@ public class Attack : MonoBehaviour
             GameObject intBullet = Instantiate(bulletPrefab, gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", specialBullet);
             intBullet.SendMessage("Mult", getDamageMult());
-
-            yield return new WaitForSeconds(specialCooldown * getCooldowns());
-            specialOnCooldown = false;
         }
     }
 
@@ -128,17 +163,11 @@ public class Attack : MonoBehaviour
 
     private IEnumerator Buff(Buffs buff)
     {
-        buffOnCooldown = true;
         addBuff(buff);
 
         yield return new WaitForSeconds(buff.getDuration());
 
         removeBuff(buff);
-
-        if (buffCooldown * getCooldowns() > buff.getDuration())
-            yield return new WaitForSeconds(buffCooldown * getCooldowns() - buff.getDuration());
-
-        buffOnCooldown = false;
     }
 
     public void OnAttack(int i) {
@@ -153,6 +182,18 @@ public class Attack : MonoBehaviour
         {
             Melees[i].SetActive(false);
         }
+    }
+
+    public void cooldownFinished(int type)
+    {
+        if (type == 0)
+            primaryOnCooldown = false;
+        else if (type == 1)
+            secondaryOnCooldown = false;
+        else if (type == 2)
+            buffOnCooldown = false;
+        else if (type == 3)
+            specialOnCooldown = false;
     }
 
     private void addBuff(Buffs buff)
@@ -172,11 +213,7 @@ public class Attack : MonoBehaviour
         {
             if (buffs[i] == buff)
             {
-                for (int j = i; j < buffs.Length - 1; j++)
-                {
-                    buffs[i] = buffs[i + 1];
-                }
-                buffs[buffs.Length - 1] = null;
+                buffs[i] = null;
                 return;
             }
         }
@@ -185,27 +222,30 @@ public class Attack : MonoBehaviour
     private float getCooldowns()
     {
         float cooldowns = 1;
-        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Length; i++)
         {
-            cooldowns *= buffs[i].getCooldowns();
+            if (buffs[i] != null)
+                cooldowns *= buffs[i].getCooldowns();
         }
         return cooldowns;
     }
     private float getAttackSpeed()
     {
         float attackSpeed = 1;
-        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Length; i++)
         {
-            attackSpeed *= buffs[i].getAttackSpeed();
+            if (buffs[i] != null)
+                attackSpeed *= buffs[i].getAttackSpeed();
         }
         return attackSpeed;
     }
     private float getDamageMult()
     {
         float mult = 1;
-        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Length; i++)
         {
-            mult *= buffs[i].getDamage();
+            if (buffs[i] != null)
+                mult *= buffs[i].getDamage();
         }
         return mult;
     }

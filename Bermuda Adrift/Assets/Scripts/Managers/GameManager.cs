@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
 
     public void startRound()   //Sets up everything when a round starts
     {
-        OnRoundStart?.Invoke();
         if (state == GameState.Idle)    //Only does anything when we're not in a round
         {
+            OnRoundStart?.Invoke();
             if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)   //Checks if it's a boss round
                 state = GameState.BossRound;
             else
@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
             {
                 tower.SendMessage("StartRound");
             }
+
+            GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
         } else
             Debug.Log("Not idling");    //Maybe disable the button when we get it until the round is over?
     }
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
         //Enable next-round button
         //Enable tower placing system
         //Both could just be affected by game state
+        GameObject.Find("Audio Source").GetComponent<AudioManager>().StopSound();
 
         state = GameState.Idle;
     }
