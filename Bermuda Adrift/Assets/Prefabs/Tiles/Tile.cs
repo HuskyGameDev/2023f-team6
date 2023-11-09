@@ -14,9 +14,12 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
-    }
 
+    }
+    private void OnDisable()
+    {
+        OnMouseExit();
+    }
     private void OnMouseEnter()
     {
         sR.color = new Vector4(0, 1, 0, 1);

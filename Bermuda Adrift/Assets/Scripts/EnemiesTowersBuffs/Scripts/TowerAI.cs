@@ -75,12 +75,15 @@ public class TowerAI : MonoBehaviour
             gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 0.5f) * 2f, Mathf.Round(mouseWorldPosition.y * 0.5f) * 2f);
 
             if (gameManager.getGameState() != GameManager.GameState.Idle)
+            {
+                OnCancel?.Invoke();
                 Destroy(gameObject);
+            }
             
             return;
         }
 
-        if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
+        //if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
 
         if (target != null) //Turn towards target every frame
             targetPoint();

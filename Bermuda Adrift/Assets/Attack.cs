@@ -87,12 +87,6 @@ public class Attack : MonoBehaviour
         else
             anim.ResetTrigger("Primary");
 
-        if (!movement.stopped())
-        {
-            anim.SetFloat("AttackDirectionX", movement.getAim().x);
-            anim.SetFloat("AttackDirectionY", movement.getAim().y);
-        }
-
         if (primaryOnCooldown)
             updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
         if (secondaryOnCooldown)
@@ -105,12 +99,16 @@ public class Attack : MonoBehaviour
 
     public void primary() 
     {
+        anim.SetFloat("AttackDirectionX", movement.getAim().x);
+        anim.SetFloat("AttackDirectionY", movement.getAim().y);
         anim.SetTrigger("Primary");
     }
     public void secondary()
     {
         if (!secondaryOnCooldown)
         {
+            anim.SetFloat("AttackDirectionX", movement.getAim().x);
+            anim.SetFloat("AttackDirectionY", movement.getAim().y);
             secondaryOnCooldown = true;
             anim.SetTrigger("Secondary");
         }
@@ -119,6 +117,8 @@ public class Attack : MonoBehaviour
     {
         if (!buffOnCooldown)
         {
+            anim.SetFloat("AttackDirectionX", movement.getAim().x);
+            anim.SetFloat("AttackDirectionY", movement.getAim().y);
             buffOnCooldown = true;
             anim.SetTrigger("Buff");
         }
@@ -127,6 +127,8 @@ public class Attack : MonoBehaviour
     {
         if (!specialOnCooldown)
         {
+            anim.SetFloat("AttackDirectionX", movement.getAim().x);
+            anim.SetFloat("AttackDirectionY", movement.getAim().y);
             specialOnCooldown = true;
             anim.SetTrigger("Special");
         }

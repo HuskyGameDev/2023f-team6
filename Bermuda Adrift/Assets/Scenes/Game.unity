@@ -686,7 +686,6 @@ MonoBehaviour:
   musicSlider: {fileID: 0}
   SFXSlider: {fileID: 0}
   backgroundMusic: {fileID: 8300000, guid: 5ecd90d72b00b9c45919de0ecae6f760, type: 3}
-  source: {fileID: 43960050}
 --- !u!82 &43960050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12169,6 +12168,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1235347566, guid: 0a53e64b7bc6d8c4ab35d2f6333a1734, type: 3}
+    - target: {fileID: 8846897387898369027, guid: 22f1c4f652e57744483233044be361ac, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1700797750126408454, guid: 22f1c4f652e57744483233044be361ac, type: 3}
@@ -34044,7 +34047,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1271838841
 RectTransform:
@@ -34078,13 +34081,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e66f7211b4a22642877c3df4b463ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  main: {fileID: 0}
-  settings: {fileID: 0}
-  sound: {fileID: 0}
-  controls: {fileID: 0}
-  video: {fileID: 0}
-  credits: {fileID: 0}
+  pauseMenu: {fileID: 1071102700}
+  main: {fileID: 1886851677}
+  settings: {fileID: 823792403}
+  sound: {fileID: 1398850582}
+  controls: {fileID: 2119784369}
+  video: {fileID: 783181399}
+  credits: {fileID: 1414623682}
 --- !u!1 &1272625004
 GameObject:
   m_ObjectHideFlags: 0
@@ -42135,8 +42138,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1427900360}
-  - {fileID: 1271838841}
   - {fileID: 2141503445}
+  - {fileID: 1271838841}
   - {fileID: 1844047425}
   - {fileID: 519420032}
   - {fileID: 1093243191}

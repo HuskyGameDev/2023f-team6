@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Barriers : MonoBehaviour
 {
+    public static event Action OnCancel;
+    public static event Action OnTowerPlaced;
+
     [SerializeField] private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private int health;
     private float armor = 1;
@@ -30,23 +34,30 @@ public class Barriers : MonoBehaviour
                     ||
                     Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
                     &&
-                    GameObject.Find("Managers").GetComponent<BuildManager>().approvePosition(transform.position))   
+                    GameObject.Find("Managers").GetComponent<BuildManager>().approvePosition(transform.position))
                 {
+                    OnTowerPlaced?.Invoke();
                     placed = true;
                     GameObject.Find("Managers").GetComponent<GameManager>().spendScrap(barrier.getCost());
                 }
             }
             else if (Input.GetMouseButtonDown(1))
+            {
+                OnCancel?.Invoke();
                 Destroy(gameObject);
+            }
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 0.5f) * 2f, Mathf.Round(mouseWorldPosition.y * 0.5f) * 2f);
 
             Locate();
 
             if (GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.Idle)
+            {
+                OnCancel?.Invoke();
                 Destroy(gameObject);
+            }
 
             return;
         }

@@ -80,10 +80,10 @@ public class AI : MonoBehaviour
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
-        if (Input.GetKeyDown("o"))  //Temp buttons, o does 1 damage, p kills everything (a "skip round" button)
-            TakeDamage(1);
-        else if (Input.GetKeyDown("p"))
-            TakeDamage(Health);
+        //if (Input.GetKeyDown("o"))  //Temp buttons, o does 1 damage, p kills everything (a "skip round" button)
+            //TakeDamage(1);
+        //else if (Input.GetKeyDown("p"))
+            //TakeDamage(Health);
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 

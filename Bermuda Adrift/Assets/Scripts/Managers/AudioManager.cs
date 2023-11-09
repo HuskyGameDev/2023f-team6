@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Slider SFXSlider;
 
     [SerializeField] AudioClip backgroundMusic; //Will need to change when there's more songs
-    [SerializeField] AudioSource source;
+    AudioSource source;
 
     private void Awake()
     {

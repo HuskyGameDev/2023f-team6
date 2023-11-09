@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class Pausing : MonoBehaviour
 {
+    public static event Action onPause;
+    public static event Action onUnpause;
+
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject main;
     [SerializeField] GameObject settings;
@@ -12,6 +16,12 @@ public class Pausing : MonoBehaviour
     [SerializeField] GameObject controls;
     [SerializeField] GameObject video;
     [SerializeField] GameObject credits;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("escape"))
+            OnPause();
+    }
 
     public void OnPauseInputAction(InputAction.CallbackContext context)
     {
@@ -23,6 +33,7 @@ public class Pausing : MonoBehaviour
             //Stop & Start time
             if (Time.timeScale == 0)
             {
+                //onUnpause?.Invoke();
                 sound.SetActive(true);
                 controls.SetActive(false);
                 video.SetActive(false);
@@ -34,6 +45,7 @@ public class Pausing : MonoBehaviour
             }
             else
             {
+                //onPause?.Invoke();
                 Time.timeScale = 0;
             }
         }
@@ -47,6 +59,7 @@ public class Pausing : MonoBehaviour
         //Stop & Start time
         if (Time.timeScale == 0)
         {
+            //onUnpause?.Invoke();
             sound.SetActive(true);
             controls.SetActive(false);
             video.SetActive(false);
@@ -58,6 +71,7 @@ public class Pausing : MonoBehaviour
         }
         else
         {
+            //onPause?.Invoke();
             Time.timeScale = 0;
         }
     }

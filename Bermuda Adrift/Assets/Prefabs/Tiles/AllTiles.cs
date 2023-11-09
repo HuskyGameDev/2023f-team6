@@ -9,6 +9,8 @@ public class AllTiles : MonoBehaviour
         BuildManager.OnTowerPicked += ActivateTiles;
         TowerAI.OnCancel += DeactivateTiles;
         TowerAI.OnTowerPlaced += DeactivateTiles;
+        Barriers.OnCancel += DeactivateTiles;
+        Barriers.OnTowerPlaced += DeactivateTiles;
     }
 
     private void OnDisable()
@@ -16,6 +18,8 @@ public class AllTiles : MonoBehaviour
         BuildManager.OnTowerPicked -= ActivateTiles;
         TowerAI.OnCancel -= DeactivateTiles;
         TowerAI.OnTowerPlaced -= DeactivateTiles;
+        Barriers.OnCancel -= DeactivateTiles;
+        Barriers.OnTowerPlaced -= DeactivateTiles;
     }
 
     void ActivateTiles()
