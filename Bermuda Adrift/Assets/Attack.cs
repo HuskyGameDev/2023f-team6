@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Attack : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class Attack : MonoBehaviour
 
     private bool specialOnCooldown;
     private float specialCooldown = 10f;
+
+    private int buffer;
 
     private Buffs[] buffs;
 
@@ -68,7 +71,7 @@ public class Attack : MonoBehaviour
 
         anim.speed = getAttackSpeed();
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !IsPointerOverUIObject())
         {
             primary();
         }
@@ -96,39 +99,42 @@ public class Attack : MonoBehaviour
         if (specialOnCooldown)
             updateCooldowns?.Invoke(specialCooldown * getCooldowns(), CooldownIndicator.position.special);
     }
-
-    public void primary() 
+    private void primary() 
     {
         anim.SetFloat("AttackDirectionX", movement.getAim().x);
         anim.SetFloat("AttackDirectionY", movement.getAim().y);
+
         anim.SetTrigger("Primary");
     }
-    public void secondary()
+    private void secondary()
     {
         if (!secondaryOnCooldown)
         {
             anim.SetFloat("AttackDirectionX", movement.getAim().x);
             anim.SetFloat("AttackDirectionY", movement.getAim().y);
+
             secondaryOnCooldown = true;
             anim.SetTrigger("Secondary");
         }
     }
-    public void utility()
+    private void utility()
     {
         if (!buffOnCooldown)
         {
             anim.SetFloat("AttackDirectionX", movement.getAim().x);
             anim.SetFloat("AttackDirectionY", movement.getAim().y);
+
             buffOnCooldown = true;
             anim.SetTrigger("Buff");
         }
     }
-    public void special()
+    private void special()
     {
         if (!specialOnCooldown)
         {
             anim.SetFloat("AttackDirectionX", movement.getAim().x);
             anim.SetFloat("AttackDirectionY", movement.getAim().y);
+
             specialOnCooldown = true;
             anim.SetTrigger("Special");
         }
@@ -137,7 +143,7 @@ public class Attack : MonoBehaviour
     public void shoot(int slot) { OnShoot(slot); }
     private void OnShoot(int slot) {
         if (slot == 1) {
-            Vector3 offset = gameObject.GetComponent<Movement>().getAim();
+            Vector3 offset = new Vector3(anim.GetFloat("AttackDirectionX"), anim.GetFloat("AttackDirectionY"));
             Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
             output = Quaternion.Euler(output.eulerAngles / 2);
 
@@ -147,7 +153,7 @@ public class Attack : MonoBehaviour
         } 
         else if (slot == 3)
         {
-            Vector3 offset = gameObject.GetComponent<Movement>().getAim();
+            Vector3 offset = new Vector3(anim.GetFloat("AttackDirectionX"), anim.GetFloat("AttackDirectionY"));
             Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
             output = Quaternion.Euler(output.eulerAngles / 2);
 
@@ -250,5 +256,15 @@ public class Attack : MonoBehaviour
                 mult *= buffs[i].getDamage();
         }
         return mult;
+    }
+    private bool IsPointerOverUIObject()
+    {
+        var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

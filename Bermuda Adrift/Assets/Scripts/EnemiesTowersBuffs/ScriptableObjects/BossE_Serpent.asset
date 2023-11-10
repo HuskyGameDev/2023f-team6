@@ -22,5 +22,7 @@ MonoBehaviour:
   rarity: 0
   anim: {fileID: 9100000, guid: 2fd36b89b23c0fc4ba4e73c9898a8edf, type: 2}
   xSize: 1
-  ySize: 2
+  ySize: 4
   debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}

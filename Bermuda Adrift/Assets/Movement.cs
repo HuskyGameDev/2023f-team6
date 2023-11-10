@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     Animator anim;
     private Vector2 lastMoveDirection;
     private bool facingLeft = true;
-    private int stop = 1;
+    private float stop = 1;
 
     //public Transform Aim;
     private Vector3 AimVector;
@@ -67,11 +67,11 @@ public class Movement : MonoBehaviour
     public Vector3 getAim() { return AimVector; }
     public bool stopped()
     {
-        if (stop == 0)
+        if (stop < 1)
             return false;
         return true;
     }
-    public void Stop() { stop = 0; }
+    public void Stop() { stop = 0.25f; }
     public void resume() { stop = 1; }
 
 

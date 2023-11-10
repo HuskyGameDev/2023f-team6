@@ -49,6 +49,7 @@ public class GUIManager : MonoBehaviour
     private void Start()
     {
         resolutions = Screen.resolutions;
+        xpSlider.interactable = false;
     }
 
     public void LoadScene(int sceneIndex)

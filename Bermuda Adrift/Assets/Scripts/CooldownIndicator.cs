@@ -28,6 +28,7 @@ public class CooldownIndicator : MonoBehaviour
     {
         slider = gameObject.GetComponent<Slider>();
         slider.value = 0;
+        slider.interactable = false;
 
         text = transform.parent.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
         text.gameObject.SetActive(false);

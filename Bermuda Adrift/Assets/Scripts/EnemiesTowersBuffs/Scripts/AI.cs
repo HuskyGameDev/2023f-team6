@@ -55,7 +55,8 @@ public class AI : MonoBehaviour
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)    //Start attack cycle if it's a boss
         {    
             StartCoroutine(randomAttacks());
-            Health = (int) (Health * Mathf.Pow(1.25f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+            Health = (int) (Health * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+            Debug.Log("Health: " + Health);
         }
 
         if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
@@ -64,7 +65,7 @@ public class AI : MonoBehaviour
             StartCoroutine(Bullets());
 
 
-        SetupHealthBar?.Invoke(enemy.getHealth());
+        SetupHealthBar?.Invoke(Health);
     }
     public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
     private void Start()    //Set up what setEnemy didn't
@@ -80,10 +81,8 @@ public class AI : MonoBehaviour
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
-        //if (Input.GetKeyDown("o"))  //Temp buttons, o does 1 damage, p kills everything (a "skip round" button)
-            //TakeDamage(1);
-        //else if (Input.GetKeyDown("p"))
-            //TakeDamage(Health);
+        if (Input.GetKeyDown("p"))
+            TakeDamage(Health);
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 
@@ -268,7 +267,9 @@ public class AI : MonoBehaviour
         stop = true;    //Stop to heal
         yield return new WaitForSeconds(1f);
 
-        Health += (int)(Health * 0.1f); //Is 10% of their current health more balanced or their max health? The max health is always going to be more than what the current health will heal, but is that a good or bad thing?
+        int toHeal = (int)(Health * 0.1f);
+        OnEnemyHurt?.Invoke(-toHeal);
+        Health += toHeal; //Is 10% of their current health more balanced or their max health? The max health is always going to be more than what the current health will heal, but is that a good or bad thing?
         if (Health > enemy.getHealth()) //To prevent overhealing (or maybe we'd want them to be able to do that?
             Health = enemy.getHealth();
 
@@ -330,15 +331,16 @@ public class AI : MonoBehaviour
         Health -= (int) (moreDamage * getArmor());
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
+        Debug.Log(damage);
 
         OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
-
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
     private void heal(int health)   //maybe an enemy that heals other enemies?
     {
         Health += health;
+        OnEnemyHurt?.Invoke(-health);
     }
     private IEnumerator attack(GameObject recipient)
     {
@@ -436,7 +438,12 @@ public class AI : MonoBehaviour
     }
     private void healthCheck()
     {
-        int expectedHealth = (int) (enemy.getHealth() * getHealthMult()) - damage;
+        int expectedHealth = enemy.getHealth();
+        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
+        {
+            expectedHealth = (int)(expectedHealth * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f) * getHealthMult()) - damage;
+        } else
+            expectedHealth = (int)(expectedHealth * getHealthMult()) - damage;
 
         if (expectedHealth < Health)    //Bring health down when the buff wears off
         {

@@ -17,12 +17,6 @@ public class Pausing : MonoBehaviour
     [SerializeField] GameObject video;
     [SerializeField] GameObject credits;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("escape"))
-            OnPause();
-    }
-
     public void OnPauseInputAction(InputAction.CallbackContext context)
     {
         if (context.started)

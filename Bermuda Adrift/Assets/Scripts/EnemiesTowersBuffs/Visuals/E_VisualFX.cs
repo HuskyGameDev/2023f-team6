@@ -27,7 +27,16 @@ public class E_VisualFX : MonoBehaviour
 
     public void DamagePopupSetup(int damageAmount)
     {
-        textMesh.SetText("-" + damageAmount.ToString());
-        Instantiate(dmgPopupTxt, new Vector3(Random.Range(transform.position.x + 1f, transform.position.x - 1f), Random.Range(transform.position.y + 0.1f, transform.position.y - 0.1f)), Quaternion.identity);
+        if (damageAmount >= 0)
+        {
+            textMesh.SetText("-" + damageAmount.ToString());
+            textMesh.color = Color.red;
+            Instantiate(dmgPopupTxt, new Vector3(Random.Range(transform.position.x + 1f, transform.position.x - 1f), Random.Range(transform.position.y + 0.1f, transform.position.y - 0.1f)), Quaternion.identity);
+        } else
+        {
+            textMesh.SetText("+" + (-damageAmount).ToString());
+            textMesh.color = Color.green;
+            Instantiate(dmgPopupTxt, new Vector3(Random.Range(transform.position.x + 1f, transform.position.x - 1f), Random.Range(transform.position.y + 0.1f, transform.position.y - 0.1f)), Quaternion.identity);
+        }
     }
 }
