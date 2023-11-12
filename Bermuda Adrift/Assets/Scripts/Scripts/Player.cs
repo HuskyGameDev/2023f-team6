@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player",menuName = "ScriptableObjects/Player")]
 public class Player : ScriptableObject
 {
+    [SerializeField] private RuntimeAnimatorController anim;
     [SerializeField] private Ability defPrimary;
     [SerializeField] private Ability defSecondary;
     [SerializeField] private Ability defUtility;
@@ -13,12 +14,15 @@ public class Player : ScriptableObject
     [SerializeField] private Ability altSecondary;
     [SerializeField] private Ability altUtility;
     [SerializeField] private Ability altSpecial;
+    [SerializeField] private Buffs defPassive;
+    [SerializeField] private Buffs altPassive;
     [SerializeField] private string description;
 
     private bool altP;
     private bool altS;
     private bool altU;
     private bool altSp;
+    private bool altPa;
     public void alt(int slot, bool alt)
     {
         if (slot == 1)
@@ -29,10 +33,13 @@ public class Player : ScriptableObject
             altU = alt;
         else if (slot == 4)
             altSp = alt;
+        else if (slot == 5)
+            altPa = alt;
         else
             altP = alt;
     }
 
+    public RuntimeAnimatorController getAnim() { return anim; }
     public Ability getPrimary()
     {
         if (altP && altPrimary != null)
@@ -57,9 +64,16 @@ public class Player : ScriptableObject
             return altSpecial;
         return defSpecial;
     }
+    public Buffs getPassive()
+    {
+        if (altPa && altPassive != null)
+            return altPassive;
+        return defPassive;
+    }
     public bool altedP() { return altP; }
     public bool altedS() { return altS; }
     public bool altedU() { return altU; }
     public bool altedSp() { return altSp; }
+    public bool altedPa() { return altPa; }
     public string getDescription() { return description; }
 }

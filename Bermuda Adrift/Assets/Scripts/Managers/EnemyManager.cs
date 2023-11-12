@@ -136,4 +136,8 @@ public class EnemyManager : MonoBehaviour
     public void setTotal(int newTotal) {
         total = newTotal;
     }
+    public float getRoundScale()
+    {
+        return (int)(Round / 10);
+    }
 }

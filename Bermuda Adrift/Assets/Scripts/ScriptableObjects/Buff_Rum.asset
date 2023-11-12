@@ -16,8 +16,11 @@ MonoBehaviour:
   Distracted: 0
   Stunned: 0
   Cooldowns: 1
+  CritChance: 1.5
   Speed: 1.5
   AttackSpeed: 1.25
+  underwaterMult: 1
+  airborneMult: 1
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 0

@@ -2,17 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Hitscan : MonoBehaviour
 {
+    public static event Action onCrit;
+
     private Bullet bullet;
     private int damage;
     private float timer;
+    private float underwaterMult;
+    private float airborneMult;
     private RuntimeAnimatorController animator;
     [SerializeField] private Buffs debuff;
     private int pierce;
     private float AOETimer;
     private Bullet.Effects effect;
+    private float critChance;
 
     [SerializeField] private Transform sprite;
 
@@ -26,6 +32,8 @@ public class Hitscan : MonoBehaviour
         //For some reason setBullet() seems to run either before Start or faster than Start
         stop = false;
         landed = false;
+        if (critChance == 0)
+            setCritChance(1);
 
         camera = Camera.main;   //Used for camera shake effects;
     }
@@ -86,6 +94,8 @@ public class Hitscan : MonoBehaviour
         timer = bullet.getTimer();
         debuff = bullet.getDebuff();
         effect = bullet.getEffect();
+        underwaterMult = bullet.getUnderwaterDamage();
+        airborneMult = bullet.getAirborneDamage();
 
         pierce = bullet.getPierce();
         if (pierce == -1)
@@ -113,16 +123,30 @@ public class Hitscan : MonoBehaviour
             timer = float.MaxValue;
     }
 
+    private void UnderwaterMult(float mult) { underwaterMult *= mult; }
+    private void AirborneMult(float mult) { airborneMult *= mult; }
+    private void setCritChance(float chance) { critChance = chance; }
+
     private void dealDamage(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-            collision.gameObject.SendMessage("TakeDamage", damage * bullet.getUnderwaterDamage());
+            collision.gameObject.SendMessage("TakeDamage", damage * underwaterMult * critCalc() * GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
 
         else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-            collision.gameObject.SendMessage("TakeDamage", damage * bullet.getAirborneDamage());
+            collision.gameObject.SendMessage("TakeDamage", damage * airborneMult * critCalc() * GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
 
         else
             collision.gameObject.SendMessage("TakeDamage", damage);
+    }
+    private int critCalc()
+    {
+        if (Random.Range(0, 1f) < (critChance * 0.1))
+        {
+            onCrit?.Invoke();
+            return 2;
+        }
+
+        return 1;
     }
 
     private void destroyBullet() 

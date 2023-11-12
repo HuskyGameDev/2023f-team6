@@ -173,6 +173,11 @@ public class GameManager : MonoBehaviour
         return level;
     }
 
+    public float getLevelScale()
+    {
+        return (float) Math.Pow(1.2, (double) getLevel());
+    }
+
     public void QuitGame()
     {
         Application.Quit();

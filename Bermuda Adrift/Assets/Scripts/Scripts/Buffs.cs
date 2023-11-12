@@ -7,6 +7,8 @@ public class Buffs : ScriptableObject
 {
     //Time in seconds that the buff/debuff is active
     [SerializeField] private float duration;
+    [SerializeField] private string description;
+    [SerializeField] private Sprite thumbnail;
 
 
     //All these variables are multipliers
@@ -21,10 +23,13 @@ public class Buffs : ScriptableObject
 
     //Applies to the player
     [SerializeField] private float Cooldowns;
+    [SerializeField] private float CritChance;
 
     //Can apply to Enemies and Player
     [SerializeField] private float Speed;
     [SerializeField] private float AttackSpeed;
+    [SerializeField] private float underwaterMult;
+    [SerializeField] private float airborneMult;
 
     //Applies only to towers and barriers
     [SerializeField] private float FireRate;    // < 1 for faster
@@ -47,11 +52,16 @@ public class Buffs : ScriptableObject
 
 
     public float getDuration() { return duration; }
+    public string getDescription() { return description; }
+    public Sprite getThumbnail() { return thumbnail; }
     public bool getDistracted() { return Distracted; }
     public bool getStunned() { return Stunned; }
     public float getCooldowns() { return Cooldowns; }
+    public float getCritChance() { return CritChance; }
     public float getSpeed() { return Speed; }
     public float getAttackSpeed() { return AttackSpeed; }
+    public float getUnderwaterMult() { return underwaterMult; }
+    public float getAirborneMult() { return airborneMult; }
     public float getFireRate() { return FireRate; }
     public float getTurnSpeed() { return TurnSpeed; }
     public int getDOT() { return DamageOverTime; }

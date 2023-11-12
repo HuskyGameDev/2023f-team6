@@ -40830,7 +40830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccfcfcb06dfd134b953d2fc5ce013ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: a1cdf67ab11154c439e72399ef2658a1, type: 2}
+  character: {fileID: 11400000, guid: a1cdf67ab11154c439e72399ef2658a1, type: 2}
 --- !u!114 &2135632953
 MonoBehaviour:
   m_ObjectHideFlags: 0

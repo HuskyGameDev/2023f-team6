@@ -87,6 +87,20 @@ public class CharacterModelHandler : MonoBehaviour
         abilityDescriptions.transform.GetChild(3).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = character.getSpecial().getDescription();
         abilityDescriptions.transform.GetChild(3).gameObject.GetComponent<Image>().sprite = character.getSpecial().getThumbnail();
     }
+    public void setDefPassive()
+    {
+        character.alt(5, false);
+        updateModel(5);
+        abilityDescriptions.transform.GetChild(4).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = character.getPassive().getDescription();
+        abilityDescriptions.transform.GetChild(4).gameObject.GetComponent<Image>().sprite = character.getPassive().getThumbnail();
+    }
+    public void setAltPassive()
+    {
+        character.alt(5, true);
+        updateModel(5);
+        abilityDescriptions.transform.GetChild(4).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = character.getPassive().getDescription();
+        abilityDescriptions.transform.GetChild(4).gameObject.GetComponent<Image>().sprite = character.getPassive().getThumbnail();
+    }
     #endregion
 
     public void updateModel(int slot)

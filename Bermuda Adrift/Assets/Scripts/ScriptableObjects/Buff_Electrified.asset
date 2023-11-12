@@ -13,14 +13,21 @@ MonoBehaviour:
   m_Name: Buff_Electrified
   m_EditorClassIdentifier: 
   duration: 2
+  description: 
+  thumbnail: {fileID: 0}
   Distracted: 0
+  Stunned: 1
   Cooldowns: 1
+  CritChance: 1
   Speed: 1
   AttackSpeed: 1
+  underwaterMult: 1
+  airborneMult: 1
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 0
   DOTSpeed: 1
+  percentDOT: 0
   Health: 1
   armor: 0.75
   Damage: 1

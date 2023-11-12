@@ -22,7 +22,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buffs = new Buffs[10];
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         AimVector = new Vector3();
@@ -75,7 +74,12 @@ public class Movement : MonoBehaviour
     public void resume() { stop = 1; }
 
 
-    public void buff(Buffs buff) { StartCoroutine(selfBuff(buff)); }
+    public void buff(Buffs buff) 
+    {
+        if (buffs == null)
+            buffs = buffs = new Buffs[10];
+        StartCoroutine(selfBuff(buff)); 
+    }
     private IEnumerator selfBuff(Buffs buff)
     {
         addBuff(buff);

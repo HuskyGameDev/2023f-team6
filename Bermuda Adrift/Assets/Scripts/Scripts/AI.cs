@@ -41,7 +41,7 @@ public class AI : MonoBehaviour
         enemy = newEnemy;
         debuffs = new Buffs[10];
 
-        Health = enemy.getHealth();    //Maybe add health scaling later based on the number of times the set of enemies has been picked?
+        Health = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());    //Maybe add health scaling later based on the number of times the set of enemies has been picked?
         gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
         debuffToInflict = enemy.getDefuff();
 
@@ -437,7 +437,7 @@ public class AI : MonoBehaviour
     }
     private void healthCheck()
     {
-        int expectedHealth = enemy.getHealth();
+        int expectedHealth = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
         {
             expectedHealth = (int)(expectedHealth * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f) * getHealthMult()) - damage;

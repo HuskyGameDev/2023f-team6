@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
-  m_Name: Buff_Baited
+  m_Name: Buff_PirateCrit
   m_EditorClassIdentifier: 
-  duration: 5
-  Distracted: 1
+  duration: -1
+  description: Seafaring Spite - Higher chance to hit for more damage
+  thumbnail: {fileID: 0}
+  Distracted: 0
   Stunned: 0
   Cooldowns: 1
-  CritChance: 1
+  CritChance: 2.5
   Speed: 1
   AttackSpeed: 1
   underwaterMult: 1

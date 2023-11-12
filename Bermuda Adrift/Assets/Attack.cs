@@ -9,7 +9,7 @@ public class Attack : MonoBehaviour
     public static event Action<float, CooldownIndicator.position> updateCooldowns;
     public static event Action<Sprite, CooldownIndicator.position> setThumbnails;
 
-    [SerializeField] private Player playerData;
+    [SerializeField] private Player character;
 
     //melee attacks
     private GameObject[] Melees1 = new GameObject[1];
@@ -49,10 +49,20 @@ public class Attack : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         anim = gameObject.GetComponent<Animator>();
 
+        setCharacter(character);
+    }
+    private void setCharacter(Player playerData)
+    {
+        character = playerData;
+        anim.runtimeAnimatorController = playerData.getAnim();
+
         setAbility(playerData.getPrimary());
         setAbility(playerData.getSecondary());
         setAbility(playerData.getUtility());
         setAbility(playerData.getSpecial());
+        if (playerData.getPassive() != null)
+            StartCoroutine(Buff(playerData.getPassive()));
+        movement.buff(playerData.getPassive());
     }
 
     private void setAbility(Ability ability)
@@ -117,36 +127,36 @@ public class Attack : MonoBehaviour
         if (ability.getSlot() == 1)
         {
             primaryCooldown = ability.getCooldown();
-            anim.SetBool("AltPrimary", playerData.altedP());
+            anim.SetBool("AltPrimary", character.altedP());
         }
         else if (ability.getSlot() == 2)
         {
             secondaryCooldown = ability.getCooldown();
-            anim.SetBool("AltSecondary", playerData.altedS());
+            anim.SetBool("AltSecondary", character.altedS());
         }
         else if (ability.getSlot() == 3)
         {
             utilityCooldown = ability.getCooldown();
-            anim.SetBool("AltUtility", playerData.altedU());
+            anim.SetBool("AltUtility", character.altedU());
         }
         else if (ability.getSlot() == 4)
         {
             specialCooldown = ability.getCooldown();
-            anim.SetBool("AltSpecial", playerData.altedSp());
+            anim.SetBool("AltSpecial", character.altedSp());
         }
         else
         {
             primaryCooldown = ability.getCooldown();
-            anim.SetBool("AltPrimary", playerData.altedP());
+            anim.SetBool("AltPrimary", character.altedP());
         }
     }
 
     public void cooldownCreated()
     {
-        setThumbnails?.Invoke(playerData.getPrimary().getThumbnail(), CooldownIndicator.position.primary);
-        setThumbnails?.Invoke(playerData.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
-        setThumbnails?.Invoke(playerData.getUtility().getThumbnail(), CooldownIndicator.position.utility);
-        setThumbnails?.Invoke(playerData.getSpecial().getThumbnail(), CooldownIndicator.position.special);
+        setThumbnails?.Invoke(character.getPrimary().getThumbnail(), CooldownIndicator.position.primary);
+        setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
+        setThumbnails?.Invoke(character.getUtility().getThumbnail(), CooldownIndicator.position.utility);
+        setThumbnails?.Invoke(character.getSpecial().getThumbnail(), CooldownIndicator.position.special);
     }
 
     // Update is called once per frame
@@ -254,6 +264,9 @@ public class Attack : MonoBehaviour
             GameObject intBullet = Instantiate(ability.getBulletPrefab(), gameObject.transform.position, output);
             intBullet.SendMessage("setBullet", ability.getBullet());
             intBullet.SendMessage("Mult", getDamageMult());
+            intBullet.SendMessage("setCritChance", getCrit());
+            intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
+            intBullet.SendMessage("AirborneMult", getAirborneMult());
         } 
         else if (ability.getAttackType() == Ability.attackType.buff)
         {
@@ -272,22 +285,38 @@ public class Attack : MonoBehaviour
 
         if (ability.getSlot() == 1)
         {
-            Melees1[direction].GetComponent<Weapon>().damageMult(getDamageMult());
+            Weapon weapon = Melees1[direction].GetComponent<Weapon>();
+            weapon.damageMult(getDamageMult());
+            weapon.setUnderwaterMult(getUnderwaterMult());
+            weapon.setAirborneMult(getAirborneMult());
+            weapon.setCrit(getCrit());
             Melees1[direction].SetActive(true);
         } 
         else if (ability.getSlot() == 2)
         {
-            Melees2[direction].GetComponent<Weapon>().damageMult(getDamageMult());
+            Weapon weapon = Melees2[direction].GetComponent<Weapon>();
+            weapon.damageMult(getDamageMult());
+            weapon.setUnderwaterMult(getUnderwaterMult());
+            weapon.setAirborneMult(getAirborneMult());
+            weapon.setCrit(getCrit());
             Melees2[direction].SetActive(true);
         }
         else if (ability.getSlot() == 3)
         {
-            Melees3[direction].GetComponent<Weapon>().damageMult(getDamageMult());
+            Weapon weapon = Melees3[direction].GetComponent<Weapon>();
+            weapon.damageMult(getDamageMult());
+            weapon.setUnderwaterMult(getUnderwaterMult());
+            weapon.setAirborneMult(getAirborneMult());
+            weapon.setCrit(getCrit());
             Melees3[direction].SetActive(true);
         }
         else if (ability.getSlot() == 4)
         {
-            Melees4[direction].GetComponent<Weapon>().damageMult(getDamageMult());
+            Weapon weapon = Melees4[direction].GetComponent<Weapon>();
+            weapon.damageMult(getDamageMult());
+            weapon.setUnderwaterMult(getUnderwaterMult());
+            weapon.setAirborneMult(getAirborneMult());
+            weapon.setCrit(getCrit());
             Melees4[direction].SetActive(true);
         }
 
@@ -335,6 +364,7 @@ public class Attack : MonoBehaviour
             specialOnCooldown = false;
     }
     #endregion
+
     #endregion
 
     #region Buff managing
@@ -371,6 +401,11 @@ public class Attack : MonoBehaviour
 
         removeBuff(buff);
     }
+    private void clearBuffs()
+    {
+        for (int i = 0; i < buffs.Length; i++)
+            removeBuff(buffs[i]);
+    }
 
     private float getCooldowns()
     {
@@ -401,6 +436,36 @@ public class Attack : MonoBehaviour
                 mult *= buffs[i].getDamage();
         }
         return mult;
+    }
+    private float getUnderwaterMult()
+    {
+        float mult = 1;
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] != null)
+                mult *= buffs[i].getUnderwaterMult();
+        }
+        return mult;
+    }
+    private float getAirborneMult()
+    {
+        float mult = 1;
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] != null)
+                mult *= buffs[i].getAirborneMult();
+        }
+        return mult;
+    }
+    private float getCrit()
+    {
+        float crit = 1;
+        for (int i = 0; i < buffs.Length; i++)
+        {
+            if (buffs[i] != null)
+                crit *= buffs[i].getCritChance();
+        }
+        return crit;
     }
     #endregion
 

@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 2
   Distracted: 0
+  Stunned: 0
   Cooldowns: 1
+  CritChance: 1
   Speed: 1
   AttackSpeed: 1
+  underwaterMult: 1
+  airborneMult: 1
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 1
   DOTSpeed: 0.25
+  percentDOT: 0
   Health: 1
   armor: 1
   Damage: 1
