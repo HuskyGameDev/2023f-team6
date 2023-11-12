@@ -104,7 +104,7 @@ public class AI : MonoBehaviour
     {
         turn();
 
-        if (goal != null && !stop)
+        if (goal != null && goal.position != null && !stop)
         {
             movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult());
             if (movement.position == goal.position && !getDistracted())
@@ -331,7 +331,6 @@ public class AI : MonoBehaviour
         Health -= (int) (moreDamage * getArmor());
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
-        Debug.Log(damage);
 
         OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
@@ -425,8 +424,8 @@ public class AI : MonoBehaviour
         if (newDebuff.getStunned())
             stop = true;
 
-        if (getDistracted())
-            baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
+        //if (getDistracted())
+        //    baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
 
         StartCoroutine(DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration(), newDebuff.getPercentDOT()));
 
@@ -471,14 +470,17 @@ public class AI : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
     }
-    private IEnumerator baited(Vector3 bait)    //Temporarily changes where the enemy thinks the goal is
+    private void baited(GameObject bait) { StartCoroutine(goToBaited(bait)); }
+    private IEnumerator goToBaited(GameObject bait)    //Temporarily changes where the enemy thinks the goal is
     {
         if (!goal.CompareTag("Center")) //Won't work on enemies in the channels
         {
-            goal.position = bait;
+            goal = new GameObject().transform;
+            goal.position = bait.transform.position;
 
             yield return new WaitForSeconds(5f);
 
+            Destroy(goal.gameObject);
             nearestEntrance();
         }
 

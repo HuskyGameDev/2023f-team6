@@ -20,18 +20,18 @@ AnimationClip:
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
-    - time: 0
+    - time: 0.041666668
       value: {fileID: 884676783, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
-    - time: 0.083333336
+    - time: 0.125
       value: {fileID: -685154313, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
-    - time: 0.16666667
+    - time: 0.20833333
       value: {fileID: -1441237547, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 12
+  m_SampleRate: 24
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -77,16 +77,23 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: OnAttack
+    functionName: setDirection
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 6
     messageOptions: 0
-  - time: 0.083333336
+  - time: 0.041666668
+    functionName: attack
+    data: 
+    objectReferenceParameter: {fileID: 11400000, guid: 9b40d4a8a0fff984f82f9634ff5b78bb, type: 2}
+    floatParameter: 0
+    intParameter: 6
+    messageOptions: 0
+  - time: 0.125
     functionName: attackFinish
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 6
+    intParameter: 1
     messageOptions: 0

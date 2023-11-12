@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
+  m_Name: A_Pistol
+  m_EditorClassIdentifier: 
+  type: 1
+  meleeHitboxes: {fileID: 0}
+  bullet: {fileID: 11400000, guid: e6a56cd7aa2a45b40b790d1a1037731c, type: 2}
+  buff: {fileID: 0}
+  bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
+  slot: 2
+  cooldown: 1
+  thumbnail: {fileID: 1046103722, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
+  ModelSprite: {fileID: 21300000, guid: 8e6006921d8ae31409ac2c907e0608f3, type: 3}
+  description: This Shot Isn't For You - Fire a piercing, high damage shot

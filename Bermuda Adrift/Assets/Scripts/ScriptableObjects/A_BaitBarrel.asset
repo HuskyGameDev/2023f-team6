@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
+  m_Name: A_BaitBarrel
+  m_EditorClassIdentifier: 
+  type: 1
+  meleeHitboxes: {fileID: 0}
+  bullet: {fileID: 11400000, guid: 1a21192f09fc27d49983814deec21551, type: 2}
+  buff: {fileID: 0}
+  bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
+  slot: 4
+  cooldown: 5
+  thumbnail: {fileID: 21300000, guid: a762bccd8f664284bb64d1a16a3ee356, type: 3}
+  ModelSprite: {fileID: 21300000, guid: 161dd6340a98fe2449c9078165a2a2d3, type: 3}
+  description: Bait Barrel - Throw a barrel of bait into the water, drawing enemies
+    in. Does not work on strong enemies or enemies in the channels.

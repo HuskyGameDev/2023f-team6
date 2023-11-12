@@ -76,10 +76,17 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.083333336
-    functionName: OnAttack
+  - time: 0
+    functionName: setDirection
     data: 
     objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.083333336
+    functionName: attack
+    data: 
+    objectReferenceParameter: {fileID: 11400000, guid: 9b40d4a8a0fff984f82f9634ff5b78bb, type: 2}
     floatParameter: 0
     intParameter: 1
     messageOptions: 0

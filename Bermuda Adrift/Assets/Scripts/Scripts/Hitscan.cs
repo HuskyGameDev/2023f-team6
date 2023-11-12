@@ -171,7 +171,7 @@ public class Hitscan : MonoBehaviour
             else if (effect == Bullet.Effects.Bait)                                              //2 is the bait effect
             {
                     stop = true;
-                    collision.gameObject.SendMessage("baited", gameObject.transform.position);
+                    collision.gameObject.SendMessage("baited", gameObject);
                     //Play bait-spreading animation
                     //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
                     collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies

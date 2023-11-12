@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0dc33d762e5bb24ca4b2e175d12cc22, type: 3}
+  m_Name: P_Pirate
+  m_EditorClassIdentifier: 
+  defPrimary: {fileID: 11400000, guid: 9b40d4a8a0fff984f82f9634ff5b78bb, type: 2}
+  defSecondary: {fileID: 11400000, guid: e9581dacddcc28741a633c3a92b1239d, type: 2}
+  defUtility: {fileID: 11400000, guid: 66de2273dd29c30429e6aae781427949, type: 2}
+  defSpecial: {fileID: 11400000, guid: c2a9cc09fb186844388b84631f6598f2, type: 2}
+  altPrimary: {fileID: 0}
+  altSecondary: {fileID: 0}
+  altUtility: {fileID: 0}
+  altSpecial: {fileID: 11400000, guid: b9e88ce154e48d84782c1f7afa40047a, type: 2}
+  description: The pirate is a quick close-range fighter, though he can rely on his
+    pistol and collection of explosive barrels to take care of far-away enemies.

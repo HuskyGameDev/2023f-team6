@@ -17,11 +17,12 @@ public class OnCharSelect : MonoBehaviour
     {
         text.text = charInfo.description;
     }
-
+    /*
     public void AddAbility(int index)
     {
         GameObject newAbility = Instantiate(ability, this.transform.position, this.transform.rotation, this.transform);
         newAbility.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = charInfo.abilities[index].name;
         newAbility.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = charInfo.abilities[index].description;
     }
+    */
 }

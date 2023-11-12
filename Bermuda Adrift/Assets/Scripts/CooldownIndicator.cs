@@ -11,6 +11,7 @@ public class CooldownIndicator : MonoBehaviour
     private position attackType;
 
     public static event Action<int> cooldownComplete;
+    public static event Action awoken;
 
     private Slider slider;
     private float soFar;
@@ -19,10 +20,12 @@ public class CooldownIndicator : MonoBehaviour
     private void OnEnable()
     {
         Attack.updateCooldowns += updateCooldowns;
+        Attack.setThumbnails += setThumbnail;
     }
     private void OnDisable()
     {
         Attack.updateCooldowns -= updateCooldowns;
+        Attack.setThumbnails -= setThumbnail;
     }
     private void Awake()
     {
@@ -42,6 +45,8 @@ public class CooldownIndicator : MonoBehaviour
             if (tempParent.GetChild(i) == generalType)
                 attackType = (position)i;
         }
+
+        awoken?.Invoke();
     }
 
     public void updateCooldowns(float total, position type)
@@ -61,5 +66,12 @@ public class CooldownIndicator : MonoBehaviour
 
         text.text = ((int)(total - soFar)).ToString();
         slider.value = soFar / total;
+    }
+    public void setThumbnail(Sprite sprite, position type)
+    {
+        if (attackType == type)
+        {
+            transform.parent.parent.GetComponent<Image>().sprite = sprite;
+        }
     }
 }

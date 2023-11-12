@@ -90,9 +90,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
-    functionName: OnShoot
+    functionName: attack
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11400000, guid: c2a9cc09fb186844388b84631f6598f2, type: 2}
     floatParameter: 0
     intParameter: 3
     messageOptions: 0
