@@ -137,4 +137,16 @@ public class BuildManager : MonoBehaviour
     }
 
     public Vector3[] getPositions() { return positions; }
+
+    public void removePosition(Vector3 position)
+    {
+        for (int i = 0; i < positions.Length; i++)
+        {
+            if (position == positions[i])
+            {
+                positions[i] = Vector3.zero;
+                return;
+            }
+        }
+    }
 }

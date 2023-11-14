@@ -138,6 +138,6 @@ public class EnemyManager : MonoBehaviour
     }
     public float getRoundScale()
     {
-        return (int)(Round / 10);
+        return (int)(Round / 10) + 1;
     }
 }

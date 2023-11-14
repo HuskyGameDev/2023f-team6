@@ -9,6 +9,8 @@ public class TowerAI : MonoBehaviour
 {
     public static event Action OnCancel;
     public static event Action OnTowerPlaced;
+    public static event Action OnUpgradeMenuOpen;
+    public static event Action<TowerAI> OnUpgraded;
 
     private Tower tower;
     [SerializeField] private GameObject nozzle;
@@ -32,6 +34,15 @@ public class TowerAI : MonoBehaviour
 
     private bool temp = false;
 
+    private void OnEnable()
+    {
+        GameManager.OnRoundStart += StartRound;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnRoundStart -= StartRound;
+    }
+
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
@@ -43,7 +54,7 @@ public class TowerAI : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buffs = new Buffs[10];
         
-        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Could be removed if we can only place outside of a round
+        if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Just in case someone manages to place a tower during a round
         {
             newTarget();
             StartRound();
@@ -83,7 +94,7 @@ public class TowerAI : MonoBehaviour
             return;
         }
 
-        //if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
+        if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
 
         if (target != null) //Turn towards target every frame
             targetPoint();
@@ -104,7 +115,18 @@ public class TowerAI : MonoBehaviour
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
+    public void destroyTower()
+    {
+        int returnScrap = getTotalSpentScrap() / 2;
 
+        gameManager.addScrap(returnScrap);
+        gameManager.gameObject.GetComponent<BuildManager>().removePosition(transform.position);
+        Destroy(gameObject);
+    }
+    public void openUpgradeMenu()
+    {
+        OnUpgradeMenuOpen?.Invoke();
+    }
     public void StartRound()    //Called when each round starts
     {
         if (target == null)     //Should be null always, might not be needed
@@ -112,34 +134,12 @@ public class TowerAI : MonoBehaviour
         anim.SetTrigger("TargetFound");
     }
 
-    private void targetPoint()  //finds where/how to point to look at target and points that way
-    {
-        Vector3 offset = target.transform.position - transform.position;
-        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
-
-        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
-    }
-
-    private void fire()    //Coroutine for creating the bullets as long as there's a target
-    {
-        anim.speed = getFireRate();
-
-        if (gameManager.getGameState() != GameManager.GameState.BossRound && gameManager.getGameState() != GameManager.GameState.Defend)    //If not in a round
-            anim.SetBool("TargetFound", false);
-        else
-            anim.SetBool("TargetFound", true);
-
-        Quaternion bulletRotation = Quaternion.Euler(nozzle.transform.rotation.eulerAngles - (nozzle.transform.rotation.eulerAngles / 2));
-        var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet
-
-        boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
-        boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
-    }
+    
 
     #region Upgrade Methods
     private void upgrade(bool path)  //true for path a, false for path b
     {
-        if (upgradeLevel >= 3)
+        if (upgradeLevel > 3)
             return;
 
         if (upgradeLevel == 0)  //Upgrade 1
@@ -219,9 +219,50 @@ public class TowerAI : MonoBehaviour
                 gameManager.spendScrap(tower.UB2getCost());
             }
         }
+        OnUpgraded?.Invoke(this);
+    }
+    public int getTotalSpentScrap()
+    {
+        int returnScrap = 0;
+        if (upgradeLevel >= 0)  //Unupgraded
+            returnScrap += tower.getCost();
+        if (upgradeLevel >= 1) //1 upgrade
+            returnScrap += tower.U1getCost();
+        if (upgradeLevel == 2 || upgradeLevel == 4) //A1 upgrade
+            returnScrap += tower.UA1getCost();
+        if (upgradeLevel == 3 || upgradeLevel == 5) //B1 upgrade
+            returnScrap += tower.UB1getCost();
+        if (upgradeLevel == 4)  //A2 upgrade
+            returnScrap += tower.UA2getCost();
+        if (upgradeLevel == 5)  //B2 upgrade
+            returnScrap += tower.UB2getCost();
+
+        return returnScrap;
     }
     #endregion
 
+    private void targetPoint()  //finds where/how to point to look at target and points that way
+    {
+        Vector3 offset = target.transform.position - transform.position;
+        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
+
+        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
+    }
+    private void fire()    //Coroutine for creating the bullets as long as there's a target
+    {
+        anim.speed = getFireRate();
+
+        if (gameManager.getGameState() != GameManager.GameState.BossRound && gameManager.getGameState() != GameManager.GameState.Defend)    //If not in a round
+            anim.SetBool("TargetFound", false);
+        else
+            anim.SetBool("TargetFound", true);
+
+        Quaternion bulletRotation = Quaternion.Euler(nozzle.transform.rotation.eulerAngles - (nozzle.transform.rotation.eulerAngles / 2));
+        var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet
+
+        boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
+        boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
+    }
     private void newTarget()    //Set target to closest enemy in range
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -317,4 +358,5 @@ public class TowerAI : MonoBehaviour
 
     public bool getPlaced() { return placed; }
     public int getUpgradeLevel() { return upgradeLevel; }
+    public Tower getTower() { return tower; }
 }

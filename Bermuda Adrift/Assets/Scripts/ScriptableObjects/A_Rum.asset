@@ -21,4 +21,5 @@ MonoBehaviour:
   cooldown: 6
   thumbnail: {fileID: -365552750, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   ModelSprite: {fileID: 21300000, guid: 697730b7005cf964b9b43610ef876281, type: 3}
+  Name: Always-Gone Rum
   description: Always-Gone Rum - Drink a bottle of rum to move and attack faster

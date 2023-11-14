@@ -38,6 +38,7 @@ public class AI : MonoBehaviour
     #region Setup and Update
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
     {
+        enemyManager = GameObject.FindGameObjectWithTag("Managers");
         enemy = newEnemy;
         debuffs = new Buffs[10];
 
@@ -72,7 +73,6 @@ public class AI : MonoBehaviour
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
         animator = gameObject.GetComponent<Animator>();
-        enemyManager = GameObject.FindGameObjectWithTag("Managers");
         movement = gameObject.transform;
 
         nearestEntrance();  //Sets the entrance to be going towards

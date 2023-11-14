@@ -21,5 +21,6 @@ MonoBehaviour:
   cooldown: 5
   thumbnail: {fileID: 21300000, guid: a762bccd8f664284bb64d1a16a3ee356, type: 3}
   ModelSprite: {fileID: 21300000, guid: 161dd6340a98fe2449c9078165a2a2d3, type: 3}
+  Name: Bait Barrel
   description: Bait Barrel - Throw a barrel of bait into the water, drawing enemies
     in. Does not work on strong enemies or enemies in the channels.

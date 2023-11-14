@@ -21,4 +21,5 @@ MonoBehaviour:
   cooldown: 1
   thumbnail: {fileID: 1046103722, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   ModelSprite: {fileID: 21300000, guid: 8e6006921d8ae31409ac2c907e0608f3, type: 3}
+  Name: This Shot Isn't For You
   description: This Shot Isn't For You - Fire a piercing, high damage shot

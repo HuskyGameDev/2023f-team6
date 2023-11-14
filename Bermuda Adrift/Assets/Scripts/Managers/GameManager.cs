@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
         level = 1;
         scrap = 0;
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+
+        addScrap(300);
     }
     
     private void Update()
@@ -83,13 +85,6 @@ public class GameManager : MonoBehaviour
                 state = GameState.Defend;
 
             gameObject.SendMessage("SpawnEnemies");     //Sends a message to the EnemyManager
-
-            //Broadcast "StartRound" to all towers
-            GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
-            foreach (GameObject tower in towers)    //Not sure if there's a more efficient way to do things than this
-            {
-                tower.SendMessage("StartRound");
-            }
 
             GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
         } else
@@ -136,6 +131,7 @@ public class GameManager : MonoBehaviour
         {
             return true;
         }
+        Debug.Log("Not Enough Scrap!");
         return false;
     }
 
@@ -175,7 +171,7 @@ public class GameManager : MonoBehaviour
 
     public float getLevelScale()
     {
-        return (float) Math.Pow(1.2, (double) getLevel());
+        return (float) Math.Pow(1.2, (double) getLevel() - 1);
     }
 
     public void QuitGame()

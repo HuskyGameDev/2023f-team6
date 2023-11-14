@@ -18,6 +18,7 @@ public class Ability : ScriptableObject
 
     [SerializeField] private Sprite thumbnail;
     [SerializeField] private Sprite ModelSprite;
+    [SerializeField] private string Name;
     [SerializeField] private string description;
 
     public attackType getAttackType() { return type; }
@@ -29,5 +30,6 @@ public class Ability : ScriptableObject
     public float getCooldown() { return cooldown; }
     public Sprite getThumbnail() { return thumbnail; }
     public Sprite getModelSprite() { return ModelSprite; }
+    public string getName() { return Name; }
     public string getDescription() { return description; }
 }
