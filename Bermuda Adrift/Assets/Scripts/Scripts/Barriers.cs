@@ -8,7 +8,7 @@ public class Barriers : MonoBehaviour
     public static event Action OnCancel;
     public static event Action OnTowerPlaced;
 
-    [SerializeField] private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
+    private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private int health;
     private float armor = 1;
     private Buffs[] debuffs;
@@ -49,7 +49,7 @@ public class Barriers : MonoBehaviour
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 0.5f) * 2f, Mathf.Round(mouseWorldPosition.y * 0.5f) * 2f);
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
 
             Locate();
 

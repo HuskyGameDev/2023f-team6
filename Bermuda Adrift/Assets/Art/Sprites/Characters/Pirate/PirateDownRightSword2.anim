@@ -77,9 +77,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.083333336
-    functionName: OnAttack
+    functionName: attack
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11400000, guid: 9b40d4a8a0fff984f82f9634ff5b78bb, type: 2}
     floatParameter: 0
     intParameter: 7
     messageOptions: 0

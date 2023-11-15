@@ -16,7 +16,7 @@ MonoBehaviour:
   damage: 25
   AOE: 3
   effect: 4
-  scale: 1
+  scale: 0.75
   timer: 3
   animator: {fileID: 9100000, guid: 9c3666c32b2db5044a13a85bf6a13757, type: 2}
   FriendlyFire: 1

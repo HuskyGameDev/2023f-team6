@@ -6,6 +6,7 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public static event Action OnTowerPicked;
+    public static event Action OnBarrierPicked;
 
     public static BuildManager main;
 
@@ -43,7 +44,7 @@ public class BuildManager : MonoBehaviour
     {
         if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
         {
-            OnTowerPicked?.Invoke();
+            OnBarrierPicked?.Invoke();
             mostRecent = Instantiate(towerPrefabs[1]);
             mostRecent.SendMessage("setBarrier", scriptable);
 
@@ -57,12 +58,6 @@ public class BuildManager : MonoBehaviour
     {
         gameManager = gameObject.GetComponent<GameManager>();
         positions = new Vector3[48];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (positions[47] != Vector3.zero) { return; }  //Won't let you place more than 48 towers
     }
 
     #region Tower/Barrier Placements

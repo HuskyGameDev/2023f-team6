@@ -110,7 +110,10 @@ public class Hitscan : MonoBehaviour
             AOETimer = float.MaxValue;
 
         gameObject.transform.localScale = new Vector3(bullet.getScale(), bullet.getScale());    //Size of the bullet
+        gameObject.GetComponent<CircleCollider2D>().radius = bullet.getScale();
+
         sprite.GetComponent<Animator>().runtimeAnimatorController = animator;
+        sprite.localScale = new Vector2(bullet.getScale() * 2, bullet.getScale() * 2);
         sprite.rotation = Quaternion.Euler(sprite.rotation.eulerAngles * 2);
     }
 
@@ -170,6 +173,8 @@ public class Hitscan : MonoBehaviour
             sprite.GetComponent<Animator>().SetTrigger("Hit");
             gameObject.GetComponent<CircleCollider2D>().radius = bullet.getAOE();    //Grow the hitbox to match the AOE
             
+            sprite.localScale = new Vector2(bullet.getAOE() * 2, bullet.getAOE() * 2);
+
             if (effect == Bullet.Effects.Shrapnel)                                               //0 - Basic bullet hit with shrapnel
             {
                 stop = true;
@@ -203,7 +208,6 @@ public class Hitscan : MonoBehaviour
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
                 camera.SendMessage("cameraShake", 0.25f);
-                sprite.localScale = new Vector2(bullet.getAOE() * 2, bullet.getAOE() * 2);
                 
                 stop = true;
                 landed = true;

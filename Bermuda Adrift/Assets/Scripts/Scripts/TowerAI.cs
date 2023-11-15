@@ -83,7 +83,7 @@ public class TowerAI : MonoBehaviour
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 0.5f) * 2f, Mathf.Round(mouseWorldPosition.y * 0.5f) * 2f);
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
 
             if (gameManager.getGameState() != GameManager.GameState.Idle)
             {
