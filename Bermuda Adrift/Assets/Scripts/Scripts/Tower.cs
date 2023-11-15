@@ -19,6 +19,7 @@ public class Tower : ScriptableObject
     [SerializeField] private string Name;
     [SerializeField] private string Description;
     [SerializeField] private Sprite image;
+    [SerializeField] private bool cantTurn;
 
 
 
@@ -97,6 +98,7 @@ public class Tower : ScriptableObject
     public string getName() { return Name; }
     public string getDescription() { return Description; }
     public Sprite getImage() { return image; }
+    public bool getCantTurn() { return cantTurn; }
 
     //Upgrade 1
     public float U1getDamageMult() { return U1damageMult; }

@@ -81,8 +81,8 @@ public class AI : MonoBehaviour
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
-        if (Input.GetKeyDown("p"))
-            TakeDamage(Health);
+        //if (Input.GetKeyDown("p"))
+        //    TakeDamage(Health);
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 

@@ -54,8 +54,6 @@ public class GameManager : MonoBehaviour
         level = 1;
         scrap = 0;
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
-
-        addScrap(300);
     }
     
     private void Update()
@@ -65,11 +63,12 @@ public class GameManager : MonoBehaviour
         {
             startRound();
         }
-        else */if (Input.GetKeyDown("n"))
+        else if (Input.GetKeyDown("n"))
             addScrap(100);
         else if (Input.GetKeyDown("b"))
             addXP(100);
-        
+        */
+
 
         levelUp();
     }

@@ -13,10 +13,54 @@ MonoBehaviour:
   m_Name: T_LightningRod
   m_EditorClassIdentifier: 
   damageMult: 1
-  fireRate: 1
   turnSpeed: 0
   range: -1
   anim: {fileID: 0}
+  baseSprite: {fileID: 0}
   defaultBullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
   cost: 0
   rarity: 0
+  Name: 
+  Description: 
+  image: {fileID: 0}
+  cantTurn: 1
+  U1damageMult: 0
+  U1turnSpeed: 0
+  U1range: 0
+  U1Bullet: {fileID: 0}
+  U1cost: 0
+  U1Name: 
+  U1Description: 
+  U1image: {fileID: 0}
+  UA1damageMult: 0
+  UA1turnSpeed: 0
+  UA1range: 0
+  UA1Bullet: {fileID: 0}
+  UA1cost: 0
+  UA1Name: 
+  UA1Description: 
+  UA1image: {fileID: 0}
+  UA2damageMult: 0
+  UA2turnSpeed: 0
+  UA2range: 0
+  UA2Bullet: {fileID: 0}
+  UA2cost: 0
+  UA2Name: 
+  UA2Description: 
+  UA2image: {fileID: 0}
+  UB1damageMult: 0
+  UB1turnSpeed: 0
+  UB1range: 0
+  UB1Bullet: {fileID: 0}
+  UB1cost: 0
+  UB1Name: 
+  UB1Description: 
+  UB1image: {fileID: 0}
+  UB2damageMult: 0
+  UB2turnSpeed: 0
+  UB2range: 0
+  UB2Bullet: {fileID: 0}
+  UB2cost: 0
+  UB2Name: 
+  UB2Description: 
+  UB2image: {fileID: 0}

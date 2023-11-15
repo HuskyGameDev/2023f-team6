@@ -22,7 +22,8 @@ MonoBehaviour:
   rarity: 0
   Name: Machine Gun
   Description: Fires weak bullets very quickly
-  image: {fileID: 21300000, guid: 019102247ad612c45a7b389e1c5e0445, type: 3}
+  image: {fileID: 1326247683, guid: f880803e86d74f545afac358feaffbda, type: 3}
+  cantTurn: 0
   U1damageMult: 1
   U1turnSpeed: 0.02
   U1range: -1
@@ -30,7 +31,7 @@ MonoBehaviour:
   U1cost: 300
   U1Name: Double Barrel
   U1Description: Fire Bullets quicker
-  U1image: {fileID: 21300000, guid: a5464e4529557dc418dc88c1b8ce6a68, type: 3}
+  U1image: {fileID: -1835893409, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA1damageMult: 1
   UA1turnSpeed: 0.02
   UA1range: -1
@@ -38,7 +39,7 @@ MonoBehaviour:
   UA1cost: 200
   UA1Name: Armor Piercing Rounds
   UA1Description: Bullets now pierce through more enemies
-  UA1image: {fileID: 21300000, guid: a5464e4529557dc418dc88c1b8ce6a68, type: 3}
+  UA1image: {fileID: 1076751315, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA2damageMult: 3
   UA2turnSpeed: 0.02
   UA2range: -1
@@ -46,7 +47,7 @@ MonoBehaviour:
   UA2cost: 300
   UA2Name: Army Killer
   UA2Description: Bullets Pierce Infinitely
-  UA2image: {fileID: 21300000, guid: a5464e4529557dc418dc88c1b8ce6a68, type: 3}
+  UA2image: {fileID: -1310959081, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB1damageMult: 2
   UB1turnSpeed: 0.02
   UB1range: -1
@@ -54,7 +55,7 @@ MonoBehaviour:
   UB1cost: 350
   UB1Name: More Bullet per Bullet
   UB1Description: Bullets do more Damage
-  UB1image: {fileID: 21300000, guid: a5464e4529557dc418dc88c1b8ce6a68, type: 3}
+  UB1image: {fileID: 297539905, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB2damageMult: 2
   UB2turnSpeed: 0.02
   UB2range: -1
@@ -62,4 +63,4 @@ MonoBehaviour:
   UB2cost: 400
   UB2Name: Ray of Death
   UB2Description: Never stops shooting
-  UB2image: {fileID: 21300000, guid: a5464e4529557dc418dc88c1b8ce6a68, type: 3}
+  UB2image: {fileID: -1654764367, guid: f880803e86d74f545afac358feaffbda, type: 3}

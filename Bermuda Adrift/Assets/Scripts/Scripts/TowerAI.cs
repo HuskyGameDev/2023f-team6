@@ -22,6 +22,7 @@ public class TowerAI : MonoBehaviour
     private float damageMult;
     private float turnSpeed;
     private float range;
+    private bool cantTurn;
 
     private GameObject target = null;
     private GameManager gameManager;
@@ -111,7 +112,7 @@ public class TowerAI : MonoBehaviour
         damageMult = tower.getDamageMult();
         turnSpeed = tower.getTurnSpeed();
         range = tower.getRange();
-
+        cantTurn = tower.getCantTurn();
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
@@ -243,6 +244,8 @@ public class TowerAI : MonoBehaviour
 
     private void targetPoint()  //finds where/how to point to look at target and points that way
     {
+        if (cantTurn) { return; }
+
         Vector3 offset = target.transform.position - transform.position;
         Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
 

@@ -22,7 +22,8 @@ MonoBehaviour:
   rarity: 0
   Name: Tri-Cannon
   Description: Fires cannonballs 3 times as fast!
-  image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  image: {fileID: -1748506242, guid: f880803e86d74f545afac358feaffbda, type: 3}
+  cantTurn: 0
   U1damageMult: 1
   U1turnSpeed: 0.05
   U1range: -1
@@ -30,31 +31,31 @@ MonoBehaviour:
   U1cost: 250
   U1Name: Larger Barrel
   U1Description: Fires larger cannon balls that spread shrapnel much further
-  U1image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  U1image: {fileID: 2031931764, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA1damageMult: 1
   UA1turnSpeed: 0.05
   UA1range: -1
   UA1Bullet: {fileID: 11400000, guid: 8023c4e255bc85843be12a19e65a19c0, type: 2}
   UA1cost: 500
   UA1Name: Sharp Shrapnel
-  UA1Description: Shrapnel now causes a bleed debuff on enemies
-  UA1image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  UA1Description: Shrapnel now causes bleeding on enemies
+  UA1image: {fileID: -2090480115, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA2damageMult: 1
   UA2turnSpeed: 0.05
   UA2range: -1
   UA2Bullet: {fileID: 11400000, guid: eb94cfcbaf05de049b35868b39c2d720, type: 2}
   UA2cost: 600
   UA2Name: Blood In The Water
-  UA2Description: The bleeding debuff is now much more powerful
-  UA2image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  UA2Description: The bleeding is now much more powerful
+  UA2image: {fileID: -1899072108, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB1damageMult: 2
   UB1turnSpeed: 0.1
   UB1range: -1
   UB1Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
   UB1cost: 250
   UB1Name: Quick-Spin
-  UB1Description: Fires even faster and does more damage per shot
-  UB1image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  UB1Description: Fires faster and does more damage per shot
+  UB1image: {fileID: -15425042, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB2damageMult: 3
   UB2turnSpeed: 0.1
   UB2range: -1
@@ -62,4 +63,4 @@ MonoBehaviour:
   UB2cost: 350
   UB2Name: Vortex Engine
   UB2Description: Fires Extremely Quickly
-  UB2image: {fileID: 21300000, guid: 3e6552ab7c61d0f49964bafd199c3595, type: 3}
+  UB2image: {fileID: 275122526, guid: f880803e86d74f545afac358feaffbda, type: 3}
