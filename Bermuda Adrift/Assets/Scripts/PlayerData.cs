@@ -10,6 +10,7 @@ public class PlayerData {
     private int xp;
     private int scrap;
     private int total;
+    private int level;
 
     public PlayerData(EnemyManager enemies, Centerpiece center, GameManager game){
         round = enemies.getRound();
@@ -17,6 +18,7 @@ public class PlayerData {
         centerHealth = center.getHealth();
         xp = game.getXP();
         scrap = game.getScrap();
+        level = game.getLevel();
     }
 
     public PlayerData(){
@@ -44,5 +46,9 @@ public class PlayerData {
 
     public int getTotal(){
         return total;
+    }
+
+    public int getLevel(){
+        return level;
     }
 }

@@ -24,7 +24,7 @@ public class SaveManager : MonoBehaviour
             LoadPlayer();
         }
 
-        if(Input.GetKeyDown(";")){
+        if(state == GameManager.GameState.GameOver){
             DeletePlayer();
         }
     }
@@ -49,6 +49,7 @@ public class SaveManager : MonoBehaviour
 
         game.setScrap(data.getScrap());
         game.setXP(data.getXP());
+        game.setLevel(data.getLevel());
     }
 
     public void endRoundSave(int bugFix){
