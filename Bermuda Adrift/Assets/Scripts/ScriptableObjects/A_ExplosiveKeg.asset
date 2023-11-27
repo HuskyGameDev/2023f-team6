@@ -16,11 +16,14 @@ MonoBehaviour:
   meleeHitboxes: {fileID: 0}
   bullet: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
   buff: {fileID: 0}
+  destinedBullet: {fileID: 0}
   bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
   slot: 4
   cooldown: 10
   thumbnail: {fileID: 1637543663, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   ModelSprite: {fileID: 21300000, guid: 8e55b07a50537874c8fecfc3fed5e259, type: 3}
   Name: Explosive Keg
-  description: Explosive Keg - Push a barrel into enemies to create a large explosion
-    and set them on fire
+  description: Push a barrel into enemies to create a large explosion and set them
+    on fire
+  looped: 0
+  lockedDirection: 0

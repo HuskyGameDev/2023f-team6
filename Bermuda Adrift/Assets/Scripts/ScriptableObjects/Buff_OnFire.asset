@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Buff_OnFire
   m_EditorClassIdentifier: 
   duration: 2
+  description: 
+  thumbnail: {fileID: 0}
   Distracted: 0
   Stunned: 0
   Cooldowns: 1
@@ -26,6 +28,7 @@ MonoBehaviour:
   DamageOverTime: 1
   DOTSpeed: 0.25
   percentDOT: 0
+  DOTColor: {r: 1, g: 0.20716198, b: 0, a: 1}
   Health: 1
   armor: 1
   Damage: 1

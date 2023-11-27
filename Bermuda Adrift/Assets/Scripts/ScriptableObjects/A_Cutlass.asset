@@ -16,10 +16,13 @@ MonoBehaviour:
   meleeHitboxes: {fileID: 7420723938345520231, guid: abeb60d7890993b489623cc665d4e79e, type: 3}
   bullet: {fileID: 0}
   buff: {fileID: 0}
+  destinedBullet: {fileID: 0}
   bulletPrefab: {fileID: 0}
   slot: 1
   cooldown: 0
   thumbnail: {fileID: -1531565712, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   ModelSprite: {fileID: 0}
   Name: Cutlass
-  description: Cutlass - Attack with a quick, short range attack
+  description: Attack with a quick, short range attack
+  looped: 1
+  lockedDirection: 0

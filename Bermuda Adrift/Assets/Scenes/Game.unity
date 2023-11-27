@@ -12587,6 +12587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520e6ad2ebc05a488108375ef65d710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackType: 0
 --- !u!1 &336426862
 GameObject:
   m_ObjectHideFlags: 0
@@ -16801,7 +16802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &720444457
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17745,7 +17746,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -17763,36 +17764,6 @@ Tilemap:
   m_GameObject: {fileID: 763595944}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: -10, y: -5, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -9, y: -5, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 2
-      m_TileSpriteIndex: 2
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -8, y: -5, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 4
-      m_TileSpriteIndex: 4
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: -10, y: -4, z: 0}
     second:
       serializedVersion: 2
@@ -17829,25 +17800,25 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 4f0df064b8a023346b98f621789a4025, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 42917d7affcd0814c9fbd1341c5b209b, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: b387ebc4db895484ba02046fa80ce0a7, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 5488354b12928b14baeef0b622dc12d6, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 42fa0b53d6adcc64f9ebc0367d5f24fc, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 06ff62c2a521cc341b8db4b7e339025a, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 6
+  - m_RefCount: 3
     m_Data:
       e00: 1
       e01: 0
@@ -17866,7 +17837,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 6
+  - m_RefCount: 3
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -39904,6 +39875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520e6ad2ebc05a488108375ef65d710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackType: 0
 --- !u!1 &1787786123
 GameObject:
   m_ObjectHideFlags: 0
@@ -42859,6 +42831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520e6ad2ebc05a488108375ef65d710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackType: 0
 --- !u!1 &2017594065
 GameObject:
   m_ObjectHideFlags: 0
@@ -42998,6 +42971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8520e6ad2ebc05a488108375ef65d710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackType: 0
 --- !u!1 &2035620797
 GameObject:
   m_ObjectHideFlags: 0
@@ -45095,7 +45069,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -45307,7 +45281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccfcfcb06dfd134b953d2fc5ce013ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: a1cdf67ab11154c439e72399ef2658a1, type: 2}
+  character: {fileID: 11400000, guid: 2c7301dfd237fdd43bd864a4c2d38df6, type: 2}
 --- !u!114 &2135632953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45331,7 +45305,7 @@ Animator:
   m_GameObject: {fileID: 2135632950}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3cbb698435b0de246ae17e8fe425adb6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5664c933a4e6be049a81d31051d1a03a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -45374,7 +45348,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002926588, y: -0.5832113}
+  m_Offset: {x: 0, y: -0.58}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -45475,7 +45449,7 @@ Transform:
   m_GameObject: {fileID: 2135632950}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.98, y: -2.03, z: 0}
+  m_LocalPosition: {x: -2, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

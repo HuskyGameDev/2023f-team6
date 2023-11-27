@@ -6,10 +6,12 @@ public class Tile : MonoBehaviour
 {
     SpriteRenderer sR;
     int type;
+    BuildManager buildManager;
     // Start is called before the first frame update
     void Start()
     {
         sR = gameObject.GetComponent<SpriteRenderer>();
+        buildManager = GameObject.Find("Managers").GetComponent<BuildManager>();
     }
     private void Update()
     {
@@ -21,13 +23,16 @@ public class Tile : MonoBehaviour
         //Light up in in the right/wrong spot
         if (type == 0)
         {
-            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1)) { enterCorrect(); }
+            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position)) { enterCorrect(); }
             else { enterIncorrect(); }
-        } else
+        } 
+        else
         {
-            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1 && Mathf.Abs(transform.position.y) < 1)   //Left/Right channels
+            if (((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1 && Mathf.Abs(transform.position.y) < 1)   //Left/Right channels
                 || 
-                (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && Mathf.Abs(transform.position.x) < 1) { enterCorrect(); }
+                (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && Mathf.Abs(transform.position.x) < 1) 
+                && 
+                buildManager.approvePosition(transform.position)) { enterCorrect(); }
             else { enterIncorrect(); }
         }
 

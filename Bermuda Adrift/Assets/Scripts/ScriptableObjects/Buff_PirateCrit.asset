@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Buff_PirateCrit
   m_EditorClassIdentifier: 
   duration: -1
-  description: Seafaring Spite - Higher chance to hit for more damage
+  description: Seafaring Spite - Higher chance to hit for critical damage
   thumbnail: {fileID: 0}
   Distracted: 0
   Stunned: 0

@@ -17,6 +17,7 @@ public class Player : ScriptableObject
     [SerializeField] private Buffs defPassive;
     [SerializeField] private Buffs altPassive;
     [SerializeField] private string description;
+    [SerializeField] private Sprite mainBodySprite;
 
     private bool altP;
     private bool altS;
@@ -70,10 +71,19 @@ public class Player : ScriptableObject
             return altPassive;
         return defPassive;
     }
+    public Ability getDefPrimary() { return defPrimary; }
+    public Ability getDefSecondary() { return defSecondary; }
+    public Ability getDefUtility() { return defUtility; }
+    public Ability getDefSpecial() { return defSpecial; }
+    public Ability getAltPrimary() { return altPrimary; }
+    public Ability getAltSecondary() { return altSecondary; }
+    public Ability getAltUtility() { return altUtility; }
+    public Ability getAltSpecial() { return altSpecial; }
     public bool altedP() { return altP; }
     public bool altedS() { return altS; }
     public bool altedU() { return altU; }
     public bool altedSp() { return altSp; }
     public bool altedPa() { return altPa; }
     public string getDescription() { return description; }
+    public Sprite getMainBodySprite() { return mainBodySprite; }
 }

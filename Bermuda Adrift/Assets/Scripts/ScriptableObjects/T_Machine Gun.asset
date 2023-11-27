@@ -45,7 +45,7 @@ MonoBehaviour:
   UA2range: -1
   UA2Bullet: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
   UA2cost: 300
-  UA2Name: Army Killer
+  UA2Name: Nation Killer
   UA2Description: Bullets Pierce Infinitely
   UA2image: {fileID: -1310959081, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB1damageMult: 2
@@ -61,6 +61,6 @@ MonoBehaviour:
   UB2range: -1
   UB2Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   UB2cost: 400
-  UB2Name: Ray of Death
+  UB2Name: Rain of Death
   UB2Description: Never stops shooting
   UB2image: {fileID: -1654764367, guid: f880803e86d74f545afac358feaffbda, type: 3}

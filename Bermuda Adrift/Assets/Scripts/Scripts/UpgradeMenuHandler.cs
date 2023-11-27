@@ -64,6 +64,10 @@ public class UpgradeMenuHandler : MonoBehaviour
             else
                 headerText.text = tower.UB2getName();
 
+            upgrade2.SetActive(false);
+            OneOption.SetActive(true);
+            TwoOptions.SetActive(false);
+
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -243.2f);
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
         }

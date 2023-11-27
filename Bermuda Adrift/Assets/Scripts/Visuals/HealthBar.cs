@@ -11,12 +11,16 @@ public class HealthBar : MonoBehaviour
     private void OnEnable()
     {
         enemy.OnEnemyHurt += updateHealthBar;
+        enemy.OnCrit += updateHealthBar;
+        enemy.OnStatusDamage += statusUpdateHealthbar;
         enemy.SetupHealthBar += setupHealthBar;
     }
 
     private void OnDisable()
     {
         enemy.OnEnemyHurt -= updateHealthBar;
+        enemy.OnCrit -= updateHealthBar;
+        enemy.OnStatusDamage -= statusUpdateHealthbar;
         enemy.SetupHealthBar -= setupHealthBar;
     }
 
@@ -30,6 +34,7 @@ public class HealthBar : MonoBehaviour
     {
         slider.value -= damage;
     }
+    private void statusUpdateHealthbar(int damage, Color color) { updateHealthBar(damage); }
 
     private void setupHealthBar(int health)
     {

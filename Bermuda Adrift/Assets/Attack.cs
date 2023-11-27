@@ -32,6 +32,8 @@ public class Attack : MonoBehaviour
     private float specialCooldown = 10f;
 
     private int direction;
+    private int attackCooldownFrames = 5;
+    private bool attackCooldownBool;
 
     private Buffs[] buffs = new Buffs[10];
 
@@ -43,6 +45,7 @@ public class Attack : MonoBehaviour
     private void OnDisable()
     {
         CooldownIndicator.cooldownComplete -= cooldownFinished;
+        CooldownIndicator.awoken -= cooldownCreated;
     }
     private void Start()
     {
@@ -154,42 +157,39 @@ public class Attack : MonoBehaviour
     public void cooldownCreated()
     {
         setThumbnails?.Invoke(character.getPrimary().getThumbnail(), CooldownIndicator.position.primary);
-        setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
         setThumbnails?.Invoke(character.getUtility().getThumbnail(), CooldownIndicator.position.utility);
         setThumbnails?.Invoke(character.getSpecial().getThumbnail(), CooldownIndicator.position.special);
+        setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.Defend && GameObject.Find("Managers").GetComponent<GameManager>().getGameState() != GameManager.GameState.BossRound)
+        {
+            anim.SetBool("Primary", false);
+            anim.SetBool("Secondary", false);
+            anim.SetBool("Utility", false);
+            anim.SetBool("Special", false);
+
             return;
+        }
 
         anim.speed = getAttackSpeed();
 
-        if (Input.GetMouseButton(0) && !IsPointerOverUIObject())
-        {
-            primary();
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            secondary();
-        }
-        else if (Input.GetKeyDown("q"))
-        {
-            utility();
-        }
-        else if (Input.GetKeyDown("r"))
-        {
-            special();
-        }
-        else
-        {
-            anim.ResetTrigger("Primary");
-            anim.ResetTrigger("Secondary");
-            anim.ResetTrigger("Utility");
-            anim.ResetTrigger("Special");
-        }
+        if ((Input.GetMouseButtonDown(0) || (character.getPrimary().canBeLooped() && Input.GetMouseButton(0)) || (!primaryOnCooldown && !anim.GetBool("Primary") && Input.GetMouseButton(0))) && !IsPointerOverUIObject()) { primary(); }
+        else if (Input.GetMouseButtonDown(1) || (character.getSecondary().canBeLooped() && Input.GetMouseButton(1)) || (!secondaryOnCooldown && !anim.GetBool("Secondary") && Input.GetMouseButton(1))) { secondary(); }
+        else if (Input.GetKeyDown("q") || (character.getUtility().canBeLooped() && Input.GetKey("q")) || (!utilityOnCooldown && !anim.GetBool("Utility") && Input.GetKey("q"))) { utility(); }
+        else if (Input.GetKeyDown("r") || (character.getSpecial().canBeLooped() && Input.GetKey("r")) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey("r"))) { special(); }
+
+        if (Input.GetMouseButtonUp(0))
+            anim.SetBool("Primary", false);
+        if (Input.GetMouseButtonUp(1))
+            anim.SetBool("Secondary", false);
+        if (Input.GetKeyUp("q"))
+            anim.SetBool("Utility", false);
+        if (Input.GetKeyUp("r"))
+            anim.SetBool("Special", false);
 
         if (primaryOnCooldown)
             updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
@@ -204,46 +204,65 @@ public class Attack : MonoBehaviour
     #region Attacks
     public void primary()
     {
-        if (!primaryOnCooldown)
+        if (!primaryOnCooldown && !otherAttackActive(1))
         {
-            anim.SetFloat("AttackDirectionX", movement.getAim().x);
-            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+            if (!(anim.GetBool("Primary") && character.getPrimary().directionLocked()))
+            {
+                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
+                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+            }
 
-            anim.SetTrigger("Primary");
+            anim.SetBool("Primary", true);
+            StartCoroutine(antiHold(character.getPrimary().canBeLooped(), 1));
         }
     }
     public void secondary()
     {
-        if (!secondaryOnCooldown)
+        if (!secondaryOnCooldown && !otherAttackActive(2))
         {
-            anim.SetFloat("AttackDirectionX", movement.getAim().x);
-            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+            if (!(anim.GetBool("Secondary") && character.getSecondary().directionLocked()))
+            {
+                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
+                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+            }
 
-            anim.SetTrigger("Secondary");
+            anim.SetBool("Secondary", true);
+            StartCoroutine(antiHold(character.getSecondary().canBeLooped(), 2));
         }
     }
     public void utility()
     {
-        if (!utilityOnCooldown)
+        if (!utilityOnCooldown && !otherAttackActive(3))
         {
-            anim.SetFloat("AttackDirectionX", movement.getAim().x);
-            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+            if (!(anim.GetBool("Utility") && character.getUtility().directionLocked()))
+            {
+                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
+                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+            }
 
-            anim.SetTrigger("Utility");
+            anim.SetBool("Utility", true);
+            StartCoroutine(antiHold(character.getUtility().canBeLooped(), 3));
         }
     }
     public void special()
     {
-        if (!specialOnCooldown)
+        if (!specialOnCooldown && !otherAttackActive(4))
         {
-            anim.SetFloat("AttackDirectionX", movement.getAim().x);
-            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+            if (!(anim.GetBool("Special") && character.getSpecial().directionLocked()))
+            {
+                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
+                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+            }
 
-            anim.SetTrigger("Special");
+            anim.SetBool("Special", true);
+            StartCoroutine(antiHold(character.getSpecial().canBeLooped(), 4));
         }
     }
     public void attack(Ability ability)    //Handles projectiles and buffs
     {
+        if (attackCooldownBool) { return; }
+        attackCooldownBool = true;
+
         if (ability.getSlot() == 1 && primaryCooldown > 0)
             primaryOnCooldown = true;
         else if (ability.getSlot() == 2 && secondaryCooldown > 0)
@@ -267,13 +286,49 @@ public class Attack : MonoBehaviour
             intBullet.SendMessage("setCritChance", getCrit());
             intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
             intBullet.SendMessage("AirborneMult", getAirborneMult());
+            intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
         } 
         else if (ability.getAttackType() == Ability.attackType.buff)
         {
             StartCoroutine(Buff(ability.getBuff()));
             movement.buff(ability.getBuff());
         }
+        else if (ability.getAttackType() == Ability.attackType.destinedProjectile)
+        {
+            GameObject intBullet = Instantiate(ability.getBulletPrefab(), new Vector3(100f,100f), Quaternion.identity);
+            intBullet.SendMessage("setBullet", ability.getDestinedBullet());
+            intBullet.SendMessage("Mult", getDamageMult());
+            intBullet.SendMessage("setCritChance", getCrit());
+            intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
+            intBullet.SendMessage("AirborneMult", getAirborneMult());
+            intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
+        }
 
+        StartCoroutine(attackDelay());
+    }
+
+    private IEnumerator attackDelay()   //Blend trees make 2 animations with the same animation events happen simultaneously. This makes it so the attack even only happens once
+    {
+        for (int i = 0; i < attackCooldownFrames; i++)
+            yield return new WaitForEndOfFrame();
+        attackCooldownBool = false;
+    }
+    private IEnumerator antiHold(bool canLoop, int attack)  //Resets the animation bool after a few frames so you can't just hold the button down
+    {
+        if (!canLoop)
+        {
+            for (int i = 0; i < attackCooldownFrames; i++)
+                yield return new WaitForEndOfFrame();
+
+            if (attack == 1)
+                anim.SetBool("Primary", false);
+            if (attack == 2)
+                anim.SetBool("Secondary", false);
+            if (attack == 3)
+                anim.SetBool("Utility", false);
+            if (attack == 4)
+                anim.SetBool("Special", false);
+        }
     }
 
     #region Melee Attacks
@@ -290,6 +345,7 @@ public class Attack : MonoBehaviour
             weapon.setUnderwaterMult(getUnderwaterMult());
             weapon.setAirborneMult(getAirborneMult());
             weapon.setCrit(getCrit());
+            weapon.setLevelScale(GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
             Melees1[direction].SetActive(true);
         } 
         else if (ability.getSlot() == 2)
@@ -299,6 +355,7 @@ public class Attack : MonoBehaviour
             weapon.setUnderwaterMult(getUnderwaterMult());
             weapon.setAirborneMult(getAirborneMult());
             weapon.setCrit(getCrit());
+            weapon.setLevelScale(GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
             Melees2[direction].SetActive(true);
         }
         else if (ability.getSlot() == 3)
@@ -308,6 +365,7 @@ public class Attack : MonoBehaviour
             weapon.setUnderwaterMult(getUnderwaterMult());
             weapon.setAirborneMult(getAirborneMult());
             weapon.setCrit(getCrit());
+            weapon.setLevelScale(GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
             Melees3[direction].SetActive(true);
         }
         else if (ability.getSlot() == 4)
@@ -317,6 +375,7 @@ public class Attack : MonoBehaviour
             weapon.setUnderwaterMult(getUnderwaterMult());
             weapon.setAirborneMult(getAirborneMult());
             weapon.setCrit(getCrit());
+            weapon.setLevelScale(GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
             Melees4[direction].SetActive(true);
         }
 
@@ -355,16 +414,41 @@ public class Attack : MonoBehaviour
     public void cooldownFinished(int type)  //Called by the cooldown indicators when they're refreshed
     {
         if (type == 0)
+        {
             primaryOnCooldown = false;
+            anim.SetBool("Primary", false);
+        }
         else if (type == 1)
+        {
             secondaryOnCooldown = false;
+            anim.SetBool("Secondary", false);
+        }
         else if (type == 2)
+        {
             utilityOnCooldown = false;
+            anim.SetBool("Utility", false);
+        }
         else if (type == 3)
+        {
             specialOnCooldown = false;
+            anim.SetBool("Special", false);
+        }
     }
     #endregion
 
+    private bool otherAttackActive(int currentAttack)   //Returns true if another attack anim bool is active
+    {
+        if (currentAttack == 1 && (anim.GetBool("Secondary") || anim.GetBool("Utility") || anim.GetBool("Special")))
+            return true;
+        else if (currentAttack == 2 && (anim.GetBool("Primary") || anim.GetBool("Utility") || anim.GetBool("Special")))
+            return true;
+        else if (currentAttack == 3 && (anim.GetBool("Primary") || anim.GetBool("Secondary") || anim.GetBool("Special")))
+            return true;
+        else if (currentAttack == 4 && (anim.GetBool("Primary") || anim.GetBool("Secondary") || anim.GetBool("Utility")))
+            return true;
+
+        return false;
+    }
     #endregion
 
     #region Buff managing
@@ -457,7 +541,7 @@ public class Attack : MonoBehaviour
         }
         return mult;
     }
-    private float getCrit()
+    private float getCrit() //Returns crit chance
     {
         float crit = 1;
         for (int i = 0; i < buffs.Length; i++)

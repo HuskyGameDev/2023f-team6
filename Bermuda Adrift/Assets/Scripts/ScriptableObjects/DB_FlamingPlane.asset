@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d1961a2921e7b4fa63a12914bd538c, type: 3}
+  m_Name: DB_FlamingPlane
+  m_EditorClassIdentifier: 
+  destinationPrefab: {fileID: 7976359315611203679, guid: 97486dc1fb343ca43ab6d65c1b9992c9, type: 3}
+  bulletAnimator: {fileID: 9100000, guid: 0ac65a1116aeb764eb51699fb1ef1b9e, type: 2}
+  destinationAnimator: {fileID: 9100000, guid: 0d047c6130b2c6144a1b4f14d772fd18, type: 2}
+  AOE: 7
+  angle: 40
+  timeToLand: 3
+  delayTime: 5
+  damage: 50
+  scrapBonus: 200

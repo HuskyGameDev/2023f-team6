@@ -8,6 +8,9 @@ using Random = UnityEngine.Random;
 public class AI : MonoBehaviour
 {
     public event Action<int> OnEnemyHurt;
+    public event Action<int> OnCrit;
+    public event Action<int, Color> OnStatusDamage;
+
     public event Action<int> SetupHealthBar;
 
     private Enemy enemy;
@@ -139,7 +142,7 @@ public class AI : MonoBehaviour
     {
         Buffs buff = debuffToInflict;
         debuffToInflict = null;
-        while (gameObject.active)
+        while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
 
@@ -153,7 +156,7 @@ public class AI : MonoBehaviour
     }
     IEnumerator Bullets()
     {
-        while (gameObject.active)
+        while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
 
@@ -168,7 +171,7 @@ public class AI : MonoBehaviour
     #region Boss attack loop
     IEnumerator randomAttacks() //Every 10 seconds, pick a random attack to do
     {
-        while (gameObject.active)
+        while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(10f);
 
@@ -325,22 +328,60 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-    #region Actions done by/done to the enemy
+    #region TakeDamage functions
     private void TakeDamage(int moreDamage) //Receiver for damage numbers, go to debuff function if debuffed
     {
         Health -= (int) (moreDamage * getArmor());
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
 
+        //Debug.Log("Normal: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
+
         OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
-    private void heal(int health)   //maybe an enemy that heals other enemies?
+    private void CritDamage(int moreDamage)
     {
-        Health += health;
-        OnEnemyHurt?.Invoke(-health);
+        Health -= (int)(moreDamage * getArmor());
+        damage += (int)(moreDamage * getArmor());
+        animator.SetTrigger("TookDamage");
+
+        //Debug.Log("Crit: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
+
+        OnCrit?.Invoke((int)(moreDamage * getArmor()));
+        if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
+            death();
     }
+    private void StatusDamage(int moreDamage, Color color)
+    {
+        Health -= moreDamage;
+        damage += moreDamage;
+        animator.SetTrigger("TookDamage");
+
+        //Debug.Log("Status: -" + moreDamage + " => " + Health + " / " + enemy.getHealth());
+
+        OnStatusDamage?.Invoke((int)(moreDamage * getArmor()), color);
+        if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
+            death();
+    }
+    private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
+    {
+        enemyManager.SendMessage("addScrap", enemy.getScrap());
+        enemyManager.SendMessage("addXP", enemy.getXP());
+
+        enemyManager.SendMessage("EnemyDown");
+        stop = true;
+        dead = true;
+
+        animator.SetBool("Dead", true);
+
+        new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
+        Destroy(gameObject);
+    }
+    #endregion
+
+    #region Attack/Heal
     private IEnumerator attack(GameObject recipient)
     {
         stop = true;
@@ -359,19 +400,10 @@ public class AI : MonoBehaviour
         animator.SetBool("Attacking", false);
         stop = false;
     }
-    private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
+    private void heal(int health)   //maybe an enemy that heals other enemies?
     {
-        enemyManager.SendMessage("addScrap", enemy.getScrap());
-        enemyManager.SendMessage("addXP", enemy.getXP());
-
-        enemyManager.SendMessage("EnemyDown");
-        stop = true;
-        dead = true;
-
-        animator.SetBool("Dead", true);
-
-        new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
-        Destroy(gameObject);
+        Health += health;
+        OnEnemyHurt?.Invoke(-health);
     }
     #endregion
 
@@ -427,7 +459,7 @@ public class AI : MonoBehaviour
         //if (getDistracted())
         //    baited(new Vector3(Random.value * gameObject.transform.position.x + gameObject.transform.position.x, Random.value * gameObject.transform.position.y + gameObject.transform.position.y));
 
-        StartCoroutine(DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration(), newDebuff.getPercentDOT()));
+        StartCoroutine(DOT(newDebuff.getDOT(), newDebuff.getDOTSpeed(), newDebuff.getDuration(), newDebuff.getPercentDOT(), newDebuff.getDOTColor()));
 
         yield return new WaitForSeconds(newDebuff.getDuration());
 
@@ -447,24 +479,24 @@ public class AI : MonoBehaviour
         if (expectedHealth < Health)    //Bring health down when the buff wears off
         {
             int tempDamage = damage;
-            TakeDamage(Health - expectedHealth);    //Could kill the enemy, which is taken care of in the take damage function
+            StatusDamage(Health - expectedHealth, Color.red);    //Could kill the enemy, which is taken care of in the take damage function
             damage = tempDamage;
         }
     }
-    private IEnumerator DOT(int damage, float speed, float duration, float percent)    //Does [damage] damage every [speed] seconds for [duration] seconds
+    private IEnumerator DOT(int damage, float speed, float duration, float percent, Color color)    //Does [damage] damage every [speed] seconds for [duration] seconds (damage shows up with [color] text)
     {
         float startTime = Time.time;
-        while (Time.time < startTime + duration) //Even if no DOT, still waits until the end of the duration
+        while (Time.time < startTime + duration)
         {
             if (damage > 0)
-                TakeDamage(damage);
+                StatusDamage(damage, color);
 
             if (percent > 0)
             {
                 if ((int)(percent / 100 * (enemy.getHealth() * getHealthMult())) == 0)
-                    TakeDamage(1);
+                    StatusDamage(1, color);
                 else
-                    TakeDamage((int)(percent / 100 * (enemy.getHealth() * getHealthMult())));
+                    StatusDamage((int)(percent / 100 * (enemy.getHealth() * getHealthMult())), color);
             }
 
             yield return new WaitForSeconds(speed);

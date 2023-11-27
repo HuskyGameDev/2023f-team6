@@ -9,8 +9,6 @@ public class Movement : MonoBehaviour
     private Vector2 input;
 
     Animator anim;
-    private Vector2 lastMoveDirection;
-    private bool facingLeft = true;
     private float stop = 1;
 
     //public Transform Aim;
@@ -29,11 +27,16 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() {
         ProccessInputs();
-        rb.velocity = input * speed * getSpeed() * Time.fixedDeltaTime * stop;
-        
-        if(isWalking) {
-            AimVector = input;
-        }
+        move();
+
+        //Update Aim to reflect mouse position
+        var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0f;
+        AimVector = mouseWorldPosition - gameObject.transform.position;
+
+        //Update movex and movey based on AIM
+        anim.SetFloat("MoveX", AimVector.x);
+        anim.SetFloat("MoveY", AimVector.y);
     }
 
     void ProccessInputs() {
@@ -55,12 +58,30 @@ public class Movement : MonoBehaviour
         }
 
         input.Normalize();
+    }
+    private void move()
+    {
+        int layerMask = 1 << 4;
+        float xDirection = 1;
+        if (input.x < 0)
+            xDirection = -1;
+        float yDirection = 1;
+        if (input.y < 0)
+            yDirection = -1;
 
-        if (isWalking)
-        {
-            anim.SetFloat("MoveX", input.x);
-            anim.SetFloat("MoveY", input.y);
-        }
+
+        if (Physics.Raycast(transform.position + (Vector3.down * 0.58f), Vector3.forward * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, layerMask))
+            xDirection = 0;
+        else
+            xDirection = input.x;
+
+        if (Physics.Raycast(transform.position + (Vector3.down * 0.58f), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, layerMask))
+            yDirection = 0;
+        else
+            yDirection = input.y;
+
+        //transform.position = transform.position + new Vector3(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
+        rb.velocity = new Vector2(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
     }
 
     public Vector3 getAim() { return AimVector; }
@@ -71,6 +92,7 @@ public class Movement : MonoBehaviour
         return true;
     }
     public void Stop() { stop = 0.25f; }
+    public void fullStop() { stop = 0f; }
     public void resume() { stop = 1; }
 
 

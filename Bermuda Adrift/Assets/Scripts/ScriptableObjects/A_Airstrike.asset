@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
+  m_Name: A_Airstrike
+  m_EditorClassIdentifier: 
+  type: 2
+  meleeHitboxes: {fileID: 0}
+  bullet: {fileID: 0}
+  buff: {fileID: 0}
+  destinedBullet: {fileID: 11400000, guid: 296a012a10cf1dd4ea46ee8f4baa6596, type: 2}
+  bulletPrefab: {fileID: 8823190863568397684, guid: 56ea482041be5254bb8db812787806b4, type: 3}
+  slot: 4
+  cooldown: 60
+  thumbnail: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  ModelSprite: {fileID: 0}
+  Name: Airstrike
+  description: Call in a plane to defeat many enemies in a large area
+  looped: 0
+  lockedDirection: 0

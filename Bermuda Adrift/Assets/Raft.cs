@@ -12,7 +12,7 @@ public class Raft : MonoBehaviour
     void Start()
     {
         tilemap = GetComponent<Tilemap>();
-        Debug.Log(tilemap.origin);
+        //Debug.Log(tilemap.origin);
 
         if (tilemap == null)
             return;

@@ -39,6 +39,7 @@ public class Buffs : ScriptableObject
     [SerializeField] private int DamageOverTime;  //If there's multiple effects on an enemy, they can stack. Probably shouldn't stack on barriers
     [SerializeField] private float DOTSpeed;    //Low for faster damage
     [SerializeField] private float percentDOT;
+    [SerializeField] private Color DOTColor;
 
     [SerializeField] private float Health;  //Probably best used as a health buff
     [SerializeField] private float armor;   //Take more damage if > 1, less if < 1
@@ -67,6 +68,7 @@ public class Buffs : ScriptableObject
     public int getDOT() { return DamageOverTime; }
     public float getDOTSpeed() { return DOTSpeed; }
     public float getPercentDOT() { return percentDOT; }
+    public Color getDOTColor() { return DOTColor; }
     public float getHealth() { return Health; }
     public float getDamage() { return Damage; }
     public float getArmor() { return armor; }

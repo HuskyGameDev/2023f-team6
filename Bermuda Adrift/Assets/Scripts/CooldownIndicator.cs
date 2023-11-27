@@ -8,7 +8,7 @@ using System;
 public class CooldownIndicator : MonoBehaviour
 {
     public enum position { primary, secondary, utility, special};
-    private position attackType;
+    [SerializeField] private position attackType;
 
     public static event Action<int> cooldownComplete;
     public static event Action awoken;

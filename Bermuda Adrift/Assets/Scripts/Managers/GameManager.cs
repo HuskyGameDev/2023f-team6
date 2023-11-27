@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     }
 
     private GameState state;
+    private Player character;
    
     private void Start()
     {
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         //f to start a round
-        /*if (Input.GetKeyDown("f"))  //Replaced in the main scene, but still useful for testing in other scenes
+        if (Input.GetKeyDown("f"))  //Replaced in the main scene, but still useful for testing in other scenes
         {
             startRound();
         }
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
             addScrap(100);
         else if (Input.GetKeyDown("b"))
             addXP(100);
-        */
+        
 
 
         levelUp();

@@ -84,6 +84,7 @@ public class Barriers : MonoBehaviour
         if (health <= 0)
         {
             //Play destroyed animation
+            GameObject.Find("Managers").GetComponent<BuildManager>().removePosition(transform.position);
             Destroy(gameObject);
         }
     }

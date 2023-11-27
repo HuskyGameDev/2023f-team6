@@ -6,8 +6,6 @@ using Random = UnityEngine.Random;
 
 public class Hitscan : MonoBehaviour
 {
-    public static event Action onCrit;
-
     private Bullet bullet;
     private int damage;
     private float timer;
@@ -19,6 +17,7 @@ public class Hitscan : MonoBehaviour
     private float AOETimer;
     private Bullet.Effects effect;
     private float critChance;
+    private float levelScale = 1;
 
     [SerializeField] private Transform sprite;
 
@@ -82,7 +81,7 @@ public class Hitscan : MonoBehaviour
     }
 
     public void Mult(float mult) { damage = (int) (damage * mult); }  //Multiplies base damage of the bullet by the damage multiplier of the tower when it's created
-
+    public void setLevelScale(float levelScale) { this.levelScale = levelScale; }
     public void setBullet(Bullet newBullet)     //Bullet is told what type of bullet it is and it sets up everything from there
     {
         bullet = newBullet;
@@ -132,20 +131,35 @@ public class Hitscan : MonoBehaviour
 
     private void dealDamage(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-            collision.gameObject.SendMessage("TakeDamage", damage * underwaterMult * critCalc() * GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
+        int crit = critCalc();
 
-        else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-            collision.gameObject.SendMessage("TakeDamage", damage * airborneMult * critCalc() * GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
+        if (crit > 1)
+        {
+            if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
+                collision.gameObject.SendMessage("CritDamage", damage * underwaterMult * crit * levelScale);
 
+            else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
+                collision.gameObject.SendMessage("CritDamage", damage * airborneMult * crit * levelScale);
+
+            else
+                collision.gameObject.SendMessage("CritDamage", damage);
+        }
         else
-            collision.gameObject.SendMessage("TakeDamage", damage);
+        {
+            if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
+                collision.gameObject.SendMessage("TakeDamage", damage * underwaterMult * levelScale);
+
+            else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
+                collision.gameObject.SendMessage("TakeDamage", damage * airborneMult * levelScale);
+
+            else
+                collision.gameObject.SendMessage("TakeDamage", damage);
+        }
     }
     private int critCalc()
     {
         if (Random.Range(0, 1f) < (critChance * 0.1))
         {
-            onCrit?.Invoke();
             return 2;
         }
 
