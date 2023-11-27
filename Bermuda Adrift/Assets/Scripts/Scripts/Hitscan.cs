@@ -62,6 +62,11 @@ public class Hitscan : MonoBehaviour
         if (landed)
         {
             AOETimer -= Time.deltaTime;
+
+            Color fade = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            fade.a = AOETimer / bullet.getAOETimer();
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = fade;
+
             if (AOETimer <= 0)
                 Destroy(gameObject);
         }
@@ -213,11 +218,10 @@ public class Hitscan : MonoBehaviour
             }
             else if (effect == Bullet.Effects.Bait)                                              //2 is the bait effect
             {
-                    stop = true;
-                    collision.gameObject.SendMessage("baited", gameObject);
-                    //Play bait-spreading animation
-                    //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Make invisible
-                    collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
+                stop = true;
+                landed = true;
+                collision.gameObject.SendMessage("baited", gameObject);
+                collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {

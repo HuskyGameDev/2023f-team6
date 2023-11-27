@@ -31,6 +31,7 @@ public class E_VisualFX : MonoBehaviour
 
     public void DamagePopupSetup(int damageAmount)
     {
+        if (damageAmount == 0) { return; }
         if (damageAmount >= 0)
         {
             textMesh.SetText("-" + damageAmount.ToString());
@@ -46,6 +47,7 @@ public class E_VisualFX : MonoBehaviour
     }
     public void CritDamagePopupSetup(int damageAmount)
     {
+        if (damageAmount == 0) { return; }
         textMesh.SetText("-" + damageAmount.ToString());
         
         textMesh.color = Color.red;
@@ -54,6 +56,7 @@ public class E_VisualFX : MonoBehaviour
     }
     public void DOTDamagePopupSetup(int damageAmount, Color color)
     {
+        if (damageAmount == 0) { return; }
         textMesh.SetText("-" + damageAmount.ToString());
 
         textMesh.color = color;

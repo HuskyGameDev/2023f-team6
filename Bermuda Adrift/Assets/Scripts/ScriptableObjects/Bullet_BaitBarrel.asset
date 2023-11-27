@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 5
   damage: 0
-  AOE: 6
+  AOE: 4
   effect: 3
   scale: 0.75
   timer: 3
-  animator: {fileID: 9100000, guid: 9c3666c32b2db5044a13a85bf6a13757, type: 2}
+  animator: {fileID: 9100000, guid: cdc86273ba1643c42ad9f8c79e171cb6, type: 2}
   FriendlyFire: 1
   debuff: {fileID: 11400000, guid: 625faa70b7ffe624f9cf9e5bc1fbc807, type: 2}
   pierce: 0

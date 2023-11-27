@@ -68,7 +68,6 @@ public class PreDestinedAttacks : MonoBehaviour
         falling = false;
         gameObject.GetComponent<Animator>().SetTrigger("Landed");
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
-        Debug.Log(gameObject.GetComponent<CircleCollider2D>());
     }
     private IEnumerator fallDelay()
     {
@@ -98,7 +97,6 @@ public class PreDestinedAttacks : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
         if (!collision.CompareTag("Enemy")) 
             return;
 

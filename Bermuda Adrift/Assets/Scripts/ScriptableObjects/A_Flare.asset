@@ -20,7 +20,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
   slot: 3
   cooldown: 6
-  thumbnail: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  thumbnail: {fileID: 100617873, guid: ba2f2ffcd46d52b409f2cd7a387e0506, type: 3}
   ModelSprite: {fileID: 0}
   Name: Go Into The Light
   description: Throw a flare into the water, attracting enemies

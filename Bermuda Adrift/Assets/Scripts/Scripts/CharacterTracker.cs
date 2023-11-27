@@ -16,6 +16,11 @@ public class CharacterTracker : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         if (level == 1)
-            GameObject.Find("Player").SendMessage("setCharacter", character);
+            StartCoroutine(setCharacterInScene());
+    }
+    IEnumerator setCharacterInScene()
+    {
+        yield return new WaitForEndOfFrame();
+        GameObject.Find("Player").SendMessage("setCharacter", character);
     }
 }

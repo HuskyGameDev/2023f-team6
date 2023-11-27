@@ -20,7 +20,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8823190863568397684, guid: 56ea482041be5254bb8db812787806b4, type: 3}
   slot: 4
   cooldown: 60
-  thumbnail: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  thumbnail: {fileID: -2031359918, guid: ba2f2ffcd46d52b409f2cd7a387e0506, type: 3}
   ModelSprite: {fileID: 0}
   Name: Airstrike
   description: Call in a plane to defeat many enemies in a large area

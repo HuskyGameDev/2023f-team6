@@ -159,7 +159,8 @@ public class Attack : MonoBehaviour
         setThumbnails?.Invoke(character.getPrimary().getThumbnail(), CooldownIndicator.position.primary);
         setThumbnails?.Invoke(character.getUtility().getThumbnail(), CooldownIndicator.position.utility);
         setThumbnails?.Invoke(character.getSpecial().getThumbnail(), CooldownIndicator.position.special);
-        setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
+        GameObject.Find("Secondary").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
+        //setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
     }
 
     // Update is called once per frame
@@ -330,6 +331,7 @@ public class Attack : MonoBehaviour
                 anim.SetBool("Special", false);
         }
     }
+    public void resetMove(String boolName) { anim.SetBool(boolName, false); }
 
     #region Melee Attacks
     public void setDirection(int i) { direction = i; }

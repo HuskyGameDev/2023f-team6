@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
   m_Name: A_Rum
   m_EditorClassIdentifier: 
-  type: 2
+  type: 3
   meleeHitboxes: {fileID: 0}
   bullet: {fileID: 0}
   buff: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
