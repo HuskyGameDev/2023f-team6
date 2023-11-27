@@ -18,17 +18,22 @@ public class AudioManager : MonoBehaviour
         source = gameObject.GetComponent<AudioSource>();
 
         source.clip = backgroundMusic;
+        quiet();
     }
 
     public void PlaySound()
     {
         source.Play();
+        source.loop = true;
     }
 
     public void StopSound()
     {
         source.Stop();
     }
+
+    public void quiet() { source.volume = 0.25f; }
+    public void fullVolume() { source.volume = 1f; }
 
     public void ChangeSFXVolume()
     {

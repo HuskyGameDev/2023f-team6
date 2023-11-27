@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class Raft : MonoBehaviour
 {
     [SerializeField] GameObject tile;
+    [SerializeField] GameObject rangeIndicator;
     [SerializeField] GameObject tileParent;
     Tilemap tilemap;
     Grid grid;
@@ -31,6 +32,7 @@ public class Raft : MonoBehaviour
 
         //grid = new Grid(tile, tileParent, tilemap.size.x / 2, tilemap.size.y / 2, 2f, c0);
         Instantiate(tile, tileParent.transform);
+        Instantiate(rangeIndicator, tileParent.transform);
         var barrierTiles = Instantiate(tile, tileParent.transform);
         barrierTiles.GetComponent<Tile>().setType(1);
     }

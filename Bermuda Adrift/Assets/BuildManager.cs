@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    public static event Action OnTowerPicked;
+    public static event Action<Tower> OnTowerPicked;
     public static event Action OnBarrierPicked;
 
     public static BuildManager main;
@@ -19,6 +19,7 @@ public class BuildManager : MonoBehaviour
     private GameObject mostRecent;
     private Vector3[] positions;
     private int activeIndex;
+    private float towerRange;
 
     [SerializeField] private Tower[] towers;
     [SerializeField] private BarrierScriptable[] barriers;
@@ -31,10 +32,14 @@ public class BuildManager : MonoBehaviour
     {
         if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
         {
-            OnTowerPicked?.Invoke();
+            OnTowerPicked?.Invoke(scriptable);
             mostRecent = Instantiate(towerPrefabs[0]);
 
             mostRecent.SendMessage("place", scriptable);
+            if (scriptable.getRange() > 0)
+                towerRange = scriptable.getRange();
+            else
+                towerRange = 1;
 
             StartCoroutine(positionTracker());
         }
@@ -144,4 +149,5 @@ public class BuildManager : MonoBehaviour
             }
         }
     }
+    public float getTowerRange() { return towerRange; }
 }

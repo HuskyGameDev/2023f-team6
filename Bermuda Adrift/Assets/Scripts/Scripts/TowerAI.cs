@@ -21,7 +21,6 @@ public class TowerAI : MonoBehaviour
     private int upgradeLevel = 0;
     private float damageMult;
     private float turnSpeed;
-    private float range;
     private bool cantTurn;
 
     private GameObject target = null;
@@ -111,7 +110,6 @@ public class TowerAI : MonoBehaviour
 
         damageMult = tower.getDamageMult();
         turnSpeed = tower.getTurnSpeed();
-        range = tower.getRange();
         cantTurn = tower.getCantTurn();
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
@@ -153,7 +151,6 @@ public class TowerAI : MonoBehaviour
             bulletScript = tower.U1getBullet();
             damageMult = tower.U1getDamageMult();
             turnSpeed = tower.U1getTurnSpeed();
-            range = tower.U1getRange();
 
             gameManager.spendScrap(tower.U1getCost());
 
@@ -170,7 +167,6 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UA1getBullet();
                 damageMult = tower.UA1getDamageMult();
                 turnSpeed = tower.UA1getTurnSpeed();
-                range = tower.UA1getRange();
 
                 gameManager.spendScrap(tower.UA1getCost());
             }
@@ -184,7 +180,6 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UB1getBullet();
                 damageMult = tower.UB1getDamageMult();
                 turnSpeed = tower.UB1getTurnSpeed();
-                range = tower.UB1getRange();
 
                 gameManager.spendScrap(tower.UB1getCost());
             }
@@ -201,7 +196,6 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UA2getBullet();
                 damageMult = tower.UA2getDamageMult();
                 turnSpeed = tower.UA2getTurnSpeed();
-                range = tower.UA2getRange();
 
                 gameManager.spendScrap(tower.UA2getCost());
             }
@@ -215,7 +209,6 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UB2getBullet();
                 damageMult = tower.UB2getDamageMult();
                 turnSpeed = tower.UB2getTurnSpeed();
-                range = tower.UB2getRange();
 
                 gameManager.spendScrap(tower.UB2getCost());
             }
@@ -247,9 +240,9 @@ public class TowerAI : MonoBehaviour
         if (cantTurn) { return; }
 
         Vector3 offset = target.transform.position - transform.position;
-        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
+        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset);
 
-        nozzle.transform.rotation = Quaternion.Lerp(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
+        nozzle.transform.rotation = Quaternion.RotateTowards(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
     }
     private void fire()    //Coroutine for creating the bullets as long as there's a target
     {
@@ -269,15 +262,16 @@ public class TowerAI : MonoBehaviour
     private void newTarget()    //Set target to closest enemy in range
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        target = null;
 
         float distance = Mathf.Infinity;
         foreach (GameObject enemy in enemies)   //Not sure how to be more efficient than iterating through all enemies
         {
             Vector3 diff = enemy.transform.position - nozzle.transform.position;
-            float curDistance = diff.sqrMagnitude;
-            if (range > 0)
+            float curDistance = diff.magnitude;
+            if (getTowerRange() > 0)
             {
-                if (curDistance < distance && curDistance < range)   //Only pick targets in a range
+                if (curDistance < distance && curDistance <= getTowerRange())   //Only pick targets in a range
                 {
                     target = enemy;
                     distance = curDistance;
@@ -291,6 +285,10 @@ public class TowerAI : MonoBehaviour
                 }
             }
         }
+        if (target == null)
+            anim.SetBool("TargetFound", false);
+        else
+            anim.SetBool("TargetFound", true);
     }
 
     //Buff Managing
@@ -362,4 +360,20 @@ public class TowerAI : MonoBehaviour
     public bool getPlaced() { return placed; }
     public int getUpgradeLevel() { return upgradeLevel; }
     public Tower getTower() { return tower; }
+    public float getTowerRange()
+    {
+        if (upgradeLevel == 0)
+            return tower.getRange();
+        if (upgradeLevel == 1)
+            return tower.U1getRange();
+        if (upgradeLevel == 2)
+            return tower.UA1getRange();
+        if (upgradeLevel == 3)
+            return tower.UB1getRange();
+        if (upgradeLevel == 4)
+            return tower.UA2getRange();
+        if (upgradeLevel == 5)
+            return tower.UB2getRange();
+        return tower.getRange();
+    }
 }

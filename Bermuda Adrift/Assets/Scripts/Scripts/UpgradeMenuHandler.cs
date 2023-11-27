@@ -42,7 +42,7 @@ public class UpgradeMenuHandler : MonoBehaviour
 
     void updateMenu(TowerAI towerAI)
     {
-        //Setup buton descriptions for hover text
+        //Setup button descriptions for hover text
         BroadcastMessage("setTower", towerAI.getTower());
         BroadcastMessage("setUpgradeLevel", towerAI.getUpgradeLevel());
 
@@ -98,13 +98,13 @@ public class UpgradeMenuHandler : MonoBehaviour
             OneOption.SetActive(true);
             TwoOptions.SetActive(false);
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -245.45f);
-            upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 1);
 
             if (upgradeLevel == 0)
             {
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.U1getImage();
                 upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.U1getName();
                 upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.U1getCost() + " scrap";
+                upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 1);
 
                 headerText.text = tower.getName();
                 destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
@@ -113,6 +113,7 @@ public class UpgradeMenuHandler : MonoBehaviour
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.UA2getImage();
                 upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UA2getName();
                 upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UA2getCost() + " scrap";
+                upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 2);
 
                 headerText.text = "Lvl 2 " + tower.getName();
                 destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
@@ -121,6 +122,7 @@ public class UpgradeMenuHandler : MonoBehaviour
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.UB2getImage();
                 upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UB2getName();
                 upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UB2getCost() + " scrap";
+                upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 2);
 
                 headerText.text = "Lvl 2 " + tower.getName();
                 destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";

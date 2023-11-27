@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         level = 1;
         scrap = 0;
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+        GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
     }
     
     private void Update()
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
 
             gameObject.SendMessage("SpawnEnemies");     //Sends a message to the EnemyManager
 
-            GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
+            GameObject.Find("Audio Source").GetComponent<AudioManager>().fullVolume();
         } else
             Debug.Log("Not idling");    //Maybe disable the button when we get it until the round is over?
     }
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
         //Enable next-round button
         //Enable tower placing system
         //Both could just be affected by game state
-        GameObject.Find("Audio Source").GetComponent<AudioManager>().StopSound();
+        GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
 
         state = GameState.Idle;
     }

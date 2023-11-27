@@ -28,18 +28,18 @@ public class AllTiles : MonoBehaviour
         DeactivateTiles();
     }
 
-    void TowerActivateTiles()
+    void TowerActivateTiles(Tower tower)
     {
         gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
     void BarrierActivateTiles()
     {
-        gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
     }
 
     void DeactivateTiles()
     {
         gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
     }
 }

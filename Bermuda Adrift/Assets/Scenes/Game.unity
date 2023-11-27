@@ -19604,8 +19604,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 64.75001, y: 3.8100014}
-  m_SizeDelta: {x: -112.90001, y: 3.4099998}
+  m_AnchoredPosition: {x: 65.1, y: 3.8100014}
+  m_SizeDelta: {x: -146.1, y: 3.4099998}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1036748833
 MonoBehaviour:
@@ -19627,7 +19627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Armor Piercing Rounds
+  m_text: Blood In The Water
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -34915,6 +34915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 5142542267729335528, guid: e78fd9263ee825949bfb41e90005c460, type: 3}
+  rangeIndicator: {fileID: 6127269059821001702, guid: e858f7d900931ff4ba9fd30cd4a82846, type: 3}
   tileParent: {fileID: 241254403}
 --- !u!1 &1244581363
 GameObject:
@@ -42057,6 +42058,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UpgradeMenuHandler, Assembly-CSharp
         m_MethodName: upgrade
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1973366941}
+        m_TargetAssemblyTypeName: ButtonDescription, Assembly-CSharp
+        m_MethodName: mouseEnter
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

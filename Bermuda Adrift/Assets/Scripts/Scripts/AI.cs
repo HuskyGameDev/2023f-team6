@@ -109,7 +109,7 @@ public class AI : MonoBehaviour
 
         if (goal != null && goal.position != null && !stop)
         {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult());
+            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult()); ;
             if (movement.position == goal.position && !getDistracted())
                 enteringChannel();
         }
@@ -451,6 +451,7 @@ public class AI : MonoBehaviour
     }
     private IEnumerator InflictDebuff(Buffs newDebuff)  //adds a debuff to the list
     {
+        if (newDebuff == null) { yield break; }
         addDebuff(newDebuff);
 
         if (newDebuff.getStunned())
@@ -508,7 +509,18 @@ public class AI : MonoBehaviour
         if (!goal.CompareTag("Center")) //Won't work on enemies in the channels
         {
             goal = new GameObject().transform;
-            goal.position = bait.transform.position;
+
+            Vector3 newGoalPosition = bait.transform.position;
+
+            //Left/Right edges
+            if (newGoalPosition.x < 7f && newGoalPosition.x > 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = 7.5f;
+            else if (newGoalPosition.x > -7f && newGoalPosition.x < 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = -7.5f;
+
+            //Top/Bottom edges
+            if (newGoalPosition.y < 7f && newGoalPosition.y > 1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = 7.5f;
+            else if (newGoalPosition.y > -7f && newGoalPosition.y < -1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = -7.5f;
+
+            goal.position = newGoalPosition;
 
             yield return new WaitForSeconds(5f);
 

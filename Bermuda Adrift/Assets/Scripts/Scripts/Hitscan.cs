@@ -181,7 +181,7 @@ public class Hitscan : MonoBehaviour
         if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; }
 
         pierce--;
-        if (bullet.getAOE() == 0 || landed || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times
+        if (bullet.getAOE() == 0 || (landed && effect != Bullet.Effects.Bait) || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times
         {
             dealDamage(collision);                                          //Basic bullet hit or shrapnel/AOE hit
             if (debuff != null)

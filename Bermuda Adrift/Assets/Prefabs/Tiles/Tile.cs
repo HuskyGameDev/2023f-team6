@@ -39,7 +39,7 @@ public class Tile : MonoBehaviour
     }
     private void OnDisable()
     {
-        mouseExit();
+        //mouseExit();
     }
     private void enterCorrect()
     {
