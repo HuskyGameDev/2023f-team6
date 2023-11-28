@@ -16,6 +16,7 @@ public class RangeIndicatorScript : MonoBehaviour
         BuildManager.OnTowerPicked += updateRangeDirect;
         TowerAI.OnTowerPlaced += deactivate;
         TowerAI.OnUpgraded += updateRange;
+        TowerAI.OnCancel += deactivate;
     }
     private void OnDisable()
     {
@@ -24,6 +25,7 @@ public class RangeIndicatorScript : MonoBehaviour
         BuildManager.OnTowerPicked -= updateRangeDirect;
         TowerAI.OnTowerPlaced -= deactivate;
         TowerAI.OnUpgraded -= updateRange;
+        TowerAI.OnCancel -= deactivate;
     }
     private void Update()
     {

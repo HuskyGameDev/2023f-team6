@@ -14,53 +14,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMult: 1
   turnSpeed: 0
-  range: -1
-  anim: {fileID: 0}
-  baseSprite: {fileID: 0}
+  range: 5
+  anim: {fileID: 9100000, guid: 54323fed241002a4aac36ae0233a1041, type: 2}
+  baseSprite: {fileID: 21300000, guid: ff71e224ceee8034687dcfc9231d4379, type: 3}
   defaultBullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
-  cost: 0
+  cost: 100
   rarity: 0
-  Name: 
-  Description: 
-  image: {fileID: 0}
+  Name: Lightning Rod
+  Description: Electrifies the nearby water and air, lowering the defense of enemies.
+  image: {fileID: -1724569256, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
   cantTurn: 1
-  U1damageMult: 0
+  U1damageMult: 1
   U1turnSpeed: 0
-  U1range: 0
-  U1Bullet: {fileID: 0}
-  U1cost: 0
-  U1Name: 
-  U1Description: 
-  U1image: {fileID: 0}
-  UA1damageMult: 0
+  U1range: 5
+  U1Bullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
+  U1cost: 200
+  U1Name: Delicate Dial
+  U1Description: The lightning rod charges faster
+  U1image: {fileID: 1613844769, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  UA1damageMult: 1
   UA1turnSpeed: 0
-  UA1range: 0
-  UA1Bullet: {fileID: 0}
-  UA1cost: 0
-  UA1Name: 
-  UA1Description: 
-  UA1image: {fileID: 0}
-  UA2damageMult: 0
+  UA1range: 5
+  UA1Bullet: {fileID: 11400000, guid: 3640303ccc531d94aa2d8ae4963ce253, type: 2}
+  UA1cost: 250
+  UA1Name: Efficient Isolators
+  UA1Description: Lightning deals damage to enemies in addition to lowering defenses
+  UA1image: {fileID: -370728653, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  UA2damageMult: 1
   UA2turnSpeed: 0
-  UA2range: 0
-  UA2Bullet: {fileID: 0}
-  UA2cost: 0
-  UA2Name: 
-  UA2Description: 
-  UA2image: {fileID: 0}
-  UB1damageMult: 0
+  UA2range: 5
+  UA2Bullet: {fileID: 11400000, guid: c265087f09b91d74ca3226fb3dca0d7f, type: 2}
+  UA2cost: 350
+  UA2Name: Ambient Superconductor
+  UA2Description: Add damage over time to the electrified debuff
+  UA2image: {fileID: -1551884224, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  UB1damageMult: 1
   UB1turnSpeed: 0
-  UB1range: 0
-  UB1Bullet: {fileID: 0}
-  UB1cost: 0
-  UB1Name: 
-  UB1Description: 
-  UB1image: {fileID: 0}
-  UB2damageMult: 0
+  UB1range: 5
+  UB1Bullet: {fileID: 11400000, guid: 2bd44235f1a470541b057ef070363107, type: 2}
+  UB1cost: 300
+  UB1Name: Higher Voltage
+  UB1Description: Electrified debuff lowers defense more and lasts longer
+  UB1image: {fileID: 1159713692, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  UB2damageMult: 1
   UB2turnSpeed: 0
-  UB2range: 0
-  UB2Bullet: {fileID: 0}
-  UB2cost: 0
-  UB2Name: 
-  UB2Description: 
-  UB2image: {fileID: 0}
+  UB2range: 5
+  UB2Bullet: {fileID: 11400000, guid: 1cff05ccb687f3244932a4ea2450282c, type: 2}
+  UB2cost: 1000
+  UB2Name: Mitochondria Engine
+  UB2Description: It't the powerhouse of the raft
+  UB2image: {fileID: -1658623949, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}

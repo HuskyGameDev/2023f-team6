@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_ElectricWaters
+  m_Name: Bullet_DOTElectricWaters
   m_EditorClassIdentifier: 
   projectileSpeed: 0
-  damage: 0
+  damage: 10
   AOE: 3
   effect: 2
   scale: 1
   timer: 0
   animator: {fileID: 9100000, guid: 4019304d8948a3749808da2de30d2145, type: 2}
   FriendlyFire: 0
-  debuff: {fileID: 11400000, guid: 0f00b56c540b5ef43804b2eb489c9389, type: 2}
+  debuff: {fileID: 11400000, guid: 2ad7362889a74fb40a90b735b4ec2b25, type: 2}
   pierce: -1
   AOETimer: 3
   UnderwaterDamage: 1

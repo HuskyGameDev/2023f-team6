@@ -575,7 +575,8 @@ public class AI : MonoBehaviour
         {
             armor *= debuffs[i].getArmor();
         }
-        return armor;
+        Debug.Log("Armor is " + armor);
+        return 1f / armor;
     }
     private float getHealthMult()   //Gives total percent health increase (multiplicative)
     {

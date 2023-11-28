@@ -564,7 +564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XP: 0
+  XPNeeded: 0
   scrap: 0
+  level: 0
 --- !u!114 &1072894507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +585,7 @@ MonoBehaviour:
   towers:
   - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
+  - {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
   barriers:
   - {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
   - {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}

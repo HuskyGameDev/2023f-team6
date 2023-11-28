@@ -136,6 +136,7 @@ public class Hitscan : MonoBehaviour
 
     private void dealDamage(Collider2D collision)
     {
+        if (collision.name == "AOETrigger") return;
         int crit = critCalc();
 
         if (crit > 1)
@@ -184,7 +185,7 @@ public class Hitscan : MonoBehaviour
         if (bullet.getAOE() == 0 || (landed && effect != Bullet.Effects.Bait) || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times
         {
             dealDamage(collision);                                          //Basic bullet hit or shrapnel/AOE hit
-            if (debuff != null)
+            if (debuff != null && collision.name != "AOETrigger")
                 collision.SendMessage("InflictDebuff", debuff);
         }
         else
@@ -214,14 +215,16 @@ public class Hitscan : MonoBehaviour
                 //gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
                 //Switch animator controller to the explosion/fire effects
-                collision.gameObject.SendMessage("InflictDebuff", debuff);
+                if (collision.name != "AOETrigger")
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);
             }
             else if (effect == Bullet.Effects.Bait)                                              //2 is the bait effect
             {
                 stop = true;
                 landed = true;
                 collision.gameObject.SendMessage("baited", gameObject);
-                collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
+                if (collision.name != "AOETrigger")
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
@@ -234,7 +237,8 @@ public class Hitscan : MonoBehaviour
                 //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Hide the bullet after the explosion, but leave the hitbox
 
                 //Switch animator controller to the explosion/fire effects
-                collision.gameObject.SendMessage("InflictDebuff", debuff);
+                if (collision.name != "AOETrigger")
+                    collision.gameObject.SendMessage("InflictDebuff", debuff);
             }
             else if (effect == Bullet.Effects.Shotgun)
             {

@@ -65,6 +65,11 @@ public class BuildManager : MonoBehaviour
         positions = new Vector3[48];
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown("5")) { PlaceLightningRod(); }
+    }
+
     #region Tower/Barrier Placements
     public void PlaceMachineGun()
     {
@@ -75,6 +80,7 @@ public class BuildManager : MonoBehaviour
     {
         placeTower(towers[0]);
     }
+    public void PlaceLightningRod() { placeTower(towers[2]); }
 
     public void PlaceBarrier()
     {

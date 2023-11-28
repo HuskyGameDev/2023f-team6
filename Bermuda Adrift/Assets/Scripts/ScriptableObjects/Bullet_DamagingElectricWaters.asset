@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_ElectricWaters
+  m_Name: Bullet_DamagingElectricWaters
   m_EditorClassIdentifier: 
   projectileSpeed: 0
-  damage: 0
+  damage: 10
   AOE: 3
   effect: 2
   scale: 1

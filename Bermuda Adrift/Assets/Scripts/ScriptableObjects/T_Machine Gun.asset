@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMult: 1
   turnSpeed: 0.5
-  range: -1
+  range: 10
   anim: {fileID: 9100000, guid: 6d92e8901d82e1d4e9985e8334c133af, type: 2}
   baseSprite: {fileID: 21300000, guid: 5a5dce63ff65241478ffee0ec50476b9, type: 3}
   defaultBullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
@@ -26,7 +26,7 @@ MonoBehaviour:
   cantTurn: 0
   U1damageMult: 1
   U1turnSpeed: 0.5
-  U1range: -1
+  U1range: 10
   U1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   U1cost: 300
   U1Name: Double Barrel
@@ -34,11 +34,11 @@ MonoBehaviour:
   U1image: {fileID: -1835893409, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA1damageMult: 1
   UA1turnSpeed: 0.5
-  UA1range: -1
+  UA1range: 15
   UA1Bullet: {fileID: 11400000, guid: 6e2f38178b70c5c47895e910fe856be8, type: 2}
   UA1cost: 200
   UA1Name: Armor Piercing Rounds
-  UA1Description: Bullets now pierce through more enemies
+  UA1Description: Bullets fire farther and pierce through more enemies
   UA1image: {fileID: 1076751315, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA2damageMult: 3
   UA2turnSpeed: 0.5
@@ -46,11 +46,11 @@ MonoBehaviour:
   UA2Bullet: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
   UA2cost: 300
   UA2Name: Nation Killer
-  UA2Description: Bullets Pierce Infinitely
+  UA2Description: Bullets Pierce and Reach Infinitely
   UA2image: {fileID: -1310959081, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB1damageMult: 2
   UB1turnSpeed: 0.5
-  UB1range: -1
+  UB1range: 10
   UB1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   UB1cost: 350
   UB1Name: More Bullet per Bullet
@@ -58,7 +58,7 @@ MonoBehaviour:
   UB1image: {fileID: 297539905, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB2damageMult: 2
   UB2turnSpeed: 0.5
-  UB2range: -1
+  UB2range: 10
   UB2Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   UB2cost: 400
   UB2Name: Rain of Death
