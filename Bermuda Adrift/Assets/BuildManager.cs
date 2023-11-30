@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildManager : MonoBehaviour
 {
     public static event Action<Tower> OnTowerPicked;
-    public static event Action OnBarrierPicked;
+    public static event Action<BarrierScriptable> OnBarrierPicked;
 
     public static BuildManager main;
 
@@ -49,7 +50,7 @@ public class BuildManager : MonoBehaviour
     {
         if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
         {
-            OnBarrierPicked?.Invoke();
+            OnBarrierPicked?.Invoke(scriptable);
             mostRecent = Instantiate(towerPrefabs[1]);
             mostRecent.SendMessage("setBarrier", scriptable);
 
@@ -57,12 +58,90 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = gameObject.GetComponent<GameManager>();
         positions = new Vector3[48];
+
+        instantiateBuyables();
+    }
+
+    private void instantiateBuyables()
+    {
+        int xPadding = 3;
+        int yPadding = 3;
+        int initialX = 17;
+        int initialY = 5;
+        int xMult = 0;
+        int yMult = 0;
+        foreach (Tower t in towers)
+        {
+            GameObject tower = new GameObject();
+            Button button = tower.AddComponent<Button>();
+            Image image = tower.AddComponent<Image>();
+            ButtonHover buttonHover = tower.AddComponent<ButtonHover>();
+            buttonHover.tower = t;
+            image.sprite = t.getImage();
+            button.targetGraphic = image;
+            tower.transform.parent = this.transform;
+            button.onClick.AddListener(() => TowerButtonClick(t));
+
+            if (xMult % 2 == 0)
+            {
+                tower.transform.position = new Vector3(initialX, initialY - yPadding * yMult, transform.position.z);
+            }
+            else
+            {
+                tower.transform.position = new Vector3(initialX + xPadding, initialY - yPadding * yMult, transform.position.z);
+                yMult++;
+            }
+
+            tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            xMult++;
+        }
+
+        foreach (BarrierScriptable b in barriers)
+        {
+            GameObject barrier = new GameObject();
+            Button button = barrier.AddComponent<Button>();
+            Image image = barrier.AddComponent<Image>();
+            //ButtonHover buttonHover = barrier.AddComponent<ButtonHover>();
+            //buttonHover.barrier = b;
+            image.sprite = b.getStartingSprite();
+            button.targetGraphic = image;
+            barrier.transform.parent = this.transform;
+            button.onClick.AddListener(() => TowerButtonClick(b));
+
+            if (xMult % 2 == 0)
+            {
+                barrier.transform.position = new Vector3(initialX, initialY - yPadding * yMult, transform.position.z);
+            }
+            else
+            {
+                barrier.transform.position = new Vector3(initialX + xPadding, initialY - yPadding * yMult, transform.position.z);
+                yMult++;
+            }
+
+            barrier.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            xMult++;
+        }
+    }
+
+    private void TowerButtonClick(Tower t)
+    {
+        placeTower(t);
+    }
+
+    private void TowerButtonClick(BarrierScriptable b)
+    {
+        placeBarrier(b);
     }
 
     private void Update()

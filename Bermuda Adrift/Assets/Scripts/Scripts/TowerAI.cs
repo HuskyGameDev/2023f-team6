@@ -25,6 +25,7 @@ public class TowerAI : MonoBehaviour
 
     private GameObject target = null;
     private GameManager gameManager;
+    private BuildManager buildManager;
     private Animator anim;
 
     private Buffs[] buffs;
@@ -52,6 +53,7 @@ public class TowerAI : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = tower.getBaseSprite();
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
+        buildManager = FindObjectOfType<BuildManager>();
         buffs = new Buffs[10];
         
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Just in case someone manages to place a tower during a round
@@ -67,7 +69,7 @@ public class TowerAI : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && gameManager.gameObject.GetComponent<BuildManager>().approvePosition(transform.position))
+                if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position))
                 {
                     OnTowerPlaced?.Invoke();
                     placed = true;
@@ -119,7 +121,7 @@ public class TowerAI : MonoBehaviour
         int returnScrap = getTotalSpentScrap() / 2;
 
         gameManager.addScrap(returnScrap);
-        gameManager.gameObject.GetComponent<BuildManager>().removePosition(transform.position);
+        buildManager.removePosition(transform.position);
         Destroy(gameObject);
     }
     public void openUpgradeMenu()

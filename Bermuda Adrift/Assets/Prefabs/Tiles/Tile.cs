@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
     void Start()
     {
         sR = gameObject.GetComponent<SpriteRenderer>();
-        buildManager = GameObject.Find("Managers").GetComponent<BuildManager>();
+        buildManager = FindObjectOfType<BuildManager>();
     }
     private void Update()
     {

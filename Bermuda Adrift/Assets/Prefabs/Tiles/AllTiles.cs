@@ -32,7 +32,7 @@ public class AllTiles : MonoBehaviour
     {
         gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
-    void BarrierActivateTiles()
+    void BarrierActivateTiles(BarrierScriptable scriptable)
     {
         gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
     }

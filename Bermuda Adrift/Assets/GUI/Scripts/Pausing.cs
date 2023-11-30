@@ -28,7 +28,7 @@ public class Pausing : MonoBehaviour
             if (Time.timeScale == 0)
             {
                 //onUnpause?.Invoke();
-                sound.SetActive(true);
+                sound.SetActive(false);
                 controls.SetActive(false);
                 video.SetActive(false);
                 credits.SetActive(false);
@@ -54,7 +54,7 @@ public class Pausing : MonoBehaviour
         if (Time.timeScale == 0)
         {
             //onUnpause?.Invoke();
-            sound.SetActive(true);
+            sound.SetActive(false);
             controls.SetActive(false);
             video.SetActive(false);
             credits.SetActive(false);

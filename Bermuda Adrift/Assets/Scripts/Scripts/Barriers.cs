@@ -9,6 +9,7 @@ public class Barriers : MonoBehaviour
     public static event Action OnTowerPlaced;
 
     private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
+    private BuildManager buildManager;
     private int health;
     private float armor = 1;
     private Buffs[] debuffs;
@@ -22,6 +23,8 @@ public class Barriers : MonoBehaviour
     {
         health = barrier.getHealth();
         debuffs = new Buffs[5];
+
+        buildManager = FindObjectOfType<BuildManager>();
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class Barriers : MonoBehaviour
                     ||
                     Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
                     &&
-                    GameObject.Find("Managers").GetComponent<BuildManager>().approvePosition(transform.position))
+                    buildManager.approvePosition(transform.position))
                 {
                     OnTowerPlaced?.Invoke();
                     placed = true;
@@ -84,7 +87,7 @@ public class Barriers : MonoBehaviour
         if (health <= 0)
         {
             //Play destroyed animation
-            GameObject.Find("Managers").GetComponent<BuildManager>().removePosition(transform.position);
+            buildManager.removePosition(transform.position);
             Destroy(gameObject);
         }
     }

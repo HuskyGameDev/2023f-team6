@@ -17,6 +17,8 @@ public class GUIManager : MonoBehaviour
     [SerializeField] Button readyBtn;
     [SerializeField] GameObject gameOverGUI;
     [SerializeField] GameObject CooldownIndicatorGUI;
+    [SerializeField] TextMeshProUGUI towerName;
+    [SerializeField] TextMeshProUGUI towerCost;
 
     Resolution[] resolutions;
 
@@ -31,6 +33,9 @@ public class GUIManager : MonoBehaviour
         GameManager.OnRoundStart += activateCooldownIndicators;
         GameManager.OnGameEnd += enableGameOverUI;
         GameManager.OnLevelUp += addLevelGUI;
+        BuildManager.OnTowerPicked += changeTowerText;
+        BuildManager.OnBarrierPicked += changeTowerText;
+        ButtonHover.OnHoverEnter += changeTowerText;
     }
 
     private void OnDisable()
@@ -44,6 +49,9 @@ public class GUIManager : MonoBehaviour
         GameManager.OnRoundStart -= activateCooldownIndicators;
         GameManager.OnGameEnd -= enableGameOverUI;
         GameManager.OnLevelUp -= addLevelGUI;
+        BuildManager.OnTowerPicked -= changeTowerText;
+        BuildManager.OnBarrierPicked -= changeTowerText;
+        ButtonHover.OnHoverEnter -= changeTowerText;
     }
 
     private void Start()
@@ -111,5 +119,17 @@ public class GUIManager : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOverGUI.SetActive(true);
+    }
+
+    public void changeTowerText(Tower tower)
+    {
+        towerName.text = tower.getName();
+        towerCost.text = "Cost: " + tower.getCost().ToString() + " Scrap";
+    }
+
+    public void changeTowerText(BarrierScriptable tower)
+    {
+        towerName.text = tower.getName();
+        towerCost.text = "Cost: " + tower.getCost().ToString() + " Scrap";
     }
 }

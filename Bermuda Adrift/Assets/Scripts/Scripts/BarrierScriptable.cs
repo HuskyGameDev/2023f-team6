@@ -6,6 +6,7 @@ using UnityEngine;
 public class BarrierScriptable : ScriptableObject
 {
     public enum Effect { Blockade, Effect }
+    [SerializeField] private string barrierName;
     [SerializeField] private Effect effect;
     [SerializeField] private int Health;
     [SerializeField] private int cost;
@@ -13,6 +14,7 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private Sprite startingSprite;
     [SerializeField] private RuntimeAnimatorController animator;
 
+    public string getName() { return barrierName; }
     public Effect getEffect() { return effect; }
     public int getHealth() { return Health; }
     public int getCost() { return cost; }

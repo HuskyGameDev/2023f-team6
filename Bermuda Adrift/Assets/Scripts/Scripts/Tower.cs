@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower", order = 2)]
 public class Tower : ScriptableObject
