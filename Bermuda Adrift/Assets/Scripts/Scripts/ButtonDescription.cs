@@ -10,6 +10,7 @@ public class ButtonDescription : MonoBehaviour
 
     [SerializeField] private Tower tower;
     [SerializeField] private Ability ability;
+    [SerializeField] private BarrierScriptable barrier;
     private int upgradeLevel;
 
     public void mouseEnter()
@@ -49,7 +50,13 @@ public class ButtonDescription : MonoBehaviour
                 title = tower.UB2getName();
                 description = tower.UB2getDescription();
             }
-        } else if (ability != null)
+        }
+        else if (barrier != null)
+        {
+            title = barrier.getName();
+            description = barrier.getDescription();
+        }
+        else if (ability != null)
         {
             title = ability.getName();
             description = ability.getDescription();
@@ -62,6 +69,7 @@ public class ButtonDescription : MonoBehaviour
     }
     private void setUpgradeLevel(int level) { upgradeLevel = level; }
     private void incrementUpgradeLevel() { upgradeLevel++; }
-    private void setTower(Tower tower) { ability = null; this.tower = tower; }
+    private void setTower(Tower tower) { ability = null; barrier = null; this.tower = tower; upgradeLevel = 0; }
+    private void setBarrier(BarrierScriptable barrier) { ability = null; tower = null; this.barrier = barrier; }
     private void setAbility(Ability ability) { tower = null; this.ability = ability; }
 }

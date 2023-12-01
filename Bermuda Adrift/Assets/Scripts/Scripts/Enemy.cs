@@ -10,6 +10,10 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private Types Type;
 
+    public enum SpecialTypes { None, Decoy, Immune, Forgotten }
+
+    [SerializeField] private SpecialTypes specialType;
+
     [SerializeField] private int Health;
     [SerializeField] private int Damage;
     [SerializeField] private float Speed;
@@ -32,6 +36,7 @@ public class Enemy : ScriptableObject
 
 
     public Types getType() { return Type; }
+    public SpecialTypes getSpecialType() { return specialType; }
     public int getHealth() { return Health; }
     public int getDamage() { return Damage; }
     public float getSpeed() { return Speed; }

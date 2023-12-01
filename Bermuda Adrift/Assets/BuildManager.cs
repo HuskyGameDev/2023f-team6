@@ -8,6 +8,7 @@ public class BuildManager : MonoBehaviour
 {
     public static event Action<Tower> OnTowerPicked;
     public static event Action<BarrierScriptable> OnBarrierPicked;
+    public static event Action OnTwoTowersPlaced;
 
     public static BuildManager main;
 
@@ -21,6 +22,8 @@ public class BuildManager : MonoBehaviour
     private Vector3[] positions;
     private int activeIndex;
     private float towerRange;
+
+    bool twoTowersPlacedEventCalled;
 
     [SerializeField] private Tower[] towers;
     [SerializeField] private BarrierScriptable[] barriers;
@@ -73,10 +76,14 @@ public class BuildManager : MonoBehaviour
 
     private void instantiateBuyables()
     {
-        int xPadding = 3;
-        int yPadding = 3;
-        int initialX = 17;
-        int initialY = 5;
+        //Dividing + vectors to make the menu consistent with different resolutions
+        float xPadding = (3 + 21.33f) / (21.33f * 2);
+        float yPadding = (3 + 12) / 24f;
+        float initialX = (17 + 21.33f) / (21.33f * 2);
+        float initialY = (5 + 12) / 24f;
+        Vector3 initial = Camera.main.ViewportToWorldPoint(new Vector3(initialX, initialY));
+        Vector3 padding = Camera.main.ViewportToWorldPoint(new Vector3(xPadding, yPadding));
+
         int xMult = 0;
         int yMult = 0;
         foreach (Tower t in towers)
@@ -85,6 +92,8 @@ public class BuildManager : MonoBehaviour
             Button button = tower.AddComponent<Button>();
             Image image = tower.AddComponent<Image>();
             ButtonHover buttonHover = tower.AddComponent<ButtonHover>();
+            ButtonDescription buttonDescription = tower.AddComponent<ButtonDescription>();
+            buttonDescription.SendMessage("setTower", t);
             buttonHover.tower = t;
             image.sprite = t.getImage();
             button.targetGraphic = image;
@@ -93,11 +102,11 @@ public class BuildManager : MonoBehaviour
 
             if (xMult % 2 == 0)
             {
-                tower.transform.position = new Vector3(initialX, initialY - yPadding * yMult, transform.position.z);
+                tower.transform.position = new Vector3(initial.x, initial.y - padding.y * yMult, transform.position.z);
             }
             else
             {
-                tower.transform.position = new Vector3(initialX + xPadding, initialY - yPadding * yMult, transform.position.z);
+                tower.transform.position = new Vector3(initial.x + padding.x, initial.y - padding.y * yMult, transform.position.z);
                 yMult++;
             }
 
@@ -111,8 +120,10 @@ public class BuildManager : MonoBehaviour
             GameObject barrier = new GameObject();
             Button button = barrier.AddComponent<Button>();
             Image image = barrier.AddComponent<Image>();
-            //ButtonHover buttonHover = barrier.AddComponent<ButtonHover>();
-            //buttonHover.barrier = b;
+            ButtonHover buttonHover = barrier.AddComponent<ButtonHover>();
+            buttonHover.barrier = b;
+            ButtonDescription buttonDescription = barrier.AddComponent<ButtonDescription>();
+            buttonDescription.SendMessage("setBarrier", b);
             image.sprite = b.getStartingSprite();
             button.targetGraphic = image;
             barrier.transform.parent = this.transform;
@@ -120,11 +131,11 @@ public class BuildManager : MonoBehaviour
 
             if (xMult % 2 == 0)
             {
-                barrier.transform.position = new Vector3(initialX, initialY - yPadding * yMult, transform.position.z);
+                barrier.transform.position = new Vector3(initial.x, initial.y - padding.y * yMult, transform.position.z);
             }
             else
             {
-                barrier.transform.position = new Vector3(initialX + xPadding, initialY - yPadding * yMult, transform.position.z);
+                barrier.transform.position = new Vector3(initial.x + padding.x, initial.y - padding.y * yMult, transform.position.z);
                 yMult++;
             }
 
@@ -144,6 +155,7 @@ public class BuildManager : MonoBehaviour
         placeBarrier(b);
     }
 
+    /*
     private void Update()
     {
         if (Input.GetKeyDown("5")) { PlaceLightningRod(); }
@@ -171,6 +183,8 @@ public class BuildManager : MonoBehaviour
         placeBarrier(barriers[1]);
     }
     #endregion
+    */
+
     private bool recentWasPlaced()  //Checks if previous tower selected was placed. If cancelled, both will be null and it will return true
     {
         if (mostRecent == null)
@@ -200,6 +214,12 @@ public class BuildManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        if (!twoTowersPlacedEventCalled && positions[1] != Vector3.zero)
+        {
+            twoTowersPlacedEventCalled = true;
+            OnTwoTowersPlaced?.Invoke();
+        }
+
         if (mostRecent == null)
             positions[i] = Vector3.zero;
     }
@@ -218,6 +238,7 @@ public class BuildManager : MonoBehaviour
                 return false; 
             }
         }
+
         return true;
     }
 

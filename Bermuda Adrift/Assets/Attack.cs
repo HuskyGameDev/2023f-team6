@@ -8,6 +8,8 @@ public class Attack : MonoBehaviour
 {
     public static event Action<float, CooldownIndicator.position> updateCooldowns;
     public static event Action<Sprite, CooldownIndicator.position> setThumbnails;
+    public static event Action loopUsed;
+    public static event Action barrelUsed;
 
     [SerializeField] private Player character;
 
@@ -35,6 +37,9 @@ public class Attack : MonoBehaviour
     private int attackCooldownFrames = 5;
     private bool attackCooldownBool;
 
+    bool loopUsedEventCalled;
+    bool barrelEventCalled;
+
     private Buffs[] buffs = new Buffs[10];
 
     private void OnEnable()
@@ -52,7 +57,8 @@ public class Attack : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         anim = gameObject.GetComponent<Animator>();
 
-        setCharacter(character);
+        if (GameObject.FindAnyObjectByType<CharacterTracker>() == null)
+            setCharacter(character);
     }
     private void setCharacter(Player playerData)
     {
@@ -66,6 +72,7 @@ public class Attack : MonoBehaviour
         if (playerData.getPassive() != null)
             StartCoroutine(Buff(playerData.getPassive()));
         movement.buff(playerData.getPassive());
+        movement.setSpeed(character.getSpeed());
     }
 
     private void setAbility(Ability ability)
@@ -178,7 +185,7 @@ public class Attack : MonoBehaviour
 
         anim.speed = getAttackSpeed();
 
-        if ((Input.GetMouseButtonDown(0) || (character.getPrimary().canBeLooped() && Input.GetMouseButton(0)) || (!primaryOnCooldown && !anim.GetBool("Primary") && Input.GetMouseButton(0))) && !IsPointerOverUIObject()) { primary(); }
+        if ((Input.GetMouseButtonDown(0) || (character.getPrimary().canBeLooped() && Input.GetMouseButton(0)) || (!primaryOnCooldown && !anim.GetBool("Primary") && Input.GetMouseButton(0)))) { primary(); }
         else if (Input.GetMouseButtonDown(1) || (character.getSecondary().canBeLooped() && Input.GetMouseButton(1)) || (!secondaryOnCooldown && !anim.GetBool("Secondary") && Input.GetMouseButton(1))) { secondary(); }
         else if (Input.GetKeyDown("q") || (character.getUtility().canBeLooped() && Input.GetKey("q")) || (!utilityOnCooldown && !anim.GetBool("Utility") && Input.GetKey("q"))) { utility(); }
         else if (Input.GetKeyDown("r") || (character.getSpecial().canBeLooped() && Input.GetKey("r")) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey("r"))) { special(); }
@@ -255,6 +262,12 @@ public class Attack : MonoBehaviour
                 anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
             }
 
+            if (character.name == "P_Pirate" && !barrelEventCalled)
+            {
+                barrelUsed?.Invoke();
+                barrelEventCalled = true;
+            }
+
             anim.SetBool("Special", true);
             StartCoroutine(antiHold(character.getSpecial().canBeLooped(), 4));
         }
@@ -303,6 +316,12 @@ public class Attack : MonoBehaviour
             intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
             intBullet.SendMessage("AirborneMult", getAirborneMult());
             intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
+        }
+
+        if (!loopUsedEventCalled && ability.canBeLooped())
+        {
+            loopUsed?.Invoke();
+            loopUsedEventCalled = true;
         }
 
         StartCoroutine(attackDelay());

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3695811193705879636}
   - component: {fileID: 7883539249785375889}
   - component: {fileID: -5528712832521496312}
+  - component: {fileID: 279866851160389067}
   m_Layer: 0
   m_Name: E_DefaultEnemy
   m_TagString: Enemy
@@ -197,6 +198,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmgPopupTxt: {fileID: 1763371284213634994, guid: a2c99df1b5d7e68489b446bb693cff51, type: 3}
+--- !u!50 &279866851160389067
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3398399399289917803}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &3563211004676212490
 PrefabInstance:
   m_ObjectHideFlags: 0

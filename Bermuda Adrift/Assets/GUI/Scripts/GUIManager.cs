@@ -36,6 +36,7 @@ public class GUIManager : MonoBehaviour
         BuildManager.OnTowerPicked += changeTowerText;
         BuildManager.OnBarrierPicked += changeTowerText;
         ButtonHover.OnHoverEnter += changeTowerText;
+        ButtonHover.OnHoverEnterB += changeTowerText;
     }
 
     private void OnDisable()
@@ -52,6 +53,7 @@ public class GUIManager : MonoBehaviour
         BuildManager.OnTowerPicked -= changeTowerText;
         BuildManager.OnBarrierPicked -= changeTowerText;
         ButtonHover.OnHoverEnter -= changeTowerText;
+        ButtonHover.OnHoverEnterB += changeTowerText;
     }
 
     private void Start()
@@ -124,12 +126,24 @@ public class GUIManager : MonoBehaviour
     public void changeTowerText(Tower tower)
     {
         towerName.text = tower.getName();
+
+        if (gameObject.GetComponent<GameManager>().cost(tower.getCost()))
+            towerCost.color = Color.yellow;
+        else
+            towerCost.color = Color.red;
+
         towerCost.text = "Cost: " + tower.getCost().ToString() + " Scrap";
     }
 
-    public void changeTowerText(BarrierScriptable tower)
+    public void changeTowerText(BarrierScriptable barrier)
     {
-        towerName.text = tower.getName();
-        towerCost.text = "Cost: " + tower.getCost().ToString() + " Scrap";
+        towerName.text = barrier.getName();
+
+        if (gameObject.GetComponent<GameManager>().cost(barrier.getCost()))
+            towerCost.color = Color.yellow;
+        else
+            towerCost.color = Color.red;
+
+        towerCost.text = "Cost: " + barrier.getCost().ToString() + " Scrap";
     }
 }

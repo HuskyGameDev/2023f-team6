@@ -12,6 +12,9 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
+    public enum Priority { Closest, Farthest, Strongest, IgnoreDecoys };
+    private Priority towerPriority;
+
     private Tower tower;
     [SerializeField] private GameObject nozzle;
 
@@ -29,12 +32,12 @@ public class TowerAI : MonoBehaviour
     private Animator anim;
 
     private Buffs[] buffs;
+    private GameObject[] enemiesInRange;
 
     private Boolean placed = false;
     private BoxCollider2D[] colliders;
 
-    private bool temp = false;
-
+    #region Setup
     private void OnEnable()
     {
         GameManager.OnRoundStart += StartRound;
@@ -43,7 +46,6 @@ public class TowerAI : MonoBehaviour
     {
         GameManager.OnRoundStart -= StartRound;
     }
-
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
@@ -55,6 +57,7 @@ public class TowerAI : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buildManager = FindObjectOfType<BuildManager>();
         buffs = new Buffs[10];
+        enemiesInRange = new GameObject[27];
         
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Just in case someone manages to place a tower during a round
         {
@@ -62,14 +65,13 @@ public class TowerAI : MonoBehaviour
             StartRound();
         }
     }
-
     private void Update()
     {
         if (!placed)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position))
+                if (raycastCorners() && buildManager.approvePosition(transform.position))
                 {
                     OnTowerPlaced?.Invoke();
                     placed = true;
@@ -96,8 +98,6 @@ public class TowerAI : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown("u") && gameManager.getGameState() == GameManager.GameState.Idle) { upgrade(true); }
-
         if (target != null) //Turn towards target every frame
             targetPoint();
 
@@ -113,6 +113,13 @@ public class TowerAI : MonoBehaviour
         damageMult = tower.getDamageMult();
         turnSpeed = tower.getTurnSpeed();
         cantTurn = tower.getCantTurn();
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        if (getTowerRange() >= 0)
+            gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange();
+        else
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
+
+        towerPriority = Priority.Closest;
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
@@ -130,12 +137,9 @@ public class TowerAI : MonoBehaviour
     }
     public void StartRound()    //Called when each round starts
     {
-        if (target == null)     //Should be null always, might not be needed
-            newTarget();
-        anim.SetTrigger("TargetFound");
+        newTarget();
     }
-
-    
+    #endregion
 
     #region Upgrade Methods
     private void upgrade(bool path)  //true for path a, false for path b
@@ -215,6 +219,13 @@ public class TowerAI : MonoBehaviour
                 gameManager.spendScrap(tower.UB2getCost());
             }
         }
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        if (getTowerRange() >= 0)
+            gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange();
+        else
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
+
         OnUpgraded?.Invoke(this);
     }
     public int getTotalSpentScrap()
@@ -237,9 +248,15 @@ public class TowerAI : MonoBehaviour
     }
     #endregion
 
+    #region Targeting/firing
     private void targetPoint()  //finds where/how to point to look at target and points that way
     {
         if (cantTurn) { return; }
+        if (target == null)
+        {
+            prioritize();
+            return;
+        }
 
         Vector3 offset = target.transform.position - transform.position;
         Quaternion output = Quaternion.LookRotation(Vector3.forward, offset);
@@ -263,6 +280,7 @@ public class TowerAI : MonoBehaviour
     }
     private void newTarget()    //Set target to closest enemy in range
     {
+        /*
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         target = null;
 
@@ -287,13 +305,210 @@ public class TowerAI : MonoBehaviour
                 }
             }
         }
+        */
+
+        if (getTowerRange() == -1 && enemiesInRange[0] == null)
+        {
+            enemiesInRange = GameObject.FindGameObjectsWithTag("Enemy");
+            prioritize();
+        }
+
+        //displayList();
+        target = enemiesInRange[0];
         if (target == null)
             anim.SetBool("TargetFound", false);
         else
             anim.SetBool("TargetFound", true);
     }
+    public void setPriority(Priority priority) { towerPriority = priority; }
+    private void prioritize()  //Sorts enemies by the set priority
+    {
+        for (int g = 0; g < enemiesInRange.Length; g++)
+        {
+            if (enemiesInRange[g] != null && enemiesInRange[g].name == "AOETrigger")
+            {
+                Debug.Log("Forgetting " + enemiesInRange[g].name);
+                enemiesInRange[g] = null;
+            } 
+        }
 
-    //Buff Managing
+        if (isEmpty()) return;
+
+        shiftUp();
+
+        int decoysEnd = 0;
+        if (towerPriority != Priority.IgnoreDecoys) //Move the decoys to the front
+        {
+            while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
+                decoysEnd++;
+
+            for (int i = decoysEnd + 1; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Move decoys to the front
+            {
+                if (enemiesInRange[i].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
+                {
+                    GameObject temp = enemiesInRange[decoysEnd];
+                    enemiesInRange[decoysEnd] = enemiesInRange[i];
+                    enemiesInRange[i] = temp;
+                    decoysEnd++;
+                }
+            }
+
+            for (int i = 0; i < decoysEnd; i++) //Sort the decoys
+            {
+                for (int j = i + 1; j < decoysEnd; j++)
+                {
+                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    {
+                        GameObject temp = enemiesInRange[j];
+                        enemiesInRange[j] = enemiesInRange[i];
+                        enemiesInRange[i] = temp;
+                    }
+                }
+            }
+            
+            for (int i = decoysEnd; i < enemiesInRange.Length; i++) //Sort the normal enemies
+            {
+                for (int j = i; i < enemiesInRange.Length && enemiesInRange[i] != null; i++)
+                {
+                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    {
+                        GameObject temp = enemiesInRange[j];
+                        enemiesInRange[j] = enemiesInRange[i];
+                        enemiesInRange[i] = temp;
+                    }
+                }
+            }
+        }
+        else                                        //Move the decoys to the end if ignoring them
+        {
+            //Here, decoysEnd is repurposed to be the start of the decoys
+            while (enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
+                decoysEnd++;
+
+            for (int i = decoysEnd + 1; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Move decoys to the front
+            {
+                if (enemiesInRange[i].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
+                {
+                    GameObject temp = enemiesInRange[decoysEnd];
+                    enemiesInRange[decoysEnd] = enemiesInRange[i];
+                    enemiesInRange[i] = temp;
+                    decoysEnd++;
+                }
+            }
+
+            for (int i = 0; i < decoysEnd; i++) //Sort the decoys
+            {
+                for (int j = i; j < decoysEnd; j++)
+                {
+                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    {
+                        GameObject temp = enemiesInRange[j];
+                        enemiesInRange[j] = enemiesInRange[i];
+                        enemiesInRange[i] = temp;
+                    }
+                }
+            }
+
+            for (int i = decoysEnd; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Sort the normal enemies
+            {
+                for (int j = i; i < enemiesInRange.Length; i++)
+                {
+                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    {
+                        GameObject temp = enemiesInRange[j];
+                        enemiesInRange[j] = enemiesInRange[i];
+                        enemiesInRange[i] = temp;
+                    }
+                }
+            }
+        }
+    }
+
+    private void shiftUp()
+    {
+        if (isEmpty() || isFull()) return;
+
+        foreach (GameObject g in enemiesInRange)
+        {
+            for (int i = 0; i < enemiesInRange.Length - 1; i++)
+            {
+                if (enemiesInRange[i] == null)
+                {
+                    enemiesInRange[i] = enemiesInRange[i + 1];
+                    enemiesInRange[i + 1] = null;
+                }
+            }
+        }
+    }
+
+    private bool isEmpty()
+    {
+        bool output = true;
+        foreach(GameObject g in enemiesInRange)
+        {
+            if (g != null)
+                output = false;
+        }
+        return output;
+    }
+    private bool isFull()
+    {
+        bool output = true;
+        foreach (GameObject g in enemiesInRange)
+        {
+            if (g == null)
+                output = false;
+        }
+        return output;
+    }
+
+    private void AddTarget(GameObject newTarget)    //Adds an enemy to the list of enemies in range (unless it's forgotten)
+    {
+        if (newTarget.GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Forgotten) return;
+
+        for (int i = 0; i < enemiesInRange.Length; i++)
+        {
+            if (enemiesInRange[i] == null)
+            {
+                enemiesInRange[i] = newTarget;
+                prioritize();
+                return;
+            }
+        }
+    }
+
+    private void forget(GameObject enemy)
+    {
+        for (int i = 0; i < enemiesInRange.Length; i++)
+        {
+            if (enemiesInRange[i] == enemy)
+            {
+                enemiesInRange[i] = null;
+                prioritize();
+                return;
+            }
+        }
+    }
+    /*
+    private void displayList()
+    {
+        string output = "[ ";
+        foreach (GameObject g in enemiesInRange)
+        {
+            if (g == null)
+                output += "null, ";
+            else if (g.name == "AOETrigger")
+                output += "Shouldn't be here, ";
+            else
+                output += g.GetComponent<AI>().getName() + ", ";
+        }
+        output += " ]";
+        Debug.Log(output);
+    }
+    */
+    #endregion
+
+    #region Buff Managing
     private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
         for (int i = 0; i < buffs.Length; i++)
@@ -328,9 +543,10 @@ public class TowerAI : MonoBehaviour
 
         removeBuff(newDebuff);
     }
+    #endregion
 
 
-    //Get functions for buffs
+    #region Get functions
     private float getFireRate()    //Gives total speed penalty/buff (multiplicative)
     {
         float fireRate = 1;
@@ -359,6 +575,21 @@ public class TowerAI : MonoBehaviour
         return damage;
     }
 
+    private bool raycastCorners()   //Checks the corners of the tower to make sure it isn't touching the water
+    {
+        int layerMask = 1 << 4;
+
+        if (Physics2D.Raycast(transform.position, Vector3.up + Vector3.right, 1.4f, layerMask).collider != null)    //Top right corner
+            return false;
+        if (Physics2D.Raycast(transform.position, Vector3.down + Vector3.right, 1.4f, layerMask).collider != null)  //Down right corner
+            return false;
+        if (Physics2D.Raycast(transform.position, Vector3.up + Vector3.left, 1.4f, layerMask).collider != null)  //Up left corner
+            return false;
+        if (Physics2D.Raycast(transform.position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
+            return false;
+
+        return true;
+    }
     public bool getPlaced() { return placed; }
     public int getUpgradeLevel() { return upgradeLevel; }
     public Tower getTower() { return tower; }
@@ -377,5 +608,17 @@ public class TowerAI : MonoBehaviour
         if (upgradeLevel == 5)
             return tower.UB2getRange();
         return tower.getRange();
+    }
+    #endregion
+
+    public void OnTriggerEnter2D(Collider2D collision) //If the collision is an enemy, add it to the list
+    {
+        if (!collision.CompareTag("Enemy")) return;
+        AddTarget(collision.gameObject);
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Enemy")) return;
+        forget(collision.gameObject);
     }
 }

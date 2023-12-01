@@ -8,6 +8,7 @@ public class HoverText : MonoBehaviour
 {
     [SerializeField] GameObject descriptionBox;
     Vector2 position;
+    bool tooFarRight = false;
     private void OnEnable()
     {
         ButtonDescription.onMouseExitButton += disable;
@@ -22,12 +23,24 @@ public class HoverText : MonoBehaviour
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f;
-        position.x = mouseWorldPosition.x + (30f * descriptionBox.transform.localScale.x);
+
+        if (tooFarRight)
+            position.x = mouseWorldPosition.x - (30f * descriptionBox.transform.localScale.x);
+        else
+            position.x = mouseWorldPosition.x + (30f * descriptionBox.transform.localScale.x);
+
         position.y = mouseWorldPosition.y - (26f * descriptionBox.transform.localScale.y);
         descriptionBox.gameObject.transform.position = position;
+
+        //Debug.Log(Camera.main.WorldToViewportPoint(Input.mousePosition) / 38);
     }
     private void updateDescription(string title, string description)
     {
+        if (Camera.main.WorldToViewportPoint(Input.mousePosition).x / 38 >= 0.9)    //Moves hover text to the left of the mouse if too close to the right edge of the screen
+            tooFarRight = true;
+        else
+            tooFarRight = false;
+
         enable();
         descriptionBox.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = title;
         descriptionBox.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = description;

@@ -7,22 +7,33 @@ using UnityEngine.EventSystems;
 public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Tower tower;
+    public BarrierScriptable barrier;
     public static event Action<Tower> OnHoverEnter;
+    public static event Action<BarrierScriptable> OnHoverEnterB;
     public static event Action OnHoverExit;
+    private ButtonDescription buttonDescription;
     Image image;
 
     private void Start()
     {
         image = GetComponent<Image>();
+        buttonDescription = gameObject.GetComponent<ButtonDescription>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnHoverEnter?.Invoke(tower);
+        if (tower != null)
+            OnHoverEnter?.Invoke(tower);
+        else
+            OnHoverEnterB?.Invoke(barrier);
+
+        buttonDescription.SendMessage("mouseEnter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         OnHoverExit?.Invoke();
+
+        buttonDescription.SendMessage("mouseExit");
     }
 }

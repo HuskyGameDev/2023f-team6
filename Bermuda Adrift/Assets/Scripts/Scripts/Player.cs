@@ -18,6 +18,7 @@ public class Player : ScriptableObject
     [SerializeField] private Buffs altPassive;
     [SerializeField] private string description;
     [SerializeField] private Sprite mainBodySprite;
+    [SerializeField] private int speed;
 
     private bool altP;
     private bool altS;
@@ -86,4 +87,5 @@ public class Player : ScriptableObject
     public bool altedPa() { return altPa; }
     public string getDescription() { return description; }
     public Sprite getMainBodySprite() { return mainBodySprite; }
+    public int getSpeed() { return speed; }
 }

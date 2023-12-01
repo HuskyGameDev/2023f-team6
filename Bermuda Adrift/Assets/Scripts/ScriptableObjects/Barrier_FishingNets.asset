@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Barrier_FishingNets
   m_EditorClassIdentifier: 
   barrierName: Fishing Net
+  description: Slows down enemies that swim through it
   effect: 1
   Health: 0
   cost: 150

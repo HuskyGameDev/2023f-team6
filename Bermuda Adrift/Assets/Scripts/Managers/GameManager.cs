@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         {
             return true;
         }
-        Debug.Log("Not Enough Scrap!");
+        //Debug.Log("Not Enough Scrap!");
         return false;
     }
 

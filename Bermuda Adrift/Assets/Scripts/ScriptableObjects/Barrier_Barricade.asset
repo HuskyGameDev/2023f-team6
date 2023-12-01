@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Barrier_Barricade
   m_EditorClassIdentifier: 
   barrierName: Barricade
+  description: Blocks enemies from progressing until it is destroyed
   effect: 0
   Health: 10
   cost: 150

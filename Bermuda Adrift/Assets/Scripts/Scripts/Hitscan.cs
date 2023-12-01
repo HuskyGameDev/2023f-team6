@@ -294,4 +294,5 @@ public class Hitscan : MonoBehaviour
         if ((pierce <= 0 || AOETimer <= 0) && effect == Bullet.Effects.None)
             Destroy(gameObject);    //After all AOE stuff, the bullet is deleted. If there is something requiring a lasting hitbox, turn the sprite invisible or something
     }
+    public float getAOETimer() { return AOETimer; }
 }

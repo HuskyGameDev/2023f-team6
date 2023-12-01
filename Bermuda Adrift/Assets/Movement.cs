@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    private float speed;
     private Rigidbody2D rb;
     private Vector2 input;
 
@@ -54,7 +54,6 @@ public class Movement : MonoBehaviour
         }
         else {
             isWalking = true;
-            anim.SetBool("Moving", true);
         }
 
         input.Normalize();
@@ -69,19 +68,25 @@ public class Movement : MonoBehaviour
         if (input.y < 0)
             yDirection = -1;
 
-
-        if (Physics.Raycast(transform.position + (Vector3.down * 0.58f), Vector3.forward * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, layerMask))
+        if (Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.right * 0.3357f * xDirection), Vector3.right * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, layerMask).collider != null)
+        {
             xDirection = 0;
+        }
         else
             xDirection = input.x;
 
-        if (Physics.Raycast(transform.position + (Vector3.down * 0.58f), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, layerMask))
+        if (Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.up * 0.09779f * yDirection), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, layerMask).collider != null)
+        {
             yDirection = 0;
+        }
         else
             yDirection = input.y;
 
+        if (xDirection == 0 && yDirection == 0) anim.SetBool("Moving", false);
+        else anim.SetBool("Moving", true);
         //transform.position = transform.position + new Vector3(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
-        rb.velocity = new Vector2(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
+        transform.position += new Vector3(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
+        //rb.velocity = new Vector2(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
     }
 
     public Vector3 getAim() { return AimVector; }
@@ -132,6 +137,7 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void setSpeed(float speed) { this.speed = speed; }
     private float getSpeed()
     {
         float speed = 1;

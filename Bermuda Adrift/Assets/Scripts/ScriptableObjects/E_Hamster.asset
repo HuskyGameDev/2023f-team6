@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E_Hamster
   m_EditorClassIdentifier: 
   Type: 0
+  specialType: 1
   Health: 100
   Damage: 0
   Speed: 1

@@ -10,7 +10,9 @@ public class AnimationHandler : MonoBehaviour
 
     [SerializeField] Animator buyMenu;
     [SerializeField] Animator upgradeMenu;
+    [SerializeField] Animator tooltips;
     bool upgradeMenuOut;
+    bool tooltipOnScreen;
     private void OnEnable()
     {
         GameManager.onRoundEnd += BuyMenu_SlideIn;
@@ -18,6 +20,8 @@ public class AnimationHandler : MonoBehaviour
         TurretMiddleMan.onClicked += upgradeMenu_SlideIn;
         GameManager.OnRoundStart += upgradeMenu_SlideOut;
         UpgradeMenuHandler.OnDestroy += upgradeMenu_SlideOut;
+        Hints.OnPopup += tooltipsPopup;
+        Hints.OnPopdown += tooltipsPopdown;
     }
 
     private void OnDisable()
@@ -27,6 +31,8 @@ public class AnimationHandler : MonoBehaviour
         TurretMiddleMan.onClicked -= upgradeMenu_SlideIn;
         GameManager.OnRoundStart -= upgradeMenu_SlideOut;
         UpgradeMenuHandler.OnDestroy -= upgradeMenu_SlideOut;
+        Hints.OnPopup -= tooltipsPopup;
+        Hints.OnPopdown -= tooltipsPopdown;
     }
     void BuyMenu_SlideIn()
     {
@@ -53,6 +59,22 @@ public class AnimationHandler : MonoBehaviour
             upgradeMenuOut = false;
             onUpgradeClosed?.Invoke();
             upgradeMenu.Play("SlideOut");
+        }
+    }
+    void tooltipsPopup()
+    {
+        if (!tooltipOnScreen)
+        {
+            tooltips.Play("TooltipSlideIn");
+            tooltipOnScreen = true;
+        }
+    }
+    void tooltipsPopdown()
+    {
+        if (tooltipOnScreen)
+        {
+            tooltips.Play("TooltipSlideOut");
+            tooltipOnScreen = false;
         }
     }
 }

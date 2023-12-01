@@ -114,7 +114,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5422419643171805529}
   m_FillRect: {fileID: 7785536441803112171}
   m_HandleRect: {fileID: 325925278000016093}
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3390301618102937326
 MonoBehaviour:
   m_ObjectHideFlags: 0

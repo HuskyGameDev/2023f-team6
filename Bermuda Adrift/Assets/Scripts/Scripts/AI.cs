@@ -32,6 +32,7 @@ public class AI : MonoBehaviour
     private int damage;
     private bool stop;
     private bool dead;
+    private bool forgotten = false;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
@@ -331,6 +332,8 @@ public class AI : MonoBehaviour
     #region TakeDamage functions
     private void TakeDamage(int moreDamage) //Receiver for damage numbers, go to debuff function if debuffed
     {
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
         Health -= (int) (moreDamage * getArmor());
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
@@ -343,6 +346,8 @@ public class AI : MonoBehaviour
     }
     private void CritDamage(int moreDamage)
     {
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
         Health -= (int)(moreDamage * getArmor());
         damage += (int)(moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
@@ -355,6 +360,8 @@ public class AI : MonoBehaviour
     }
     private void StatusDamage(int moreDamage, Color color)
     {
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
         Health -= moreDamage;
         damage += moreDamage;
         animator.SetTrigger("TookDamage");
@@ -376,7 +383,8 @@ public class AI : MonoBehaviour
 
         animator.SetBool("Dead", true);
 
-        new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
+        if (!goal.CompareTag("Entrance") && !goal.CompareTag("Center")) Destroy(goal.gameObject);
+        //new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
         Destroy(gameObject);
     }
     #endregion
@@ -503,10 +511,10 @@ public class AI : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
     }
-    private void baited(GameObject bait) { StartCoroutine(goToBaited(bait)); }
-    private IEnumerator goToBaited(GameObject bait)    //Temporarily changes where the enemy thinks the goal is
+    private void baited(GameObject bait) { StartCoroutine(goToBaited(bait, bait.GetComponent<Hitscan>().getAOETimer())); }
+    private IEnumerator goToBaited(GameObject bait, float time)    //Temporarily changes where the enemy thinks the goal is
     {
-        if (!goal.CompareTag("Center")) //Won't work on enemies in the channels
+        if (!goal.CompareTag("Center") && enemy.getType() != Enemy.Types.WaterBoss && enemy.getType() != Enemy.Types.AirborneBoss) //Won't work on enemies in the channels
         {
             goal = new GameObject().transform;
 
@@ -522,8 +530,9 @@ public class AI : MonoBehaviour
 
             goal.position = newGoalPosition;
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(time);
 
+            Debug.Log(goal.gameObject);
             Destroy(goal.gameObject);
             nearestEntrance();
         }
@@ -575,7 +584,6 @@ public class AI : MonoBehaviour
         {
             armor *= debuffs[i].getArmor();
         }
-        Debug.Log("Armor is " + armor);
         return 1f / armor;
     }
     private float getHealthMult()   //Gives total percent health increase (multiplicative)
@@ -588,6 +596,17 @@ public class AI : MonoBehaviour
         return mult;
     }
     public Enemy.Types getType() { return enemy.getType(); }
+    public Enemy.SpecialTypes getSpecialType() 
+    {
+        if (forgotten)
+            return Enemy.SpecialTypes.Forgotten;
+        return enemy.getSpecialType();
+    }
+    public float getStrength()    //A "score" for each enemy based on health, damage, and speed
+    {
+        return enemy.getDamage() * enemy.getHealth() * enemy.getSpeed();
+    }
+    public string getName() { return enemy.name; }
     #endregion
 
     public void OnTriggerEnter2D(Collider2D collision)  //Trigger for hitting a barrier
