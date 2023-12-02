@@ -10,6 +10,8 @@ public class AI : MonoBehaviour
     public event Action<int> OnEnemyHurt;
     public event Action<int> OnCrit;
     public event Action<int, Color> OnStatusDamage;
+    public static event Action OnEnemyDeath;
+    public static event Action OnDecoyDeath;
 
     public event Action<int> SetupHealthBar;
 
@@ -23,6 +25,7 @@ public class AI : MonoBehaviour
     [SerializeField] private Bullet bullet;
 
     private Transform movement;
+    private int newMaxHealth;
 
     private Transform goal;
     private GameObject goalGO;
@@ -46,7 +49,8 @@ public class AI : MonoBehaviour
         enemy = newEnemy;
         debuffs = new Buffs[10];
 
-        Health = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());    //Maybe add health scaling later based on the number of times the set of enemies has been picked?
+        Health = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());
+        newMaxHealth = Health;
         gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
         debuffToInflict = enemy.getDefuff();
 
@@ -60,7 +64,8 @@ public class AI : MonoBehaviour
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)    //Start attack cycle if it's a boss
         {    
             StartCoroutine(randomAttacks());
-            Health = (int) (Health * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+            Health = (int) (enemy.getHealth() * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+            newMaxHealth = Health;
             Debug.Log("Health: " + Health);
         }
 
@@ -338,6 +343,9 @@ public class AI : MonoBehaviour
         damage += (int) (moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
 
+        //if (enemy.getType() == Enemy.Types.WaterBoss)
+        //    Debug.Log("Took " + (int)(moreDamage * getArmor()) + " damage, now at " + Health + " / " + newMaxHealth);
+
         //Debug.Log("Normal: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
 
         OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
@@ -384,7 +392,12 @@ public class AI : MonoBehaviour
         animator.SetBool("Dead", true);
 
         if (!goal.CompareTag("Entrance") && !goal.CompareTag("Center")) Destroy(goal.gameObject);
-        //new WaitForSeconds(0.5f);  //Maybe a standard death animation length or a variable in Enemy? Is it possible to wait until an animation is done?
+
+        OnEnemyDeath?.Invoke();
+
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Decoy)
+            OnDecoyDeath?.Invoke();
+
         Destroy(gameObject);
     }
     #endregion
@@ -478,12 +491,7 @@ public class AI : MonoBehaviour
     }
     private void healthCheck()
     {
-        int expectedHealth = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());
-        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
-        {
-            expectedHealth = (int)(expectedHealth * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f) * getHealthMult()) - damage;
-        } else
-            expectedHealth = (int)(expectedHealth * getHealthMult()) - damage;
+        int expectedHealth = (int)(newMaxHealth * getHealthMult()) - damage;
 
         if (expectedHealth < Health)    //Bring health down when the buff wears off
         {
@@ -532,7 +540,6 @@ public class AI : MonoBehaviour
 
             yield return new WaitForSeconds(time);
 
-            Debug.Log(goal.gameObject);
             Destroy(goal.gameObject);
             nearestEntrance();
         }
@@ -602,10 +609,14 @@ public class AI : MonoBehaviour
             return Enemy.SpecialTypes.Forgotten;
         return enemy.getSpecialType();
     }
+
+    #region Tower Priority Get Functions
     public float getStrength()    //A "score" for each enemy based on health, damage, and speed
     {
         return enemy.getDamage() * enemy.getHealth() * enemy.getSpeed();
     }
+    public float towerGetSpeed() { return enemy.getSpeed(); }   //Doesn't factor in buffs
+    #endregion
     public string getName() { return enemy.name; }
     #endregion
 

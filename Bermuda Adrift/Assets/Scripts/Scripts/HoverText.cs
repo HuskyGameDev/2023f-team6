@@ -36,6 +36,8 @@ public class HoverText : MonoBehaviour
     }
     private void updateDescription(string title, string description)
     {
+        if (title.CompareTo("") == 0 && description.CompareTo("") == 0) return;
+
         if (Camera.main.WorldToViewportPoint(Input.mousePosition).x / 38 >= 0.9)    //Moves hover text to the left of the mouse if too close to the right edge of the screen
             tooFarRight = true;
         else

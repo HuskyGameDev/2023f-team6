@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
     public static event Action OnGameEnd;
     public static event Action<int> OnLevelUp;
 
+    public static event Action OnBossWarning;
+    public static event Action OnBossApproaching;
+
     public enum GameState
     {
         Idle,
@@ -67,6 +70,8 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown("n"))
             addScrap(100);
+        else if (Input.GetKeyDown("z"))
+            addScrap(1000);
         else if (Input.GetKeyDown("b"))
             addXP(100);
         
@@ -88,17 +93,21 @@ public class GameManager : MonoBehaviour
             gameObject.SendMessage("SpawnEnemies");     //Sends a message to the EnemyManager
 
             // GameObject.Find("Audio Source").GetComponent<AudioManager>().fullVolume();
+
         } else
             Debug.Log("Not idling");    //Maybe disable the button when we get it until the round is over?
     }
 
     private void endRound() //Does everything that needs doing at the end of a round (received from enemyManager)
     {
-        onRoundEnd?.Invoke();
-        //Enable next-round button
-        //Enable tower placing system
-        //Both could just be affected by game state
         // GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
+
+        if (gameObject.GetComponent<EnemyManager>().getRound() == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
+            OnBossWarning?.Invoke();
+        else if (gameObject.GetComponent<EnemyManager>().getRound() == 9)
+            OnBossApproaching?.Invoke();
+
+        onRoundEnd?.Invoke();
 
         state = GameState.Idle;
     }
@@ -172,7 +181,7 @@ public class GameManager : MonoBehaviour
 
     public float getLevelScale()
     {
-        return (float) Math.Pow(1.2, (double) getLevel() - 1);
+        return (float) Math.Pow(1.3, (double) getLevel() - 1);
     }
 
     public void QuitGame()

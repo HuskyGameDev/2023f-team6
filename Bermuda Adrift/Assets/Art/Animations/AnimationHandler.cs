@@ -6,6 +6,8 @@ using UnityEngine;
 public class AnimationHandler : MonoBehaviour
 {
     public static event Action<TowerAI> onUpgradeOpened;
+    public static event Action<Barriers> onUpgradeOpenedB;
+    public static event Action<Centerpiece> onUpgradeOpenedC;
     public static event Action onUpgradeClosed;
 
     [SerializeField] Animator buyMenu;
@@ -22,6 +24,8 @@ public class AnimationHandler : MonoBehaviour
         UpgradeMenuHandler.OnDestroy += upgradeMenu_SlideOut;
         Hints.OnPopup += tooltipsPopup;
         Hints.OnPopdown += tooltipsPopdown;
+        Centerpiece.onClicked += upgradeMenu_SlideIn;
+        Barriers.onClicked += upgradeMenu_SlideIn;
     }
 
     private void OnDisable()
@@ -46,6 +50,24 @@ public class AnimationHandler : MonoBehaviour
     void upgradeMenu_SlideIn(GameObject go) 
     {
         onUpgradeOpened?.Invoke(go.GetComponent<TowerAI>());
+        if (!upgradeMenuOut)
+        {
+            upgradeMenu.Play("SlideIn");
+            upgradeMenuOut = true;
+        }
+    }
+    void upgradeMenu_SlideIn(Centerpiece c)
+    {
+        onUpgradeOpenedC?.Invoke(c);
+        if (!upgradeMenuOut)
+        {
+            upgradeMenu.Play("SlideIn");
+            upgradeMenuOut = true;
+        }
+    }
+    void upgradeMenu_SlideIn(Barriers b)
+    {
+        onUpgradeOpenedB?.Invoke(b);
         if (!upgradeMenuOut)
         {
             upgradeMenu.Play("SlideIn");

@@ -8,25 +8,42 @@ public class E_VisualFX : MonoBehaviour
     [SerializeField] GameObject dmgPopupTxt;
     private TextMeshPro textMesh;
     private AI enemy;
+    private Centerpiece centerpiece;
 
     private void OnEnable()
     {
-        enemy.OnEnemyHurt += DamagePopupSetup;
-        enemy.OnCrit += CritDamagePopupSetup;
-        enemy.OnStatusDamage += DOTDamagePopupSetup;
+        if (enemy != null)
+        {
+            enemy.OnEnemyHurt += DamagePopupSetup;
+            enemy.OnCrit += CritDamagePopupSetup;
+            enemy.OnStatusDamage += DOTDamagePopupSetup;
+        }
+        else
+        {
+            centerpiece.onCenterpieceDamage += CritDamagePopupSetup;
+        }
     }
 
     private void OnDisable()
     {
-        enemy.OnEnemyHurt -= DamagePopupSetup;
-        enemy.OnCrit -= CritDamagePopupSetup;
-        enemy.OnStatusDamage -= DOTDamagePopupSetup;
+        if (enemy != null)
+        {
+            enemy.OnEnemyHurt -= DamagePopupSetup;
+            enemy.OnCrit -= CritDamagePopupSetup;
+            enemy.OnStatusDamage -= DOTDamagePopupSetup;
+        }
+        else
+        {
+            centerpiece.onCenterpieceDamage -= CritDamagePopupSetup;
+        }
     }
 
     private void Awake()
     {
         textMesh = dmgPopupTxt.GetComponent<TextMeshPro>();
         enemy = gameObject.GetComponent<AI>();
+        if (enemy == null)
+            centerpiece = gameObject.GetComponent<Centerpiece>();
     }
 
     public void DamagePopupSetup(int damageAmount)

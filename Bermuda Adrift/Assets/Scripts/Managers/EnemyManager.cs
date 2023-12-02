@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
     public static event Action<int> onEnemyDeath;
     public static event Action<int> onEnemySpawn;
 
-    private Camera camera;  //Not sure what the warning is, but when I changed the name it broke several things
+    new private Camera camera;  //Not sure what the warning is, but when I changed the name it broke several things
     private int total;
     private int Round;
     private int loopSpot;
@@ -95,7 +95,7 @@ public class EnemyManager : MonoBehaviour
         onEnemyDeath?.Invoke(total);    // Event that triggers when enemy dies
         if (total <= 0)     //Doesn't actually count the enemies on screen. Enemies should be getting tracked with the total in SpawnEnemies or added with newEnemies if they are spawned another way
         {
-            Debug.Log("End round");
+            //Debug.Log("End round");
             gameObject.SendMessage("endRound");
             Round++;
             loopSpot++;
@@ -120,7 +120,7 @@ public class EnemyManager : MonoBehaviour
     {
         return (camera.transform.position.x - camera.orthographicSize) * 2f;    //Uses camera orthographic size to calculate "off-screen" no matter how zoomed in the camera is. Has more of a multiplier 
     }
-    public int getRound()   //Returns round number
+    public int getRound()   //Returns the round number
     {
         return Round;
     }
@@ -138,6 +138,11 @@ public class EnemyManager : MonoBehaviour
     }
     public float getRoundScale()
     {
-        return (int)(Round / 10) + 1;
+        //(Too hard) For the first 10 rounds, 2^(2 log x)
+        //if (Round <= 10)
+        //    return (int) Mathf.Round(Mathf.Pow(2f, 2 * Mathf.Log10(Round)));
+
+        //1.09^x
+        return Mathf.Round(Mathf.Pow(1.09f, Round));
     }
 }

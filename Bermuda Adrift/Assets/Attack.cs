@@ -37,9 +37,6 @@ public class Attack : MonoBehaviour
     private int attackCooldownFrames = 5;
     private bool attackCooldownBool;
 
-    bool loopUsedEventCalled;
-    bool barrelEventCalled;
-
     private Buffs[] buffs = new Buffs[10];
 
     private void OnEnable()
@@ -262,11 +259,8 @@ public class Attack : MonoBehaviour
                 anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
             }
 
-            if (character.name == "P_Pirate" && !barrelEventCalled)
-            {
+            if (character.name == "P_Pirate")
                 barrelUsed?.Invoke();
-                barrelEventCalled = true;
-            }
 
             anim.SetBool("Special", true);
             StartCoroutine(antiHold(character.getSpecial().canBeLooped(), 4));
@@ -318,11 +312,8 @@ public class Attack : MonoBehaviour
             intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
         }
 
-        if (!loopUsedEventCalled && ability.canBeLooped())
-        {
+        if (ability.canBeLooped())
             loopUsed?.Invoke();
-            loopUsedEventCalled = true;
-        }
 
         StartCoroutine(attackDelay());
     }

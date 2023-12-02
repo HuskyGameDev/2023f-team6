@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
-public class Barriers : MonoBehaviour
+public class Barriers : MonoBehaviour, IPointerDownHandler
 {
     public static event Action OnCancel;
     public static event Action OnTowerPlaced;
+    public static event Action<Barriers> onClicked;
 
     private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private BuildManager buildManager;
@@ -25,6 +27,7 @@ public class Barriers : MonoBehaviour
         debuffs = new Buffs[5];
 
         buildManager = FindObjectOfType<BuildManager>();
+        AddPhysics2DRaycaster();
     }
 
     // Update is called once per frame
@@ -86,10 +89,20 @@ public class Barriers : MonoBehaviour
         health -= (int) (damage * armor);
         if (health <= 0)
         {
-            //Play destroyed animation
             buildManager.removePosition(transform.position);
             Destroy(gameObject);
         }
+    }
+    private void repair(int damage)
+    {
+        health += damage;
+    }
+    public void destroyBarrier()
+    {
+        //Play destroyed animation
+        buildManager.removePosition(transform.position);
+        FindObjectOfType<GameManager>().addScrap(barrier.getCost() / 2);
+        Destroy(gameObject);
     }
 
     private void Locate()   //Changes the animation based on which channel the barrier is in
@@ -150,9 +163,27 @@ public class Barriers : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (placed && GameObject.FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
+            onClicked?.Invoke(this);
+    }
+
+    private void AddPhysics2DRaycaster()
+    {
+        Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
+        if (physicsRaycaster == null)
+        {
+            Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+        }
+    }
 
 
     public BarrierScriptable.Effect getEffect() { return barrier.getEffect(); }
     public Buffs getDebuff() { return debuffToInflict; }
     public bool getPlaced() { return placed; }
+    public int getHealth() { return health; }
+    public int getMaxHealth() { return barrier.getHealth(); }
+    public string getName() { return barrier.getName(); }
+    public BarrierScriptable getBarrier() { return barrier; }
 }

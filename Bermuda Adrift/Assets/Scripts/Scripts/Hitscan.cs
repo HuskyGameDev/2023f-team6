@@ -24,7 +24,7 @@ public class Hitscan : MonoBehaviour
     private bool landed;
     private bool stop;
 
-    private Camera camera;
+    new private Camera camera;
 
     private void Start()
     {

@@ -8,8 +8,9 @@ public class Hints : MonoBehaviour
 {
     public static event Action OnPopup;
     public static event Action OnPopdown;
+    public static event Action OnPopupAppeared;
 
-    Queue<string> queue;
+    Stack<string> stack;
     TextMeshProUGUI textMesh;
     [SerializeField] bool disabled;
     bool tooltipEndEarly;
@@ -18,21 +19,33 @@ public class Hints : MonoBehaviour
     {
         GameManager.onRoundEnd += displayPopup;
         GameManager.OnRoundStart += disappear;
+
         Attack.loopUsed += loopAttacks;
         Attack.barrelUsed += shootBarrels;
         BuildManager.OnTwoTowersPlaced += twoTowers;
+        AI.OnDecoyDeath += decoyDeath;
+        OnPopupAppeared += endTooltipEarly;
+        GameManager.OnBossWarning += bossWarning;
+        GameManager.OnBossApproaching += bossApproaching;
+        Centerpiece.onCenterpieceDamaged += repairHint;
     }
     private void OnDisable()
     {
         GameManager.onRoundEnd -= displayPopup;
         GameManager.OnRoundStart -= disappear;
+
         Attack.loopUsed -= loopAttacks;
         Attack.barrelUsed -= shootBarrels;
         BuildManager.OnTwoTowersPlaced -= twoTowers;
+        AI.OnDecoyDeath -= decoyDeath;
+        OnPopupAppeared -= endTooltipEarly;
+        GameManager.OnBossWarning -= bossWarning;
+        GameManager.OnBossApproaching -= bossApproaching;
+        Centerpiece.onCenterpieceDamaged -= repairHint;
     }
     private void Start()
     {
-        queue = new Queue<string>();
+        stack = new Stack<string>();
         textMesh = transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
     }
     public void disappear() { OnPopdown?.Invoke(); }
@@ -42,17 +55,14 @@ public class Hints : MonoBehaviour
         if (disabled) return;
 
         string tip;
-        if (!queue.TryDequeue(out tip))
+        if (!stack.TryPop(out tip))
             return;
 
         textMesh.text = tip;
         OnPopup?.Invoke();
+        
+        OnPopupAppeared?.Invoke();
 
-        if (!tooltipEndEarly)
-        {
-            endTooltipEarly();
-            tooltipEndEarly = true;
-        }
         StartCoroutine(delay(5f));
     }
     private IEnumerator delay(float timeOnScreen)
@@ -61,13 +71,51 @@ public class Hints : MonoBehaviour
         disappear();
     }
 
-    private void endTooltipEarly() { Debug.Log("Queueing early tooltips"); queue.Enqueue("You can click on these tips to make them disappear!"); }
-    public void loopAttacks()
+    #region Tips
+    private void endTooltipEarly()
     {
-        Debug.Log("Queueing loop attacks");
-        queue.Enqueue("For some attacks, you can hold down the button to keep attacking");
-        queue.Enqueue("If you hold down the button for any attack, it will activate once it's cooldown finishes");
+        stack.Push("You can click on these tips to make them disappear faster!");
+
+        OnPopupAppeared -= endTooltipEarly;
     }
-    public void shootBarrels() { Debug.Log("Queueing barrel attacks"); queue.Enqueue("Fun Fact: you can shoot your barrels to detonate them early"); }
-    public void twoTowers() { Debug.Log("Queueing towers"); queue.Enqueue("If you click on a tower, you can upgrade it to make it much more powerful"); }
+    void loopAttacks()
+    {
+        stack.Push("For some attacks, you can hold down the button to keep attacking");
+        stack.Push("If you hold down the button for any attack, it will activate once it's cooldown finishes");
+
+        Attack.loopUsed -= loopAttacks;
+    }
+    void shootBarrels()
+    {
+        stack.Push("Fun Fact: you can shoot your barrels to detonate them early");
+
+        Attack.barrelUsed -= shootBarrels;
+    }
+    void twoTowers() 
+    {
+        stack.Push("If you click on a tower, you can upgrade it to make it much more powerful");
+
+        BuildManager.OnTwoTowersPlaced -= twoTowers;
+    }
+    void decoyDeath()
+    {
+        stack.Push("Some enemies will attract all the attention of your towers. Apart from that, they're mostly harmless");
+
+        AI.OnDecoyDeath -= decoyDeath;
+    }
+    void bossWarning()
+    {
+        stack.Push("A powerful enemy approaches...");
+    }
+    void bossApproaching()
+    {
+        stack.Push("PREPARE YOURSELF");
+    }
+    void repairHint()
+    {
+        stack.Push("You can click on the centerpiece to have a chance to repair it. Be warned, the more damage there is, the more costly it will be to fix");
+        
+        Centerpiece.onCenterpieceDamaged -= repairHint;
+    }
+    #endregion
 }

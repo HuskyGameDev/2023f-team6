@@ -15,7 +15,14 @@ public class UpgradeMenuHandler : MonoBehaviour
     private GameObject upgrade1;
     private GameObject upgrade2;
     private GameObject destroyButton;
+    private Slider repairSlider;
+    private GameObject repairButton;
+
+    private int currentHealth;
+
     private TowerAI currentTower;
+    private Barriers currentBarrier;
+    private Centerpiece centerpiece;
 
     private void Start()
     {
@@ -25,19 +32,34 @@ public class UpgradeMenuHandler : MonoBehaviour
         upgrade1 = transform.GetChild(3).gameObject;
         upgrade2 = transform.GetChild(4).gameObject;
         destroyButton = transform.GetChild(5).gameObject;
+        repairSlider = transform.GetChild(6).GetComponent<Slider>();
+        repairButton = transform.GetChild(7).gameObject;
     }
 
     private void OnEnable()
     {
         AnimationHandler.onUpgradeOpened += updateMenu;
+        AnimationHandler.onUpgradeOpenedB += updateMenu;
+        AnimationHandler.onUpgradeOpenedC += updateMenu;
+
+
         AnimationHandler.onUpgradeClosed += nonInteractable;
         TowerAI.OnUpgraded += updateMenu;
     }
     private void OnDisable()
     {
         AnimationHandler.onUpgradeOpened -= updateMenu;
+        AnimationHandler.onUpgradeOpenedB -= updateMenu;
+        AnimationHandler.onUpgradeOpenedC -= updateMenu;
+
         AnimationHandler.onUpgradeClosed -= nonInteractable;
         TowerAI.OnUpgraded -= updateMenu;
+    }
+
+    private void Update()
+    {
+        if (repairSlider.isActiveAndEnabled)
+            updateRepairMenu();
     }
 
     void updateMenu(TowerAI towerAI)
@@ -48,13 +70,19 @@ public class UpgradeMenuHandler : MonoBehaviour
 
         int upgradeLevel = towerAI.getUpgradeLevel();
         Tower tower = towerAI.getTower();
+
         currentTower = towerAI;
+        currentBarrier = null;
 
         //Make buttons interactable
         upgrade1.GetComponent<Button>().interactable = true;
         upgrade2.GetComponent<Button>().interactable = true;
         destroyButton.GetComponent<Button>().interactable = true;
+
         upgrade1.SetActive(true);
+        destroyButton.SetActive(true);
+        repairSlider.gameObject.SetActive(false);
+        repairButton.SetActive(false);
 
         if (upgradeLevel >= 4)  //Displays only the destroy button when it's fully upgraded
         {
@@ -85,12 +113,12 @@ public class UpgradeMenuHandler : MonoBehaviour
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
 
             upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.UA1getImage();
-            upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UA1getName();
-            upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UA1getCost() + " scrap";
+            upgrade1.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = tower.UA1getName();
+            upgrade1.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UA1getCost() + " scrap";
 
             upgrade2.transform.GetChild(1).GetComponent<Image>().sprite = tower.UB1getImage();
-            upgrade2.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UB1getName();
-            upgrade2.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UB1getCost() + " scrap";
+            upgrade2.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = tower.UB1getName();
+            upgrade2.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UB1getCost() + " scrap";
         }
         else
         {
@@ -102,8 +130,8 @@ public class UpgradeMenuHandler : MonoBehaviour
             if (upgradeLevel == 0)
             {
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.U1getImage();
-                upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.U1getName();
-                upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.U1getCost() + " scrap";
+                upgrade1.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = tower.U1getName();
+                upgrade1.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.U1getCost() + " scrap";
                 upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 1);
 
                 headerText.text = tower.getName();
@@ -111,8 +139,8 @@ public class UpgradeMenuHandler : MonoBehaviour
             } else if (upgradeLevel == 2)
             {
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.UA2getImage();
-                upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UA2getName();
-                upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UA2getCost() + " scrap";
+                upgrade1.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = tower.UA2getName();
+                upgrade1.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UA2getCost() + " scrap";
                 upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 2);
 
                 headerText.text = "Lvl 2 " + tower.getName();
@@ -120,14 +148,100 @@ public class UpgradeMenuHandler : MonoBehaviour
             } else if (upgradeLevel == 3)
             {
                 upgrade1.transform.GetChild(1).GetComponent<Image>().sprite = tower.UB2getImage();
-                upgrade1.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = tower.UB2getName();
-                upgrade1.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UB2getCost() + " scrap";
+                upgrade1.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = tower.UB2getName();
+                upgrade1.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Cost: " + tower.UB2getCost() + " scrap";
                 upgrade1.SendMessage("setUpgradeLevel", towerAI.getUpgradeLevel() + 2);
 
                 headerText.text = "Lvl 2 " + tower.getName();
                 destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
             }
         }
+    }
+    
+    void updateMenu(Barriers barrier)
+    {
+        currentTower = null;
+        centerpiece = null;
+        currentBarrier = barrier;
+
+        BroadcastMessage("setBarrier", barrier.getBarrier());
+        //BroadcastMessage("setUpgradeLevel", towerAI.getUpgradeLevel());
+
+        if (barrier.getEffect() == BarrierScriptable.Effect.Blockade)
+        {
+            upgrade1.SetActive(false);
+            upgrade2.SetActive(false);
+            TwoOptions.SetActive(false);
+            OneOption.SetActive(true);
+            repairSlider.gameObject.SetActive(true);
+            repairButton.SetActive(true);
+            destroyButton.SetActive(true);
+            destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -245.45f);
+
+            destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
+            headerText.text = barrier.getName();
+
+            repairSlider.maxValue = barrier.getMaxHealth();
+            repairSlider.value = barrier.getHealth();
+
+            currentHealth = barrier.getHealth();
+
+            updateRepairMenu();
+        }
+        else if (barrier.getEffect() == BarrierScriptable.Effect.Effect)
+        {
+            upgrade1.SetActive(false);
+            upgrade2.SetActive(false);
+            TwoOptions.SetActive(false);
+            OneOption.SetActive(true);
+            destroyButton.SetActive(true);
+            repairSlider.gameObject.SetActive(false);
+            repairButton.SetActive(false);
+            destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -243.2f);
+
+            destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
+            headerText.text = barrier.getName();
+
+            currentHealth = barrier.getHealth();
+
+            updateRepairMenu();
+        }
+    }
+    void updateMenu(Centerpiece center)
+    {
+        centerpiece = center;
+        currentTower = null;
+        currentBarrier = null;
+
+        BroadcastMessage("clearDescription");
+
+        upgrade1.SetActive(false);
+        upgrade2.SetActive(false);
+        TwoOptions.SetActive(false);
+        OneOption.SetActive(true);
+        repairSlider.gameObject.SetActive(true);
+        repairButton.SetActive(true);
+        destroyButton.SetActive(false);
+        headerText.text = "Centerpiece";
+
+        repairSlider.maxValue = center.getMaxHealth();
+        repairSlider.value = center.getHealth();
+
+        currentHealth = center.getHealth();
+
+        updateRepairMenu();
+    }
+
+    public void updateRepairMenu()
+    {
+        if (repairSlider.value <= currentHealth) 
+        { 
+            repairSlider.value = currentHealth;
+            repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair 0 Damage: 0 Scrap";
+            return;
+        }
+
+        repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair " + Mathf.RoundToInt(repairSlider.value - currentHealth) + " Damage: " + getRepairScrap(Mathf.RoundToInt(repairSlider.value - currentHealth)) + " Scrap";
     }
     private int getReturnScrap(Tower tower, int upgradeLevel)
     {
@@ -147,6 +261,46 @@ public class UpgradeMenuHandler : MonoBehaviour
 
         return returnScrap;
     }
+    private int getRepairScrap(int toBeRepaired)
+    {
+        int repairScrap = 0;
+
+        int current;
+        if (currentBarrier != null)
+            current = currentBarrier.getMaxHealth();
+        else
+            current = centerpiece.getMaxHealth();
+        //Variable starts at the top, goes down the line until it hits the point where it starts adding the cost, and at that point i is at the right point
+
+        //First 10 health is 50 scrap per HP, then 100, then 150, and so on. Max is 22,050 scrap to heal from 1 hp. The higher the current HP, the cheaper
+        for (int i = 1; current > currentHealth; i++)
+        {
+            for (int j = 0; j < 10 && current > currentHealth; j++)
+            {
+                if (current <= currentHealth + toBeRepaired)
+                    repairScrap += 50 * i;
+
+                current--;
+            }
+        }
+
+        return repairScrap;
+    }
+    public void repair()
+    {
+        if (!FindObjectOfType<GameManager>().cost((int)(repairSlider.value - currentHealth))) return;
+        if (currentBarrier != null)
+        {
+            currentBarrier.SendMessage("repair", repairSlider.value - currentHealth);
+            updateMenu(currentBarrier);
+        }
+        else
+        {
+            centerpiece.SendMessage("repair", repairSlider.value - currentHealth);
+            updateMenu(centerpiece);
+        }
+        FindObjectOfType<GameManager>().spendScrap((int)(repairSlider.value - currentHealth));
+    }
 
     private void nonInteractable()
     {
@@ -157,7 +311,11 @@ public class UpgradeMenuHandler : MonoBehaviour
     public void destroyClicked()
     {
         OnDestroy?.Invoke();
-        currentTower.destroyTower();
+
+        if (currentTower != null)
+            currentTower.destroyTower();
+        else if (currentBarrier != null)
+            currentBarrier.destroyBarrier();
     }
     public void upgrade(bool path)
     {

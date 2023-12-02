@@ -25,6 +25,7 @@ public class GUIManager : MonoBehaviour
     private void OnEnable()
     {
         EnemyManager.onRoundEnd += addToRound;
+        EnemyManager.onRoundEnd += clearTowerTextInt;
         EnemyManager.onEnemyDeath += updateEnemyCount;
         EnemyManager.onEnemySpawn += updateEnemyCount;
         GameManager.onScrapCollect += addScrapGUI;
@@ -33,15 +34,17 @@ public class GUIManager : MonoBehaviour
         GameManager.OnRoundStart += activateCooldownIndicators;
         GameManager.OnGameEnd += enableGameOverUI;
         GameManager.OnLevelUp += addLevelGUI;
-        BuildManager.OnTowerPicked += changeTowerText;
-        BuildManager.OnBarrierPicked += changeTowerText;
+        BuildManager.OnTowerPicked += cancelPrompt;
+        BuildManager.OnBarrierPicked += cancelPromptB;
         ButtonHover.OnHoverEnter += changeTowerText;
         ButtonHover.OnHoverEnterB += changeTowerText;
+        TowerAI.OnCancel += clearTowerText;
     }
 
     private void OnDisable()
     {
         EnemyManager.onRoundEnd -= addToRound;
+        EnemyManager.onRoundEnd -= clearTowerTextInt;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
         EnemyManager.onEnemySpawn -= updateEnemyCount;
         GameManager.onScrapCollect -= addScrapGUI;
@@ -50,17 +53,18 @@ public class GUIManager : MonoBehaviour
         GameManager.OnRoundStart -= activateCooldownIndicators;
         GameManager.OnGameEnd -= enableGameOverUI;
         GameManager.OnLevelUp -= addLevelGUI;
-        BuildManager.OnTowerPicked -= changeTowerText;
-        BuildManager.OnBarrierPicked -= changeTowerText;
+        BuildManager.OnTowerPicked -= cancelPrompt;
+        BuildManager.OnBarrierPicked -= cancelPromptB;
         ButtonHover.OnHoverEnter -= changeTowerText;
-        ButtonHover.OnHoverEnterB += changeTowerText;
+        ButtonHover.OnHoverEnterB -= changeTowerText;
+        TowerAI.OnCancel -= clearTowerText;
     }
 
     private void Start()
     {
         resolutions = Screen.resolutions;
-        if (xpSlider != null)
-            xpSlider.interactable = false;
+
+        clearTowerText();
     }
 
     public void LoadScene(int sceneIndex)
@@ -125,6 +129,13 @@ public class GUIManager : MonoBehaviour
 
     public void changeTowerText(Tower tower)
     {
+        if (tower == null)
+        {
+            towerName.text = "";
+            towerCost.text = "";
+            return;
+        }
+
         towerName.text = tower.getName();
 
         if (gameObject.GetComponent<GameManager>().cost(tower.getCost()))
@@ -137,6 +148,13 @@ public class GUIManager : MonoBehaviour
 
     public void changeTowerText(BarrierScriptable barrier)
     {
+        if (barrier == null)
+        {
+            towerName.text = "";
+            towerCost.text = "";
+            return;
+        }
+
         towerName.text = barrier.getName();
 
         if (gameObject.GetComponent<GameManager>().cost(barrier.getCost()))
@@ -145,5 +163,23 @@ public class GUIManager : MonoBehaviour
             towerCost.color = Color.red;
 
         towerCost.text = "Cost: " + barrier.getCost().ToString() + " Scrap";
+    }
+    void clearTowerTextInt(int i) { clearTowerText(); }
+    public void clearTowerText()
+    {
+        towerName.text = "";
+        towerCost.text = "";
+    }
+    public void cancelPrompt(Tower tower)
+    {
+        towerName.text = "Right Click";
+        towerCost.text = "To Cancel";
+        towerCost.color = Color.white;
+    }
+    public void cancelPromptB(BarrierScriptable b)
+    {
+        towerName.text = "Right Click";
+        towerCost.text = "To Cancel";
+        towerCost.color = Color.white;
     }
 }

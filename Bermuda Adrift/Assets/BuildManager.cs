@@ -23,8 +23,6 @@ public class BuildManager : MonoBehaviour
     private int activeIndex;
     private float towerRange;
 
-    bool twoTowersPlacedEventCalled;
-
     [SerializeField] private Tower[] towers;
     [SerializeField] private BarrierScriptable[] barriers;
 
@@ -214,11 +212,8 @@ public class BuildManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        if (!twoTowersPlacedEventCalled && positions[1] != Vector3.zero)
-        {
-            twoTowersPlacedEventCalled = true;
+        if (positions[1] != Vector3.zero)
             OnTwoTowersPlaced?.Invoke();
-        }
 
         if (mostRecent == null)
             positions[i] = Vector3.zero;

@@ -71,5 +71,6 @@ public class ButtonDescription : MonoBehaviour
     private void incrementUpgradeLevel() { upgradeLevel++; }
     private void setTower(Tower tower) { ability = null; barrier = null; this.tower = tower; upgradeLevel = 0; }
     private void setBarrier(BarrierScriptable barrier) { ability = null; tower = null; this.barrier = barrier; }
-    private void setAbility(Ability ability) { tower = null; this.ability = ability; }
+    private void setAbility(Ability ability) { tower = null; barrier = null; this.ability = ability; }
+    private void clearDescription() { tower = null; barrier = null; ability = null; }
 }

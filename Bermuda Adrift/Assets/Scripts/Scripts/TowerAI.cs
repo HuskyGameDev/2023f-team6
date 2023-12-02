@@ -12,8 +12,8 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
-    public enum Priority { Closest, Farthest, Strongest, IgnoreDecoys };
-    private Priority towerPriority;
+    public enum Priority { Closest, Farthest, Strongest, Fastest };
+    private bool ignoreDecoys;
 
     private Tower tower;
     [SerializeField] private GameObject nozzle;
@@ -41,11 +41,17 @@ public class TowerAI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnRoundStart += StartRound;
+        AI.OnEnemyDeath += prioritize;
     }
     private void OnDisable()
     {
         GameManager.OnRoundStart -= StartRound;
+        AI.OnEnemyDeath -= prioritize;
     }
+
+    delegate float score(GameObject g);
+    score getScore;
+
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
@@ -58,7 +64,7 @@ public class TowerAI : MonoBehaviour
         buildManager = FindObjectOfType<BuildManager>();
         buffs = new Buffs[10];
         enemiesInRange = new GameObject[27];
-        
+
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Just in case someone manages to place a tower during a round
         {
             newTarget();
@@ -98,6 +104,10 @@ public class TowerAI : MonoBehaviour
             return;
         }
 
+        if (placed && Input.GetKeyDown("j")) changePriorityFunction(Priority.Closest);
+        if (placed && Input.GetKeyDown("k")) changePriorityFunction(Priority.Farthest);
+        if (placed && Input.GetKeyDown("l")) changePriorityFunction(Priority.Strongest);
+
         if (target != null) //Turn towards target every frame
             targetPoint();
 
@@ -119,7 +129,7 @@ public class TowerAI : MonoBehaviour
         else
             gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
 
-        towerPriority = Priority.Closest;
+        changePriorityFunction(Priority.Closest);
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
@@ -320,7 +330,40 @@ public class TowerAI : MonoBehaviour
         else
             anim.SetBool("TargetFound", true);
     }
-    public void setPriority(Priority priority) { towerPriority = priority; }
+
+    #region Priority functions
+    private void changePriorityFunction(Priority newPriority)
+    {
+        if (newPriority == Priority.Closest)
+            getScore = getScoreByClosest;
+        else if (newPriority == Priority.Farthest)
+            getScore = getScoreByFurthest;
+        else if (newPriority == Priority.Strongest)
+            getScore = getScoreByStrongest;
+        else
+            getScore = getScoreBySpeed;
+    }
+    float getScoreByClosest(GameObject g)
+    {
+        return (g.transform.position - nozzle.transform.position).magnitude;
+    }
+    float getScoreByFurthest(GameObject g)
+    {
+        return -(g.transform.position - nozzle.transform.position).magnitude;   //Give a negative number so it's sorted backwards
+    }
+    float getScoreByStrongest(GameObject g)
+    {
+        if (g.GetComponent<AI>() == null)
+            return 0;
+        return g.GetComponent<AI>().getStrength();
+    }
+    float getScoreBySpeed(GameObject g)
+    {
+        if (g.GetComponent<AI>() == null)
+            return 0;
+        return g.GetComponent<AI>().towerGetSpeed();
+    }
+
     private void prioritize()  //Sorts enemies by the set priority
     {
         for (int g = 0; g < enemiesInRange.Length; g++)
@@ -337,7 +380,7 @@ public class TowerAI : MonoBehaviour
         shiftUp();
 
         int decoysEnd = 0;
-        if (towerPriority != Priority.IgnoreDecoys) //Move the decoys to the front
+        if (!ignoreDecoys) //Move the decoys to the front
         {
             while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
                 decoysEnd++;
@@ -357,7 +400,7 @@ public class TowerAI : MonoBehaviour
             {
                 for (int j = i + 1; j < decoysEnd; j++)
                 {
-                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
                         GameObject temp = enemiesInRange[j];
                         enemiesInRange[j] = enemiesInRange[i];
@@ -370,7 +413,7 @@ public class TowerAI : MonoBehaviour
             {
                 for (int j = i; i < enemiesInRange.Length && enemiesInRange[i] != null; i++)
                 {
-                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
                         GameObject temp = enemiesInRange[j];
                         enemiesInRange[j] = enemiesInRange[i];
@@ -400,7 +443,7 @@ public class TowerAI : MonoBehaviour
             {
                 for (int j = i; j < decoysEnd; j++)
                 {
-                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
                         GameObject temp = enemiesInRange[j];
                         enemiesInRange[j] = enemiesInRange[i];
@@ -413,7 +456,7 @@ public class TowerAI : MonoBehaviour
             {
                 for (int j = i; i < enemiesInRange.Length; i++)
                 {
-                    if (enemiesInRange[j].GetComponent<AI>().getStrength() > enemiesInRange[i].GetComponent<AI>().getStrength())    //Ordered by enemy strength from strongest to weakest
+                    if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
                         GameObject temp = enemiesInRange[j];
                         enemiesInRange[j] = enemiesInRange[i];
@@ -507,6 +550,7 @@ public class TowerAI : MonoBehaviour
     }
     */
     #endregion
+    #endregion
 
     #region Buff Managing
     private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
@@ -544,7 +588,6 @@ public class TowerAI : MonoBehaviour
         removeBuff(newDebuff);
     }
     #endregion
-
 
     #region Get functions
     private float getFireRate()    //Gives total speed penalty/buff (multiplicative)

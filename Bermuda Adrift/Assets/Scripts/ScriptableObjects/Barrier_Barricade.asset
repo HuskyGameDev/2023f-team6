@@ -15,7 +15,7 @@ MonoBehaviour:
   barrierName: Barricade
   description: Blocks enemies from progressing until it is destroyed
   effect: 0
-  Health: 10
+  Health: 20
   cost: 150
   debuff: {fileID: 0}
   startingSprite: {fileID: 21300000, guid: 58434a7e3b91b8946b773b5324ff5cc2, type: 3}

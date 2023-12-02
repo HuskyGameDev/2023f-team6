@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 1
-  Health: 100
+  Health: 70
   Damage: 0
   Speed: 1
   attackSpeed: 1
