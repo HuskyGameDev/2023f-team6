@@ -19,5 +19,5 @@ MonoBehaviour:
   angle: 40
   timeToLand: 3
   delayTime: 5
-  damage: 100
+  damage: 50
   scrapBonus: 200

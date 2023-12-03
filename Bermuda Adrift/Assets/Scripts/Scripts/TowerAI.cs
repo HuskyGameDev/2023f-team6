@@ -12,7 +12,7 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
-    public enum Priority { Closest, Farthest, Strongest, Fastest };
+    public enum Priority { Closest, Furthest, Strongest, Fastest };
     private bool ignoreDecoys;
 
     private Tower tower;
@@ -80,6 +80,7 @@ public class TowerAI : MonoBehaviour
                 if (raycastCorners() && buildManager.approvePosition(transform.position))
                 {
                     OnTowerPlaced?.Invoke();
+                    nozzle.GetComponent<TurretMiddleMan>().openUpgradeMenu();
                     placed = true;
                     anim.SetTrigger("Placed");
                     gameManager.spendScrap(tower.getCost());
@@ -103,10 +104,6 @@ public class TowerAI : MonoBehaviour
             
             return;
         }
-
-        if (placed && Input.GetKeyDown("j")) changePriorityFunction(Priority.Closest);
-        if (placed && Input.GetKeyDown("k")) changePriorityFunction(Priority.Farthest);
-        if (placed && Input.GetKeyDown("l")) changePriorityFunction(Priority.Strongest);
 
         if (target != null) //Turn towards target every frame
             targetPoint();
@@ -332,11 +329,29 @@ public class TowerAI : MonoBehaviour
     }
 
     #region Priority functions
+
+    private void priorityUpdate(bool Left)
+    {
+        if (Left)
+        {
+            if (getPriority() == (Priority)0)
+                changePriorityFunction(Priority.Fastest);
+            else
+                changePriorityFunction((Priority) ( (int)getPriority() - 1));
+        }
+        else
+        {
+            if (getPriority() == Priority.Fastest)
+                changePriorityFunction(0);
+            else
+                changePriorityFunction((Priority)((int)getPriority() + 1));
+        }
+    }
     private void changePriorityFunction(Priority newPriority)
     {
         if (newPriority == Priority.Closest)
             getScore = getScoreByClosest;
-        else if (newPriority == Priority.Farthest)
+        else if (newPriority == Priority.Furthest)
             getScore = getScoreByFurthest;
         else if (newPriority == Priority.Strongest)
             getScore = getScoreByStrongest;
@@ -362,6 +377,19 @@ public class TowerAI : MonoBehaviour
         if (g.GetComponent<AI>() == null)
             return 0;
         return g.GetComponent<AI>().towerGetSpeed();
+    }
+    public Priority getPriority()
+    {
+        if (getScore == getScoreByClosest)
+            return Priority.Closest;
+        if (getScore == getScoreByFurthest)
+            return Priority.Furthest;
+        if (getScore == getScoreByStrongest)
+            return Priority.Strongest;
+        if (getScore == getScoreBySpeed)
+            return Priority.Fastest;
+
+        return 0;
     }
 
     private void prioritize()  //Sorts enemies by the set priority

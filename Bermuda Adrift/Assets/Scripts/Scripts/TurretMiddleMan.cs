@@ -27,6 +27,8 @@ public class TurretMiddleMan : MonoBehaviour, IPointerDownHandler
         AddPhysics2DRaycaster();
     }
 
+    public void openUpgradeMenu() { onClicked?.Invoke(transform.parent.gameObject); }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (transform.parent.gameObject.GetComponent<TowerAI>().getPlaced()

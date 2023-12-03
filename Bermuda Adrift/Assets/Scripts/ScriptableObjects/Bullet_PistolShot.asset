@@ -21,7 +21,7 @@ MonoBehaviour:
   animator: {fileID: 9100000, guid: 5c7e3d02dff0c9d438c3c599926f8fbf, type: 2}
   FriendlyFire: 0
   debuff: {fileID: 0}
-  pierce: -1
+  pierce: 3
   AOETimer: -1
   UnderwaterDamage: 1
   AirborneDamage: 1

@@ -131,7 +131,7 @@ public class GUIManager : MonoBehaviour
     {
         if (tower == null)
         {
-            towerName.text = "";
+            towerName.text = "Owned Blueprints";
             towerCost.text = "";
             return;
         }
@@ -150,7 +150,7 @@ public class GUIManager : MonoBehaviour
     {
         if (barrier == null)
         {
-            towerName.text = "";
+            towerName.text = "Owned Blueprints";
             towerCost.text = "";
             return;
         }
@@ -167,7 +167,7 @@ public class GUIManager : MonoBehaviour
     void clearTowerTextInt(int i) { clearTowerText(); }
     public void clearTowerText()
     {
-        towerName.text = "";
+        towerName.text = "Owned Blueprints";
         towerCost.text = "";
     }
     public void cancelPrompt(Tower tower)

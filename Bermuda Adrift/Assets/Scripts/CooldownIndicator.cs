@@ -20,12 +20,12 @@ public class CooldownIndicator : MonoBehaviour
     private void OnEnable()
     {
         Attack.updateCooldowns += updateCooldowns;
-        Attack.setThumbnails += setThumbnail;
+        //Attack.setThumbnails += setThumbnail;
     }
     private void OnDisable()
     {
         Attack.updateCooldowns -= updateCooldowns;
-        Attack.setThumbnails -= setThumbnail;
+        //Attack.setThumbnails -= setThumbnail;
     }
     private void Awake()
     {
@@ -67,11 +67,9 @@ public class CooldownIndicator : MonoBehaviour
         text.text = ((int)(total - soFar)).ToString();
         slider.value = soFar / total;
     }
-    public void setThumbnail(Sprite sprite, position type)
+    public void setThumbnail(Ability ability)
     {
-        if (attackType == type)
-        {
-            transform.parent.parent.GetComponent<Image>().sprite = sprite;
-        }
+            transform.parent.parent.GetComponent<Image>().sprite = ability.getThumbnail();
+            SendMessageUpwards("setAbility", ability);
     }
 }

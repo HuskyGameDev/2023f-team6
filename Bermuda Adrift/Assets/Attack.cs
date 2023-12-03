@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Attack : MonoBehaviour
 {
     public static event Action<float, CooldownIndicator.position> updateCooldowns;
-    public static event Action<Sprite, CooldownIndicator.position> setThumbnails;
+    //public static event Action<Sprite, Ability> setThumbnails;
     public static event Action loopUsed;
     public static event Action barrelUsed;
 
@@ -160,11 +160,12 @@ public class Attack : MonoBehaviour
 
     public void cooldownCreated()
     {
-        setThumbnails?.Invoke(character.getPrimary().getThumbnail(), CooldownIndicator.position.primary);
-        setThumbnails?.Invoke(character.getUtility().getThumbnail(), CooldownIndicator.position.utility);
-        setThumbnails?.Invoke(character.getSpecial().getThumbnail(), CooldownIndicator.position.special);
-        GameObject.Find("Secondary").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
-        //setThumbnails?.Invoke(character.getSecondary().getThumbnail(), CooldownIndicator.position.secondary);
+        GameObject.Find("Primary").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getPrimary());
+        GameObject.Find("Secondary").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getSecondary());
+        GameObject.Find("Utility").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getUtility());
+        GameObject.Find("Special").transform.GetChild(0).GetChild(0).GetComponent<CooldownIndicator>().setThumbnail(character.getSpecial());
+
+        CooldownIndicator.awoken -= cooldownCreated;
     }
 
     // Update is called once per frame
@@ -213,8 +214,8 @@ public class Attack : MonoBehaviour
         {
             if (!(anim.GetBool("Primary") && character.getPrimary().directionLocked()))
             {
-                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
-                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+                anim.SetFloat("AttackDirectionX", movement.getAim().x);
+                anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
             anim.SetBool("Primary", true);
@@ -227,8 +228,8 @@ public class Attack : MonoBehaviour
         {
             if (!(anim.GetBool("Secondary") && character.getSecondary().directionLocked()))
             {
-                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
-                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+                anim.SetFloat("AttackDirectionX", movement.getAim().x);
+                anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
             anim.SetBool("Secondary", true);
@@ -241,8 +242,8 @@ public class Attack : MonoBehaviour
         {
             if (!(anim.GetBool("Utility") && character.getUtility().directionLocked()))
             {
-                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
-                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+                anim.SetFloat("AttackDirectionX", movement.getAim().x);
+                anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
             anim.SetBool("Utility", true);
@@ -255,8 +256,8 @@ public class Attack : MonoBehaviour
         {
             if (!(anim.GetBool("Special") && character.getSpecial().directionLocked()))
             {
-                anim.SetFloat("AttackDirectionX", Mathf.Round(movement.getAim().normalized.x));
-                anim.SetFloat("AttackDirectionY", Mathf.Round(movement.getAim().normalized.y));
+                anim.SetFloat("AttackDirectionX", movement.getAim().x);
+                anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
             if (character.name == "P_Pirate")

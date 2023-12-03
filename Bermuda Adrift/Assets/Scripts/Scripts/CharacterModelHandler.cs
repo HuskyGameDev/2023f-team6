@@ -17,6 +17,7 @@ public class CharacterModelHandler : MonoBehaviour
     [SerializeField] private Image mainBody;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private GameObject abilityDescriptions;
+    [SerializeField] private TextMeshProUGUI Title;
     private void Start()
     {
         setCharacter(character);    
@@ -147,6 +148,7 @@ public class CharacterModelHandler : MonoBehaviour
     }
     public void updateDescription()
     {
+        Title.text = character.getName();
         description.text = character.getDescription();
     }
 }

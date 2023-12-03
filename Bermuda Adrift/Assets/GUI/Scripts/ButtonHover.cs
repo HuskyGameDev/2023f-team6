@@ -10,7 +10,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public BarrierScriptable barrier;
     public static event Action<Tower> OnHoverEnter;
     public static event Action<BarrierScriptable> OnHoverEnterB;
-    public static event Action OnHoverExit;
+    //public static event Action OnHoverExit;
     private ButtonDescription buttonDescription;
     Image image;
 
@@ -24,7 +24,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (tower != null)
             OnHoverEnter?.Invoke(tower);
-        else
+        else if (barrier != null)
             OnHoverEnterB?.Invoke(barrier);
 
         buttonDescription.SendMessage("mouseEnter");
@@ -32,7 +32,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnHoverExit?.Invoke();
+        //OnHoverExit?.Invoke();
 
         buttonDescription.SendMessage("mouseExit");
     }

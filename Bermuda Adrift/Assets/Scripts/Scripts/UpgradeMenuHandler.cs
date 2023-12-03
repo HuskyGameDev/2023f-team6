@@ -17,8 +17,10 @@ public class UpgradeMenuHandler : MonoBehaviour
     private GameObject destroyButton;
     private Slider repairSlider;
     private GameObject repairButton;
+    private GameObject priorityChanger;
 
     private int currentHealth;
+    private int healedSoFar;
 
     private TowerAI currentTower;
     private Barriers currentBarrier;
@@ -34,6 +36,7 @@ public class UpgradeMenuHandler : MonoBehaviour
         destroyButton = transform.GetChild(5).gameObject;
         repairSlider = transform.GetChild(6).GetComponent<Slider>();
         repairButton = transform.GetChild(7).gameObject;
+        priorityChanger = transform.GetChild(8).gameObject;
     }
 
     private void OnEnable()
@@ -83,6 +86,16 @@ public class UpgradeMenuHandler : MonoBehaviour
         destroyButton.SetActive(true);
         repairSlider.gameObject.SetActive(false);
         repairButton.SetActive(false);
+        priorityChanger.SetActive(true);
+        priorityChanger.transform.GetChild(1).GetComponent<Button>().interactable = true;
+        priorityChanger.transform.GetChild(2).GetComponent<Button>().interactable = true;
+        
+        
+        TextMeshProUGUI text = priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+        if (currentTower.getPriority() == TowerAI.Priority.Closest) text.text = "Closest";
+        if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
+        if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
+        if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
 
         if (upgradeLevel >= 4)  //Displays only the destroy button when it's fully upgraded
         {
@@ -178,6 +191,11 @@ public class UpgradeMenuHandler : MonoBehaviour
             destroyButton.SetActive(true);
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -245.45f);
 
+            priorityChanger.SetActive(true);
+            priorityChanger.transform.GetChild(1).GetComponent<Button>().interactable = false;
+            priorityChanger.transform.GetChild(2).GetComponent<Button>().interactable = false;
+            priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Drag to repair";
+
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
             headerText.text = barrier.getName();
 
@@ -198,6 +216,7 @@ public class UpgradeMenuHandler : MonoBehaviour
             repairSlider.gameObject.SetActive(false);
             repairButton.SetActive(false);
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -243.2f);
+            priorityChanger.SetActive(false);
 
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
             headerText.text = barrier.getName();
@@ -223,6 +242,11 @@ public class UpgradeMenuHandler : MonoBehaviour
         repairButton.SetActive(true);
         destroyButton.SetActive(false);
         headerText.text = "Centerpiece";
+
+        priorityChanger.SetActive(true);
+        priorityChanger.transform.GetChild(1).GetComponent<Button>().interactable = false;
+        priorityChanger.transform.GetChild(2).GetComponent<Button>().interactable = false;
+        priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Drag to repair";
 
         repairSlider.maxValue = center.getMaxHealth();
         repairSlider.value = center.getHealth();
@@ -265,22 +289,21 @@ public class UpgradeMenuHandler : MonoBehaviour
     {
         int repairScrap = 0;
 
-        int current;
-        if (currentBarrier != null)
-            current = currentBarrier.getMaxHealth();
-        else
-            current = centerpiece.getMaxHealth();
-        //Variable starts at the top, goes down the line until it hits the point where it starts adding the cost, and at that point i is at the right point
+        //Costs more if you've repaired before
+        int startingPrice = healedSoFar % 10 + 1;
 
         //First 10 health is 50 scrap per HP, then 100, then 150, and so on. Max is 22,050 scrap to heal from 1 hp. The higher the current HP, the cheaper
-        for (int i = 1; current > currentHealth; i++)
+        for (int i = startingPrice; toBeRepaired > 0; i++)
         {
-            for (int j = 0; j < 10 && current > currentHealth; j++)
+            if (toBeRepaired < 10)
             {
-                if (current <= currentHealth + toBeRepaired)
-                    repairScrap += 50 * i;
-
-                current--;
+                repairScrap += toBeRepaired * 50 * i;
+                toBeRepaired = 0;
+            }
+            else
+            {
+                repairScrap += 10 * 50 * i;
+                toBeRepaired -= 10;
             }
         }
 
@@ -288,7 +311,10 @@ public class UpgradeMenuHandler : MonoBehaviour
     }
     public void repair()
     {
-        if (!FindObjectOfType<GameManager>().cost((int)(repairSlider.value - currentHealth))) return;
+        if (!FindObjectOfType<GameManager>().cost(getRepairScrap((int)(repairSlider.value - currentHealth)))) return;
+
+        healedSoFar += (int) (repairSlider.value - currentHealth);
+
         if (currentBarrier != null)
         {
             currentBarrier.SendMessage("repair", repairSlider.value - currentHealth);
@@ -301,12 +327,27 @@ public class UpgradeMenuHandler : MonoBehaviour
         }
         FindObjectOfType<GameManager>().spendScrap((int)(repairSlider.value - currentHealth));
     }
+    public void changePriority(bool left)
+    {
+        if (currentTower == null) return;
+
+        currentTower.SendMessage("priorityUpdate", left);
+
+        TextMeshProUGUI text = priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        if (currentTower.getPriority() == TowerAI.Priority.Closest) text.text = "Closest";
+        if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
+        if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
+        if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
+    }
 
     private void nonInteractable()
     {
         upgrade1.GetComponent<Button>().interactable = false;
         upgrade2.GetComponent<Button>().interactable = false;
         destroyButton.GetComponent<Button>().interactable = false;
+        priorityChanger.transform.GetChild(1).GetComponent<Button>().interactable = false;
+        priorityChanger.transform.GetChild(2).GetComponent<Button>().interactable = false;
     }
     public void destroyClicked()
     {

@@ -48,3 +48,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UpgradeMenu
+    uniqueID: 591443691
+    locked: 0

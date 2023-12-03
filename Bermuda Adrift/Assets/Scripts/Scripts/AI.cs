@@ -66,7 +66,6 @@ public class AI : MonoBehaviour
             StartCoroutine(randomAttacks());
             Health = (int) (enemy.getHealth() * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
             newMaxHealth = Health;
-            Debug.Log("Health: " + Health);
         }
 
         if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
@@ -90,8 +89,8 @@ public class AI : MonoBehaviour
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
-        //if (Input.GetKeyDown("p"))
-        //    TakeDamage(Health);
+        if (Input.GetKeyDown("p"))
+            TakeDamage(Health);
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 
@@ -99,7 +98,7 @@ public class AI : MonoBehaviour
         {
             move();
 
-            if (Mathf.Abs(movement.position.x) + Mathf.Abs(movement.position.y) <= 2.5)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
+            if (transform.position.magnitude <= 2.5)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
             {
                 nowArriving();
             }
@@ -132,12 +131,16 @@ public class AI : MonoBehaviour
     private void nowArriving()  //Sets the position that the enemy will be attacking the center form
     {
         arrived = true;     //This section of code will only run once
+        //stop = true;
         animator.SetBool("Attacking", true);    //Start animations
 
-        if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2.5f, 0), movement.rotation); }        //Left lane
-        else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2.5f, 0), movement.rotation); }    //Right lane
-        else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2.5f), movement.rotation); }    //Top lane
-        else { movement.SetPositionAndRotation(new Vector3(0, -2.5f), movement.rotation); }                                //Bottom Lane
+        if (enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss)
+        {
+            if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2.5f, 0), movement.rotation); }        //Left lane
+            else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2.5f, 0), movement.rotation); }    //Right lane
+            else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2.5f), movement.rotation); }    //Top lane
+            else { movement.SetPositionAndRotation(new Vector3(0, -2.5f), movement.rotation); }                                //Bottom Lane
+        }
 
         StartCoroutine(attack(goal.gameObject));
     }
@@ -291,6 +294,12 @@ public class AI : MonoBehaviour
     #region Goal Setters
     private void nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
     {
+        if (enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss)
+        {
+            goal = FindObjectOfType<Centerpiece>().transform;
+            return;
+        }
+
         GameObject[] entrances;
 
         entrances = GameObject.FindGameObjectsWithTag("Entrance");
@@ -528,13 +537,17 @@ public class AI : MonoBehaviour
 
             Vector3 newGoalPosition = bait.transform.position;
 
-            //Left/Right edges
-            if (newGoalPosition.x < 7f && newGoalPosition.x > 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = 7.5f;
-            else if (newGoalPosition.x > -7f && newGoalPosition.x < 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = -7.5f;
 
-            //Top/Bottom edges
-            if (newGoalPosition.y < 7f && newGoalPosition.y > 1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = 7.5f;
-            else if (newGoalPosition.y > -7f && newGoalPosition.y < -1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = -7.5f;
+            if (enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss)
+            {
+                //Left/Right edges
+                if (newGoalPosition.x < 7f && newGoalPosition.x > 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = 7.5f;
+                else if (newGoalPosition.x > -7f && newGoalPosition.x < 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = -7.5f;
+
+                //Top/Bottom edges
+                if (newGoalPosition.y < 7f && newGoalPosition.y > 1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = 7.5f;
+                else if (newGoalPosition.y > -7f && newGoalPosition.y < -1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = -7.5f;
+            }
 
             goal.position = newGoalPosition;
 

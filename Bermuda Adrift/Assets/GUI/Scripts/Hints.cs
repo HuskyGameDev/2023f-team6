@@ -22,12 +22,12 @@ public class Hints : MonoBehaviour
 
         Attack.loopUsed += loopAttacks;
         Attack.barrelUsed += shootBarrels;
-        BuildManager.OnTwoTowersPlaced += twoTowers;
         AI.OnDecoyDeath += decoyDeath;
         OnPopupAppeared += endTooltipEarly;
         GameManager.OnBossWarning += bossWarning;
         GameManager.OnBossApproaching += bossApproaching;
         Centerpiece.onCenterpieceDamaged += repairHint;
+        BuildManager.TooManyBlueprints += blueprintLimit;
     }
     private void OnDisable()
     {
@@ -36,12 +36,12 @@ public class Hints : MonoBehaviour
 
         Attack.loopUsed -= loopAttacks;
         Attack.barrelUsed -= shootBarrels;
-        BuildManager.OnTwoTowersPlaced -= twoTowers;
         AI.OnDecoyDeath -= decoyDeath;
         OnPopupAppeared -= endTooltipEarly;
         GameManager.OnBossWarning -= bossWarning;
         GameManager.OnBossApproaching -= bossApproaching;
         Centerpiece.onCenterpieceDamaged -= repairHint;
+        BuildManager.TooManyBlueprints -= blueprintLimit;
     }
     private void Start()
     {
@@ -91,12 +91,14 @@ public class Hints : MonoBehaviour
 
         Attack.barrelUsed -= shootBarrels;
     }
+    /*
     void twoTowers() 
     {
         stack.Push("If you click on a tower, you can upgrade it to make it much more powerful");
 
         BuildManager.OnTwoTowersPlaced -= twoTowers;
     }
+    */
     void decoyDeath()
     {
         stack.Push("Some enemies will attract all the attention of your towers. Apart from that, they're mostly harmless");
@@ -113,9 +115,15 @@ public class Hints : MonoBehaviour
     }
     void repairHint()
     {
-        stack.Push("You can click on the centerpiece to have a chance to repair it. Be warned, the more damage there is, the more costly it will be to fix");
+        stack.Push("You can click on the centerpiece to have a chance to repair it. Be warned, the more you repair things, the more those repairs will cost");
         
         Centerpiece.onCenterpieceDamaged -= repairHint;
+    }
+    void blueprintLimit()
+    {
+        stack.Push("If you have more than 10 blueprints, you won't be able to receive any more");
+
+        BuildManager.TooManyBlueprints -= blueprintLimit;
     }
     #endregion
 }

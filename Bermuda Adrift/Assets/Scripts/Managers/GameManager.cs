@@ -109,6 +109,9 @@ public class GameManager : MonoBehaviour
 
         onRoundEnd?.Invoke();
 
+        if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)  //Award the player with a random tower after every boss round
+            FindObjectOfType<LevelGUIManager>().addRandom();
+
         state = GameState.Idle;
     }
 

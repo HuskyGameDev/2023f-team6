@@ -140,6 +140,8 @@ public class Movement : MonoBehaviour
     public void setSpeed(float speed) { this.speed = speed; }
     private float getSpeed()
     {
+        if (buffs == null) return 1;
+
         float speed = 1;
         for (int i = 0; i < buffs.Length; i++)
         {

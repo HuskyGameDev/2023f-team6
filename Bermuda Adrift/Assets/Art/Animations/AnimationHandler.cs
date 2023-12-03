@@ -13,6 +13,10 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] Animator buyMenu;
     [SerializeField] Animator upgradeMenu;
     [SerializeField] Animator tooltips;
+    [SerializeField] Animator levelUpCard1;
+    [SerializeField] Animator levelUpCard2;
+    [SerializeField] Animator levelUpCard3;
+
     bool upgradeMenuOut;
     bool tooltipOnScreen;
     private void OnEnable()
@@ -26,6 +30,8 @@ public class AnimationHandler : MonoBehaviour
         Hints.OnPopdown += tooltipsPopdown;
         Centerpiece.onClicked += upgradeMenu_SlideIn;
         Barriers.onClicked += upgradeMenu_SlideIn;
+        LevelGUIManager.OnLevelUpOpen += levelUpScreen_SlideIn;
+        LevelGUIManager.OnLevelUpClose += levelUpScreen_SlideOut;
     }
 
     private void OnDisable()
@@ -37,6 +43,10 @@ public class AnimationHandler : MonoBehaviour
         UpgradeMenuHandler.OnDestroy -= upgradeMenu_SlideOut;
         Hints.OnPopup -= tooltipsPopup;
         Hints.OnPopdown -= tooltipsPopdown;
+        Centerpiece.onClicked -= upgradeMenu_SlideIn;
+        Barriers.onClicked -= upgradeMenu_SlideIn;
+        LevelGUIManager.OnLevelUpOpen -= levelUpScreen_SlideIn;
+        LevelGUIManager.OnLevelUpClose -= levelUpScreen_SlideOut;
     }
     void BuyMenu_SlideIn()
     {
@@ -98,5 +108,44 @@ public class AnimationHandler : MonoBehaviour
             tooltips.Play("TooltipSlideOut");
             tooltipOnScreen = false;
         }
+    }
+
+    void levelUpScreen_SlideIn()
+    {
+        StartCoroutine(levelUp_SlideIn());
+    }
+    void levelUpScreen_SlideOut()
+    {
+        StartCoroutine(levelUp_SlideOut());
+    }
+    private IEnumerator levelUp_SlideIn()
+    {
+        levelUpCard1.Play("SlideIn");
+
+        yield return new WaitForSeconds(0.25f);
+
+        levelUpCard2.Play("SlideIn");
+
+        yield return new WaitForSeconds(0.25f);
+
+        levelUpCard3.Play("SlideIn");
+
+        yield return new WaitForSeconds(0.75f);
+
+        //FindObjectOfType<GameManager>().freezeTime();
+    }
+    private IEnumerator levelUp_SlideOut()
+    {
+        //FindObjectOfType<GameManager>().unfreezeTime();
+
+        levelUpCard1.Play("SlideOut");
+
+        yield return new WaitForSeconds(0.25f);
+
+        levelUpCard2.Play("SlideOut");
+
+        yield return new WaitForSeconds(0.25f);
+
+        levelUpCard3.Play("SlideOut");
     }
 }
