@@ -20,6 +20,7 @@ public class Player : ScriptableObject
     [SerializeField] private string name;
     [SerializeField] private Sprite mainBodySprite;
     [SerializeField] private int speed;
+    [SerializeField] private bool unlocked;
 
     private bool altP;
     private bool altS;
@@ -73,6 +74,9 @@ public class Player : ScriptableObject
             return altPassive;
         return defPassive;
     }
+    public void unlock() { unlocked = true; }
+
+
     public Ability getDefPrimary() { return defPrimary; }
     public Ability getDefSecondary() { return defSecondary; }
     public Ability getDefUtility() { return defUtility; }
@@ -90,4 +94,5 @@ public class Player : ScriptableObject
     public string getName() { return name; }
     public Sprite getMainBodySprite() { return mainBodySprite; }
     public int getSpeed() { return speed; }
+    public bool getUnlocked() { return unlocked; }
 }

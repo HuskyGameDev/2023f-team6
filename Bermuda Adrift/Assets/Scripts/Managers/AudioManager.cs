@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
         source.Stop();
     }
 
-    public void quiet() { source.volume = 0.25f; }
+    public void quiet() { source.volume = 0.5f; }
     public void fullVolume() { source.volume = 1f; }
 
     public void ChangeSFXVolume()

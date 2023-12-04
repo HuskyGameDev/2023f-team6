@@ -13,7 +13,6 @@ public class Hints : MonoBehaviour
     Stack<string> stack;
     TextMeshProUGUI textMesh;
     [SerializeField] bool disabled;
-    bool tooltipEndEarly;
 
     private void OnEnable()
     {
@@ -28,6 +27,7 @@ public class Hints : MonoBehaviour
         GameManager.OnBossApproaching += bossApproaching;
         Centerpiece.onCenterpieceDamaged += repairHint;
         BuildManager.TooManyBlueprints += blueprintLimit;
+        GameManager.OnLevelUp += levelExplanations;
     }
     private void OnDisable()
     {
@@ -42,13 +42,17 @@ public class Hints : MonoBehaviour
         GameManager.OnBossApproaching -= bossApproaching;
         Centerpiece.onCenterpieceDamaged -= repairHint;
         BuildManager.TooManyBlueprints -= blueprintLimit;
+        GameManager.OnLevelUp -= levelExplanations;
     }
     private void Start()
     {
         stack = new Stack<string>();
         textMesh = transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
     }
-    public void disappear() { OnPopdown?.Invoke(); }
+    public void disappear() 
+    {
+        OnPopdown?.Invoke(); 
+    }
 
     public void displayPopup()
     {
@@ -124,6 +128,12 @@ public class Hints : MonoBehaviour
         stack.Push("If you have more than 10 blueprints, you won't be able to receive any more");
 
         BuildManager.TooManyBlueprints -= blueprintLimit;
+    }
+    void levelExplanations(int i)
+    {
+        stack.Push("The scrap these creatures give you have some strange properties. Maybe the papers they drop can give insight into their uses");
+
+        GameManager.OnLevelUp -= levelExplanations;
     }
     #endregion
 }

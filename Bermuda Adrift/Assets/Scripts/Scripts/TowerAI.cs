@@ -398,7 +398,6 @@ public class TowerAI : MonoBehaviour
         {
             if (enemiesInRange[g] != null && enemiesInRange[g].name == "AOETrigger")
             {
-                Debug.Log("Forgetting " + enemiesInRange[g].name);
                 enemiesInRange[g] = null;
             } 
         }

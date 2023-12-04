@@ -7,6 +7,15 @@ public class CharacterTracker : MonoBehaviour
     [SerializeField] private Player defaultCharacter;
     private Player character;
     // Start is called before the first frame update
+
+    private void OnEnable()
+    {
+        CharacterModelHandler.onCharacterChange += setCharacter;
+    }
+    private void OnDisable()
+    {
+        CharacterModelHandler.onCharacterChange -= setCharacter;
+    }
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -23,4 +32,5 @@ public class CharacterTracker : MonoBehaviour
         yield return new WaitForEndOfFrame();
         GameObject.Find("Player").SendMessage("setCharacter", character);
     }
+    public Player getCharacter() { return character; }
 }

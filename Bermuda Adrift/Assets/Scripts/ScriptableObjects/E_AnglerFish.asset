@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: E_AnglerFish
   m_EditorClassIdentifier: 
   Type: 0
+  specialType: 0
   Health: 20
   Damage: 3
   Speed: 2
   attackSpeed: 1
   xp: 25
   scrap: 10
-  rarity: 0.28571
+  rarity: 0.2
   anim: {fileID: 9100000, guid: 31de241dbaa712d4b971c886dc93cb4e, type: 2}
   xSize: 1.5
   ySize: 1
   debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}

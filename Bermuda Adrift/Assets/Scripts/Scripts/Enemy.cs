@@ -33,6 +33,7 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private GameObject extra;
     [SerializeField] private Bullet bullet;
+    [SerializeField] private Enemy minion;
 
 
     public Types getType() { return Type; }
@@ -50,4 +51,5 @@ public class Enemy : ScriptableObject
     public Buffs getDefuff() { return debuff; }
     public GameObject getExtra() { return extra; }
     public Bullet getBullet() { return bullet; }
+    public Enemy getMinion() { return minion; }
 }

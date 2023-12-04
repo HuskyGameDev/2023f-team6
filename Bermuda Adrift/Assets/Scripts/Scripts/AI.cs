@@ -18,7 +18,6 @@ public class AI : MonoBehaviour
     private Enemy enemy;
     private GameObject enemyManager;
 
-    private Enemy Minion;
     [SerializeField] private GameObject prefab;
 
     [SerializeField] private GameObject extra;
@@ -76,7 +75,7 @@ public class AI : MonoBehaviour
 
         SetupHealthBar?.Invoke(Health);
     }
-    public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
+    //public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
     private void Start()    //Set up what setEnemy didn't
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
@@ -210,7 +209,7 @@ public class AI : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.5f);  //Half-second gap between each minion
                 var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);   //Maybe an animation for when they get summoned?
-                minion.SendMessage("setEnemy", Minion);
+                minion.SendMessage("setEnemy", enemy.getMinion());
                 enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
 
                 i++;
@@ -218,7 +217,7 @@ public class AI : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                     minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
-                    minion.SendMessage("setEnemy", Minion);
+                    minion.SendMessage("setEnemy", enemy.getMinion());
                     enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
                 }
             }
@@ -229,7 +228,7 @@ public class AI : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.5f);
                 var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
-                minion.SendMessage("setEnemy", Minion);
+                minion.SendMessage("setEnemy", enemy.getMinion());
                 enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
 
                 i++;
@@ -237,7 +236,7 @@ public class AI : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                     minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
-                    minion.SendMessage("setEnemy", Minion);
+                    minion.SendMessage("setEnemy", enemy.getMinion());
                     enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
                 }
             }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BossE_Serpent
   m_EditorClassIdentifier: 
   Type: 2
+  specialType: 0
   Health: 1000
   Damage: 30
   Speed: 1
@@ -26,3 +27,4 @@ MonoBehaviour:
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
+  minion: {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}

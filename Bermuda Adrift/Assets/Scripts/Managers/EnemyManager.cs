@@ -17,47 +17,61 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private GameObject prefab;
 
-    private Enemy[] enemySet;   //The set that's actually used to assign enemies
-    [SerializeField] private Enemy[] set1;      //The sets that contain enemies that can be assigned
-    [SerializeField] private Enemy[] set2;
-    [SerializeField] private Enemy[] set3;
-    [SerializeField] private Enemy[] minions;
+    [SerializeField] private Enemy[] allEnemies;
     [SerializeField] private Enemy[] Bosses;
+
+    private List<Enemy> enemySet;
 
     private void Start()
     {
         camera = Camera.main;
         Round = 1;
         loopSpot = 1;
-        enemySet = set1; //Always start with set 1
+
+        enemySet = randomizedSet();
+        displayEnemySet();
     }
    
+    private List<Enemy> randomizedSet() //Gives a randomized list of a bunch of enemies. All the enemies' rarities add up to at least 1
+    {
+        List<Enemy> newSet = new List<Enemy>();
+
+        float totalRarity = 0;
+        while(totalRarity < 1)
+        {
+            Enemy randomEnemy = allEnemies[Random.Range(0, allEnemies.Length)];
+
+            while (newSet.Contains(randomEnemy)) randomEnemy = allEnemies[Random.Range(0, allEnemies.Length)];
+
+            newSet.Add(randomEnemy);
+            totalRarity += randomEnemy.getRarity();
+        }
+
+        return newSet;
+    }
+    private void displayEnemySet()
+    {
+        string output = "";
+        foreach (Enemy e in enemySet)
+            output += e.name + "(" + e.getRarity() + "), ";
+        Debug.Log(output);
+    }
     public void SpawnEnemies()  //Spawns all the enemies at the start of the round
     {
 
         if (Round % 10 == 0)    //Checks if it's a boss round currently. Maybe check the game state or loopCount instead to be a bit more efficient?
         {
             total = 1;  //Only spawns 1 boss. Maybe on later rounds we can spawn multiple
-            enemySet = Bosses;
 
             //int i = (Round - 10) / 10;    //If we wanted to go in a specific order through the bosses
 
             var boss = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
 
-            boss.SendMessage("setEnemy", enemySet[randomEnemy()]);  //Sets the boss to a random one in the set
-
-            boss.SendMessage("setMinion", minions[randomEnemy() % minions.Length]);
-
-            //Change the enemy set for the next 10 rounds
-            int i = Random.Range(0, 3);
-            if (i == 0)
-                enemySet = set1;
-            else if (i == 1)
-                enemySet = set2;
-            else
-                enemySet = set3;
+            boss.SendMessage("setEnemy", Bosses[Round / 10 % Bosses.Length]);  //Progress through the bosses set in order
 
             loopSpot = 1;   //Reset the loopSpot to 1, which resets the number of enemies spawning each round
+
+            enemySet = randomizedSet();
         } 
         
         else
@@ -81,13 +95,43 @@ public class EnemyManager : MonoBehaviour
     }
     private int randomEnemy()   //Chooses a random enemy from the enemySet based on the rarity. Actual rarity is slightly different than the rarity in the enemy file
     {
-        for (int i = 0; i < enemySet.Length; i++)
+        for (int i = 0; i < enemySet.Capacity; i++)
         {
             float random = Random.Range(0f, 1f);
-            if (enemySet[i].getRarity() >= random)
+            if (trueRarityCalc(i) >= random)
                 return i;
         }
         return 0;   //If none are chosen, pick the first enemy in the enemySet
+    }
+    private float trueRarityCalc(int index) //Goal is something like 10% rarity, will do the math to make that the actual probability
+    {
+        if (index == 0)
+            return enemySet[index].getRarity();
+
+        float previousRarities = 1 - enemySet[0].getRarity();
+
+        for (int i = 1; i < index; i++)
+        {
+            previousRarities *= trueRarityRecursive(i);
+        }
+        //goal = chance to get that far * true rarity
+
+        return enemySet[index].getRarity() / previousRarities;
+    }
+    private float trueRarityRecursive(int index)
+    {
+        if (index <= 0) return 1 - enemySet[index].getRarity();
+
+        else return 1 - (enemySet[index].getRarity() / trueRarityDenominator(index));
+    }
+    private float trueRarityDenominator(int index)
+    {
+        float output = trueRarityRecursive(0);
+        for (int i = 1; i < index; i++)
+        {
+            output *= trueRarityRecursive(index - i);
+        }
+        return output;
     }
     private void EnemyDown()    //Updates the total enemies and ends the round if there are none left
     {

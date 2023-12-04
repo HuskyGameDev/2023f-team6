@@ -1255,7 +1255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &43960049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,7 +1271,7 @@ MonoBehaviour:
   mixer: {fileID: 0}
   musicSlider: {fileID: 0}
   SFXSlider: {fileID: 0}
-  backgroundMusic: {fileID: 8300000, guid: 5ecd90d72b00b9c45919de0ecae6f760, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
 --- !u!82 &43960050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18325,6 +18325,7 @@ MonoBehaviour:
   towerPrefabs:
   - {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
   - {fileID: 331806046385309275, guid: 0cf2112da1e16394886153ecf3972c7e, type: 3}
+  alwaysAvailable: {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
 --- !u!1 &388417972
 GameObject:
   m_ObjectHideFlags: 0
@@ -19022,6 +19023,7 @@ GameObject:
   - component: {fileID: 394191829}
   - component: {fileID: 394191828}
   - component: {fileID: 394191831}
+  - component: {fileID: 394191832}
   m_Layer: 5
   m_Name: Button3
   m_TagString: Untagged
@@ -19046,7 +19048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 357, y: -1348}
+  m_AnchoredPosition: {x: 411.99997, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &394191828
@@ -19122,7 +19124,7 @@ Animator:
   m_GameObject: {fileID: 394191826}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eadada43488501b47a65d6193348794e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22c09a6bf95969e4cbbcd4ebf8718915, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -19133,6 +19135,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &394191832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394191826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f5184bd68c80843b7178d6f80cd19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &400582261
 GameObject:
   m_ObjectHideFlags: 0
@@ -36542,6 +36556,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 394191832}
+        m_TargetAssemblyTypeName: TimeStopper, Assembly-CSharp
+        m_MethodName: startTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1031499269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38850,7 +38876,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -59926,7 +59952,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!224 &1427900360
 RectTransform:
@@ -64803,6 +64829,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 394191832}
+        m_TargetAssemblyTypeName: TimeStopper, Assembly-CSharp
+        m_MethodName: startTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1638510399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65012,7 +65050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -877, y: -1348}
+  m_AnchoredPosition: {x: -822, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1648827375
@@ -65433,6 +65471,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: LevelGUIManager, Assembly-CSharp
         m_MethodName: choice
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 394191832}
+        m_TargetAssemblyTypeName: TimeStopper, Assembly-CSharp
+        m_MethodName: startTime
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -70799,12 +70849,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChoicesCanvas: {fileID: 1780854689}
-  allChoicesInt: 0000000000000000000000000100000001000000
+  allChoicesInt: 00000000000000000000000001000000
   allChoicesSO:
   - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
   - {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
-  - {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
   - {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}
 --- !u!114 &1939975467
 MonoBehaviour:
@@ -74478,7 +74527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -271, y: -1348}
+  m_AnchoredPosition: {x: -215.99997, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031664637
@@ -74809,30 +74858,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3398399399289917803, guid: 2fb1d2b8b7c9c0349a1c27ae343a8b28, type: 3}
-  set1:
-  - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
-  - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}
-  - {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
-  - {fileID: 11400000, guid: bb3ee2f29fc633b4a9407f0449945540, type: 2}
-  - {fileID: 11400000, guid: b3e93273f28392d4f98cc0b1d4e7418d, type: 2}
-  set2:
-  - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
-  - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
+  allEnemies:
   - {fileID: 11400000, guid: 0875ed1d39b31ab4bad0d0a808de0faf, type: 2}
+  - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
   - {fileID: 11400000, guid: f5b234e3189ca9842aba41874420e9a7, type: 2}
   - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
+  - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
+  - {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
   - {fileID: 11400000, guid: 1f64bc60a2b4aef4fad5e00cbd44b802, type: 2}
-  set3:
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
-  - {fileID: 11400000, guid: 37bbed466e849184bbc0b4cd52a0bbe1, type: 2}
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
-  - {fileID: 11400000, guid: 7c13a1c6ba1ba3a478bab2390a587f1c, type: 2}
-  - {fileID: 11400000, guid: b3999ec0ea08aaa46bf65ff2b0d418a5, type: 2}
-  minions:
-  - {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
+  - {fileID: 11400000, guid: b3e93273f28392d4f98cc0b1d4e7418d, type: 2}
   - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}
+  - {fileID: 11400000, guid: b3999ec0ea08aaa46bf65ff2b0d418a5, type: 2}
+  - {fileID: 11400000, guid: bb3ee2f29fc633b4a9407f0449945540, type: 2}
+  - {fileID: 11400000, guid: 37bbed466e849184bbc0b4cd52a0bbe1, type: 2}
   Bosses:
   - {fileID: 11400000, guid: baddfa75645138349a939bb568ff6f1f, type: 2}
 --- !u!4 &2038607806

@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: E_ElectricEel
   m_EditorClassIdentifier: 
   Type: 0
+  specialType: 0
   Health: 15
   Damage: 5
   Speed: 2
   attackSpeed: 1
   xp: 20
   scrap: 20
-  rarity: 0.4
+  rarity: 0.2
   anim: {fileID: 9100000, guid: ba15f104298653f479bddbac3e61f53c, type: 2}
   xSize: 1.25
   ySize: 0.5
   debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}

@@ -119,6 +119,8 @@ public class UpgradeMenuHandler : MonoBehaviour
             OneOption.SetActive(false);
             TwoOptions.SetActive(true);
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -249.7f);
+
+            BroadcastMessage("setTower", towerAI.getTower());
             upgrade1.SendMessage("setUpgradeLevel", 2);
             upgrade2.SendMessage("setUpgradeLevel", 3);
 

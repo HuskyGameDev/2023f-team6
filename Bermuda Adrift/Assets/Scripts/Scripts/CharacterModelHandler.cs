@@ -18,13 +18,20 @@ public class CharacterModelHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private GameObject abilityDescriptions;
     [SerializeField] private TextMeshProUGUI Title;
+    [SerializeField] private Player lockedCharacter;
+    
+    
     private void Start()
     {
         setCharacter(character);    
     }
     public void setCharacter(Player character)
     {
-        this.character = character;
+        if (!character.getUnlocked())
+            this.character = lockedCharacter;
+        else
+            this.character = character;
+
         updateDescription();
         for (int i = 1; i < 6; i++)
             updateModel(i);
@@ -34,7 +41,7 @@ public class CharacterModelHandler : MonoBehaviour
         setDefUtility();
         setDefSpecial();
 
-        onCharacterChange?.Invoke(character);
+        onCharacterChange?.Invoke(this.character);
     }
 
     #region Loadout functions
@@ -144,7 +151,15 @@ public class CharacterModelHandler : MonoBehaviour
             else
                 Special.gameObject.SetActive(true);
         }
-        else if (slot == 5 && mainBody != null) { mainBody.sprite = character.getMainBodySprite(); }
+        else if (slot == 5 && mainBody != null) 
+        {
+            if (character.getName().CompareTo("The Pirate") == 0)
+                mainBody.transform.localScale = new Vector3(1, 1);
+            else
+                mainBody.transform.localScale = new Vector3(1.5f, 1);
+
+            mainBody.sprite = character.getMainBodySprite(); 
+        }
     }
     public void updateDescription()
     {

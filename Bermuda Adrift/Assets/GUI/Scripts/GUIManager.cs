@@ -69,7 +69,10 @@ public class GUIManager : MonoBehaviour
 
     public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        if (FindObjectOfType<CharacterTracker>().getCharacter().getUnlocked())
+            SceneManager.LoadScene(sceneIndex);
+        else
+            Debug.Log("Not unlocked!");
     }
 
     public void SetActiveTrue(GameObject screen)
@@ -167,8 +170,11 @@ public class GUIManager : MonoBehaviour
     void clearTowerTextInt(int i) { clearTowerText(); }
     public void clearTowerText()
     {
-        towerName.text = "Owned Blueprints";
-        towerCost.text = "";
+        if (towerName != null && towerCost != null)
+        {
+            towerName.text = "Owned Blueprints";
+            towerCost.text = "";
+        }
     }
     public void cancelPrompt(Tower tower)
     {

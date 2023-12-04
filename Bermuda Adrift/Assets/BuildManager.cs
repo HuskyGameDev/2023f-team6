@@ -14,6 +14,7 @@ public class BuildManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject[] towerPrefabs;
+    [SerializeField] private BarrierScriptable alwaysAvailable;
 
     private GameManager gameManager;
     private GameObject mostRecent;
@@ -72,6 +73,7 @@ public class BuildManager : MonoBehaviour
         placeables = new List<(int, ScriptableObject)>();
 
         clearBuyables();
+        reloadBuyables();
     }
 
     private void instantiateBuyables()
@@ -80,12 +82,27 @@ public class BuildManager : MonoBehaviour
         float xPadding = (2.8f + 21.33f) / (21.33f * 2);
         float yPadding = (3 + 12) / 24f;
         float initialX = (17.1f + 21.33f + transform.parent.gameObject.GetComponent<RectTransform>().anchoredPosition.x - 16.09f) / (21.33f * 2);
-        float initialY = (5 + 12) / 24f;
+        float initialY = (3 + 12) / 24f;
         Vector3 initial = Camera.main.ViewportToWorldPoint(new Vector3(initialX, initialY));
         Vector3 padding = Camera.main.ViewportToWorldPoint(new Vector3(xPadding, yPadding));
 
         int xMult = 0;
         int yMult = 0;
+
+        GameObject alwaysAvailableButton = new GameObject();
+        Button AAbutton = alwaysAvailableButton.AddComponent<Button>();
+        Image AAimage = alwaysAvailableButton.AddComponent<Image>();
+        ButtonHover AAbuttonHover = alwaysAvailableButton.AddComponent<ButtonHover>();
+        AAbuttonHover.barrier = alwaysAvailable;
+        ButtonDescription AAbuttonDescription = alwaysAvailableButton.AddComponent<ButtonDescription>();
+        AAbuttonDescription.SendMessage("setBarrier", alwaysAvailable); ;
+        AAimage.sprite = alwaysAvailable.getStartingSprite();
+        AAbutton.targetGraphic = AAimage;
+        alwaysAvailableButton.transform.parent = this.transform;
+        AAbutton.onClick.AddListener(() => TowerButtonClick(alwaysAvailable));
+        alwaysAvailableButton.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        alwaysAvailableButton.transform.position = new Vector3(initial.x, initial.y + padding.y * 1, transform.position.z);
+
         foreach ((int,ScriptableObject) x in placeables)
         {
             if (x.Item1 == 0)   //0 if a tower
@@ -300,7 +317,7 @@ public class BuildManager : MonoBehaviour
         if (mostRecent == null)
             positions[i] = Vector3.zero;
 
-        if (mostRecent != null)
+        if (mostRecent != null && mostRecentSO != alwaysAvailable)
         {
             removeFromList((mostRecentInt, mostRecentSO));
         }

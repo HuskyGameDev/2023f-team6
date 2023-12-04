@@ -165,7 +165,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (placed && GameObject.FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
+        if (placed && GameObject.FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle && barrier.getName().CompareTo("Barricade") != 0)
             onClicked?.Invoke(this);
     }
 
