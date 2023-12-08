@@ -101,15 +101,21 @@ public class GameManager : MonoBehaviour
     {
         GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
 
-        if (gameObject.GetComponent<EnemyManager>().getRound() == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
+        if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning1());
-        else if (gameObject.GetComponent<EnemyManager>().getRound() == 9)
+        else if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 9)
+        {
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning2());
+            gameObject.GetComponent<ShaderManager>().startBossRound();
+        }
 
         onRoundEnd?.Invoke();
 
-        if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)  //Award the player with a random tower after every boss round
+        if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 0)   //Award the player with a random tower after every boss round
+        {
             FindObjectOfType<LevelGUIManager>().addRandom();
+            gameObject.GetComponent<ShaderManager>().endBossRound();
+        }
 
         state = GameState.Idle;
     }

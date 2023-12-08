@@ -171,6 +171,7 @@ public class UpgradeMenuHandler : MonoBehaviour
                 destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (getReturnScrap(tower, upgradeLevel) / 2) + " scrap";
             }
         }
+        if (headerText.text.CompareTo("") == 0) headerText.text = tower.getName();
     }
     
     void updateMenu(Barriers barrier)
@@ -327,7 +328,7 @@ public class UpgradeMenuHandler : MonoBehaviour
             centerpiece.SendMessage("repair", repairSlider.value - currentHealth);
             updateMenu(centerpiece);
         }
-        FindObjectOfType<GameManager>().spendScrap((int)(repairSlider.value - currentHealth));
+        FindObjectOfType<GameManager>().spendScrap(getRepairScrap((int)repairSlider.value - currentHealth));
     }
     public void changePriority(bool left)
     {

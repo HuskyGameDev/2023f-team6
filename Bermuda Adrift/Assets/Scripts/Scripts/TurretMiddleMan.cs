@@ -11,6 +11,7 @@ public class TurretMiddleMan : MonoBehaviour, IPointerDownHandler
     {
         SendMessageUpwards("fire");
     }
+    public void destroy() { SendMessageUpwards("destroyTower"); }
     /*
     private void OnMouseDown()
     {
@@ -33,7 +34,9 @@ public class TurretMiddleMan : MonoBehaviour, IPointerDownHandler
     {
         if (transform.parent.gameObject.GetComponent<TowerAI>().getPlaced()
             &&
-            GameObject.Find("Managers").GetComponent<GameManager>().getGameState() == GameManager.GameState.Idle)
+            GameObject.Find("Managers").GetComponent<GameManager>().getGameState() == GameManager.GameState.Idle
+            &&
+            transform.parent.gameObject.GetComponent<TowerAI>().getTower().getName().CompareTo("Old Friend") != 0)
         {
             onClicked?.Invoke(transform.parent.gameObject);
         }

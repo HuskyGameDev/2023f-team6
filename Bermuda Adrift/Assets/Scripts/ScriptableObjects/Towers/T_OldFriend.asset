@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
+  m_Name: T_OldFriend
+  m_EditorClassIdentifier: 
+  damageMult: 1
+  turnSpeed: 1.5
+  range: 15
+  anim: {fileID: 9100000, guid: d555e7733a7cffd4c8e3bf8583bed721, type: 2}
+  baseSprite: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  cost: 0
+  rarity: 0
+  Name: Old Friend
+  Description: The last remnant of a life now forgotten
+  image: {fileID: 0}
+  cantTurn: 0
+  U1damageMult: 1
+  U1turnSpeed: 0
+  U1range: 15
+  U1Bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  U1cost: 0
+  U1Name: 
+  U1Description: 
+  U1image: {fileID: 0}
+  UA1damageMult: 1
+  UA1turnSpeed: 0
+  UA1range: 15
+  UA1Bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  UA1cost: 0
+  UA1Name: 
+  UA1Description: The last remnant of a life now forgotten
+  UA1image: {fileID: 0}
+  UA2damageMult: 1
+  UA2turnSpeed: 0
+  UA2range: 15
+  UA2Bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  UA2cost: 0
+  UA2Name: 
+  UA2Description: The last remnant of a life now forgotten
+  UA2image: {fileID: 0}
+  UB1damageMult: 1
+  UB1turnSpeed: 0
+  UB1range: 15
+  UB1Bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  UB1cost: 0
+  UB1Name: 
+  UB1Description: The last remnant of a life now forgotten
+  UB1image: {fileID: 0}
+  UB2damageMult: 1
+  UB2turnSpeed: 0
+  UB2range: 15
+  UB2Bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  UB2cost: 0
+  UB2Name: 
+  UB2Description: The last remnant of a life now forgotten
+  UB2image: {fileID: 0}

@@ -43,7 +43,9 @@ public class RangeIndicatorScript : MonoBehaviour
     {
         towerParent = towerAI.gameObject;
         transform.localScale = new Vector3(towerAI.getTowerRange() * 2, towerAI.getTowerRange() * 2);
-        activate();
+
+        if (FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
+            activate();
     }
     public void updateRangeDirect(Tower tower)
     {

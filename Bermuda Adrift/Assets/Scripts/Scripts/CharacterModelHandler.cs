@@ -40,6 +40,7 @@ public class CharacterModelHandler : MonoBehaviour
         setDefSecondary();
         setDefUtility();
         setDefSpecial();
+        setDefPassive();
 
         onCharacterChange?.Invoke(this.character);
     }

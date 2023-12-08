@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
         //Light up in in the right/wrong spot
         if (type == 0)  //Towers
         {
-            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
+            if (buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
             else { enterIncorrect(); }
         } 
         else    //Barriers

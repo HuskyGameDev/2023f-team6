@@ -14,12 +14,15 @@ public class TheHatMan : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Clicked");
+        if (FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle) return;
+
         AI[] enemies = FindObjectsOfType<AI>();
 
         foreach (AI enemy in enemies)
             enemy.SendMessage("Forget");
 
-        Destroy(gameObject);
+        StartCoroutine(fadeAway());
     }
 
     private void AddPhysics2DRaycaster()
@@ -29,6 +32,18 @@ public class TheHatMan : MonoBehaviour, IPointerDownHandler
         {
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
         }
+    }
+    private IEnumerator fadeAway()
+    {
+        int a = 10;
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        for(int i = 255; i > 0; i -= a)
+        {
+            sr.color -= Color.black * (a / 255);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Destroy(gameObject);
     }
 
     private IEnumerator delayedDisappear()

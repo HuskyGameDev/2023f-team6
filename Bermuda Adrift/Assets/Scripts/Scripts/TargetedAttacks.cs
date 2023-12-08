@@ -31,16 +31,21 @@ public class TargetedAttacks : MonoBehaviour
     }
     private IEnumerator moveToAttack()
     {
-        while ((transform.position - target.transform.position).magnitude > 0.5)
+        Vector3 targetPosition = transform.position;
+        if (target != null)
+            targetPosition = target.transform.position;
+        while ((transform.position - targetPosition).magnitude > 0.5)
         {
-            transform.position = Vector3.Lerp(transform.position, target.transform.position, 0.75f);
+            if (target != null) targetPosition = target.transform.position;
+            transform.position = Vector3.Lerp(transform.position, target.transform.position, 0.5f);
             yield return new WaitForEndOfFrame();
         }
 
-        target.SendMessage("TakeDamage", damage);   //Can be used as a damaging move against bosses, but can't crit
-        target.SendMessage("Forget");   //Could be changed later if we decide to have something else that works like this
-
-        Destroy(gameObject);
+        if (target != null)
+        {
+            target.SendMessage("TakeDamage", damage);   //Can be used as a damaging move against bosses, but can't crit
+            target.SendMessage("Forget");   //Could be changed later if we decide to have something else that works like this
+        }
     }
     public void missionComplete()
     {

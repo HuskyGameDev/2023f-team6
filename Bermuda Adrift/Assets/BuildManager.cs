@@ -261,7 +261,6 @@ public class BuildManager : MonoBehaviour
     public void placeRandom(Tower tower, float duration)
     {
         Vector3 position = randomApprovedTowerPosition();
-        Debug.Log("Creating the tower " + tower.getName());
 
         GameObject setPositionTower = Instantiate(towerPrefabs[0], position, Quaternion.identity);
         setPositionTower.SendMessage("place", tower);
@@ -273,8 +272,8 @@ public class BuildManager : MonoBehaviour
     private IEnumerator tempTower(GameObject g, float duration)
     {
         yield return new WaitForSeconds(duration);
-        Debug.Log("Destroying temp tower");
-        g.GetComponent<TowerAI>().destroyTower();
+
+        g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destroy");
     }
 
     /*
@@ -403,6 +402,8 @@ public class BuildManager : MonoBehaviour
         if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, layerMask).collider != null)  //Up left corner
             return false;
         if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
+            return false;
+        if (Mathf.Abs(position.x) < 2 || Mathf.Abs(position.y) < 2)
             return false;
 
         return true;

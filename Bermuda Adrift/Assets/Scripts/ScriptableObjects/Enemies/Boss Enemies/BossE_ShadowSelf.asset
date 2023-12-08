@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_ShadowSelf
+  m_EditorClassIdentifier: 
+  Type: 3
+  specialType: 0
+  Health: 4000
+  Damage: 30
+  Speed: 0.5
+  attackSpeed: 0.25
+  xp: 2000
+  scrap: 250
+  rarity: 0
+  anim: {fileID: 9100000, guid: a538fb1e41b1b394d8155b1089110727, type: 2}
+  xSize: 1
+  ySize: 2
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
+  minion: {fileID: 11400000, guid: 0eb95e05bfefcb64285d762c110c70e7, type: 2}
+  bossWarning: You feel chills run down your spine
+  bossApproaching: A shadow appears on the horizon

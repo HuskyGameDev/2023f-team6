@@ -61,13 +61,17 @@ public class EnemyManager : MonoBehaviour
 
         if (Round % 10 == 0)    //Checks if it's a boss round currently. Maybe check the game state or loopCount instead to be a bit more efficient?
         {
-            total = 1;  //Only spawns 1 boss. Maybe on later rounds we can spawn multiple
+            total = Round / 100 + 1;  //Only spawns 1 boss. After Round 100 start spawning 2, then 3 on round 200, etc
 
             //int i = (Round - 10) / 10;    //If we wanted to go in a specific order through the bosses
 
-            var boss = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
 
-            boss.SendMessage("setEnemy", Bosses[Round / 10 % Bosses.Length]);  //Progress through the bosses set in order
+            for (int i = 0; i < total; i++)
+            {
+                var boss = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
+
+                boss.SendMessage("setEnemy", Bosses[(Round / 10 - 1) % Bosses.Length]);  //Progress through the bosses set in order
+            }
 
             loopSpot = 1;   //Reset the loopSpot to 1, which resets the number of enemies spawning each round
 
@@ -191,7 +195,7 @@ public class EnemyManager : MonoBehaviour
     }
     public Enemy getUpcomingBoss()
     {
-        int upcomingBossRound = (int) (Round / 10f) + 1;
+        int upcomingBossRound = (int) (Round / 10f);
             
         return Bosses[upcomingBossRound % Bosses.Length];
     }

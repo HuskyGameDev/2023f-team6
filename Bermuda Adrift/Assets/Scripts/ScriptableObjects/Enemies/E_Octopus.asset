@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: E_Octopus
+  m_EditorClassIdentifier: 
+  Type: 0
+  specialType: 0
+  Health: 20
+  Damage: 2
+  Speed: 3
+  attackSpeed: 1
+  xp: 40
+  scrap: 40
+  rarity: 0.1
+  anim: {fileID: 9100000, guid: b5be241ef544cae44801bb419578b69a, type: 2}
+  xSize: 1
+  ySize: 1.25
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
+  minion: {fileID: 0}
+  bossWarning: 
+  bossApproaching: 

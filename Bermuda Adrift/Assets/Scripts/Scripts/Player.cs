@@ -81,10 +81,12 @@ public class Player : ScriptableObject
     public Ability getDefSecondary() { return defSecondary; }
     public Ability getDefUtility() { return defUtility; }
     public Ability getDefSpecial() { return defSpecial; }
+    public Buffs getDefPassive() { return defPassive; }
     public Ability getAltPrimary() { return altPrimary; }
     public Ability getAltSecondary() { return altSecondary; }
     public Ability getAltUtility() { return altUtility; }
     public Ability getAltSpecial() { return altSpecial; }
+    public Buffs getAltPassive() { return altPassive; }
     public bool altedP() { return altP; }
     public bool altedS() { return altS; }
     public bool altedU() { return altU; }

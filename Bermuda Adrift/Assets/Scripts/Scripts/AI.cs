@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
     public event Action<int, Color> OnStatusDamage;
     public static event Action OnEnemyDeath;
     public static event Action OnDecoyDeath;
+    public static event Action<Enemy> OnBossDeath;
 
     public event Action<int> SetupHealthBar;
 
@@ -407,6 +408,9 @@ public class AI : MonoBehaviour
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Decoy)
             OnDecoyDeath?.Invoke();
 
+        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
+            OnBossDeath?.Invoke(enemy);
+
         Destroy(gameObject);
     }
     #endregion
@@ -457,7 +461,7 @@ public class AI : MonoBehaviour
     {
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss) return;
 
-        if (Random.Range(0, 1) == 0)
+        if (Random.Range(0, 2) == 0)
         {
             death();
             return;
