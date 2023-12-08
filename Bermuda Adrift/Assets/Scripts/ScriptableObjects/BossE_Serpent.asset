@@ -28,3 +28,5 @@ MonoBehaviour:
   extra: {fileID: 0}
   bullet: {fileID: 0}
   minion: {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
+  bossWarning: A powerful creature approaches...
+  bossApproaching: PREPARE YOURSELF

@@ -24,7 +24,6 @@ public class Hints : MonoBehaviour
         AI.OnDecoyDeath += decoyDeath;
         OnPopupAppeared += endTooltipEarly;
         GameManager.OnBossWarning += bossWarning;
-        GameManager.OnBossApproaching += bossApproaching;
         Centerpiece.onCenterpieceDamaged += repairHint;
         BuildManager.TooManyBlueprints += blueprintLimit;
         GameManager.OnLevelUp += levelExplanations;
@@ -39,7 +38,6 @@ public class Hints : MonoBehaviour
         AI.OnDecoyDeath -= decoyDeath;
         OnPopupAppeared -= endTooltipEarly;
         GameManager.OnBossWarning -= bossWarning;
-        GameManager.OnBossApproaching -= bossApproaching;
         Centerpiece.onCenterpieceDamaged -= repairHint;
         BuildManager.TooManyBlueprints -= blueprintLimit;
         GameManager.OnLevelUp -= levelExplanations;
@@ -109,13 +107,9 @@ public class Hints : MonoBehaviour
 
         AI.OnDecoyDeath -= decoyDeath;
     }
-    void bossWarning()
+    void bossWarning(string warning)
     {
-        stack.Push("A powerful enemy approaches...");
-    }
-    void bossApproaching()
-    {
-        stack.Push("PREPARE YOURSELF");
+        stack.Push(warning);
     }
     void repairHint()
     {

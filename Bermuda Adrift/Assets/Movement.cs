@@ -13,7 +13,6 @@ public class Movement : MonoBehaviour
 
     //public Transform Aim;
     private Vector3 AimVector;
-    bool isWalking = false;
 
     private Buffs[] buffs;
 
@@ -44,16 +43,12 @@ public class Movement : MonoBehaviour
         input.y = Input.GetAxisRaw("Vertical");
 
         if(input.x == 0 && input.y == 0) {
-            isWalking = false;
             anim.SetBool("Moving", false);
             //lastMoveDirection = input;
             //Vector3 vector3 = Vector3.left * lastMoveDirection.x + Vector3.down * lastMoveDirection.y;
 
             //AimVector = vector3;
             //Aim.rotation = Quaternion.LookRotation(Vector3.forward, vector3);
-        }
-        else {
-            isWalking = true;
         }
 
         input.Normalize();
@@ -105,7 +100,7 @@ public class Movement : MonoBehaviour
     {
         if (buffs == null)
             buffs = buffs = new Buffs[10];
-        StartCoroutine(selfBuff(buff)); 
+        StartCoroutine(selfBuff(buff));
     }
     private IEnumerator selfBuff(Buffs buff)
     {

@@ -35,8 +35,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnGameEnd;
     public static event Action<int> OnLevelUp;
 
-    public static event Action OnBossWarning;
-    public static event Action OnBossApproaching;
+    public static event Action<string> OnBossWarning;
 
     public enum GameState
     {
@@ -103,9 +102,9 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
 
         if (gameObject.GetComponent<EnemyManager>().getRound() == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
-            OnBossWarning?.Invoke();
+            OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning1());
         else if (gameObject.GetComponent<EnemyManager>().getRound() == 9)
-            OnBossApproaching?.Invoke();
+            OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning2());
 
         onRoundEnd?.Invoke();
 

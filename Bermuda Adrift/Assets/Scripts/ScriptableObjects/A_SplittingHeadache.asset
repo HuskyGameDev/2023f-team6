@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
+  m_Name: A_SplittingHeadache
+  m_EditorClassIdentifier: 
+  type: 3
+  meleeHitboxes: {fileID: 0}
+  bullet: {fileID: 0}
+  destinedBullet: {fileID: 0}
+  targetedAttacker: {fileID: 4826000510941422143, guid: a7a73a37e6774754f9d66a2c02ed7401, type: 3}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
+  bulletPrefab: {fileID: 0}
+  slot: 2
+  cooldown: 10
+  thumbnail: {fileID: -944231584, guid: fcc7e456ab8794649a2164a724e21960, type: 3}
+  ModelSprite: {fileID: 0}
+  Name: Splitting Headache
+  description: The shadows escape your head for a moment
+  looped: 0
+  lockedDirection: 0

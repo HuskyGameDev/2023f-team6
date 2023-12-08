@@ -67,8 +67,10 @@ public class Attack : MonoBehaviour
         setAbility(playerData.getUtility());
         setAbility(playerData.getSpecial());
         if (playerData.getPassive() != null)
+        {
             StartCoroutine(Buff(playerData.getPassive()));
-        movement.buff(playerData.getPassive());
+            movement.buff(playerData.getPassive());
+        }
         movement.setSpeed(character.getSpeed());
     }
 
@@ -311,6 +313,14 @@ public class Attack : MonoBehaviour
             intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
             intBullet.SendMessage("AirborneMult", getAirborneMult());
             intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
+        }
+        else if (ability.getAttackType() == Ability.attackType.targetedAttack)
+        {
+            Instantiate(ability.getTargetedAttacker()); //The scripts on these game objects will deal with everything from here
+        }
+        else if (ability.getAttackType() == Ability.attackType.tempTower)
+        {
+            FindObjectOfType<BuildManager>().placeRandom(ability.getTempTower(), ability.getTowerDuration());
         }
 
         if (ability.canBeLooped())

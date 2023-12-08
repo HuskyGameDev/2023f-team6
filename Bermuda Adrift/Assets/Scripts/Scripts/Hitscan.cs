@@ -29,7 +29,7 @@ public class Hitscan : MonoBehaviour
     private void Start()
     {
         //For some reason setBullet() seems to run either before Start or faster than Start
-        stop = false;
+        
         landed = false;
         if (critChance == 0)
             setCritChance(1);
@@ -92,6 +92,7 @@ public class Hitscan : MonoBehaviour
         bullet = newBullet;
 
         sprite = transform.GetChild(0);
+        stop = false;
 
         damage = bullet.getDamage();        
         animator = bullet.getAnimator();    //Animator automatically sets sprites
@@ -133,6 +134,18 @@ public class Hitscan : MonoBehaviour
     private void UnderwaterMult(float mult) { underwaterMult *= mult; }
     private void AirborneMult(float mult) { airborneMult *= mult; }
     private void setCritChance(float chance) { critChance = chance; }
+    private void initialDelay(int frames)
+    {
+        stop = true;
+        StartCoroutine(delay(frames));
+    }
+    private IEnumerator delay(int offset)
+    {
+        for (int i = 0; i < offset; i++)
+            yield return new WaitForEndOfFrame();
+
+        stop = false;
+    }
 
     private void dealDamage(Collider2D collision)
     {
@@ -246,8 +259,26 @@ public class Hitscan : MonoBehaviour
                 landed = true;
 
                 int count = (int) bullet.getAOE();
-                int i = 0;
+                float maxDegree = count / 5f;
+                int delayVariation = count / 2;
 
+                for (int i = 0; i < count; i++)
+                {
+                    Quaternion direction = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + (Vector3.forward * Random.Range(-maxDegree, maxDegree)));
+
+                    var pellet = Instantiate(gameObject, gameObject.transform.position, direction);
+
+                    pellet.SendMessage("setBullet", bullet);
+                    pellet.SendMessage("setTimer", -1);
+                    pellet.SendMessage("setEffect", Bullet.Effects.None);
+                    pellet.GetComponent<CircleCollider2D>().radius = bullet.getScale();
+
+                    pellet.SendMessage("initialDelay", Random.Range(0, delayVariation));
+                }
+
+                Destroy(gameObject);
+
+                /*
                 if (count % 2 == 1)
                 {
                     count--;
@@ -280,6 +311,7 @@ public class Hitscan : MonoBehaviour
                     pellet.SendMessage("setEffect", Bullet.Effects.None);
                     pellet.GetComponent<CircleCollider2D>().radius = 1;
                 }
+                */
             }
 
         }

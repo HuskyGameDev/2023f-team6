@@ -189,4 +189,10 @@ public class EnemyManager : MonoBehaviour
         //1.09^x
         return Mathf.Round(Mathf.Pow(1.09f, Round));
     }
+    public Enemy getUpcomingBoss()
+    {
+        int upcomingBossRound = (int) (Round / 10f) + 1;
+            
+        return Bosses[upcomingBossRound % Bosses.Length];
+    }
 }

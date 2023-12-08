@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 0
-  Health: 30
+  Health: 20
   Damage: 2
   Speed: 3
   attackSpeed: 1
@@ -27,3 +27,4 @@ MonoBehaviour:
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
+  minion: {fileID: 0}

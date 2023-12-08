@@ -40,7 +40,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
                     ||
                     Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
                     &&
-                    buildManager.approvePosition(transform.position))
+                    buildManager.approvePosition(transform.position, 1))
                 {
                     OnTowerPlaced?.Invoke();
                     placed = true;

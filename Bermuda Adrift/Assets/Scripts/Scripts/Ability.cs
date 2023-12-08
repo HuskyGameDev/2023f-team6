@@ -5,13 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability")]
 public class Ability : ScriptableObject
 {
-    public enum attackType { melee, projectile, destinedProjectile, buff};
+    public enum attackType { melee, projectile, destinedProjectile, targetedAttack, tempTower, buff};
     [SerializeField] private attackType type;
 
     [SerializeField] private GameObject meleeHitboxes;
+
     [SerializeField] private Bullet bullet;
-    [SerializeField] private Buffs buff;
+
     [SerializeField] private DestinedBullet destinedBullet;
+
+    [SerializeField] private GameObject targetedAttacker;
+
+    [SerializeField] private Tower tempTower;
+    [SerializeField] private float towerDuration;
+
+    [SerializeField] private Buffs buff;
+
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int slot;
@@ -27,8 +36,11 @@ public class Ability : ScriptableObject
     public attackType getAttackType() { return type; }
     public GameObject getHitboxes() { return meleeHitboxes; }
     public Bullet getBullet() { return bullet; }
-    public Buffs getBuff() { return buff; }
     public DestinedBullet getDestinedBullet() { return destinedBullet; }
+    public GameObject getTargetedAttacker() { return targetedAttacker; }
+    public Tower getTempTower() { return tempTower; }
+    public float getTowerDuration() { return towerDuration; }
+    public Buffs getBuff() { return buff; }
     public GameObject getBulletPrefab() { return bulletPrefab; }
     public int getSlot() { return slot; }
     public float getCooldown() { return cooldown; }

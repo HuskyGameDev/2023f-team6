@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class TowerAI : MonoBehaviour
 {
@@ -58,7 +57,10 @@ public class TowerAI : MonoBehaviour
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
         colliders = new BoxCollider2D[1];
         colliders[0] = gameObject.GetComponent<BoxCollider2D>();
-        gameObject.GetComponent<SpriteRenderer>().sprite = tower.getBaseSprite();
+        if (tower.getBaseSprite() == null)
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        else
+            gameObject.GetComponent<SpriteRenderer>().sprite = tower.getBaseSprite();
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buildManager = FindObjectOfType<BuildManager>();
@@ -77,7 +79,7 @@ public class TowerAI : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (raycastCorners() && buildManager.approvePosition(transform.position))
+                if (buildManager.approvePosition(transform.position, 0))
                 {
                     OnTowerPlaced?.Invoke();
                     nozzle.GetComponent<TurretMiddleMan>().openUpgradeMenu();
@@ -111,6 +113,7 @@ public class TowerAI : MonoBehaviour
         if (gameManager.getGameState() == GameManager.GameState.BossRound || gameManager.getGameState() == GameManager.GameState.Defend)
             newTarget();
     }
+    private void placeTower() { placed = true; }
 
     public void place(Tower towerType)  //Setup function
     {
@@ -534,7 +537,7 @@ public class TowerAI : MonoBehaviour
 
     private void AddTarget(GameObject newTarget)    //Adds an enemy to the list of enemies in range (unless it's forgotten)
     {
-        if (newTarget.GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Forgotten) return;
+        if (newTarget.GetComponent<AI>().getForgotten()) return;
 
         for (int i = 0; i < enemiesInRange.Length; i++)
         {
@@ -643,22 +646,6 @@ public class TowerAI : MonoBehaviour
             damage *= buffs[i].getDamage();
         }
         return damage;
-    }
-
-    private bool raycastCorners()   //Checks the corners of the tower to make sure it isn't touching the water
-    {
-        int layerMask = 1 << 4;
-
-        if (Physics2D.Raycast(transform.position, Vector3.up + Vector3.right, 1.4f, layerMask).collider != null)    //Top right corner
-            return false;
-        if (Physics2D.Raycast(transform.position, Vector3.down + Vector3.right, 1.4f, layerMask).collider != null)  //Down right corner
-            return false;
-        if (Physics2D.Raycast(transform.position, Vector3.up + Vector3.left, 1.4f, layerMask).collider != null)  //Up left corner
-            return false;
-        if (Physics2D.Raycast(transform.position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
-            return false;
-
-        return true;
     }
     public bool getPlaced() { return placed; }
     public int getUpgradeLevel() { return upgradeLevel; }

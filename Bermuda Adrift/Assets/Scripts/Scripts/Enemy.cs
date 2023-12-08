@@ -10,7 +10,7 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private Types Type;
 
-    public enum SpecialTypes { None, Decoy, Immune, Forgotten }
+    public enum SpecialTypes { None, Decoy, Immune }
 
     [SerializeField] private SpecialTypes specialType;
 
@@ -35,6 +35,9 @@ public class Enemy : ScriptableObject
     [SerializeField] private Bullet bullet;
     [SerializeField] private Enemy minion;
 
+    [SerializeField] private string bossWarning;
+    [SerializeField] private string bossApproaching;
+
 
     public Types getType() { return Type; }
     public SpecialTypes getSpecialType() { return specialType; }
@@ -52,4 +55,6 @@ public class Enemy : ScriptableObject
     public GameObject getExtra() { return extra; }
     public Bullet getBullet() { return bullet; }
     public Enemy getMinion() { return minion; }
+    public string getWarning1() { return bossWarning; }
+    public string getWarning2() { return bossApproaching; }
 }

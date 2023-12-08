@@ -75,7 +75,6 @@ public class AI : MonoBehaviour
 
         SetupHealthBar?.Invoke(Health);
     }
-    //public void setMinion(Enemy newMinion) { Minion = newMinion; }  //Sets the minion when the boss spawns in. Should be random
     private void Start()    //Set up what setEnemy didn't
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
@@ -390,6 +389,8 @@ public class AI : MonoBehaviour
     }
     private void death()    //Updates enemyManager count, adds scrap and XP, and deletes GameObject
     {
+        if (dead) return;
+
         enemyManager.SendMessage("addScrap", enemy.getScrap());
         enemyManager.SendMessage("addXP", enemy.getXP());
 
@@ -452,6 +453,23 @@ public class AI : MonoBehaviour
     }
 
     #region Debuff Managing
+    private void Forget()   //50-50 chance to either instakill or become invisible to towers
+    {
+        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss) return;
+
+        if (Random.Range(0, 1) == 0)
+        {
+            death();
+            return;
+        }
+
+        Debug.Log("Forgotten");
+
+        TowerAI[] towers = FindObjectsOfType<TowerAI>();
+        foreach (TowerAI t in towers)
+            t.SendMessage("forget", gameObject);
+        forgotten = true;
+    }
     private void addDebuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
         for (int i = 0; i < debuffs.Length; i++)
@@ -615,12 +633,7 @@ public class AI : MonoBehaviour
         return mult;
     }
     public Enemy.Types getType() { return enemy.getType(); }
-    public Enemy.SpecialTypes getSpecialType() 
-    {
-        if (forgotten)
-            return Enemy.SpecialTypes.Forgotten;
-        return enemy.getSpecialType();
-    }
+    public Enemy.SpecialTypes getSpecialType() { return enemy.getSpecialType(); }
 
     #region Tower Priority Get Functions
     public float getStrength()    //A "score" for each enemy based on health, damage, and speed
@@ -630,6 +643,7 @@ public class AI : MonoBehaviour
     public float towerGetSpeed() { return enemy.getSpeed(); }   //Doesn't factor in buffs
     #endregion
     public string getName() { return enemy.name; }
+    public bool getForgotten() { return forgotten; }
     #endregion
 
     public void OnTriggerEnter2D(Collider2D collision)  //Trigger for hitting a barrier

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BuildManager : MonoBehaviour
 {
@@ -244,6 +245,38 @@ public class BuildManager : MonoBehaviour
         placeBarrier(b);
     }
 
+
+    public Vector3 randomApprovedTowerPosition()
+    {
+        Vector3 position = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7));
+
+        while (!approvePosition(position, 0))
+        {
+            Debug.Log("Rejected (" + position.x + ", " + position.y + ")");
+            position.x = Random.Range(-7, 7);
+            position.y = Random.Range(-7, 7);
+        }
+        return position;
+    }
+    public void placeRandom(Tower tower, float duration)
+    {
+        Vector3 position = randomApprovedTowerPosition();
+        Debug.Log("Creating the tower " + tower.getName());
+
+        GameObject setPositionTower = Instantiate(towerPrefabs[0], position, Quaternion.identity);
+        setPositionTower.SendMessage("place", tower);
+        setPositionTower.SendMessage("placeTower");
+
+        if (duration != -1)
+            StartCoroutine(tempTower(setPositionTower, duration));
+    }
+    private IEnumerator tempTower(GameObject g, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Debug.Log("Destroying temp tower");
+        g.GetComponent<TowerAI>().destroyTower();
+    }
+
     /*
     private void Update()
     {
@@ -323,7 +356,7 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    public bool approvePosition(Vector3 position)
+    public bool approvePosition(Vector3 position, int type)
     {
         Vector3 temp = Vector3.zero;
         for (int i = 0; i < activeIndex; i++)
@@ -338,7 +371,9 @@ public class BuildManager : MonoBehaviour
             }
         }
 
-        return true;
+        if (type == 1)
+            return true;
+        else return raycastCorners(position);
     }
 
     public Vector3[] getPositions() { return positions; }
@@ -356,4 +391,20 @@ public class BuildManager : MonoBehaviour
     }
     public float getTowerRange() { return towerRange; }
     public int blueprintNumber() { return placeables.Capacity; }
+
+    private bool raycastCorners(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water
+    {
+        int layerMask = 1 << 4;
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, layerMask).collider != null)    //Top right corner
+            return false;
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, layerMask).collider != null)  //Down right corner
+            return false;
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, layerMask).collider != null)  //Up left corner
+            return false;
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
+            return false;
+
+        return true;
+    }
 }

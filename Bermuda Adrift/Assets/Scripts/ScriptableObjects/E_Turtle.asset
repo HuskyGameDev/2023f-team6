@@ -20,7 +20,7 @@ MonoBehaviour:
   attackSpeed: 1
   xp: 25
   scrap: 25
-  rarity: 0.25
+  rarity: 0.15
   anim: {fileID: 9100000, guid: 38bb6657be9c0924e82941789c20964f, type: 2}
   xSize: 1
   ySize: 0.5

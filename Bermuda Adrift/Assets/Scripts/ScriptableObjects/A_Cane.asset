@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926299748a6915d4c9a47ca7c3aafbe9, type: 3}
+  m_Name: A_Cane
+  m_EditorClassIdentifier: 
+  type: 0
+  meleeHitboxes: {fileID: 4240625610244105167, guid: 37f2de7155f7c7743bab47daeedba0b5, type: 3}
+  bullet: {fileID: 0}
+  buff: {fileID: 0}
+  destinedBullet: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  slot: 1
+  cooldown: 0
+  thumbnail: {fileID: 950683314, guid: fcc7e456ab8794649a2164a724e21960, type: 3}
+  ModelSprite: {fileID: 0}
+  Name: Carry a Big Stick
+  description: Stab an enemies with the sharp end of your cane
+  looped: 1
+  lockedDirection: 0

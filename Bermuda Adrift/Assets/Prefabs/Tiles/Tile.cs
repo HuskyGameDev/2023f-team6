@@ -21,18 +21,18 @@ public class Tile : MonoBehaviour
         gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
 
         //Light up in in the right/wrong spot
-        if (type == 0)
+        if (type == 0)  //Towers
         {
-            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position)) { enterCorrect(); }
+            if ((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1) && (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
             else { enterIncorrect(); }
         } 
-        else
+        else    //Barriers
         {
             if (((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1 && Mathf.Abs(transform.position.y) < 1)   //Left/Right channels
                 || 
                 (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && Mathf.Abs(transform.position.x) < 1) 
                 && 
-                buildManager.approvePosition(transform.position)) { enterCorrect(); }
+                buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
             else { enterIncorrect(); }
         }
 

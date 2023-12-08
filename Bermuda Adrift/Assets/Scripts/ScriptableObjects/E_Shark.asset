@@ -20,10 +20,11 @@ MonoBehaviour:
   attackSpeed: 1
   xp: 500
   scrap: 100
-  rarity: 0.05
+  rarity: 0.01
   anim: {fileID: 9100000, guid: 613c910491ee85848aa46fbc6b782f82, type: 2}
   xSize: 1.5
   ySize: 4
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
+  minion: {fileID: 0}

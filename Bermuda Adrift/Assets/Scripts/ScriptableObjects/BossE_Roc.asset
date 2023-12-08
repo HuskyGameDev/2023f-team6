@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
   m_Name: BossE_Roc
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 3
+  specialType: 0
   Health: 0
   Damage: 0
   Speed: 0
@@ -26,3 +27,6 @@ MonoBehaviour:
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
+  minion: {fileID: 0}
+  bossWarning: 
+  bossApproaching: 

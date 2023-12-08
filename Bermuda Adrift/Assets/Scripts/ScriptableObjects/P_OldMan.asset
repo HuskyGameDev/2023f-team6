@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0dc33d762e5bb24ca4b2e175d12cc22, type: 3}
   m_Name: P_OldMan
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  defPrimary: {fileID: 0}
-  defSecondary: {fileID: 0}
-  defUtility: {fileID: 0}
-  defSpecial: {fileID: 0}
-  altPrimary: {fileID: 0}
+  anim: {fileID: 9100000, guid: d856fa4121c21b84eb4a6987f039d6bf, type: 2}
+  defPrimary: {fileID: 11400000, guid: 5bc63f34a72b13b439d8b74320c592de, type: 2}
+  defSecondary: {fileID: 11400000, guid: 36f34c081242fd049930e441d5c44762, type: 2}
+  defUtility: {fileID: 11400000, guid: afd5986396874fe46bd3063f15961761, type: 2}
+  defSpecial: {fileID: 11400000, guid: b70146c60ad9f924e818f174c1dec036, type: 2}
+  altPrimary: {fileID: 11400000, guid: 9b224cb71d5739a48accac499d5877ae, type: 2}
   altSecondary: {fileID: 0}
   altUtility: {fileID: 0}
   altSpecial: {fileID: 0}
   defPassive: {fileID: 0}
   altPassive: {fileID: 0}
-  description: This man may be old, but he has plenty of friends to back him up.
-    Or are they really friends?
+  description: He may be old, but he has plenty of friends to back him up. They are
+    his friends, right?
   name: The Old Man
-  mainBodySprite: {fileID: 21300000, guid: e0b19e2cf0c655947a78f510814b3972, type: 3}
-  speed: 5
-  unlocked: 0
+  mainBodySprite: {fileID: 2142675960, guid: 827c720708928dc4ba1c9a1c70bc9fe7, type: 3}
+  speed: 3
+  unlocked: 1
