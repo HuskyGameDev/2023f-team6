@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         scrap = 0;
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
         GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
+
+        Screen.SetResolution(1920, 1080, true);
     }
     
     private void Update()
@@ -145,16 +147,14 @@ public class GameManager : MonoBehaviour
 
     public bool cost(int cost)  //If you can afford it, place it, but if you can't, return false
     {
-        if (cost <= scrap)
-        {
-            return true;
-        }
+        if (cost <= scrap) { return true; }
         //Debug.Log("Not Enough Scrap!");
         return false;
     }
 
     public void spendScrap(int cost)
     {
+        Debug.Log("Spending " + cost + " scrap");
         scrap -= cost;
         onScrapCollect?.Invoke(scrap);
     }

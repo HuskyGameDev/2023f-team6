@@ -314,7 +314,9 @@ public class UpgradeMenuHandler : MonoBehaviour
     }
     public void repair()
     {
-        if (!FindObjectOfType<GameManager>().cost(getRepairScrap((int)(repairSlider.value - currentHealth)))) return;
+        int cost = getRepairScrap((int)(repairSlider.value - currentHealth));
+        GameManager manager = FindObjectOfType<GameManager>();
+        if (!manager.cost(cost)) return;
 
         healedSoFar += (int) (repairSlider.value - currentHealth);
 
@@ -328,7 +330,7 @@ public class UpgradeMenuHandler : MonoBehaviour
             centerpiece.SendMessage("repair", repairSlider.value - currentHealth);
             updateMenu(centerpiece);
         }
-        FindObjectOfType<GameManager>().spendScrap(getRepairScrap((int)repairSlider.value - currentHealth));
+        manager.spendScrap(cost);
     }
     public void changePriority(bool left)
     {
@@ -344,7 +346,7 @@ public class UpgradeMenuHandler : MonoBehaviour
         if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
     }
 
-    private void nonInteractable()
+    private void nonInteractable()  //Makes all buttons non-interactable
     {
         upgrade1.GetComponent<Button>().interactable = false;
         upgrade2.GetComponent<Button>().interactable = false;
@@ -355,6 +357,7 @@ public class UpgradeMenuHandler : MonoBehaviour
     public void destroyClicked()
     {
         OnDestroy?.Invoke();
+        Debug.Log(currentTower + ", " + currentBarrier);
 
         if (currentTower != null)
             currentTower.destroyTower();

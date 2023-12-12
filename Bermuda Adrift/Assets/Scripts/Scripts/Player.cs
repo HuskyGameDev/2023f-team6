@@ -17,7 +17,7 @@ public class Player : ScriptableObject
     [SerializeField] private Buffs defPassive;
     [SerializeField] private Buffs altPassive;
     [SerializeField] private string description;
-    [SerializeField] private string name;
+    [SerializeField] private string characterName;
     [SerializeField] private Sprite mainBodySprite;
     [SerializeField] private int speed;
     [SerializeField] private bool unlocked;

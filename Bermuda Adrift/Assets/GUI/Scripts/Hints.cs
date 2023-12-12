@@ -65,7 +65,7 @@ public class Hints : MonoBehaviour
         
         OnPopupAppeared?.Invoke();
 
-        StartCoroutine(delay(5f));
+        StartCoroutine(delay(10f));
     }
     private IEnumerator delay(float timeOnScreen)
     {

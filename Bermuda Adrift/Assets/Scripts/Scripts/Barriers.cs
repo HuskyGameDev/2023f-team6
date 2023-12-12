@@ -8,6 +8,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
 {
     public static event Action OnCancel;
     public static event Action OnTowerPlaced;
+    public static event Action<GameObject> OnTowerPlacedBM;
     public static event Action<Barriers> onClicked;
 
     private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
@@ -40,9 +41,10 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
                     ||
                     Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
                     &&
-                    buildManager.approvePosition(transform.position, 1))
+                    buildManager.approvePosition(gameObject))
                 {
                     OnTowerPlaced?.Invoke();
+                    OnTowerPlacedBM?.Invoke(gameObject);
                     placed = true;
                     GameObject.Find("Managers").GetComponent<GameManager>().spendScrap(barrier.getCost());
                 }
@@ -89,7 +91,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
         health -= (int) (damage * armor);
         if (health <= 0)
         {
-            buildManager.removePosition(transform.position);
+            buildManager.removePosition(gameObject);
             Destroy(gameObject);
         }
     }
@@ -100,7 +102,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     public void destroyBarrier()
     {
         //Play destroyed animation
-        buildManager.removePosition(transform.position);
+        buildManager.removePosition(gameObject);
         FindObjectOfType<GameManager>().addScrap(barrier.getCost() / 2);
         Destroy(gameObject);
     }
@@ -186,4 +188,5 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     public int getMaxHealth() { return barrier.getHealth(); }
     public string getName() { return barrier.getName(); }
     public BarrierScriptable getBarrier() { return barrier; }
+    private void placeBarrier() { placed = true; Locate(); }
 }

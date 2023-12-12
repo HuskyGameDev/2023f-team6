@@ -5,6 +5,51 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+public class PlaceableData
+{
+    TowerAI towerData;
+    Barriers barrierData;
+    Vector3 location;
+    int upgradeLevel;
+
+    public PlaceableData(GameObject go)
+    {
+        //If the component isn't there, it'll return null, which is what we want
+        towerData = go.GetComponent<TowerAI>();
+        barrierData = go.GetComponent<Barriers>();
+        location = go.transform.position;
+        upgradeLevel = 0;
+    }
+
+    public Type getPlaceableType()
+    {
+        if (towerData != null)
+        {
+            upgradeLevel = towerData.getUpgradeLevel();
+            return towerData.GetType();
+        }
+        else
+            return barrierData.GetType();
+    }
+
+    public object getPlaceableData()
+    {
+        if (towerData != null)
+            return towerData;
+        else
+            return barrierData;
+    }
+    public int getUpgradeLevel() 
+    {
+        if (towerData == null)
+            return 0;
+
+        upgradeLevel = towerData.getUpgradeLevel();
+        return upgradeLevel;
+    }
+    public Vector3 getLocation() { return location; }
+    //public void setLocation(Vector3 location) { this.location = location; }
+}
 public class BuildManager : MonoBehaviour
 {
     public static event Action<Tower> OnTowerPicked;
@@ -22,62 +67,39 @@ public class BuildManager : MonoBehaviour
     private int mostRecentInt;
     private ScriptableObject mostRecentSO;
 
-    private Vector3[] positions;
     private int activeIndex;
     private float towerRange;
 
     private List<(int, ScriptableObject)> placeables;
+    private List<PlaceableData> placeableDatas;
 
-    public void placeTower(Tower scriptable)
-    {
-        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
-        {
-            OnTowerPicked?.Invoke(scriptable);
-            mostRecent = Instantiate(towerPrefabs[0]);
-            mostRecentInt = 0;
-            mostRecentSO = scriptable;
-
-            mostRecent.SendMessage("place", scriptable);
-            if (scriptable.getRange() > 0)
-                towerRange = scriptable.getRange();
-            else
-                towerRange = 1;
-
-            StartCoroutine(positionTracker());
-        }
-    }
-
-    public void placeBarrier(BarrierScriptable scriptable)
-    {
-        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
-        {
-            OnBarrierPicked?.Invoke(scriptable);
-            mostRecent = Instantiate(towerPrefabs[1]);
-            mostRecentInt = 1;
-            mostRecentSO = scriptable;
-
-            mostRecent.SendMessage("setBarrier", scriptable);
-
-            StartCoroutine(positionTracker());
-        }
-    }
-
+    #region Setup stuff
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
-
-    // Start is called before the first frame update
     void Start()
     {
-        positions = new Vector3[48];
         placeables = new List<(int, ScriptableObject)>();
+        placeableDatas = new List<PlaceableData>();
 
         clearBuyables();
         reloadBuyables();
     }
+    private void OnEnable()
+    {
+        TowerAI.OnTowerPlacedBM += addPosition;
+        Barriers.OnTowerPlacedBM += addPosition;
+    }
+    private void OnDisable()
+    {
+        TowerAI.OnTowerPlacedBM -= addPosition;
+        Barriers.OnTowerPlacedBM -= addPosition;
+    }
+    #endregion
 
-    private void instantiateBuyables()
+    #region Inventory system
+    private void instantiateBuyables()  //Creates the buyable tower buttons
     {
         //Dividing + vectors to make the menu consistent with different resolutions
         float xPadding = (2.8f + 21.33f) / (21.33f * 2);
@@ -224,98 +246,71 @@ public class BuildManager : MonoBehaviour
         }
         */
     }
-    private void clearBuyables()
+    private void clearBuyables()    //Deletes all buyable tower buttons
     {
         int max = transform.childCount;
         for (int i = 0; i < max; i++) { Destroy(transform.GetChild(i).gameObject); }
     }
-    public void reloadBuyables()
+    public void reloadBuyables()    //Deletes all buttons and reinstantiates them
     {
         clearBuyables();
         instantiateBuyables();
     }
-
-    private void TowerButtonClick(Tower t)
-    {
-        placeTower(t);
-    }
-
-    private void TowerButtonClick(BarrierScriptable b)
-    {
-        placeBarrier(b);
-    }
-
-
-    public Vector3 randomApprovedTowerPosition()
-    {
-        Vector3 position = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7));
-
-        while (!approvePosition(position, 0))
-        {
-            Debug.Log("Rejected (" + position.x + ", " + position.y + ")");
-            position.x = Random.Range(-7, 7);
-            position.y = Random.Range(-7, 7);
-        }
-        return position;
-    }
-    public void placeRandom(Tower tower, float duration)
-    {
-        Vector3 position = randomApprovedTowerPosition();
-
-        GameObject setPositionTower = Instantiate(towerPrefabs[0], position, Quaternion.identity);
-        setPositionTower.SendMessage("place", tower);
-        setPositionTower.SendMessage("placeTower");
-
-        if (duration != -1)
-            StartCoroutine(tempTower(setPositionTower, duration));
-    }
-    private IEnumerator tempTower(GameObject g, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-
-        g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destroy");
-    }
-
-    /*
-    private void Update()
-    {
-        if (Input.GetKeyDown("5")) { PlaceLightningRod(); }
-    }
-
-    #region Tower/Barrier Placements
-    public void PlaceMachineGun()
-    {
-        placeTower(towers[1]);
-    }
-
-    public void PlaceTricannon()
-    {
-        placeTower(towers[0]);
-    }
-    public void PlaceLightningRod() { placeTower(towers[2]); }
-
-    public void PlaceBarrier()
-    {
-        placeBarrier(barriers[0]);
-    }
-
-    public void PlaceFishNet()
-    {
-        placeBarrier(barriers[1]);
-    }
-    #endregion
-    */
-    public void addToList((int, ScriptableObject) script) 
+    public void addToList((int, ScriptableObject) script)   //Add an option to the list available. 0 for tower, 1 for barrier
     {
         if (placeables.Capacity >= 10) return;
 
         if (placeables.Capacity > 7)
             TooManyBlueprints?.Invoke();
 
-        placeables.Add(script); 
+        placeables.Add(script);
         reloadBuyables();
     }
-    public void removeFromList((int, ScriptableObject) script) { placeables.Remove(script); reloadBuyables(); }
+    public void removeFromList((int, ScriptableObject) script) { placeables.Remove(script); reloadBuyables(); } //Remove a buyable button from the list and reload all buttons
+    #endregion
+
+    #region Tower/Barrier placing
+    public void placeTower(Tower scriptable)    //Creates a tower with the given tower scriptable
+    {
+        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
+        {
+            OnTowerPicked?.Invoke(scriptable);
+            mostRecent = Instantiate(towerPrefabs[0]);
+            mostRecentInt = 0;
+            mostRecentSO = scriptable;
+
+            mostRecent.SendMessage("place", scriptable);
+            if (scriptable.getRange() > 0)
+                towerRange = scriptable.getRange();
+            else
+                towerRange = 1;
+
+            //StartCoroutine(positionTracker());
+        }
+    }
+    public void placeBarrier(BarrierScriptable scriptable)  //Creates a barrier with the given barrier scriptable
+    {
+        if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
+        {
+            OnBarrierPicked?.Invoke(scriptable);
+            mostRecent = Instantiate(towerPrefabs[1]);
+            mostRecentInt = 1;
+            mostRecentSO = scriptable;
+
+            mostRecent.SendMessage("setBarrier", scriptable);
+
+            //StartCoroutine(positionTracker());
+        }
+    }
+
+    private void TowerButtonClick(Tower t)
+    {
+        placeTower(t);
+    }
+    private void TowerButtonClick(BarrierScriptable b)
+    {
+        placeBarrier(b);
+    }
 
     private bool recentWasPlaced()  //Checks if previous tower selected was placed. If cancelled, both will be null and it will return true
     {
@@ -329,68 +324,44 @@ public class BuildManager : MonoBehaviour
         return true;
     }
 
-    private IEnumerator positionTracker()
-    {
-        int i = 0;
-        for (; i < positions.Length; i++)   //Find next spot to insert a position
-        {
-            if (positions[i] == Vector3.zero)
-                break;
-        }
-
-        activeIndex = i;
-
-        while (mostRecent != null && (mostRecent.GetComponent<TowerAI>() != null && !mostRecent.GetComponent<TowerAI>().getPlaced() || mostRecent.GetComponent<Barriers>() != null && !mostRecent.GetComponent<Barriers>().getPlaced()))
-        {
-            positions[i] = mostRecent.transform.position;
-            yield return new WaitForEndOfFrame();
-        }
-
-        if (mostRecent == null)
-            positions[i] = Vector3.zero;
-
-        if (mostRecent != null && mostRecentSO != alwaysAvailable)
-        {
-            removeFromList((mostRecentInt, mostRecentSO));
-        }
-    }
-
-    public bool approvePosition(Vector3 position, int type)
+    public bool approvePosition(Vector3 position, int type) //0 for tower, 1 for barrier
     {
         Vector3 temp = Vector3.zero;
-        for (int i = 0; i < activeIndex; i++)
+        foreach (PlaceableData pd in placeableDatas)
         {
-            if (positions[i] == Vector3.zero) { return true; }
+            if (pd.getLocation() == Vector3.zero) { return true; }
 
-            temp.x = position.x - positions[i].x;
-            temp.y = position.y - positions[i].y;
-            if (temp.magnitude < 2 ) {
-                //Debug.Log("Denied - too close to tower " + i);
-                return false; 
+            temp.x = position.x - pd.getLocation().x;
+            temp.y = position.y - pd.getLocation().y;
+            if (temp.magnitude < 2)
+            {
+                return false;
             }
         }
 
         if (type == 1)
             return true;
-        else return raycastCorners(position);
+        return raycastCorners(position);
     }
-
-    public Vector3[] getPositions() { return positions; }
-
-    public void removePosition(Vector3 position)
+    public bool approvePosition(GameObject go)  //Goes through the positions of all other towers and checks for overlaps or being out of bounds
     {
-        for (int i = 0; i < positions.Length; i++)
+        Vector3 temp = Vector3.zero;
+        foreach (PlaceableData pd in placeableDatas)
         {
-            if (position == positions[i])
+            if (pd.getLocation() == Vector3.zero) { return true; }
+
+            temp.x = go.transform.position.x - pd.getLocation().x;
+            temp.y = go.transform.position.y - pd.getLocation().y;
+            if (temp.magnitude < 2)
             {
-                positions[i] = Vector3.zero;
-                return;
+                return false;
             }
         }
-    }
-    public float getTowerRange() { return towerRange; }
-    public int blueprintNumber() { return placeables.Capacity; }
 
+        if (go.GetComponent<Barriers>() != null)
+            return true;
+        else return raycastCorners(go.transform.position);
+    }
     private bool raycastCorners(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water
     {
         int layerMask = 1 << 4;
@@ -403,9 +374,112 @@ public class BuildManager : MonoBehaviour
             return false;
         if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
             return false;
-        if (Mathf.Abs(position.x) < 2 || Mathf.Abs(position.y) < 2)
+        if (Mathf.Abs(position.x) < 2 || Mathf.Abs(position.y) < 2) //Can place on bridges otherwise
             return false;
 
         return true;
     }
+
+    #region Loading buildings
+    private void clearAllBuildings()    //Deletes all buildings (in preparation for loading in more)
+    {
+        TowerAI[] towers = FindObjectsOfType<TowerAI>();
+        Barriers[] barriers = FindObjectsOfType<Barriers>();
+
+        foreach(TowerAI t in towers)
+            Destroy(t.gameObject);
+
+        foreach (Barriers b in barriers)
+            Destroy(b.gameObject);
+    }
+    public void loadPlaceables(List<PlaceableData> list)    //Loads and places all towers/barriers in the given list
+    {
+        clearAllBuildings();
+
+        placeableDatas = list;
+        GameObject currentBuilding;
+
+        foreach (PlaceableData pd in list)
+        {
+            if (pd.getPlaceableType() == typeof(TowerAI))   //I think this should work
+            {
+                currentBuilding = Instantiate(towerPrefabs[0], pd.getLocation(), Quaternion.identity);
+                currentBuilding.SendMessage("placeTower");
+                currentBuilding.SendMessage("setTower", ((TowerAI) pd.getPlaceableData()).getTower());
+                currentBuilding.SendMessage("setUpgrade", pd.getUpgradeLevel());
+            }
+            else
+            {
+                currentBuilding = Instantiate(towerPrefabs[1], pd.getLocation(), Quaternion.identity);
+                currentBuilding.SendMessage("placeBarrier");
+                currentBuilding.SendMessage("setBarrier", ((Barriers) pd.getPlaceableData()).getBarrier());
+                //No barrier upgrades yet
+            }
+        }
+    }
+    #endregion
+
+    #region Randomly placed towers (temp towers)
+    public Vector3 randomApprovedTowerPosition()    //Returns a random position that is a valid place for a tower to be put
+    {
+        Vector3 position = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7));
+
+        while (!approvePosition(position, 0))
+        {
+            Debug.Log("Rejected (" + position.x + ", " + position.y + ")");
+            position.x = Random.Range(-7, 7);
+            position.y = Random.Range(-7, 7);
+        }
+        return position;
+    }
+    public void placeRandom(Tower tower, float duration)    //Creates a temporary tower at a random position
+    {
+        Vector3 position = randomApprovedTowerPosition();
+
+        GameObject setPositionTower = Instantiate(towerPrefabs[0], position, Quaternion.identity);
+        setPositionTower.SendMessage("place", tower);
+        setPositionTower.SendMessage("placeTower");
+
+        if (duration != -1)
+            StartCoroutine(tempTower(setPositionTower, duration));
+    }
+    private IEnumerator tempTower(GameObject g, float duration) //Deletes a temporary tower after a specified duration
+    {
+        yield return new WaitForSeconds(duration);
+
+        g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destroy");
+    }
+    #endregion
+
+    #endregion
+
+    #region Placeable Data management
+    public List<PlaceableData> GetPlaceableDatas() { return placeableDatas; }
+    public void addPosition(GameObject go)
+    {
+        placeableDatas.Add(new PlaceableData(go));
+
+        removeFromList((mostRecentInt, mostRecentSO));
+    }
+    public void removePosition(GameObject go)
+    {
+        object comparison;
+        if (go.GetComponent<TowerAI>() != null)
+            comparison = go.GetComponent<TowerAI>();
+        else
+            comparison = go.GetComponent<Barriers>();
+
+        foreach (PlaceableData pd in placeableDatas)
+        {
+            if (pd.getPlaceableData() == comparison)
+            {
+                placeableDatas.Remove(pd);
+                return;
+            }
+        }
+    }
+    #endregion
+
+    public float getTowerRange() { return towerRange; }
+    public int blueprintNumber() { return placeables.Capacity; }
 }

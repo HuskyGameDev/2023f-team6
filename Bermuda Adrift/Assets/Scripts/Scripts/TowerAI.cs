@@ -8,6 +8,7 @@ public class TowerAI : MonoBehaviour
 {
     public static event Action OnCancel;
     public static event Action OnTowerPlaced;
+    public static event Action<GameObject> OnTowerPlacedBM; //Specifically for the build manager
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
@@ -79,9 +80,10 @@ public class TowerAI : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (buildManager.approvePosition(transform.position, 0))
+                if (buildManager.approvePosition(gameObject))
                 {
                     OnTowerPlaced?.Invoke();
+                    OnTowerPlacedBM?.Invoke(gameObject);
                     nozzle.GetComponent<TurretMiddleMan>().openUpgradeMenu();
                     placed = true;
                     anim.SetTrigger("Placed");
@@ -138,7 +140,7 @@ public class TowerAI : MonoBehaviour
         int returnScrap = getTotalSpentScrap() / 2;
 
         gameManager.addScrap(returnScrap);
-        buildManager.removePosition(transform.position);
+        buildManager.removePosition(gameObject);
         Destroy(gameObject);
     }
     public void openUpgradeMenu()
@@ -238,7 +240,7 @@ public class TowerAI : MonoBehaviour
 
         OnUpgraded?.Invoke(this);
     }
-    public int getTotalSpentScrap()
+    public int getTotalSpentScrap() //Calculates the total scrap spent on placing the tower + upgrades
     {
         int returnScrap = 0;
         if (upgradeLevel >= 0)  //Unupgraded
@@ -255,6 +257,17 @@ public class TowerAI : MonoBehaviour
             returnScrap += tower.UB2getCost();
 
         return returnScrap;
+    }
+    public void setUpgrade(int upgradeLevel)   //Sets a tower's upgrade level and makes the animations match
+    {
+        this.upgradeLevel = upgradeLevel;
+
+        if (upgradeLevel == 0) anim.Play("Setup");
+        if (upgradeLevel == 1) anim.Play("U1Transition");
+        if (upgradeLevel == 2) anim.Play("A1Transition");
+        if (upgradeLevel == 3) anim.Play("B1Transition");
+        if (upgradeLevel == 4) anim.Play("A2Transition");
+        if (upgradeLevel == 5) anim.Play("B2Transition");
     }
     #endregion
 
@@ -629,7 +642,7 @@ public class TowerAI : MonoBehaviour
         }
         return fireRate;
     }
-    private float getTurnSpeed()    //Gives total speed penalty/buff (multiplicative)
+    private float getTurnSpeed()    //Gives total turn speed penalty/buff (multiplicative)
     {
         float turnSpeed = 1;
         for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
@@ -638,7 +651,7 @@ public class TowerAI : MonoBehaviour
         }
         return turnSpeed;
     }
-    private float getDamage()    //Gives total speed penalty/buff (multiplicative)
+    private float getDamage()    //Gives total damage penalty/buff (multiplicative)
     {
         float damage = 1;
         for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
@@ -673,7 +686,7 @@ public class TowerAI : MonoBehaviour
         if (!collision.CompareTag("Enemy")) return;
         AddTarget(collision.gameObject);
     }
-    public void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)   //Remove an enemy from the list of targets when it exits the range
     {
         if (!collision.CompareTag("Enemy")) return;
         forget(collision.gameObject);
