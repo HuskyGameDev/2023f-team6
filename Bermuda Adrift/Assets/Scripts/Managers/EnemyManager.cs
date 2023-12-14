@@ -29,7 +29,7 @@ public class EnemyManager : MonoBehaviour
         loopSpot = 1;
 
         enemySet = randomizedSet();
-        displayEnemySet();
+        //displayEnemySet();
     }
    
     private List<Enemy> randomizedSet() //Gives a randomized list of a bunch of enemies. All the enemies' rarities add up to at least 1
@@ -40,6 +40,10 @@ public class EnemyManager : MonoBehaviour
         while(totalRarity < 1)
         {
             Enemy randomEnemy = allEnemies[Random.Range(0, allEnemies.Length)];
+            if (Round > 100 && Random.Range(0, 1f) < 0.1)   //After round 100, 10% chance for bosses to spawn as normal enemies
+            {
+                randomEnemy = Bosses[Random.Range(0, Bosses.Length)];
+            }
 
             while (newSet.Contains(randomEnemy)) randomEnemy = allEnemies[Random.Range(0, allEnemies.Length)];
 
@@ -80,7 +84,7 @@ public class EnemyManager : MonoBehaviour
         
         else
         {
-            total = loopSpot * 3;   //Very basic scaling of enemy difficulty. Maybe use an array or something to keep track of how many times each set is chosen and add scaling that way?
+            total = (loopSpot * 3) + (Round / 10);   //Very basic scaling of enemy difficulty. Maybe use an array or something to keep track of how many times each set is chosen and add scaling that way?
             int i = 0;
             for (; i < total / 2; i++)
             {

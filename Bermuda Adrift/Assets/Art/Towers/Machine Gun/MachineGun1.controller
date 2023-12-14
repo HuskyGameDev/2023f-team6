@@ -106,7 +106,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MachineGunSetup
+  m_Name: Setup
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -183,7 +183,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UpgradeBTransition
+  m_Name: B1Transition
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -790,7 +790,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UpgradeATransition
+  m_Name: A1Transition
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1101,7 +1101,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MachineGunUpgrade1
+  m_Name: U1Transition
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

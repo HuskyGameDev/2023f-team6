@@ -59,7 +59,10 @@ public class GameManager : MonoBehaviour
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
         GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
 
-        Screen.SetResolution(1920, 1080, true);
+        if (Screen.width >= Screen.height * 16f / 9f)
+            Screen.SetResolution(Screen.width, (int)(Screen.width * 9f / 16f), true);   //Forces a 16:9 ratio. Several things don't work with different resolutions (mainly UI)
+        else
+            Screen.SetResolution((int)(Screen.height * 16f / 9f), Screen.height, true);
     }
     
     private void Update()

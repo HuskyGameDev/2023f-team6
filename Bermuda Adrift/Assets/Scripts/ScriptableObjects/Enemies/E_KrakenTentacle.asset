@@ -15,8 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Health: 10
-  Damage: 2
-  Speed: 1
+  Damage: 1
+  Speed: 8
   attackSpeed: 0.5
   xp: 10
   scrap: 0
@@ -30,3 +30,6 @@ MonoBehaviour:
   minion: {fileID: 0}
   bossWarning: 
   bossApproaching: 
+  availableAttacks: 
+  phase2switch: 0
+  Phase2ExtraAttacks: 

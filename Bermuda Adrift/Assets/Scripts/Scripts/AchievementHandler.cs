@@ -7,11 +7,11 @@ public class AchievementHandler : MonoBehaviour
     [SerializeField] private Player oldMan;
     private void OnEnable()
     {
-        AI.OnBossDeath += unlock;
+        AI.OnUnlockEnemyDeath += unlock;
     }
     private void OnDisable()
     {
-        AI.OnBossDeath -= unlock;
+        AI.OnUnlockEnemyDeath -= unlock;
     }
 
     void unlock(Enemy enemy) 

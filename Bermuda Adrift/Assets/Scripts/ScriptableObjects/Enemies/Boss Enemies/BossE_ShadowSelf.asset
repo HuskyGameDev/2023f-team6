@@ -20,7 +20,7 @@ MonoBehaviour:
   attackSpeed: 0.25
   xp: 2000
   scrap: 250
-  rarity: 0
+  rarity: 0.005
   anim: {fileID: 9100000, guid: a538fb1e41b1b394d8155b1089110727, type: 2}
   xSize: 1
   ySize: 2
@@ -30,3 +30,6 @@ MonoBehaviour:
   minion: {fileID: 11400000, guid: 0eb95e05bfefcb64285d762c110c70e7, type: 2}
   bossWarning: You feel chills run down your spine
   bossApproaching: A shadow appears on the horizon
+  availableAttacks: 0000000001000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 

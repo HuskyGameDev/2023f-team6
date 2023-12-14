@@ -6,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class Enemy : ScriptableObject
 {
-    public enum Types { Underwater, Airborne, WaterBoss, AirborneBoss };  //When we add more bosses, maybe we should have an underwater boss vs airborne boss types in the enum
+    public enum Types { Underwater, Airborne, WaterBoss, AirborneBoss };
+    public enum Attack { Minions, Resurface, Heal, Projectile, Buff, AOEBuff, Lightning };
 
     [SerializeField] private Types Type;
 
@@ -38,6 +39,11 @@ public class Enemy : ScriptableObject
     [SerializeField] private string bossWarning;
     [SerializeField] private string bossApproaching;
 
+    [SerializeField] private Attack[] availableAttacks;
+
+    [SerializeField] private float phase2switch;
+    [SerializeField] private Attack[] Phase2ExtraAttacks;
+
 
     public Types getType() { return Type; }
     public SpecialTypes getSpecialType() { return specialType; }
@@ -57,4 +63,7 @@ public class Enemy : ScriptableObject
     public Enemy getMinion() { return minion; }
     public string getWarning1() { return bossWarning; }
     public string getWarning2() { return bossApproaching; }
+    public Attack[] getAvailableAttacks() { return availableAttacks; }
+    public Attack[] getPhase2Attacks() { return Phase2ExtraAttacks; }
+    public float phase2TriggerHealth() { return phase2switch; }
 }

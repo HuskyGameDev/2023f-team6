@@ -20,7 +20,7 @@ MonoBehaviour:
   attackSpeed: 1
   xp: 3000
   scrap: 400
-  rarity: 0
+  rarity: 0.05
   anim: {fileID: 9100000, guid: a40d5c6bf4f9d0244903aa83437c2cb1, type: 2}
   xSize: 5
   ySize: 6
@@ -30,3 +30,6 @@ MonoBehaviour:
   minion: {fileID: 11400000, guid: 551b35b9b8296524d9a5cb6c9d56a4d0, type: 2}
   bossWarning: You hear the sound of screams in the distance
   bossApproaching: The sea writhes beneath you
+  availableAttacks: 000000000100000002000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 

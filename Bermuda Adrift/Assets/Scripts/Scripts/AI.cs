@@ -12,12 +12,12 @@ public class AI : MonoBehaviour
     public event Action<int, Color> OnStatusDamage;
     public static event Action OnEnemyDeath;
     public static event Action OnDecoyDeath;
-    public static event Action<Enemy> OnBossDeath;
+    public static event Action<Enemy> OnUnlockEnemyDeath;
 
     public event Action<int> SetupHealthBar;
 
     private Enemy enemy;
-    private GameObject enemyManager;
+    private EnemyManager enemyManager;
 
     [SerializeField] private GameObject prefab;
 
@@ -45,11 +45,11 @@ public class AI : MonoBehaviour
     #region Setup and Update
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
     {
-        enemyManager = GameObject.FindGameObjectWithTag("Managers");
+        enemyManager = FindObjectOfType<EnemyManager>();
         enemy = newEnemy;
         debuffs = new Buffs[10];
 
-        Health = (int) (enemy.getHealth() * enemyManager.GetComponent<EnemyManager>().getRoundScale());
+        Health = (int) (enemy.getHealth() * enemyManager.getRoundScale());
         newMaxHealth = Health;
         gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
         debuffToInflict = enemy.getDefuff();
@@ -61,10 +61,9 @@ public class AI : MonoBehaviour
 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
 
-        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)    //Start attack cycle if it's a boss
+        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss && enemyManager.getRound() % 10 == 0)    //Boss health scaling during boss rounds, but not when a normal enemy
         {    
-            StartCoroutine(randomAttacks());
-            Health = (int) (enemy.getHealth() * Mathf.Pow(1.15f, GameObject.Find("Managers").GetComponent<EnemyManager>().getRound() / 10f));
+            Health = (int) (enemy.getHealth() * Mathf.Pow(1.15f, enemyManager.getRound() / 10f));
             newMaxHealth = Health;
         }
 
@@ -73,6 +72,8 @@ public class AI : MonoBehaviour
         else if (extra != null && extra.name == "Bullet_EnemyBullet" && bullet != null)
             StartCoroutine(Bullets());
 
+        if (enemy.getAvailableAttacks().Length > 0)
+            StartCoroutine(randomAttacks());
 
         SetupHealthBar?.Invoke(Health);
     }
@@ -145,63 +146,60 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-    #region Projectile/Buff enemies
-    IEnumerator Buffs()
-    {
-        Buffs buff = debuffToInflict;
-        debuffToInflict = null;
-        while (gameObject.activeInHierarchy)
-        {
-            yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
-
-            var effect = Instantiate(extra, gameObject.transform.position, Quaternion.identity);
-            effect.SendMessage("setBuff", buff);
-            //effect.SendMessage("setRadius", 4);
-
-            yield return new WaitForSeconds(1f);
-            Destroy(effect);
-        }
-    }
-    IEnumerator Bullets()
-    {
-        while (gameObject.activeInHierarchy)
-        {
-            yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
-
-            Vector3 offset = Vector3.zero - transform.position;
-            Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
-            var boolet = Instantiate(extra, gameObject.transform.position, Quaternion.Euler(output.eulerAngles - (output.eulerAngles / 2)));
-            boolet.SendMessage("setBullet", bullet);
-        }
-    }
-    #endregion
-
-    #region Boss attack loop
+    #region Attack loop
     IEnumerator randomAttacks() //Every 10 seconds, pick a random attack to do
     {
+        List<Enemy.Attack> availableAttacks = new List<Enemy.Attack>();
+        foreach (Enemy.Attack a in enemy.getAvailableAttacks()) //Can add multiple versions of the same attack to make it more likely
+            availableAttacks.Add(a);
+
         while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(10f);
 
-            if (goal.position == Vector3.zero) //If it's in a channel, no more atacks
+            if ( (float) Health / newMaxHealth < enemy.phase2TriggerHealth())
+            {
+                foreach (Enemy.Attack a in enemy.getPhase2Attacks())
+                    availableAttacks.Add(a);
+            }
+
+            if (goal.position == Vector3.zero && enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss) //If it's in a channel, no more atacks
                 break;
 
-            int random = Random.Range(0, 3);
-            if (random == 0)
-                StartCoroutine(Minions());
+            if (gameObject.activeInHierarchy)
+            {
+                Enemy.Attack chosenAttack = availableAttacks[Random.Range(0, availableAttacks.Capacity)];
 
-            else if (random == 1)
-                StartCoroutine(Heal());
-
-            else if (random == 2)
-                StartCoroutine(Resurface());
+                if (!stop)
+                    interpretAttack(chosenAttack);
+            }
         }
     }
+
+    void interpretAttack(Enemy.Attack attack)
+    {
+        Debug.Log(attack);
+        if (attack == Enemy.Attack.Minions)
+            StartCoroutine(Minions());
+
+        if (attack == Enemy.Attack.Resurface)
+            StartCoroutine(Resurface());
+
+        if (attack == Enemy.Attack.Heal)
+            StartCoroutine(Heal());
+
+        if (attack == Enemy.Attack.Projectile)  //Still needs work
+            StartCoroutine(Bullets());
+
+        if (attack == Enemy.Attack.AOEBuff) //Still needs work
+            StartCoroutine(Buffs());
+    }
+
     IEnumerator Minions()   //Summon minions behind it
     {
         Debug.Log("Minions");
         stop = true;    //Stop while spawning
-        int total = enemyManager.GetComponent<EnemyManager>().getRound() / 10 + 2;  //start with 3 minions + 1 more every 10 rounds
+        int total = enemyManager.getRound() / 10 + 2;  //start with 3 minions + 1 more every 10 rounds
 
         if (gameObject.transform.position.x < -4)   //Spawns the enemies behind itself, so different relative positions depending on what side of the screen they're on
         {
@@ -210,7 +208,7 @@ public class AI : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);  //Half-second gap between each minion
                 var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);   //Maybe an animation for when they get summoned?
                 minion.SendMessage("setEnemy", enemy.getMinion());
-                enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
+                enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
 
                 i++;
                 if (i < total)  //Spawn behind and above, then behind and below. Sometimes the total is 0 when you get to the behind and below
@@ -218,7 +216,7 @@ public class AI : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                     minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
                     minion.SendMessage("setEnemy", enemy.getMinion());
-                    enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
+                    enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
                 }
             }
         }
@@ -229,7 +227,7 @@ public class AI : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);
                 minion.SendMessage("setEnemy", enemy.getMinion());
-                enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
+                enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
 
                 i++;
                 if (i < total)
@@ -237,7 +235,7 @@ public class AI : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                     minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
                     minion.SendMessage("setEnemy", enemy.getMinion());
-                    enemyManager.GetComponent<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
+                    enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
                 }
             }
         }
@@ -287,6 +285,39 @@ public class AI : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         stop = false;   //Resume
+    }
+    IEnumerator Buffs()
+    {
+        Debug.Log("AOE Buff");
+
+        stop = true;
+
+        Buffs buff = debuffToInflict;
+           
+        yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
+
+        var effect = Instantiate(extra, gameObject.transform.position, Quaternion.identity);
+        effect.SendMessage("setBuff", buff);
+        //effect.SendMessage("setRadius", 4);
+
+        yield return new WaitForSeconds(1f);
+        Destroy(effect);
+
+        stop = false;
+    }
+    IEnumerator Bullets()
+    {
+        Debug.Log("Projectiles");
+        stop = true;
+
+        yield return new WaitForSeconds(1);
+
+        Vector3 offset = Vector3.zero - transform.position;
+        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
+        var boolet = Instantiate(extra, gameObject.transform.position, Quaternion.Euler(output.eulerAngles - (output.eulerAngles / 2)));
+        boolet.SendMessage("setBullet", bullet);
+
+        stop = false;
     }
     #endregion
 
@@ -408,8 +439,7 @@ public class AI : MonoBehaviour
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Decoy)
             OnDecoyDeath?.Invoke();
 
-        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
-            OnBossDeath?.Invoke(enemy);
+        OnUnlockEnemyDeath?.Invoke(enemy);
 
         Destroy(gameObject);
     }
