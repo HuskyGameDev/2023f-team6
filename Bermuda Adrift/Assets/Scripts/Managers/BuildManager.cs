@@ -478,8 +478,47 @@ public class BuildManager : MonoBehaviour
             }
         }
     }
+    public bool towerPlaced(string towerName)   //Returns true if a tower of the given name exists (only works for towers right now)
+    {
+        foreach (PlaceableData pd in placeableDatas)
+        {
+            if (pd.getPlaceableType() == typeof(TowerAI) && ((TowerAI)pd.getPlaceableData()).getTower().getName().CompareTo(towerName) == 0)
+                return true;
+        }
+
+        return false;
+    }
+    public TowerAI getTowerOfType(string name)  //Returns a random tower with the given name
+    {
+        if (!towerPlaced(name)) { return null; } //If the tower doesn't exist, don't bother looking for it
+
+        List<TowerAI> towers = new List<TowerAI>();
+
+        foreach (PlaceableData pd in placeableDatas)
+        {
+            if (pd.getPlaceableType() == typeof(TowerAI) && ((TowerAI)pd.getPlaceableData()).getTower().getName().CompareTo(name) == 0)
+                towers.Add((TowerAI)pd.getPlaceableData());
+        }
+
+        return towers[Random.Range(0, towers.Capacity)];
+    }
     #endregion
 
+    public TowerAI getRandomTower()
+    {
+        List<TowerAI> towers = new List<TowerAI>();
+
+        foreach (PlaceableData pd in placeableDatas)
+        {
+            if (pd.getPlaceableType() == typeof(TowerAI))
+                towers.Add( (TowerAI)pd.getPlaceableData() );
+        }
+
+        if (towers.Capacity <= 0)
+            return null;
+        else
+            return towers[Random.Range(0, towers.Capacity)];
+    }
     public float getTowerRange() { return towerRange; }
     public int blueprintNumber() { return placeables.Capacity; }
 }

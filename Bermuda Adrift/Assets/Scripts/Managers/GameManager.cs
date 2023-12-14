@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     #region Singleton Setup
     public static GameManager Instance { get; private set; }
 
-    public int XP;
-    public float XPNeeded;
-    public int scrap;
-    public int level;
+    private int XP;
+    private float XPNeeded;
+    private int scrap;
+    private int level;
 
     // If there is an instance, and it's not me, destroy myself.
 

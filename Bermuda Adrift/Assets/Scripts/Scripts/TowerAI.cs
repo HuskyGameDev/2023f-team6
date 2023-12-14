@@ -22,6 +22,7 @@ public class TowerAI : MonoBehaviour
     private Bullet bulletScript;
 
     private int upgradeLevel = 0;
+    private int lightningResistance = 0;
     private float damageMult;
     private float turnSpeed;
     private bool cantTurn;
@@ -41,11 +42,15 @@ public class TowerAI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnRoundStart += StartRound;
+        GameManager.OnRoundStart += turnOnHitboxes;
+        GameManager.onRoundEnd += turnOffHitboxes;
         AI.OnEnemyDeath += prioritize;
     }
     private void OnDisable()
     {
         GameManager.OnRoundStart -= StartRound;
+        GameManager.OnRoundStart -= turnOnHitboxes;
+        GameManager.onRoundEnd -= turnOffHitboxes;
         AI.OnEnemyDeath -= prioritize;
     }
 
@@ -125,6 +130,8 @@ public class TowerAI : MonoBehaviour
         damageMult = tower.getDamageMult();
         turnSpeed = tower.getTurnSpeed();
         cantTurn = tower.getCantTurn();
+        lightningResistance = tower.getLightningResistance() + 1;
+
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         if (getTowerRange() >= 0)
             gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange();
@@ -169,6 +176,7 @@ public class TowerAI : MonoBehaviour
             bulletScript = tower.U1getBullet();
             damageMult = tower.U1getDamageMult();
             turnSpeed = tower.U1getTurnSpeed();
+            lightningResistance = tower.U1getLightningResistance() + 1;
 
             gameManager.spendScrap(tower.U1getCost());
 
@@ -185,6 +193,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UA1getBullet();
                 damageMult = tower.UA1getDamageMult();
                 turnSpeed = tower.UA1getTurnSpeed();
+                lightningResistance = tower.UA1getLightningResistance() + 1;
 
                 gameManager.spendScrap(tower.UA1getCost());
             }
@@ -198,6 +207,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UB1getBullet();
                 damageMult = tower.UB1getDamageMult();
                 turnSpeed = tower.UB1getTurnSpeed();
+                lightningResistance = tower.UB1getLightningResistance() + 1;
 
                 gameManager.spendScrap(tower.UB1getCost());
             }
@@ -214,6 +224,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UA2getBullet();
                 damageMult = tower.UA2getDamageMult();
                 turnSpeed = tower.UA2getTurnSpeed();
+                lightningResistance = tower.UA2getLightningResistance() + 1;
 
                 gameManager.spendScrap(tower.UA2getCost());
             }
@@ -227,6 +238,7 @@ public class TowerAI : MonoBehaviour
                 bulletScript = tower.UB2getBullet();
                 damageMult = tower.UB2getDamageMult();
                 turnSpeed = tower.UB2getTurnSpeed();
+                lightningResistance = tower.UB2getLightningResistance() + 1;
 
                 gameManager.spendScrap(tower.UB2getCost());
             }
@@ -595,7 +607,7 @@ public class TowerAI : MonoBehaviour
     #endregion
     #endregion
 
-    #region Buff Managing
+    #region Buff/Debuff Managing
     private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
         for (int i = 0; i < buffs.Length; i++)
@@ -629,6 +641,22 @@ public class TowerAI : MonoBehaviour
         yield return new WaitForSeconds(newDebuff.getDuration());
 
         removeBuff(newDebuff);
+    }
+    private void lightningStrike(float duration) { StartCoroutine(tempDisable(duration)); }
+    private IEnumerator tempDisable(float duration) //Temporarily stops the tower from firing
+    {
+        lightningResistance--;
+
+        if (lightningResistance > 0)
+            yield break;
+        
+        anim.speed = 0;
+        //Smoke particle effect
+
+        yield return new WaitForSeconds(duration);
+
+        lightningResistance = getLightningResistance() + 1;
+        anim.speed = 1;
     }
     #endregion
 
@@ -679,8 +707,26 @@ public class TowerAI : MonoBehaviour
             return tower.UB2getRange();
         return tower.getRange();
     }
+    private int getLightningResistance()
+    {
+        if (upgradeLevel == 0)
+            return tower.getLightningResistance();
+        if (upgradeLevel == 1)
+            return tower.U1getLightningResistance();
+        if (upgradeLevel == 2)
+            return tower.UA1getLightningResistance();
+        if (upgradeLevel == 3)
+            return tower.UB1getLightningResistance();
+        if (upgradeLevel == 4)
+            return tower.UA2getLightningResistance();
+        if (upgradeLevel == 5)
+            return tower.UB2getLightningResistance();
+        return tower.getLightningResistance();
+    }
     #endregion
 
+    private void turnOffHitboxes() { gameObject.GetComponent<CircleCollider2D>().enabled = false; } //Tower hitboxes mess with being able to click on other towers, so turn them off at the end of every round
+    private void turnOnHitboxes() { if (getTowerRange() > 0) gameObject.GetComponent<CircleCollider2D>().enabled = true; }  //And turn them back on at the start of every round
     public void OnTriggerEnter2D(Collider2D collision) //If the collision is an enemy, add it to the list
     {
         if (!collision.CompareTag("Enemy")) return;

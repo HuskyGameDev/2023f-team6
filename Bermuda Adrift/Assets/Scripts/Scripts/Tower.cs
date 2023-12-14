@@ -15,7 +15,8 @@ public class Tower : ScriptableObject
     [SerializeField] private Bullet defaultBullet;
 
     [SerializeField] private int cost;
-    [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up options
+    [SerializeField] private int lightningResistance;
+    [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up 
 
     [SerializeField] private string Name;
     [SerializeField] private string Description;
@@ -31,6 +32,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float U1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet U1Bullet;
     [SerializeField] private int U1cost;
+    [SerializeField] private int U1LightningResistance;
     [SerializeField] private string U1Name;
     [SerializeField] private string U1Description;
     [SerializeField] private Sprite U1image;
@@ -43,6 +45,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float UA1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UA1Bullet;
     [SerializeField] private int UA1cost;
+    [SerializeField] private int UA1LightningResistance;
     [SerializeField] private string UA1Name;
     [SerializeField] private string UA1Description;
     [SerializeField] private Sprite UA1image;
@@ -54,6 +57,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float UA2range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UA2Bullet;
     [SerializeField] private int UA2cost;
+    [SerializeField] private int UA2LightningResistance;
     [SerializeField] private string UA2Name;
     [SerializeField] private string UA2Description;
     [SerializeField] private Sprite UA2image;
@@ -66,6 +70,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float UB1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UB1Bullet;
     [SerializeField] private int UB1cost;
+    [SerializeField] private int UB1LightningResistance;
     [SerializeField] private string UB1Name;
     [SerializeField] private string UB1Description;
     [SerializeField] private Sprite UB1image;
@@ -79,6 +84,7 @@ public class Tower : ScriptableObject
     [SerializeField] private float UB2range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UB2Bullet;
     [SerializeField] private int UB2cost;
+    [SerializeField] private int UB2LightningResistance;
     [SerializeField] private string UB2Name;
     [SerializeField] private string UB2Description;
     [SerializeField] private Sprite UB2image;
@@ -95,6 +101,7 @@ public class Tower : ScriptableObject
     public Bullet getDefaultBullet() { return defaultBullet; }
 
     public int getCost() { return cost; }
+    public int getLightningResistance() { return lightningResistance; }
     public float getRarity() { return rarity; }
     public string getName() { return Name; }
     public string getDescription() { return Description; }
@@ -108,6 +115,7 @@ public class Tower : ScriptableObject
     public float U1getRange() { return U1range; }
     public Bullet U1getBullet() { return U1Bullet; }
     public int U1getCost() { return U1cost; }
+    public int U1getLightningResistance() { return U1LightningResistance; }
     public string U1getName() { return U1Name; }
     public string U1getDescription() { return U1Description; }
     public Sprite U1getImage() { return U1image; }
@@ -119,6 +127,7 @@ public class Tower : ScriptableObject
     public float UA1getRange() { return UA1range; }
     public Bullet UA1getBullet() { return UA1Bullet; }
     public int UA1getCost() { return UA1cost; }
+    public int UA1getLightningResistance() { return UA1LightningResistance; }
     public string UA1getName() { return UA1Name; }
     public string UA1getDescription() { return UA1Description; }
     public Sprite UA1getImage() { return UA1image; }
@@ -130,6 +139,7 @@ public class Tower : ScriptableObject
     public float UA2getRange() { return UA2range; }
     public Bullet UA2getBullet() { return UA2Bullet; }
     public int UA2getCost() { return UA2cost; }
+    public int UA2getLightningResistance() { return UA2LightningResistance; }
     public string UA2getName() { return UA2Name; }
     public string UA2getDescription() { return UA2Description; }
     public Sprite UA2getImage() { return UA2image; }
@@ -141,6 +151,7 @@ public class Tower : ScriptableObject
     public float UB1getRange() { return UB1range; }
     public Bullet UB1getBullet() { return UB1Bullet; }
     public int UB1getCost() { return UB1cost; }
+    public int UB1getLightningResistance() { return UB1LightningResistance; }
     public string UB1getName() { return UB1Name; }
     public string UB1getDescription() { return UB1Description; }
     public Sprite UB1getImage() { return UB1image; }
@@ -152,6 +163,7 @@ public class Tower : ScriptableObject
     public float UB2getRange() { return UB2range; }
     public Bullet UB2getBullet() { return UB2Bullet; }
     public int UB2getCost() { return UB2cost; }
+    public int UB2getLightningResistance() { return UB2LightningResistance; }
     public string UB2getName() { return UB2Name; }
     public string UB2getDescription() { return UB2Description; }
     public Sprite UB2getImage() { return UB2image; }

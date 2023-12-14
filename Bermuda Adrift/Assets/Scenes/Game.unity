@@ -76172,6 +76172,7 @@ GameObject:
   - component: {fileID: 2038607812}
   - component: {fileID: 2038607813}
   - component: {fileID: 2038607814}
+  - component: {fileID: 2038607815}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Managers
@@ -76237,10 +76238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31525263f0cedbd40992815aab5eb663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XP: 0
-  XPNeeded: 0
-  scrap: 0
-  level: 1
 --- !u!114 &2038607808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76407,6 +76404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd2254c1da9444ba31740136ff6316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pilot: {fileID: 11400000, guid: 2c7301dfd237fdd43bd864a4c2d38df6, type: 2}
   oldMan: {fileID: 11400000, guid: 2da40c1a7d778f745a240e96c11b0114, type: 2}
 --- !u!114 &2038607814
 MonoBehaviour:
@@ -76424,6 +76422,22 @@ MonoBehaviour:
   normalWater: {fileID: -876546973899608171, guid: c0e593765c4ad5542a6aa5d92523913e, type: 3}
   bloodWater: {fileID: -876546973899608171, guid: d0c0f33d46c86984a9f5978f2f2d5306, type: 3}
   water: {fileID: 1170690616}
+--- !u!114 &2038607815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038607804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad249e2328a6544cb2420567097c3ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  islandPrefab: {fileID: 1515542200839933519, guid: c9bba34389a458946852bfb1d7eb9e2e, type: 3}
+  islandRarity: 0.01
+  islands:
+  - {fileID: 11400000, guid: 8cc561454df92d84a9496a1c9b98204d, type: 2}
 --- !u!1 &2049117546
 GameObject:
   m_ObjectHideFlags: 0

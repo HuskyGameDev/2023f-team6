@@ -106,7 +106,6 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-
     #region Movement functions
     private void move() //Moves towards the goal
     {
@@ -193,6 +192,10 @@ public class AI : MonoBehaviour
 
         if (attack == Enemy.Attack.AOEBuff) //Still needs work
             StartCoroutine(Buffs());
+
+        if (attack == Enemy.Attack.Lightning)
+            LightningStrike();
+
     }
 
     IEnumerator Minions()   //Summon minions behind it
@@ -318,6 +321,17 @@ public class AI : MonoBehaviour
         boolet.SendMessage("setBullet", bullet);
 
         stop = false;
+    }
+    void LightningStrike()
+    {
+        TowerAI target = FindObjectOfType<BuildManager>().getTowerOfType("Lightning Rod");
+
+        if (target == null)
+        {
+            target = FindObjectOfType<BuildManager>().getRandomTower();
+        }
+
+        target.SendMessage("lightningStrike", 5f);
     }
     #endregion
 
@@ -471,8 +485,6 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-
-    //For the animator
     public Transform getGoal() { return goal; } //Only used in the directional animation script
 
     private void Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
