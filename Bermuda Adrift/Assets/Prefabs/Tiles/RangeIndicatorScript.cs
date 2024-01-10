@@ -42,7 +42,7 @@ public class RangeIndicatorScript : MonoBehaviour
     public void updateRange(TowerAI towerAI)
     {
         towerParent = towerAI.gameObject;
-        transform.localScale = new Vector3(towerAI.getTowerRange() * 2, towerAI.getTowerRange() * 2);
+        transform.localScale = new Vector3(towerAI.getTowerRange() * 3, towerAI.getTowerRange() * 3);
 
         if (FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
             activate();
@@ -50,7 +50,7 @@ public class RangeIndicatorScript : MonoBehaviour
     public void updateRangeDirect(Tower tower)
     {
         towerParent = null;
-        transform.localScale = new Vector3(tower.getRange() * 2, tower.getRange() * 2);
+        transform.localScale = new Vector3(tower.getRange() * 3, tower.getRange() * 3);
         activate();
     }
     private void activate() { gameObject.GetComponent<SpriteRenderer>().enabled = true; }

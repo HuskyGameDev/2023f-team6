@@ -18,7 +18,8 @@ MonoBehaviour:
   Distracted: 0
   Stunned: 0
   Cooldowns: 1
-  CritChance: 1
+  range: 1
+  ignoreDecoys: 0
   Speed: 1
   AttackSpeed: 1
   underwaterMult: 1
@@ -31,4 +32,5 @@ MonoBehaviour:
   DOTColor: {r: 1, g: 0.25943398, b: 0.25943398, a: 1}
   Health: 1
   armor: 1
+  CritChance: 1
   Damage: 1

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
+  m_Name: Bullet_ScrapScrew
+  m_EditorClassIdentifier: 
+  projectileSpeed: 40
+  damage: 0
+  AOE: 0
+  effect: 0
+  scale: 0.4
+  timer: -1
+  animator: {fileID: 9100000, guid: 9303970e3abcdc64c8de3d2af418e467, type: 2}
+  FriendlyFire: 0
+  debuff: {fileID: 11400000, guid: f51c1f83587c21241a7314f91ef6bd20, type: 2}
+  pierce: 0
+  AOETimer: 0
+  UnderwaterDamage: 1
+  AirborneDamage: 1
+  types: []

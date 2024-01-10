@@ -23,7 +23,10 @@ public class Buffs : ScriptableObject
 
     //Applies to the player
     [SerializeField] private float Cooldowns;
-    [SerializeField] private float CritChance;
+
+    //Apply only to towers
+    [SerializeField] private float range;
+    [SerializeField] private bool ignoreDecoys;
 
     //Can apply to Enemies and Player
     [SerializeField] private float Speed;
@@ -45,6 +48,7 @@ public class Buffs : ScriptableObject
     [SerializeField] private float armor;   //Take more damage if > 1, less if < 1
 
     //Can apply to Player and Towers/barriers
+    [SerializeField] private float CritChance;
 
 
     //Can apply to all
@@ -58,6 +62,8 @@ public class Buffs : ScriptableObject
     public bool getDistracted() { return Distracted; }
     public bool getStunned() { return Stunned; }
     public float getCooldowns() { return Cooldowns; }
+    public float getRange() { return range; }
+    public bool getIgnoreDecoys() { return ignoreDecoys; }
     public float getCritChance() { return CritChance; }
     public float getSpeed() { return Speed; }
     public float getAttackSpeed() { return AttackSpeed; }

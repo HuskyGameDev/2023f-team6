@@ -167,7 +167,9 @@ public class AI : MonoBehaviour
 
             if (gameObject.activeInHierarchy)
             {
-                Enemy.Attack chosenAttack = availableAttacks[Random.Range(0, availableAttacks.Capacity)];
+                int chosenIndex = Random.Range(0, availableAttacks.Count);
+                Debug.Log("Chosen: " + chosenIndex + " / " + availableAttacks.Count);
+                Enemy.Attack chosenAttack = availableAttacks[chosenIndex];
 
                 if (!stop)
                     interpretAttack(chosenAttack);

@@ -22199,7 +22199,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.57, y: -0.9963}
-  m_SizeDelta: {x: 109.9213, y: 32.9263}
+  m_SizeDelta: {x: 115, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &475366540
 MonoBehaviour:
@@ -22248,7 +22248,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.2
+  m_fontSize: 25.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -37038,7 +37038,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -3.84}
+  m_AnchoredPosition: {x: 4.57, y: -4.2}
   m_SizeDelta: {x: 109.9213, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1036433763
@@ -38255,7 +38255,7 @@ GameObject:
   - component: {fileID: 1093243192}
   - component: {fileID: 1093243193}
   - component: {fileID: 1093243194}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: TempCenter
   m_TagString: Center
   m_Icon: {fileID: 0}
@@ -38302,7 +38302,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 152e2531d2824df47b26cfcde1627871, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -42074,7 +42074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -5.93}
+  m_AnchoredPosition: {x: 4.57, y: -6.9}
   m_SizeDelta: {x: 109.9213, y: 22.2914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148574867
@@ -42992,7 +42992,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.57, y: -0.9963}
-  m_SizeDelta: {x: 109.9213, y: 32.9263}
+  m_SizeDelta: {x: 115, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167990473
 MonoBehaviour:
@@ -43041,7 +43041,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.15
+  m_fontSize: 23.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -54381,7 +54381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -6.35}
+  m_AnchoredPosition: {x: 4.57, y: -6.9}
   m_SizeDelta: {x: 109.9213, y: 22.2914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213937884
@@ -61323,7 +61323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -6.35}
+  m_AnchoredPosition: {x: 4.57, y: -6.9}
   m_SizeDelta: {x: 109.9213, y: 22.2914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1433176765
@@ -61639,7 +61639,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.57, y: -0.9963}
-  m_SizeDelta: {x: 109.9213, y: 32.9263}
+  m_SizeDelta: {x: 115, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1455995930
 MonoBehaviour:
@@ -61661,7 +61661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tri-Cannon
+  m_text: Torpedo Launcher
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -61688,7 +61688,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.55
+  m_fontSize: 18.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -69208,7 +69208,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -3.84}
+  m_AnchoredPosition: {x: 4.57, y: -4.2}
   m_SizeDelta: {x: 109.9213, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1786983384
@@ -69231,7 +69231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fires cannonballs 3 times as fast!
+  m_text: Fire powerful ballista bolts, dealing extra damage to flying enemies
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -69997,7 +69997,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 698169698}
   m_HandleRect: {fileID: 0}
@@ -72181,12 +72181,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChoicesCanvas: {fileID: 1780854689}
-  allChoicesInt: 00000000000000000000000001000000
+  allChoicesInt: 000000000000000000000000010000000000000000000000000000000000000000000000
   allChoicesSO:
   - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
   - {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
   - {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}
+  - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
+  - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
+  - {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
+  - {fileID: 11400000, guid: 1834ddf0ddde47b4fbefb2c683e94294, type: 2}
+  - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
+  testTower: {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77055,7 +77061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.57, y: -3.84}
+  m_AnchoredPosition: {x: 4.57, y: -4.2}
   m_SizeDelta: {x: 109.9213, y: 32.9263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2085980323
@@ -78839,7 +78845,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 2142675960, guid: 827c720708928dc4ba1c9a1c70bc9fe7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

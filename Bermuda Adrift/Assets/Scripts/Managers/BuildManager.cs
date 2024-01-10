@@ -119,7 +119,7 @@ public class BuildManager : MonoBehaviour
         AAbuttonHover.barrier = alwaysAvailable;
         ButtonDescription AAbuttonDescription = alwaysAvailableButton.AddComponent<ButtonDescription>();
         AAbuttonDescription.SendMessage("setBarrier", alwaysAvailable); ;
-        AAimage.sprite = alwaysAvailable.getStartingSprite();
+        AAimage.sprite = alwaysAvailable.getThumbnail();
         AAbutton.targetGraphic = AAimage;
         alwaysAvailableButton.transform.parent = this.transform;
         AAbutton.onClick.AddListener(() => TowerButtonClick(alwaysAvailable));
@@ -165,7 +165,7 @@ public class BuildManager : MonoBehaviour
                 buttonHover.barrier = (BarrierScriptable) x.Item2;
                 ButtonDescription buttonDescription = barrier.AddComponent<ButtonDescription>();
                 buttonDescription.SendMessage("setBarrier", ((BarrierScriptable)x.Item2));
-                image.sprite = ((BarrierScriptable)x.Item2).getStartingSprite();
+                image.sprite = ((BarrierScriptable)x.Item2).getThumbnail();
                 button.targetGraphic = image;
                 barrier.transform.parent = this.transform;
                 button.onClick.AddListener(() => TowerButtonClick(((BarrierScriptable)x.Item2)));
@@ -258,9 +258,9 @@ public class BuildManager : MonoBehaviour
     }
     public void addToList((int, ScriptableObject) script)   //Add an option to the list available. 0 for tower, 1 for barrier
     {
-        if (placeables.Capacity >= 10) return;
+        if (placeables.Count >= 10) return;
 
-        if (placeables.Capacity > 7)
+        if (placeables.Count > 7)
             TooManyBlueprints?.Invoke();
 
         placeables.Add(script);
@@ -500,7 +500,7 @@ public class BuildManager : MonoBehaviour
                 towers.Add((TowerAI)pd.getPlaceableData());
         }
 
-        return towers[Random.Range(0, towers.Capacity)];
+        return towers[Random.Range(0, towers.Count)];
     }
     #endregion
 
@@ -514,11 +514,11 @@ public class BuildManager : MonoBehaviour
                 towers.Add( (TowerAI)pd.getPlaceableData() );
         }
 
-        if (towers.Capacity <= 0)
+        if (towers.Count <= 0)
             return null;
         else
-            return towers[Random.Range(0, towers.Capacity)];
+            return towers[Random.Range(0, towers.Count)];
     }
     public float getTowerRange() { return towerRange; }
-    public int blueprintNumber() { return placeables.Capacity; }
+    public int blueprintNumber() { return placeables.Count; }
 }

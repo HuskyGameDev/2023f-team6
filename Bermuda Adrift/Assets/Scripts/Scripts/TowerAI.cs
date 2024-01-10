@@ -12,8 +12,7 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
-    public enum Priority { Closest, Furthest, Strongest, Fastest };
-    private bool ignoreDecoys;
+    public enum Priority { Closest, Furthest, Strongest, Fastest, OnlyWater, OnlyAir };
 
     private Tower tower;
     [SerializeField] private GameObject nozzle;
@@ -35,8 +34,10 @@ public class TowerAI : MonoBehaviour
     private Buffs[] buffs;
     private GameObject[] enemiesInRange;
 
-    private Boolean placed = false;
-    private BoxCollider2D[] colliders;
+    private bool placed = false;
+    //private BoxCollider2D[] colliders;
+    private Priority[] extras;
+
 
     #region Setup
     private void OnEnable()
@@ -61,8 +62,8 @@ public class TowerAI : MonoBehaviour
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
-        colliders = new BoxCollider2D[1];
-        colliders[0] = gameObject.GetComponent<BoxCollider2D>();
+        //colliders = new BoxCollider2D[1];
+        //colliders[0] = gameObject.GetComponent<BoxCollider2D>();
         if (tower.getBaseSprite() == null)
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         else
@@ -114,6 +115,14 @@ public class TowerAI : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            fire();
+
+        if (getRange() != 1)
+        {
+            if (getTowerRange() >= 0)
+                gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange() * getRange();
+        }
         if (target != null) //Turn towards target every frame
             targetPoint();
 
@@ -132,13 +141,16 @@ public class TowerAI : MonoBehaviour
         cantTurn = tower.getCantTurn();
         lightningResistance = tower.getLightningResistance() + 1;
 
+        extras = tower.getExtraPriorities();
+        if (extras.Length > 0) { sortExtras(); }
+
+        changePriorityFunction(Priority.Closest);
+
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         if (getTowerRange() >= 0)
             gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange();
         else
             gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
-
-        changePriorityFunction(Priority.Closest);
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
@@ -312,6 +324,7 @@ public class TowerAI : MonoBehaviour
 
         boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
         boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
+        boolet.SendMessage("setCritChance", getCritChance());
     }
     private void newTarget()    //Set target to closest enemy in range
     {
@@ -349,7 +362,19 @@ public class TowerAI : MonoBehaviour
         }
 
         //displayList();
-        target = enemiesInRange[0];
+        if (enemiesInRange[0] == null)
+        {
+            target = null;
+            //Debug.Log("Null target");
+        }
+        else if (getScore(enemiesInRange[0]) == 0)
+        {
+            target = null;
+            //Debug.Log("Invalid Target");
+        }
+        else
+            target = enemiesInRange[0];
+
         if (target == null)
             anim.SetBool("TargetFound", false);
         else
@@ -362,15 +387,52 @@ public class TowerAI : MonoBehaviour
     {
         if (Left)
         {
-            if (getPriority() == (Priority)0)
-                changePriorityFunction(Priority.Fastest);
+            if (getPriority() > Priority.Fastest)
+            {
+                int i = extras.Length - 1;
+                for (; i > 0; i--)
+                {
+                    if (extras[i] > Priority.Fastest && extras[i] < getPriority())  //Should set priority to the highest priority below the current priority
+                    {
+                        changePriorityFunction(extras[i]);
+                        break;
+                    }
+                }
+                if (i <= 0) //If there's nothing in the extras list, it should go to Fastest
+                    changePriorityFunction(Priority.Fastest);
+            }
             else
-                changePriorityFunction((Priority) ( (int)getPriority() - 1));
+            {
+                if (getPriority() == (Priority)0)
+                {
+                    if (extras.Length > 0)
+                        changePriorityFunction(extras[extras.Length - 1]);
+                    else
+                        changePriorityFunction(Priority.Fastest);
+                }
+                else
+                    changePriorityFunction((Priority)((int)getPriority() - 1));
+            }
         }
         else
         {
-            if (getPriority() == Priority.Fastest)
-                changePriorityFunction(0);
+            if (getPriority() >= Priority.Fastest)  //If there are extra aiming options at the end, iterate through them until you get the next one
+            {
+                if (extras.Length <= 0)
+                    changePriorityFunction(0);
+
+                int i = 0;
+                for (; i < extras.Length; i++)
+                {
+                    if (extras[i] > Priority.Fastest && extras[i] > getPriority())
+                    {
+                        changePriorityFunction(extras[i]);
+                        break;
+                    }
+                }
+                if (i >= extras.Length) //Should only happen if you've reached the end of the list of extras. Will break early otherwise and i won't be at the end
+                    changePriorityFunction(0);
+            }
             else
                 changePriorityFunction((Priority)((int)getPriority() + 1));
         }
@@ -383,28 +445,66 @@ public class TowerAI : MonoBehaviour
             getScore = getScoreByFurthest;
         else if (newPriority == Priority.Strongest)
             getScore = getScoreByStrongest;
-        else
+        else if (newPriority == Priority.Fastest)
             getScore = getScoreBySpeed;
+        else if (newPriority == Priority.OnlyWater)
+            getScore = getScoreByWaterStrong;
+        else if (newPriority == Priority.OnlyAir)
+            getScore = getScoreByAirStrong;
     }
     float getScoreByClosest(GameObject g)
     {
+        if (g == null || g.GetComponent<AI>() == null)
+        {
+            return 0;
+        }
+
         return (g.transform.position - nozzle.transform.position).magnitude;
     }
     float getScoreByFurthest(GameObject g)
     {
-        return -(g.transform.position - nozzle.transform.position).magnitude;   //Give a negative number so it's sorted backwards
+        if (g.GetComponent<AI>() == null)
+        {
+            return 0;
+        }
+
+        return -getScoreByClosest(g);   //Give a negative number so it's sorted backwards
     }
     float getScoreByStrongest(GameObject g)
     {
         if (g.GetComponent<AI>() == null)
+        {
             return 0;
+        }
+
         return g.GetComponent<AI>().getStrength();
     }
     float getScoreBySpeed(GameObject g)
     {
         if (g.GetComponent<AI>() == null)
+        {
             return 0;
+        }
+
         return g.GetComponent<AI>().towerGetSpeed();
+    }
+    float getScoreByWaterStrong(GameObject g)
+    {
+        if (g == null || g.GetComponent<AI>() == null || g.GetComponent<AI>().getType() == Enemy.Types.Airborne || g.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
+        {
+            return 0;
+        }
+
+        return getScoreByStrongest(g);
+    }
+    float getScoreByAirStrong(GameObject g)
+    {
+        if (g == null || g.GetComponent<AI>() == null || g.GetComponent<AI>().getType() == Enemy.Types.Underwater || g.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
+        {
+            return 0;
+        }
+
+        return getScoreByStrongest(g);
     }
     public Priority getPriority()
     {
@@ -416,8 +516,27 @@ public class TowerAI : MonoBehaviour
             return Priority.Strongest;
         if (getScore == getScoreBySpeed)
             return Priority.Fastest;
+        if (getScore == getScoreByWaterStrong)
+            return Priority.OnlyWater;
+        if (getScore == getScoreByAirStrong)
+            return Priority.OnlyAir;
 
         return 0;
+    }
+    private void sortExtras()   //Sorts all the extra targeting options
+    {
+        for (int i = 0; i < extras.Length; i++)
+        {
+            for (int j = i + 1; j < extras.Length; i++)
+            {
+                if (extras[j] < extras[i])
+                {
+                    Priority temp = extras[i];
+                    extras[i] = extras[j];
+                    extras[j] = temp;
+                }
+            }
+        }
     }
 
     private void prioritize()  //Sorts enemies by the set priority
@@ -435,7 +554,7 @@ public class TowerAI : MonoBehaviour
         shiftUp();
 
         int decoysEnd = 0;
-        if (!ignoreDecoys) //Move the decoys to the front
+        if (!getIgnoreDecoys()) //Move the decoys to the front
         {
             while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
                 decoysEnd++;
@@ -468,7 +587,7 @@ public class TowerAI : MonoBehaviour
             {
                 for (int j = i; i < enemiesInRange.Length && enemiesInRange[i] != null; i++)
                 {
-                    if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
+                    if (enemiesInRange[j] != null && enemiesInRange[i] != null && getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
                         GameObject temp = enemiesInRange[j];
                         enemiesInRange[j] = enemiesInRange[i];
@@ -480,7 +599,7 @@ public class TowerAI : MonoBehaviour
         else                                        //Move the decoys to the end if ignoring them
         {
             //Here, decoysEnd is repurposed to be the start of the decoys
-            while (enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
+            while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>() != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
                 decoysEnd++;
 
             for (int i = decoysEnd + 1; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Move decoys to the front
@@ -520,6 +639,11 @@ public class TowerAI : MonoBehaviour
                 }
             }
         }
+
+        //string debug = "";
+        //foreach (GameObject g in enemiesInRange)
+        //    debug += g.GetComponent<AI>().getName() + ", ";
+        //Debug.Log(debug);
     }
 
     private void shiftUp()
@@ -687,6 +811,33 @@ public class TowerAI : MonoBehaviour
             damage *= buffs[i].getDamage();
         }
         return damage;
+    }
+    private float getRange()    //Gives total damage penalty/buff (multiplicative)
+    {
+        float range = 1;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            range *= buffs[i].getRange();
+        }
+        return range;
+    }
+    private float getCritChance()    //Gives total damage penalty/buff (multiplicative)
+    {
+        float crit = 1;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            crit *= buffs[i].getCritChance();
+        }
+        return crit;
+    }
+    private bool getIgnoreDecoys()
+    {
+        bool ignoreDecoys = false;
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        {
+            ignoreDecoys = ignoreDecoys || buffs[i].getIgnoreDecoys();
+        }
+        return ignoreDecoys;
     }
     public bool getPlaced() { return placed; }
     public int getUpgradeLevel() { return upgradeLevel; }

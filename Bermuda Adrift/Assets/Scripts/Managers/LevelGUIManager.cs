@@ -17,6 +17,7 @@ public class LevelGUIManager : MonoBehaviour
     [SerializeField] private ScriptableObject[] allChoicesSO;
     private (int, ScriptableObject)[] allChoices;
 
+    [SerializeField] private Tower testTower;
 
     private (int, ScriptableObject) option1;
     private (int, ScriptableObject) option2;
@@ -49,6 +50,8 @@ public class LevelGUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown("x"))
             addAll();
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            buildManager.addToList((0, testTower));
     }
 
     private void levelUpScreen()
@@ -108,7 +111,7 @@ public class LevelGUIManager : MonoBehaviour
                 activeTower = null;
                 activeBarrier = (BarrierScriptable)allChoices[random[i]].Item2;
 
-                grid.GetChild(3).GetComponent<Image>().sprite = activeBarrier.getStartingSprite();                      //Image
+                grid.GetChild(3).GetComponent<Image>().sprite = activeBarrier.getThumbnail();                      //Image
                 grid.GetChild(4).GetComponent<TextMeshProUGUI>().text = activeBarrier.getName();                        //Title
                 grid.GetChild(5).GetComponent<TextMeshProUGUI>().text = activeBarrier.getDescription();                 //Description
                 grid.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Cost: " + activeBarrier.getCost() + " Scrap";  //Cost

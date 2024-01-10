@@ -96,6 +96,8 @@ public class UpgradeMenuHandler : MonoBehaviour
         if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
         if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
         if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
+        if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
+        if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
 
         if (upgradeLevel >= 4)  //Displays only the destroy button when it's fully upgraded
         {
@@ -295,17 +297,17 @@ public class UpgradeMenuHandler : MonoBehaviour
         //Costs more if you've repaired before
         int startingPrice = healedSoFar % 10 + 1;
 
-        //First 10 health is 50 scrap per HP, then 100, then 150, and so on. Max is 22,050 scrap to heal from 1 hp. The higher the current HP, the cheaper
+        //First 10 health is 5 scrap per HP, then 10, then 15, and so on. Max is 2,205 scrap to heal from 1 hp. The higher the current HP, the cheaper
         for (int i = startingPrice; toBeRepaired > 0; i++)
         {
             if (toBeRepaired < 10)
             {
-                repairScrap += toBeRepaired * 50 * i;
+                repairScrap += toBeRepaired * 5 * i;
                 toBeRepaired = 0;
             }
             else
             {
-                repairScrap += 10 * 50 * i;
+                repairScrap += 10 * 5 * i;
                 toBeRepaired -= 10;
             }
         }
@@ -344,6 +346,8 @@ public class UpgradeMenuHandler : MonoBehaviour
         if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
         if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
         if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
+        if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
+        if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
     }
 
     private void nonInteractable()  //Makes all buttons non-interactable
@@ -357,7 +361,6 @@ public class UpgradeMenuHandler : MonoBehaviour
     public void destroyClicked()
     {
         OnDestroy?.Invoke();
-        Debug.Log(currentTower + ", " + currentBarrier);
 
         if (currentTower != null)
             currentTower.destroyTower();

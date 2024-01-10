@@ -158,7 +158,6 @@ public class GameManager : MonoBehaviour
 
     public void spendScrap(int cost)
     {
-        Debug.Log("Spending " + cost + " scrap");
         scrap -= cost;
         onScrapCollect?.Invoke(scrap);
     }

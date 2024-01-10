@@ -14,6 +14,7 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private Buffs debuff;
     [SerializeField] private Sprite startingSprite;
     [SerializeField] private RuntimeAnimatorController animator;
+    [SerializeField] private Sprite Thumbnail;
 
     public string getName() { return barrierName; }
     public string getDescription() { return description; }
@@ -23,4 +24,5 @@ public class BarrierScriptable : ScriptableObject
     public Buffs getDebuff() { return debuff; }
     public Sprite getStartingSprite() { return startingSprite; }
     public RuntimeAnimatorController getAnimator() { return animator; }
+    public Sprite getThumbnail() { return Thumbnail; }
 }

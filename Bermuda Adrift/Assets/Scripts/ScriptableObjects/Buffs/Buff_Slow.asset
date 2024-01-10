@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Buff_Slow
   m_EditorClassIdentifier: 
   duration: 3
+  description: 
+  thumbnail: {fileID: 0}
   Distracted: 0
   Stunned: 0
   Cooldowns: 1
-  CritChance: 1
+  range: 1
+  ignoreDecoys: 0
   Speed: 0.5
   AttackSpeed: 1
   underwaterMult: 1
@@ -26,6 +29,8 @@ MonoBehaviour:
   DamageOverTime: 0
   DOTSpeed: 1
   percentDOT: 0
+  DOTColor: {r: 0, g: 0, b: 0, a: 0}
   Health: 1
   armor: 1
+  CritChance: 1
   Damage: 1

@@ -19,6 +19,7 @@ MonoBehaviour:
   baseSprite: {fileID: 21300000, guid: ff71e224ceee8034687dcfc9231d4379, type: 3}
   defaultBullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
   cost: 100
+  lightningResistance: 3
   rarity: 0
   Name: Lightning Rod
   Description: Electrifies the nearby water and air, lowering the defense of enemies.
@@ -29,6 +30,7 @@ MonoBehaviour:
   U1range: 3
   U1Bullet: {fileID: 11400000, guid: b83c5437387fe3245ac07c26bb59083b, type: 2}
   U1cost: 200
+  U1LightningResistance: 3
   U1Name: Delicate Dial
   U1Description: The lightning rod charges faster
   U1image: {fileID: 1613844769, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
@@ -37,6 +39,7 @@ MonoBehaviour:
   UA1range: 3
   UA1Bullet: {fileID: 11400000, guid: 3640303ccc531d94aa2d8ae4963ce253, type: 2}
   UA1cost: 250
+  UA1LightningResistance: 4
   UA1Name: Efficient Isolators
   UA1Description: Lightning deals damage to enemies in addition to lowering defenses
   UA1image: {fileID: -370728653, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
@@ -45,6 +48,7 @@ MonoBehaviour:
   UA2range: 3
   UA2Bullet: {fileID: 11400000, guid: c265087f09b91d74ca3226fb3dca0d7f, type: 2}
   UA2cost: 350
+  UA2LightningResistance: 5
   UA2Name: Ambient Superconductor
   UA2Description: Add damage over time to the electrified debuff
   UA2image: {fileID: -1551884224, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
@@ -53,6 +57,7 @@ MonoBehaviour:
   UB1range: 3
   UB1Bullet: {fileID: 11400000, guid: 2bd44235f1a470541b057ef070363107, type: 2}
   UB1cost: 300
+  UB1LightningResistance: 2
   UB1Name: Higher Voltage
   UB1Description: Electrified debuff lowers defense more and lasts longer
   UB1image: {fileID: 1159713692, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
@@ -61,6 +66,7 @@ MonoBehaviour:
   UB2range: 3
   UB2Bullet: {fileID: 11400000, guid: 1cff05ccb687f3244932a4ea2450282c, type: 2}
   UB2cost: 1000
+  UB2LightningResistance: 2
   UB2Name: Mitochondria Engine
   UB2Description: It't the powerhouse of the raft
   UB2image: {fileID: -1658623949, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}

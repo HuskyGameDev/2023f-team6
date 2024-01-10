@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
+  m_Name: Bullet_SolidTorpedo
+  m_EditorClassIdentifier: 
+  projectileSpeed: 30
+  damage: 15
+  AOE: 0
+  effect: 0
+  scale: 0.5
+  timer: -1
+  animator: {fileID: 9100000, guid: fab9172607c0cec42945c52171a8da2c, type: 2}
+  FriendlyFire: 0
+  Homing: 0.75
+  debuff: {fileID: 0}
+  pierce: 0
+  AOETimer: 0
+  UnderwaterDamage: 1
+  AirborneDamage: 0
+  types: []

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
+  m_Name: Bullets_MoreScrap
+  m_EditorClassIdentifier: 
+  projectileSpeed: 0
+  damage: 0
+  AOE: 0
+  effect: 0
+  scale: 0
+  timer: 0
+  animator: {fileID: 0}
+  FriendlyFire: 0
+  debuff: {fileID: 0}
+  pierce: 0
+  AOETimer: 0
+  UnderwaterDamage: 0
+  AirborneDamage: 0
+  types:
+  - {fileID: 11400000, guid: 94cfb54f61c88c14fb6860f10647c282, type: 2}
+  - {fileID: 11400000, guid: 8ea840c4c5546a84b8cca380c7d53169, type: 2}
+  - {fileID: 11400000, guid: ec1bd017e768a2643836ff2971c7ae68, type: 2}
+  - {fileID: 11400000, guid: d1c8995a79b0b40458e5fd23cdce3fb6, type: 2}
+  - {fileID: 11400000, guid: 30691232c0edd824cb09b39922ac5c37, type: 2}
+  - {fileID: 11400000, guid: 6bf951ee240ecc3448605c1ab53ea5f8, type: 2}

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
+  m_Name: T_Ballista
+  m_EditorClassIdentifier: 
+  Name: Ballista
+  Description: Fire powerful ballista bolts, dealing extra damage to flying enemies
+  damageMult: 1
+  turnSpeed: 1
+  range: 7
+  defaultBullet: {fileID: 11400000, guid: b057b18e47edbe64fb696534e3836739, type: 2}
+  cost: 200
+  lightningResistance: 0
+  image: {fileID: 1560486244, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  U1Name: Gears of War
+  U1Description: Powerful gears pull the string back harder, raising damage
+  U1damageMult: 1.5
+  U1turnSpeed: 1
+  U1range: 7
+  U1Bullet: {fileID: 11400000, guid: b057b18e47edbe64fb696534e3836739, type: 2}
+  U1cost: 200
+  U1LightningResistance: 0
+  U1image: {fileID: -1606827177, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UA1Name: Two Birds, One Stone
+  UA1Description: Fire 2 bolts at once
+  UA1damageMult: 1.5
+  UA1turnSpeed: 1
+  UA1range: 7
+  UA1Bullet: {fileID: 11400000, guid: 29199b6717092f344adc5388935533f2, type: 2}
+  UA1cost: 300
+  UA1LightningResistance: 0
+  UA1image: {fileID: 1935929143, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UA2Name: Dove's Branch
+  UA2Description: THERE WILL BE PEACE WHEN THEY ARE GONE
+  UA2damageMult: 1.5
+  UA2turnSpeed: 1
+  UA2range: 8
+  UA2Bullet: {fileID: 11400000, guid: 048023f9693342b4a847967fc09a214a, type: 2}
+  UA2cost: 300
+  UA2LightningResistance: 0
+  UA2image: {fileID: 347028501, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UB1Name: Steel String
+  UB1Description: Stronger string allows for more powerful shots
+  UB1damageMult: 2
+  UB1turnSpeed: 1
+  UB1range: 7
+  UB1Bullet: {fileID: 11400000, guid: b057b18e47edbe64fb696534e3836739, type: 2}
+  UB1cost: 200
+  UB1LightningResistance: 0
+  UB1image: {fileID: 87746666, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UB2Name: Heavy Ordinance
+  UB2Description: Light Up the Sky
+  UB2damageMult: 2
+  UB2turnSpeed: 1
+  UB2range: 8
+  UB2Bullet: {fileID: 11400000, guid: bb6fe827d0985b34f826f5601c33a028, type: 2}
+  UB2cost: 500
+  UB2LightningResistance: 0
+  UB2image: {fileID: -1027113715, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  anim: {fileID: 9100000, guid: bb4ed309f0aaf3243912ec8c71368b3b, type: 2}
+  baseSprite: {fileID: 1330348931, guid: 8f2c6608a12272c4987ce250a7ebf840, type: 3}
+  rarity: 0
+  cantTurn: 0
+  extraPriorities: 05000000

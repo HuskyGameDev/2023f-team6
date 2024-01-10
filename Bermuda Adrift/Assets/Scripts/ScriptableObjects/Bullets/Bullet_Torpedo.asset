@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
   m_Name: Bullet_Torpedo
   m_EditorClassIdentifier: 
-  projectileSpeed: 30
+  projectileSpeed: 25
   damage: 10
-  AOE: 5
+  AOE: 2
   effect: 4
   scale: 0.5
   timer: -1
-  animator: {fileID: 0}
+  animator: {fileID: 9100000, guid: 6e0cde46a4f51cb4db712ac5fd03289d, type: 2}
   FriendlyFire: 0
+  Homing: 0
   debuff: {fileID: 0}
-  pierce: -1
-  AOETimer: 0
-  UnderwaterDamage: 2
-  AirborneDamage: 0.5
+  pierce: 0
+  AOETimer: 3
+  UnderwaterDamage: 1
+  AirborneDamage: 0
+  types: []

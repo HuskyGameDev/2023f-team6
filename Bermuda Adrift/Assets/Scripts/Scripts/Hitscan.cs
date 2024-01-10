@@ -34,6 +34,7 @@ public class Hitscan : MonoBehaviour
         if (critChance == 0)
             setCritChance(1);
 
+        sprite.localRotation = transform.rotation;
         camera = Camera.main;   //Used for camera shake effects;
     }
     private void Update()
@@ -41,6 +42,14 @@ public class Hitscan : MonoBehaviour
         countdown();
 
         Onwards();
+
+        if (sprite.GetComponent<Animator>().parameters.Length > 1)  //If there's animations for being over water or air, check for that every frame
+        {
+            if (Physics2D.Raycast(transform.position, Vector3.down, 0.01f, 1 << 4))
+                sprite.GetComponent<Animator>().SetTrigger("Water");
+            else
+                sprite.GetComponent<Animator>().SetTrigger("Land");
+        }
     }
 
     private void countdown()    //Counts down a timer every frame
@@ -119,7 +128,39 @@ public class Hitscan : MonoBehaviour
 
         sprite.GetComponent<Animator>().runtimeAnimatorController = animator;
         sprite.localScale = new Vector2(bullet.getScale() * 2, bullet.getScale() * 2);
-        sprite.rotation = Quaternion.Euler(sprite.rotation.eulerAngles * 2);
+
+        if (bullet.hasTypes())
+        {
+            if (bullet.getEffect() == Bullet.Effects.Shotgun)
+            {
+                stop = true;
+                landed = true;
+
+                int count = (int)bullet.getAOE();
+                float maxDegree = count / 5f;
+                int delayVariation = count / 2;
+
+                for (int i = 0; i < count; i++)
+                {
+                    Quaternion direction = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + (Vector3.forward * Random.Range(-maxDegree, maxDegree)));
+
+                    var pellet = Instantiate(gameObject, gameObject.transform.position, direction);
+
+                    Bullet randomBullet = bullet.getBulletAtIndex(Random.Range(0, bullet.getNumOfTypes()));
+
+                    pellet.SendMessage("setBullet", randomBullet);
+                    pellet.GetComponent<CircleCollider2D>().radius = bullet.getScale();
+
+                    pellet.SendMessage("initialDelay", Random.Range(0, delayVariation));
+                }
+
+                Destroy(gameObject);
+            }
+            else
+            {
+                setBullet(bullet.getBulletAtIndex(Random.Range(0, bullet.getNumOfTypes())));
+            }
+        }
     }
 
     private void setEffect(Bullet.Effects newEffect) { effect = newEffect; }    //Sets type of bullet. Mainly used for shotgun
@@ -192,6 +233,12 @@ public class Hitscan : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
     {
+        if (stop && collision.CompareTag("Tower") && debuff != null)    //Buff other towers if they are inside an AOE buff. Could also debuff towers in a radius. Maybe we can use that
+        {
+            collision.gameObject.GetComponent<TowerAI>().StartCoroutine("Buff", debuff);
+            return;
+        }
+
         if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; }
 
         pierce--;
@@ -250,7 +297,7 @@ public class Hitscan : MonoBehaviour
                 //gameObject.GetComponent<SpriteRenderer>().enabled = false;  //Hide the bullet after the explosion, but leave the hitbox
 
                 //Switch animator controller to the explosion/fire effects
-                if (collision.name != "AOETrigger")
+                if (collision.name != "AOETrigger" && debuff != null)
                     collision.gameObject.SendMessage("InflictDebuff", debuff);
             }
             else if (effect == Bullet.Effects.Shotgun)

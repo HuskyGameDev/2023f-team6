@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
+  m_Name: T_ScrapTurret
+  m_EditorClassIdentifier: 
+  Name: Scrap Turret
+  Description: Fires random pieces of scrap
+  damageMult: 1
+  turnSpeed: 1
+  range: 6
+  defaultBullet: {fileID: 11400000, guid: 82182d90e7700b04b95e07c25cb78cdf, type: 2}
+  cost: 50
+  lightningResistance: 0
+  image: {fileID: 1777780787, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  U1Name: More Scrap
+  U1Description: Fire more types of scrap
+  U1damageMult: 1
+  U1turnSpeed: 1
+  U1range: 6
+  U1Bullet: {fileID: 11400000, guid: c5550f0b859fbb0458334aed46c97bf6, type: 2}
+  U1cost: 200
+  U1LightningResistance: 0
+  U1image: {fileID: -172098534, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  UA1Name: Concentrated Fire
+  UA1Description: Fire all loaded scrap in bursts
+  UA1damageMult: 1
+  UA1turnSpeed: 1
+  UA1range: 6
+  UA1Bullet: {fileID: 11400000, guid: 643775c1565712c4cb627831066d7ab4, type: 2}
+  UA1cost: 300
+  UA1LightningResistance: 0
+  UA1image: {fileID: 501012860, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  UA2Name: Scrap Typhoon
+  UA2Description: Hit enemies with a storm of scrap!
+  UA2damageMult: 1.5
+  UA2turnSpeed: 1
+  UA2range: 6
+  UA2Bullet: {fileID: 11400000, guid: ef8483d825740d14b980aad9d072174e, type: 2}
+  UA2cost: 500
+  UA2LightningResistance: 0
+  UA2image: {fileID: -1114565448, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  UB1Name: Even More Scrap
+  UB1Description: Fire even more types of scrap
+  UB1damageMult: 1
+  UB1turnSpeed: 1
+  UB1range: 6
+  UB1Bullet: {fileID: 11400000, guid: 00bb01abe4671eb46a75c282d80da03f, type: 2}
+  UB1cost: 300
+  UB1LightningResistance: 0
+  UB1image: {fileID: -1940847801, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  UB2Name: Overseeing Eyes
+  UB2Description: The eyes have...powers
+  UB2damageMult: 1.5
+  UB2turnSpeed: 1
+  UB2range: 6
+  UB2Bullet: {fileID: 11400000, guid: a5ea6606f42bcae49bea61a076ea738d, type: 2}
+  UB2cost: 600
+  UB2LightningResistance: 0
+  UB2image: {fileID: -151052679, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
+  anim: {fileID: 9100000, guid: 9ed78ca465f16f64e910204afc4ae16d, type: 2}
+  baseSprite: {fileID: 770356676, guid: 2c25dbb9bced58c459806c120742f6f3, type: 3}
+  rarity: 0
+  cantTurn: 0

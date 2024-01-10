@@ -12,11 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_TorpedoLauncher
   m_EditorClassIdentifier: 
-  damageMult: 0
-  fireRate: 0
-  turnSpeed: 0
-  range: 0
-  anim: {fileID: 0}
-  defaultBullet: {fileID: 0}
-  cost: 0
+  Name: Torpedo Launcher
+  Description: Fires explosive torpedos that can only hit underwater enemies
+  damageMult: 1
+  turnSpeed: 0.75
+  range: 7
+  defaultBullet: {fileID: 11400000, guid: 2a4528d336ae0674792ff9037336bce8, type: 2}
+  cost: 300
+  lightningResistance: 0
+  image: {fileID: -1046966293, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  U1Name: Faster Spin
+  U1Description: Torpedos fire faster
+  U1damageMult: 1
+  U1turnSpeed: 0.75
+  U1range: 7
+  U1Bullet: {fileID: 11400000, guid: 2a4528d336ae0674792ff9037336bce8, type: 2}
+  U1cost: 150
+  U1LightningResistance: 0
+  U1image: {fileID: 480291720, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UA1Name: Packed Explosives
+  UA1Description: Torpedos have enough explosives to hit birds from underwater
+  UA1damageMult: 1
+  UA1turnSpeed: 0.75
+  UA1range: 7
+  UA1Bullet: {fileID: 11400000, guid: f8c07f0a93cf34e43a21105e20d1571b, type: 2}
+  UA1cost: 400
+  UA1LightningResistance: 0
+  UA1image: {fileID: -1961827361, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UA2Name: Elemental Vortex
+  UA2Description: Channel lightning through the sheer force of explosions
+  UA2damageMult: 1
+  UA2turnSpeed: 0.75
+  UA2range: 7
+  UA2Bullet: {fileID: 11400000, guid: 88f3df537f374af4899f41f0a8e2e552, type: 2}
+  UA2cost: 300
+  UA2LightningResistance: 0
+  UA2image: {fileID: 1817036913, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UB1Name: Laser Guidance
+  UB1Description: Torpedos will home in towards enemies
+  UB1damageMult: 1
+  UB1turnSpeed: 0.8
+  UB1range: 7
+  UB1Bullet: {fileID: 11400000, guid: beaa3c35efa9bff4dbb12b94bec3e5cd, type: 2}
+  UB1cost: 250
+  UB1LightningResistance: 0
+  UB1image: {fileID: -811818384, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  UB2Name: Silent Death
+  UB2Description: Fire a solid metal torpedo to hit single enemies for high damage
+  UB2damageMult: 1
+  UB2turnSpeed: 0.8
+  UB2range: 8
+  UB2Bullet: {fileID: 11400000, guid: eace3a8a79ffda642b92271a16b8d026, type: 2}
+  UB2cost: 500
+  UB2LightningResistance: 0
+  UB2image: {fileID: 2040928910, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  anim: {fileID: 9100000, guid: 3e86527350e87b843b7d0141345e0b64, type: 2}
+  baseSprite: {fileID: -1758812984, guid: ff4ee1650360beb4ea2adef86fb2cddf, type: 3}
   rarity: 0
+  cantTurn: 0
+  extraPriorities: 04000000

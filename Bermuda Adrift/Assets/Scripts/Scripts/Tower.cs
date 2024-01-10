@@ -6,89 +6,89 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower", order = 2)]
 public class Tower : ScriptableObject
 {
-    [SerializeField] private float damageMult;
-    //[SerializeField] private float fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
-    [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
-    [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
-    [SerializeField] private RuntimeAnimatorController anim;
-    [SerializeField] private Sprite baseSprite;
-    [SerializeField] private Bullet defaultBullet;
-
-    [SerializeField] private int cost;
-    [SerializeField] private int lightningResistance;
-    [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up 
-
+    [Header("Base Form")]
     [SerializeField] private string Name;
     [SerializeField] private string Description;
+    [SerializeField] private float damageMult;
+    [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
+    [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
+    [SerializeField] private Bullet defaultBullet;
+    [SerializeField] private int cost;
+    [SerializeField] private int lightningResistance;
     [SerializeField] private Sprite image;
-    [SerializeField] private bool cantTurn;
 
 
 
     //Upgrade 1
+    [Header("Upgrade 1")]
+    [SerializeField] private string U1Name;
+    [SerializeField] private string U1Description;
     [SerializeField] private float U1damageMult;
-    //[SerializeField] private float U1fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float U1turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float U1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet U1Bullet;
     [SerializeField] private int U1cost;
     [SerializeField] private int U1LightningResistance;
-    [SerializeField] private string U1Name;
-    [SerializeField] private string U1Description;
     [SerializeField] private Sprite U1image;
 
 
     //Upgrade A1
+    [Header("Upgrade A1")]
+    [SerializeField] private string UA1Name;
+    [SerializeField] private string UA1Description;
     [SerializeField] private float UA1damageMult;
-    //[SerializeField] private float UA1fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float UA1turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float UA1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UA1Bullet;
     [SerializeField] private int UA1cost;
     [SerializeField] private int UA1LightningResistance;
-    [SerializeField] private string UA1Name;
-    [SerializeField] private string UA1Description;
     [SerializeField] private Sprite UA1image;
 
     //Upgrade A2
+    [Header("Upgrade A2")]
+    [SerializeField] private string UA2Name;
+    [SerializeField] private string UA2Description;
     [SerializeField] private float UA2damageMult;
-    //[SerializeField] private float UA2fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float UA2turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float UA2range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UA2Bullet;
     [SerializeField] private int UA2cost;
     [SerializeField] private int UA2LightningResistance;
-    [SerializeField] private string UA2Name;
-    [SerializeField] private string UA2Description;
     [SerializeField] private Sprite UA2image;
 
 
     //Upgrade B1
+    [Header("Upgrade B1")]
+    [SerializeField] private string UB1Name;
+    [SerializeField] private string UB1Description;
     [SerializeField] private float UB1damageMult;
-    //[SerializeField] private float UB1fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float UB1turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float UB1range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UB1Bullet;
     [SerializeField] private int UB1cost;
     [SerializeField] private int UB1LightningResistance;
-    [SerializeField] private string UB1Name;
-    [SerializeField] private string UB1Description;
     [SerializeField] private Sprite UB1image;
 
 
 
     //Upgrade B2
+    [Header("Upgrade B2")]
+    [SerializeField] private string UB2Name;
+    [SerializeField] private string UB2Description;
     [SerializeField] private float UB2damageMult;
-    //[SerializeField] private float UB2fireRate;    //0 is no delay, 1 is 1 second between shots, and so on
     [SerializeField] private float UB2turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float UB2range;       //Use tiles as a measure of range? -1 for infinite range
     [SerializeField] private Bullet UB2Bullet;
     [SerializeField] private int UB2cost;
     [SerializeField] private int UB2LightningResistance;
-    [SerializeField] private string UB2Name;
-    [SerializeField] private string UB2Description;
     [SerializeField] private Sprite UB2image;
 
+    [Header("Misc")]
+    [SerializeField] private RuntimeAnimatorController anim;
+    [SerializeField] private Sprite baseSprite;
+    [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up
+    [SerializeField] private bool cantTurn;
+    [SerializeField] private TowerAI.Priority[] extraPriorities;
 
 
 
@@ -98,8 +98,10 @@ public class Tower : ScriptableObject
     public float getRange() { return range; }
     public RuntimeAnimatorController getAnim() { return anim; }
     public Sprite getBaseSprite() { return baseSprite; }
-    public Bullet getDefaultBullet() { return defaultBullet; }
+    public TowerAI.Priority[] getExtraPriorities() { return extraPriorities; }
 
+
+    public Bullet getDefaultBullet() { return defaultBullet; }
     public int getCost() { return cost; }
     public int getLightningResistance() { return lightningResistance; }
     public float getRarity() { return rarity; }
