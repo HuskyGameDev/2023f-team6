@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_ScrapTurret
   m_EditorClassIdentifier: 
+  saveString: scrap-turret
   Name: Scrap Turret
   Description: Fires random pieces of scrap
   damageMult: 1
@@ -70,3 +71,4 @@ MonoBehaviour:
   baseSprite: {fileID: 770356676, guid: 2c25dbb9bced58c459806c120742f6f3, type: 3}
   rarity: 0
   cantTurn: 0
+  extraPriorities: 

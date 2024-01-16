@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad553b0c11f8f6f45920753d3eba1447, type: 3}
   m_Name: Barrier_Barricade
   m_EditorClassIdentifier: 
+  saveString: barrier-barricade
   barrierName: Barricade
   description: Blocks enemies from progressing until it is destroyed
   effect: 0

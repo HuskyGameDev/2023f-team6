@@ -7,11 +7,15 @@ public class SaveManager : MonoBehaviour
     [SerializeField] EnemyManager enemies;
     [SerializeField] Centerpiece center;
     [SerializeField] GameManager game;
+    [SerializeField] PlaceableDatabase pdb;
+    private BuildManager build;
     private GameManager.GameState state;
-    bool saved = false;
+    bool saved1 = false;
+    bool saved2 = false;
 
     private void Start(){
         state = game.getGameState();
+        build = FindObjectOfType<BuildManager>();
     }
 
     private void Update(){
@@ -20,6 +24,12 @@ public class SaveManager : MonoBehaviour
             beginRoundSave();
         }
 
+        /*
+        if(state == GameManager.GameState.Idle){
+            endRoundSave();
+        }
+        */
+
         if(Input.GetKeyDown("m")){
             LoadPlayer();
         }
@@ -27,17 +37,22 @@ public class SaveManager : MonoBehaviour
         if(state == GameManager.GameState.GameOver){
             DeletePlayer();
         }
+
+        if(Input.GetKeyDown("9")){
+            DeletePlayer();
+        }
     }
 
     private void OnEnable(){
-        EnemyManager.onRoundEnd += endRoundSave;
+            EnemyManager.onRoundEnd += endRoundSave;
     }
 
     public void beginRoundSave(){
-        if(!saved){
-            SaveSystem.savePlayer(enemies, center, game);
-            saved = true;
+        if(!saved1){
+            saved1 = true;
+            SaveSystem.savePlayer(enemies, center, game, build);
         }
+        saved2 = false;
     }
 
     public void LoadPlayer(){
@@ -50,11 +65,30 @@ public class SaveManager : MonoBehaviour
         game.setScrap(data.getScrap());
         game.setXP(data.getXP());
         game.setLevel(data.getLevel());
+
+        List<string> saveStrings = data.getSaveStrings();
+        List<float> locations = data.getLocations();
+        List<int> upgrades = data.getUpgrades();
+        List<PlaceableData> towers = new List<PlaceableData>();
+        int i = 0;
+        foreach(string s in saveStrings){
+            int locIndex = i*3;
+            Vector3 loc = new Vector3(locations[locIndex], locations[locIndex + 1], locations[locIndex + 2]);
+            PlaceableData tower = new PlaceableData(pdb.getMatchingObject(s), loc, upgrades[i]);
+            towers.Add(tower);
+            i++;
+        }
+        Debug.Log("Got this far");
+        build.loadPlaceables(towers);
     }
 
-    public void endRoundSave(int bugFix){
-        SaveSystem.savePlayer(enemies, center, game);
-        Debug.Log("            Saved at end of round");
+    public void endRoundSave(int i){
+        if(!saved2){
+            saved2 = true;
+            SaveSystem.savePlayer(enemies, center, game, build);
+            Debug.Log("            Saved at end of round");
+            saved1 = false;
+        }
     }
 
     public void DeletePlayer(){

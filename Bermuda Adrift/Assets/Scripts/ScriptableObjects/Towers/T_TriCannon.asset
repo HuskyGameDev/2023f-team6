@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_TriCannon
   m_EditorClassIdentifier: 
+  saveString: tri-cannon
   Name: Tri-Cannon
   Description: Fires cannonballs 3 times as fast!
   damageMult: 1

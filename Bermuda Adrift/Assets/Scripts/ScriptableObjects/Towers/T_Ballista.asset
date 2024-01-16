@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_Ballista
   m_EditorClassIdentifier: 
+  saveString: ballista
   Name: Ballista
   Description: Fire powerful ballista bolts, dealing extra damage to flying enemies
   damageMult: 1

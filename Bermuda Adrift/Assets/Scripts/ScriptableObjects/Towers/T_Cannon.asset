@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_Cannon
   m_EditorClassIdentifier: 
+  saveString: cannon
   Name: Cannon
   Description: Fires slow, powerful cannonballs
   damageMult: 1.5

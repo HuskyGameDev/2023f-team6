@@ -6,6 +6,8 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower", order = 2)]
 public class Tower : ScriptableObject
 {
+    [SerializeField] private string saveString;
+
     [Header("Base Form")]
     [SerializeField] private string Name;
     [SerializeField] private string Description;
@@ -91,6 +93,7 @@ public class Tower : ScriptableObject
     [SerializeField] private TowerAI.Priority[] extraPriorities;
 
 
+    public string getSaveString() { return saveString; }
 
     public float getDamageMult() { return damageMult; }
     //public float getFireRate() { return fireRate; }

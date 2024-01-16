@@ -61,7 +61,7 @@ public class TowerAI : MonoBehaviour
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
+             //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
         //colliders = new BoxCollider2D[1];
         //colliders[0] = gameObject.GetComponent<BoxCollider2D>();
         if (tower.getBaseSprite() == null)
@@ -153,6 +153,7 @@ public class TowerAI : MonoBehaviour
             gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
 
         nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
+        anim = nozzle.GetComponent<Animator>();
     }
     public void destroyTower()
     {
@@ -285,8 +286,9 @@ public class TowerAI : MonoBehaviour
     public void setUpgrade(int upgradeLevel)   //Sets a tower's upgrade level and makes the animations match
     {
         this.upgradeLevel = upgradeLevel;
+        Debug.Log(upgradeLevel);
 
-        if (upgradeLevel == 0) anim.Play("Setup");
+        if (upgradeLevel <= 0) anim.Play("Setup");
         if (upgradeLevel == 1) anim.Play("U1Transition");
         if (upgradeLevel == 2) anim.Play("A1Transition");
         if (upgradeLevel == 3) anim.Play("B1Transition");
@@ -814,8 +816,10 @@ public class TowerAI : MonoBehaviour
     }
     private float getRange()    //Gives total damage penalty/buff (multiplicative)
     {
+        if (buffs == null) return 1;
+
         float range = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
         {
             range *= buffs[i].getRange();
         }

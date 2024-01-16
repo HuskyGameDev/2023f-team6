@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "Barrier", menuName = "ScriptableObjects/Barrier", order = 0)]
 public class BarrierScriptable : ScriptableObject
 {
+    [SerializeField] private string saveString;
+
+    [SerializeField] 
     public enum Effect { Blockade, Effect }
     [SerializeField] private string barrierName;
     [SerializeField] private string description;
@@ -16,6 +19,7 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animator;
     [SerializeField] private Sprite Thumbnail;
 
+    public string getSaveString() { return saveString; }
     public string getName() { return barrierName; }
     public string getDescription() { return description; }
     public Effect getEffect() { return effect; }

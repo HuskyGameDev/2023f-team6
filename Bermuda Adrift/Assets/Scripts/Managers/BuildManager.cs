@@ -8,9 +8,12 @@ using Random = UnityEngine.Random;
 public class PlaceableData
 {
     TowerAI towerData;
+    Tower towerScriptable;
     Barriers barrierData;
+    BarrierScriptable barrierScriptable;
     Vector3 location;
     int upgradeLevel;
+    string saveString;
 
     public PlaceableData(GameObject go)
     {
@@ -19,11 +22,44 @@ public class PlaceableData
         barrierData = go.GetComponent<Barriers>();
         location = go.transform.position;
         upgradeLevel = 0;
+
+        if (towerData != null)
+        {
+            saveString = towerData.getTower().getSaveString();
+        }
+        else
+        {
+            saveString = barrierData.getBarrier().getSaveString();
+        }
+    }
+
+    public PlaceableData(ScriptableObject go, Vector3 loc, int upgrade)
+    {
+        location = loc;
+        upgradeLevel = upgrade;
+
+        try
+        {
+            towerScriptable = (Tower) go;
+            saveString = towerScriptable.getSaveString();
+            Debug.Log("Try: " + towerScriptable.getDamageMult());
+        }
+        catch (Exception e)
+        {
+            barrierScriptable = (BarrierScriptable) go;
+            saveString = barrierScriptable.getSaveString();
+            Debug.Log("Catch: " + barrierScriptable.getStartingSprite());
+        }
+
     }
 
     public Type getPlaceableType()
     {
-        if (towerData != null)
+        if (towerScriptable != null)
+            return typeof(TowerAI);
+        else if (barrierScriptable != null)
+            return typeof(Barriers);
+        else if (towerData != null)
         {
             upgradeLevel = towerData.getUpgradeLevel();
             return towerData.GetType();
@@ -31,6 +67,10 @@ public class PlaceableData
         else
             return barrierData.GetType();
     }
+
+    public bool hasScriptable() { return towerScriptable != null || barrierScriptable != null; }
+    public Tower getTowerScriptable() { return towerScriptable; }
+    public BarrierScriptable getBarrierScriptable() { return barrierScriptable; }
 
     public object getPlaceableData()
     {
@@ -48,6 +88,7 @@ public class PlaceableData
         return upgradeLevel;
     }
     public Vector3 getLocation() { return location; }
+    public string getSaveString() { return saveString; }
     //public void setLocation(Vector3 location) { this.location = location; }
 }
 public class BuildManager : MonoBehaviour
@@ -77,12 +118,11 @@ public class BuildManager : MonoBehaviour
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
+        placeables = new List<(int, ScriptableObject)>();
+        placeableDatas = new List<PlaceableData>();
     }
     void Start()
     {
-        placeables = new List<(int, ScriptableObject)>();
-        placeableDatas = new List<PlaceableData>();
-
         clearBuyables();
         reloadBuyables();
     }
@@ -394,6 +434,7 @@ public class BuildManager : MonoBehaviour
     }
     public void loadPlaceables(List<PlaceableData> list)    //Loads and places all towers/barriers in the given list
     {
+        Debug.Log("Loading");
         clearAllBuildings();
 
         placeableDatas = list;
@@ -401,18 +442,39 @@ public class BuildManager : MonoBehaviour
 
         foreach (PlaceableData pd in list)
         {
+            Debug.Log("Trying to load");
             if (pd.getPlaceableType() == typeof(TowerAI))   //I think this should work
             {
+                Debug.Log("Loading a tower");
                 currentBuilding = Instantiate(towerPrefabs[0], pd.getLocation(), Quaternion.identity);
+
+                if (pd.hasScriptable())
+                {
+                    currentBuilding.SendMessage("place", pd.getTowerScriptable());
+                }
+                else
+                {
+                    currentBuilding.SendMessage("place", ((TowerAI) pd.getPlaceableData()).getTower());
+                }
+
                 currentBuilding.SendMessage("placeTower");
-                currentBuilding.SendMessage("setTower", ((TowerAI) pd.getPlaceableData()).getTower());
                 currentBuilding.SendMessage("setUpgrade", pd.getUpgradeLevel());
             }
             else
             {
+                Debug.Log("Loading a barrier");
                 currentBuilding = Instantiate(towerPrefabs[1], pd.getLocation(), Quaternion.identity);
+
+                if (pd.hasScriptable())
+                {
+                    currentBuilding.SendMessage("setBarrier",pd.getBarrierScriptable());
+                }
+                else
+                {
+                    currentBuilding.SendMessage("setBarrier", ((Barriers) pd.getPlaceableData()).getBarrier());
+                }
+
                 currentBuilding.SendMessage("placeBarrier");
-                currentBuilding.SendMessage("setBarrier", ((Barriers) pd.getPlaceableData()).getBarrier());
                 //No barrier upgrades yet
             }
         }
@@ -454,7 +516,26 @@ public class BuildManager : MonoBehaviour
     #endregion
 
     #region Placeable Data management
-    public List<PlaceableData> GetPlaceableDatas() { return placeableDatas; }
+    private void printPlaceableDatas()
+    {
+        if (placeableDatas == null)
+        {
+            Debug.Log("PlaceableDatas is null");
+            return;
+        }
+
+        string output = "";
+        foreach(PlaceableData pd in placeableDatas)
+        {
+            output += pd.getPlaceableData() + ", ";
+        }
+        Debug.Log(output);
+    }
+    public List<PlaceableData> GetPlaceableDatas() {
+        Debug.Log("placeableDatas requested");
+        printPlaceableDatas();
+        return placeableDatas;
+    }
     public void addPosition(GameObject go)
     {
         placeableDatas.Add(new PlaceableData(go));

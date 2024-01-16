@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
   m_Name: T_TorpedoLauncher
   m_EditorClassIdentifier: 
+  saveString: torpedo-launcher
   Name: Torpedo Launcher
   Description: Fires explosive torpedos that can only hit underwater enemies
   damageMult: 1
