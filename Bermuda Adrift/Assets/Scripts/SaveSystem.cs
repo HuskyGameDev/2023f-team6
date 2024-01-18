@@ -25,14 +25,15 @@ public static class SaveSystem {
 
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
 
-            
 
+
+            stream.Close();
             return data;
         }else{
             Debug.LogError("Save file not found in " + path);
+            stream.Close();
             return null;
         }
-        stream.Close();
     }
 
     public static void resetPlayer(){

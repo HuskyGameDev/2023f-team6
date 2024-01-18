@@ -120,18 +120,20 @@ public class AnimationHandler : MonoBehaviour
     }
     private IEnumerator levelUp_SlideIn()
     {
+        gameObject.GetComponent<GameManager>().freezeTime();
         levelUpCard1.Play("SlideIn");
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
 
         levelUpCard2.Play("SlideIn");
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
 
         levelUpCard3.Play("SlideIn");
     }
     private IEnumerator levelUp_SlideOut()
     {
+        gameObject.GetComponent<GameManager>().unfreezeTime();
         levelUpCard1.Play("SlideOut");
 
         yield return new WaitForSeconds(0.25f);

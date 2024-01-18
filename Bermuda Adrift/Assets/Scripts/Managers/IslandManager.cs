@@ -25,15 +25,6 @@ public class IslandManager : MonoBehaviour
         GameManager.onRoundEnd -= createIsland;
         GameManager.OnRoundStart -= removeIsland;
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            island = Instantiate(islandPrefab);  //Island animator will move it around properly
-
-            island.SendMessage("setIsland", randomIsland());
-        }
-    }
 
     private bool islandAppears()
     {

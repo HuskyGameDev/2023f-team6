@@ -21,20 +21,8 @@ public class Tile : MonoBehaviour
         gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
 
         //Light up in in the right/wrong spot
-        if (type == 0)  //Towers
-        {
-            if (buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
-            else { enterIncorrect(); }
-        } 
-        else    //Barriers
-        {
-            if (((Mathf.Abs(transform.position.x) <= 6 && Mathf.Abs(transform.position.x) > 1 && Mathf.Abs(transform.position.y) < 1)   //Left/Right channels
-                || 
-                (Mathf.Abs(transform.position.y) <= 6 && Mathf.Abs(transform.position.y) > 1) && Mathf.Abs(transform.position.x) < 1) 
-                && 
-                buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
-            else { enterIncorrect(); }
-        }
+        if (buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
+        else { enterIncorrect(); }
 
     }
     private void OnDisable()

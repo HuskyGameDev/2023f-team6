@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterTracker : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class CharacterTracker : MonoBehaviour
     {
         if (level == 1)
             StartCoroutine(setCharacterInScene());
-    }
+    }    
     IEnumerator setCharacterInScene()
     {
         yield return new WaitForEndOfFrame();

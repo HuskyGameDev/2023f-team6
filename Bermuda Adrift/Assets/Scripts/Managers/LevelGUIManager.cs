@@ -13,20 +13,14 @@ public class LevelGUIManager : MonoBehaviour
 
     private BuildManager buildManager;
     [SerializeField] private GameObject ChoicesCanvas;
-    [SerializeField] private int[] allChoicesInt;
-    [SerializeField] private ScriptableObject[] allChoicesSO;
-    private (int, ScriptableObject)[] allChoices;
+    [SerializeField] private Tower[] allChoices;
 
-    [SerializeField] private Tower testTower;
-
-    private (int, ScriptableObject) option1;
-    private (int, ScriptableObject) option2;
-    private (int, ScriptableObject) option3;
+    private Tower option1;
+    private Tower option2;
+    private Tower option3;
     int previousLevel;
 
     Tower activeTower;
-    BarrierScriptable activeBarrier;
-    // Start is called before the first frame update
 
     private void OnEnable()
     {
@@ -36,22 +30,18 @@ public class LevelGUIManager : MonoBehaviour
     {
         GameManager.onRoundEnd -= levelUpScreen;
     }
-    void Start()
+    private void Start()
     {
         buildManager = FindObjectOfType<BuildManager>();
-
-        allChoices = new (int, ScriptableObject)[allChoicesInt.Length];
-        previousLevel = 1;
-
-        for (int i = 0; i < allChoicesSO.Length && i < allChoicesInt.Length; i++)
-            allChoices[i] = (allChoicesInt[i], allChoicesSO[i]);
     }
     private void Update()
     {
         if (Input.GetKeyDown("x"))
             addAll();
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            buildManager.addToList((0, testTower));
+        for (int i = 1; i < 10; i++)
+        {
+            if (Input.GetKeyDown(i.ToString())) buildManager.addToList(allChoices[i-1]);
+        }
     }
 
     private void levelUpScreen()
@@ -96,26 +86,13 @@ public class LevelGUIManager : MonoBehaviour
             grid.GetChild(0).GetChild(randomBackground).gameObject.SetActive(true);
 
             //Image
-            if (allChoices[random[i]].Item1 == 0)
-            {
-                activeTower = (Tower)allChoices[random[i]].Item2;
-                activeBarrier = null;
+                activeTower = allChoices[random[i]];
 
                 grid.GetChild(3).GetComponent<Image>().sprite = activeTower.getImage();                                 //Image
                 grid.GetChild(4).GetComponent<TextMeshProUGUI>().text = activeTower.getName();                          //Title
                 grid.GetChild(5).GetComponent<TextMeshProUGUI>().text = activeTower.getDescription();                   //Description
                 grid.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Cost: " + activeTower.getCost() + " Scrap";    //Cost
-            }
-            else if (allChoices[random[i]].Item1 == 1)
-            {
-                activeTower = null;
-                activeBarrier = (BarrierScriptable)allChoices[random[i]].Item2;
-
-                grid.GetChild(3).GetComponent<Image>().sprite = activeBarrier.getThumbnail();                      //Image
-                grid.GetChild(4).GetComponent<TextMeshProUGUI>().text = activeBarrier.getName();                        //Title
-                grid.GetChild(5).GetComponent<TextMeshProUGUI>().text = activeBarrier.getDescription();                 //Description
-                grid.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Cost: " + activeBarrier.getCost() + " Scrap";  //Cost
-            }
+            
 
             grid.GetChild(7).GetComponent<Button>().interactable = true;
         }
@@ -137,13 +114,13 @@ public class LevelGUIManager : MonoBehaviour
     }
     public void addRandom()
     {
-        (int, ScriptableObject) random = allChoices[Random.Range(0, allChoices.Length)];
+        Tower random = allChoices[Random.Range(0, allChoices.Length)];
         buildManager.addToList(random);
     }
 
     void addAll()
     {
-        foreach ((int, ScriptableObject) x in allChoices)
+        foreach (Tower x in allChoices)
             buildManager.addToList(x);
     }
 }

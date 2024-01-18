@@ -13,15 +13,28 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
 
     [SerializeField] private int maxHealth;
     private int Health;
-    private GameObject manager;
+    private GameManager manager;
+    private Transform Player;
+    private SpriteRenderer spriteRenderer;
 
     private void Start() 
     { 
-        manager = GameObject.FindGameObjectWithTag("Managers");
+        manager = FindObjectOfType<GameManager>();
+        Player = FindObjectOfType<Movement>().gameObject.transform;
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
         Health = maxHealth;
 
         AddPhysics2DRaycaster();
     }
+    private void Update()
+    {
+        if (Player.position.y >= 0)
+            spriteRenderer.sortingOrder = 5;
+        else
+            spriteRenderer.sortingOrder = 3;
+    }
+
     void TakeDamage(int damage)
     {
         Health -= damage;
@@ -47,7 +60,7 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     public void setHealth(int health) { Health = health; }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (GameObject.FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
+        if (manager.getGameState() == GameManager.GameState.Idle)
             onClicked?.Invoke(this);
     }
 

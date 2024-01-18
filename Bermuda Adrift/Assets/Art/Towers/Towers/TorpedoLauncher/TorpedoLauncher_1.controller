@@ -566,10 +566,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: UpgradeA
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3712656373987626425}
   m_Solo: 0
@@ -1178,7 +1175,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TLA2Transition
+  m_Name: A2Transition
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1205,7 +1202,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TLB2Transition
+  m_Name: B2Transition
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

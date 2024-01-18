@@ -24,7 +24,6 @@ public class PlayerData {
 
         foreach (PlaceableData pd in towers)
         {
-            Debug.Log(pd.getSaveString());
             saveStrings.Add(pd.getSaveString());
             locations.Add(pd.getLocation().x);
             locations.Add(pd.getLocation().y);

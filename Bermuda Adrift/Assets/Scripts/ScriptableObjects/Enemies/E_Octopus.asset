@@ -21,6 +21,7 @@ MonoBehaviour:
   xp: 40
   scrap: 40
   rarity: 0.1
+  roundLimit: 10
   anim: {fileID: 9100000, guid: b5be241ef544cae44801bb419578b69a, type: 2}
   xSize: 1
   ySize: 1.25
@@ -30,3 +31,6 @@ MonoBehaviour:
   minion: {fileID: 0}
   bossWarning: 
   bossApproaching: 
+  availableAttacks: 
+  phase2switch: 0
+  Phase2ExtraAttacks: 

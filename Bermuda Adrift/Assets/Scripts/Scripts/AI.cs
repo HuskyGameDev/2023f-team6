@@ -63,7 +63,7 @@ public class AI : MonoBehaviour
 
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss && enemyManager.getRound() % 10 == 0)    //Boss health scaling during boss rounds, but not when a normal enemy
         {    
-            Health = (int) (enemy.getHealth() * Mathf.Pow(1.15f, enemyManager.getRound() / 10f));
+            Health = (int) (enemy.getHealth() * Mathf.Pow(1.25f, enemyManager.getRound() / 10f));
             newMaxHealth = Health;
         }
 

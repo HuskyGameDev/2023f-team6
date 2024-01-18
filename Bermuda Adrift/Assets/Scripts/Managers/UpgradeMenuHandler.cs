@@ -175,12 +175,13 @@ public class UpgradeMenuHandler : MonoBehaviour
         }
         if (headerText.text.CompareTo("") == 0) headerText.text = tower.getName();
     }
-    
     void updateMenu(Barriers barrier)
     {
         currentTower = null;
         centerpiece = null;
         currentBarrier = barrier;
+
+        destroyButton.GetComponent<Button>().interactable = true;
 
         BroadcastMessage("setBarrier", barrier.getBarrier());
         //BroadcastMessage("setUpgradeLevel", towerAI.getUpgradeLevel());

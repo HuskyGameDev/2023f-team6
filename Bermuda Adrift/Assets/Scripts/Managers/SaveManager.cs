@@ -78,7 +78,6 @@ public class SaveManager : MonoBehaviour
             towers.Add(tower);
             i++;
         }
-        Debug.Log("Got this far");
         build.loadPlaceables(towers);
     }
 
@@ -86,7 +85,7 @@ public class SaveManager : MonoBehaviour
         if(!saved2){
             saved2 = true;
             SaveSystem.savePlayer(enemies, center, game, build);
-            Debug.Log("            Saved at end of round");
+            Debug.Log("Saved at end of round");
             saved1 = false;
         }
     }

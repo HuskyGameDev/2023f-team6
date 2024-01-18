@@ -37,11 +37,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
         if (!placed) {
             if (Input.GetMouseButtonDown(0))
             {
-                if ((Mathf.Abs(gameObject.transform.position.x) < 7 && Mathf.Abs(gameObject.transform.position.x) > 1 && (Mathf.Abs(gameObject.transform.position.y) < 1)    // Left/Right channels
-                    ||
-                    Mathf.Abs(gameObject.transform.position.y) < 7 && Mathf.Abs(gameObject.transform.position.y) > 1 && (Mathf.Abs(gameObject.transform.position.x) < 1))
-                    &&
-                    buildManager.approvePosition(gameObject))
+                if (buildManager.approvePosition(gameObject))
                 {
                     OnTowerPlaced?.Invoke();
                     OnTowerPlacedBM?.Invoke(gameObject);
@@ -89,8 +85,10 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     private void TakeDamage(int damage)
     {
         health -= (int) (damage * armor);
+        Debug.Log("Barrier health: " + health);
         if (health <= 0)
         {
+            Debug.Log("Destroying barrier");
             buildManager.removePosition(gameObject);
             Destroy(gameObject);
         }
@@ -101,7 +99,6 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     }
     public void destroyBarrier()
     {
-        //Play destroyed animation
         buildManager.removePosition(gameObject);
         FindObjectOfType<GameManager>().addScrap(barrier.getCost() / 2);
         Destroy(gameObject);
@@ -167,7 +164,8 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (placed && GameObject.FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle && barrier.getName().CompareTo("Barricade") != 0)
+        Debug.Log("OnPointerDown");
+        if (placed && FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle && barrier.getName().CompareTo("Barricade") != 0)
             onClicked?.Invoke(this);
     }
 

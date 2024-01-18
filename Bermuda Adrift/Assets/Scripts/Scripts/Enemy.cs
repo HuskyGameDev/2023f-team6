@@ -25,6 +25,7 @@ public class Enemy : ScriptableObject
 
     //0 for no spawn, 1 for guaranteed spawn
     [SerializeField] private float rarity;
+    [SerializeField] private int roundLimit;    //Won't appear before the given round. Good for high-scaled enemies so you don't get flattened in the early game
 
     [SerializeField] private RuntimeAnimatorController anim;
     [SerializeField] private float xSize;
@@ -54,6 +55,7 @@ public class Enemy : ScriptableObject
     public int getXP() { return xp; }
     public int getScrap() { return scrap; }
     public float getRarity() { return rarity; }
+    public int getRoundLimit() { return roundLimit; }
     public RuntimeAnimatorController getAnim() { return anim; }
     public float getXSize() { return xSize; }
     public float getYSize() { return ySize; }

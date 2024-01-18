@@ -5,7 +5,6 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private float speed;
-    private Rigidbody2D rb;
     private Vector2 input;
 
     Animator anim;
@@ -19,7 +18,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         AimVector = new Vector3();
     }
@@ -56,6 +54,9 @@ public class Movement : MonoBehaviour
     private void move()
     {
         int layerMask = 1 << 4;
+        int channelMask = 1 << 6;
+        int bridgeMask = 1 << 7;
+
         float xDirection = 1;
         if (input.x < 0)
             xDirection = -1;
@@ -63,14 +64,23 @@ public class Movement : MonoBehaviour
         if (input.y < 0)
             yDirection = -1;
 
-        if (Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.right * 0.3357f * xDirection), Vector3.right * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, layerMask).collider != null)
+        //if going to hit water or channel and not on a bridge, don't move that direction
+        if ((Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.right * 0.3357f * xDirection), Vector3.right * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, layerMask).collider != null
+            ||
+            Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.right * 0.3357f * xDirection), Vector3.right * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.right * 0.3357f * xDirection), Vector3.right * xDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).x, bridgeMask).collider == null)
         {
             xDirection = 0;
         }
         else
             xDirection = input.x;
 
-        if (Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.up * 0.09779f * yDirection), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, layerMask).collider != null)
+        if ((Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.up * 0.09779f * yDirection), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, layerMask).collider != null
+            ||
+            Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.up * 0.09779f * yDirection), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(transform.position + (Vector3.down * 0.58f) + (Vector3.up * 0.09779f * yDirection), Vector3.up * yDirection, (input * speed * getSpeed() * Time.fixedDeltaTime * stop).y, bridgeMask).collider == null)
         {
             yDirection = 0;
         }

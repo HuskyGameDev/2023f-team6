@@ -68,7 +68,7 @@ public class Hitscan : MonoBehaviour
         else
             timer -= Time.deltaTime;
 
-        if (landed)
+        if (landed && AOETimer != -1)
         {
             AOETimer -= Time.deltaTime;
 

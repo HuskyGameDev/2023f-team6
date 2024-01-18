@@ -31,7 +31,7 @@ public class EnemyManager : MonoBehaviour
         enemySet = randomizedSet();
         //displayEnemySet();
     }
-   
+
     private List<Enemy> randomizedSet() //Gives a randomized list of a bunch of enemies. All the enemies' rarities add up to at least 1
     {
         List<Enemy> newSet = new List<Enemy>();
@@ -47,8 +47,11 @@ public class EnemyManager : MonoBehaviour
 
             while (newSet.Contains(randomEnemy)) randomEnemy = allEnemies[Random.Range(0, allEnemies.Length)];
 
-            newSet.Add(randomEnemy);
-            totalRarity += randomEnemy.getRarity();
+            if (Round >= randomEnemy.getRoundLimit())
+            {
+                newSet.Add(randomEnemy);
+                totalRarity += randomEnemy.getRarity();
+            }
         }
 
         return newSet;

@@ -61,7 +61,7 @@ public class TowerAI : MonoBehaviour
     private void Start()
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-             //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
+        anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
         //colliders = new BoxCollider2D[1];
         //colliders[0] = gameObject.GetComponent<BoxCollider2D>();
         if (tower.getBaseSprite() == null)
@@ -92,7 +92,7 @@ public class TowerAI : MonoBehaviour
                     OnTowerPlacedBM?.Invoke(gameObject);
                     nozzle.GetComponent<TurretMiddleMan>().openUpgradeMenu();
                     placed = true;
-                    anim.SetTrigger("Placed");
+                    anim.Play("Setup");
                     gameManager.spendScrap(tower.getCost());
                 }
             }
@@ -114,9 +114,6 @@ public class TowerAI : MonoBehaviour
             
             return;
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            fire();
 
         if (getRange() != 1)
         {
@@ -152,8 +149,8 @@ public class TowerAI : MonoBehaviour
         else
             gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
 
-        nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
         anim = nozzle.GetComponent<Animator>();
+        nozzle.GetComponent<Animator>().runtimeAnimatorController = tower.getAnim();    //If run at the same time as Start, could have some bugs with this reference
     }
     public void destroyTower()
     {
@@ -183,7 +180,7 @@ public class TowerAI : MonoBehaviour
         {
             if (!gameManager.cost(tower.U1getCost())) { return; }
 
-            anim.SetTrigger("UpgradeA");    //Default upgrade path
+            anim.Play("U1Transition");
             upgradeLevel++;
 
             bulletScript = tower.U1getBullet();
@@ -200,7 +197,7 @@ public class TowerAI : MonoBehaviour
             {
                 if (!gameManager.cost(tower.UA1getCost())) { return; }
 
-                anim.SetTrigger("UpgradeA");
+                anim.Play("A1Transition");
                 upgradeLevel++; //Sets upgrade level to 2
 
                 bulletScript = tower.UA1getBullet();
@@ -214,7 +211,7 @@ public class TowerAI : MonoBehaviour
             {
                 if (!gameManager.cost(tower.UB1getCost())) { return; }
 
-                anim.SetTrigger("UpgradeB");
+                anim.Play("B1Transition");
                 upgradeLevel += 2;  //Sets upgrade level to 3
 
                 bulletScript = tower.UB1getBullet();
@@ -231,7 +228,7 @@ public class TowerAI : MonoBehaviour
             {
                 if (!gameManager.cost(tower.UA2getCost())) { return; }
 
-                anim.SetTrigger("UpgradeA");    //Default upgrade path
+                anim.Play("A2Transition");    //Default upgrade path
                 upgradeLevel += 2;  //Fully upgraded A branch is 4
 
                 bulletScript = tower.UA2getBullet();
@@ -245,7 +242,7 @@ public class TowerAI : MonoBehaviour
             {
                 if (!gameManager.cost(tower.UB2getCost())) { return; }
 
-                anim.SetTrigger("UpgradeA");    //Default upgrade path, don't need to differentiate after the branch
+                anim.Play("B2Transition");    //Default upgrade path, don't need to differentiate after the branch
                 upgradeLevel += 2;  //Fully upgraded B branch is 5
 
                 bulletScript = tower.UB2getBullet();
@@ -285,8 +282,8 @@ public class TowerAI : MonoBehaviour
     }
     public void setUpgrade(int upgradeLevel)   //Sets a tower's upgrade level and makes the animations match
     {
-        this.upgradeLevel = upgradeLevel;
         Debug.Log(upgradeLevel);
+        this.upgradeLevel = upgradeLevel;
 
         if (upgradeLevel <= 0) anim.Play("Setup");
         if (upgradeLevel == 1) anim.Play("U1Transition");

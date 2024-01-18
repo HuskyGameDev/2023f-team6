@@ -23,9 +23,9 @@ MonoBehaviour:
   altSpecial: {fileID: 0}
   defPassive: {fileID: 11400000, guid: a19336e0cd15fbd4cb8725f5e36be50c, type: 2}
   altPassive: {fileID: 0}
-  description: The pilot is a unique survivor primary dependent on dealing damage
+  description: The pilot is a unique survivor primarily dependent on dealing damage
     to large groups of enemies all at once.
-  name: The Pilot
+  characterName: 
   mainBodySprite: {fileID: -2010298464, guid: 108c2fb3a2d50454e9e6d9e20053618f, type: 3}
   speed: 5
   unlocked: 1

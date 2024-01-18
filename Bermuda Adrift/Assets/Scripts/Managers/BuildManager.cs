@@ -42,13 +42,11 @@ public class PlaceableData
         {
             towerScriptable = (Tower) go;
             saveString = towerScriptable.getSaveString();
-            Debug.Log("Try: " + towerScriptable.getDamageMult());
         }
         catch (Exception e)
         {
             barrierScriptable = (BarrierScriptable) go;
             saveString = barrierScriptable.getSaveString();
-            Debug.Log("Catch: " + barrierScriptable.getStartingSprite());
         }
 
     }
@@ -101,24 +99,23 @@ public class BuildManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject[] towerPrefabs;
-    [SerializeField] private BarrierScriptable alwaysAvailable;
+    [SerializeField] private BarrierScriptable barrier1;
+    [SerializeField] private BarrierScriptable barrier2;
 
     private GameManager gameManager;
     private GameObject mostRecent;
-    private int mostRecentInt;
-    private ScriptableObject mostRecentSO;
+    private Tower mostRecentTower;
 
-    private int activeIndex;
     private float towerRange;
 
-    private List<(int, ScriptableObject)> placeables;
+    private List<Tower> placeables;
     private List<PlaceableData> placeableDatas;
 
     #region Setup stuff
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
-        placeables = new List<(int, ScriptableObject)>();
+        placeables = new List<Tower>();
         placeableDatas = new List<PlaceableData>();
     }
     void Start()
@@ -142,62 +139,74 @@ public class BuildManager : MonoBehaviour
     private void instantiateBuyables()  //Creates the buyable tower buttons
     {
         //Dividing + vectors to make the menu consistent with different resolutions
-        float xPadding = (2.8f + 21.33f) / (21.33f * 2);
-        float yPadding = (3 + 12) / 24f;
-        float initialX = (17.1f + 21.33f + transform.parent.gameObject.GetComponent<RectTransform>().anchoredPosition.x - 16.09f) / (21.33f * 2);
-        float initialY = (3 + 12) / 24f;
+        float xPadding = (3f + 21.33f) / (21.33f * 2);
+        float yPadding = (2.9f + 12) / 24f;
+        float initialX = (17.3f + 21.33f + transform.parent.gameObject.GetComponent<RectTransform>().anchoredPosition.x - 16.09f) / (21.33f * 2);
+        float initialY = (3.6f + 12) / 24f;
         Vector3 initial = Camera.main.ViewportToWorldPoint(new Vector3(initialX, initialY));
         Vector3 padding = Camera.main.ViewportToWorldPoint(new Vector3(xPadding, yPadding));
 
         int xMult = 0;
         int yMult = 0;
 
-        GameObject alwaysAvailableButton = new GameObject();
-        Button AAbutton = alwaysAvailableButton.AddComponent<Button>();
-        Image AAimage = alwaysAvailableButton.AddComponent<Image>();
-        ButtonHover AAbuttonHover = alwaysAvailableButton.AddComponent<ButtonHover>();
-        AAbuttonHover.barrier = alwaysAvailable;
-        ButtonDescription AAbuttonDescription = alwaysAvailableButton.AddComponent<ButtonDescription>();
-        AAbuttonDescription.SendMessage("setBarrier", alwaysAvailable); ;
-        AAimage.sprite = alwaysAvailable.getThumbnail();
-        AAbutton.targetGraphic = AAimage;
-        alwaysAvailableButton.transform.parent = this.transform;
-        AAbutton.onClick.AddListener(() => TowerButtonClick(alwaysAvailable));
-        alwaysAvailableButton.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        alwaysAvailableButton.transform.position = new Vector3(initial.x, initial.y + padding.y * 1, transform.position.z);
+        GameObject barrier1Button = new GameObject();
+        Button B1button = barrier1Button.AddComponent<Button>();
+        Image B1image = barrier1Button.AddComponent<Image>();
+        ButtonHover B1buttonHover = barrier1Button.AddComponent<ButtonHover>();
+        B1buttonHover.barrier = barrier1;
+        ButtonDescription B1buttonDescription = barrier1Button.AddComponent<ButtonDescription>();
+        B1buttonDescription.SendMessage("setBarrier", barrier1); ;
+        B1image.sprite = barrier1.getThumbnail();
+        B1button.targetGraphic = B1image;
+        barrier1Button.transform.parent = transform;
+        B1button.onClick.AddListener(() => TowerButtonClick(barrier1));
+        barrier1Button.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        barrier1Button.transform.position = new Vector3(initial.x, initial.y + padding.y * 1, transform.position.z);
 
-        foreach ((int,ScriptableObject) x in placeables)
+        if (barrier2 != null)
         {
-            if (x.Item1 == 0)   //0 if a tower
+            GameObject barrier2Button = new GameObject();
+            Button B2button = barrier2Button.AddComponent<Button>();
+            Image B2image = barrier2Button.AddComponent<Image>();
+            ButtonHover B2buttonHover = barrier2Button.AddComponent<ButtonHover>();
+            B2buttonHover.barrier = barrier2;
+            ButtonDescription B2buttonDescription = barrier2Button.AddComponent<ButtonDescription>();
+            B2buttonDescription.SendMessage("setBarrier", barrier2); ;
+            B2image.sprite = barrier2.getThumbnail();
+            B2button.targetGraphic = B2image;
+            barrier2Button.transform.parent = transform;
+            B2button.onClick.AddListener(() => TowerButtonClick(barrier2));
+            barrier2Button.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            barrier2Button.transform.position = new Vector3(initial.x + padding.x * 1, initial.y + padding.y * 1, transform.position.z);
+        }
+
+        foreach (Tower x in placeables)
+        {
+            GameObject tower = new GameObject();
+            Button button = tower.AddComponent<Button>();
+            Image image = tower.AddComponent<Image>();
+            ButtonHover buttonHover = tower.AddComponent<ButtonHover>();
+            ButtonDescription buttonDescription = tower.AddComponent<ButtonDescription>();
+            buttonDescription.SendMessage("setTower", x);
+            buttonHover.tower = x;
+            image.sprite = x.getImage();
+            button.targetGraphic = image;
+            tower.transform.parent = transform;
+            button.onClick.AddListener(() => TowerButtonClick(x));
+
+            if (xMult % 2 == 0)
             {
-                GameObject tower = new GameObject();
-                Button button = tower.AddComponent<Button>();
-                Image image = tower.AddComponent<Image>();
-                ButtonHover buttonHover = tower.AddComponent<ButtonHover>();
-                ButtonDescription buttonDescription = tower.AddComponent<ButtonDescription>();
-                buttonDescription.SendMessage("setTower", (Tower) x.Item2);
-                buttonHover.tower = (Tower) x.Item2;
-                image.sprite = ((Tower)x.Item2).getImage();
-                button.targetGraphic = image;
-                tower.transform.parent = this.transform;
-                button.onClick.AddListener(() => TowerButtonClick(((Tower)x.Item2)));
-
-                if (xMult % 2 == 0)
-                {
-                    tower.transform.position = new Vector3(initial.x, initial.y - padding.y * yMult, transform.position.z);
-                }
-                else
-                {
-                    tower.transform.position = new Vector3(initial.x + padding.x, initial.y - padding.y * yMult, transform.position.z);
-                    yMult++;
-                }
-
-                tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-                xMult++;
+                tower.transform.position = new Vector3(initial.x, initial.y - padding.y * yMult, transform.position.z);
             }
-            else if (x.Item1 == 1)  //1 if a barrier
+            else
             {
+                tower.transform.position = new Vector3(initial.x + padding.x, initial.y - padding.y * yMult, transform.position.z);
+                yMult++;
+            }
+
+            tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            xMult++;
+            /*
                 GameObject barrier = new GameObject();
                 Button button = barrier.AddComponent<Button>();
                 Image image = barrier.AddComponent<Image>();
@@ -223,7 +232,7 @@ public class BuildManager : MonoBehaviour
                 barrier.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
                 xMult++;
-            }
+            */
         }
 
         /*
@@ -296,7 +305,7 @@ public class BuildManager : MonoBehaviour
         clearBuyables();
         instantiateBuyables();
     }
-    public void addToList((int, ScriptableObject) script)   //Add an option to the list available. 0 for tower, 1 for barrier
+    public void addToList(Tower script)   //Add an option to the list available. 0 for tower, 1 for barrier
     {
         if (placeables.Count >= 10) return;
 
@@ -306,7 +315,7 @@ public class BuildManager : MonoBehaviour
         placeables.Add(script);
         reloadBuyables();
     }
-    public void removeFromList((int, ScriptableObject) script) { placeables.Remove(script); reloadBuyables(); } //Remove a buyable button from the list and reload all buttons
+    public void removeFromList(Tower script) { placeables.Remove(script); reloadBuyables(); } //Remove a buyable button from the list and reload all buttons
     #endregion
 
     #region Tower/Barrier placing
@@ -315,9 +324,9 @@ public class BuildManager : MonoBehaviour
         if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
         {
             OnTowerPicked?.Invoke(scriptable);
+
             mostRecent = Instantiate(towerPrefabs[0]);
-            mostRecentInt = 0;
-            mostRecentSO = scriptable;
+            mostRecentTower = scriptable;
 
             mostRecent.SendMessage("place", scriptable);
             if (scriptable.getRange() > 0)
@@ -333,9 +342,9 @@ public class BuildManager : MonoBehaviour
         if (gameManager.cost(scriptable.getCost()) && recentWasPlaced())
         {
             OnBarrierPicked?.Invoke(scriptable);
+
             mostRecent = Instantiate(towerPrefabs[1]);
-            mostRecentInt = 1;
-            mostRecentSO = scriptable;
+            mostRecentTower = null;
 
             mostRecent.SendMessage("setBarrier", scriptable);
 
@@ -380,8 +389,8 @@ public class BuildManager : MonoBehaviour
         }
 
         if (type == 1)
-            return true;
-        return raycastCorners(position);
+            return raycastCornersBarrier(position);
+        return raycastCornersTower(position);
     }
     public bool approvePosition(GameObject go)  //Goes through the positions of all other towers and checks for overlaps or being out of bounds
     {
@@ -399,22 +408,70 @@ public class BuildManager : MonoBehaviour
         }
 
         if (go.GetComponent<Barriers>() != null)
-            return true;
-        else return raycastCorners(go.transform.position);
+            return raycastCornersBarrier(go.transform.position);
+        else
+            return raycastCornersTower(go.transform.position);
     }
-    private bool raycastCorners(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water
+    private bool raycastCornersTower(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water or a channel
     {
-        int layerMask = 1 << 4;
+        int waterMask = 1 << 4;
+        int channelMask = 1 << 6;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, layerMask).collider != null)    //Top right corner
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, channelMask).collider != null)    //Top right corner
             return false;
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, layerMask).collider != null)  //Down right corner
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, channelMask).collider != null)  //Down right corner
             return false;
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, layerMask).collider != null)  //Up left corner
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, channelMask).collider != null)  //Up left corner
             return false;
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, layerMask).collider != null)  //Down left corner
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, channelMask).collider != null)  //Down left corner
             return false;
-        if (Mathf.Abs(position.x) < 2 || Mathf.Abs(position.y) < 2) //Can place on bridges otherwise
+
+
+        return true;
+    }
+    private bool raycastCornersBarrier(Vector3 position) //If in a channel, not touching the raft, and not 
+    {
+        int channelMask = 1 << 6;
+        int raftMask = 1 << 3;
+        int waterMask = 1 << 4;
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, waterMask).collider != null)    //Top right corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, waterMask).collider != null)  //Down right corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, waterMask).collider != null)  //Up left corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, waterMask).collider != null)  //Down left corner
             return false;
 
         return true;
@@ -434,7 +491,6 @@ public class BuildManager : MonoBehaviour
     }
     public void loadPlaceables(List<PlaceableData> list)    //Loads and places all towers/barriers in the given list
     {
-        Debug.Log("Loading");
         clearAllBuildings();
 
         placeableDatas = list;
@@ -442,10 +498,8 @@ public class BuildManager : MonoBehaviour
 
         foreach (PlaceableData pd in list)
         {
-            Debug.Log("Trying to load");
             if (pd.getPlaceableType() == typeof(TowerAI))   //I think this should work
             {
-                Debug.Log("Loading a tower");
                 currentBuilding = Instantiate(towerPrefabs[0], pd.getLocation(), Quaternion.identity);
 
                 if (pd.hasScriptable())
@@ -462,7 +516,6 @@ public class BuildManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Loading a barrier");
                 currentBuilding = Instantiate(towerPrefabs[1], pd.getLocation(), Quaternion.identity);
 
                 if (pd.hasScriptable())
@@ -529,10 +582,8 @@ public class BuildManager : MonoBehaviour
         {
             output += pd.getPlaceableData() + ", ";
         }
-        Debug.Log(output);
     }
     public List<PlaceableData> GetPlaceableDatas() {
-        Debug.Log("placeableDatas requested");
         printPlaceableDatas();
         return placeableDatas;
     }
@@ -540,7 +591,8 @@ public class BuildManager : MonoBehaviour
     {
         placeableDatas.Add(new PlaceableData(go));
 
-        removeFromList((mostRecentInt, mostRecentSO));
+        if (mostRecentTower != null)
+            removeFromList(mostRecentTower);
     }
     public void removePosition(GameObject go)
     {
@@ -585,6 +637,7 @@ public class BuildManager : MonoBehaviour
     }
     #endregion
 
+    #region Get/Set Functions
     public TowerAI getRandomTower()
     {
         List<TowerAI> towers = new List<TowerAI>();
@@ -602,4 +655,8 @@ public class BuildManager : MonoBehaviour
     }
     public float getTowerRange() { return towerRange; }
     public int blueprintNumber() { return placeables.Count; }
+    public void setBarrier1(BarrierScriptable b) { barrier1 = b; }
+    public void setBarrier2(BarrierScriptable b) { barrier2 = b; }
+    public void clearBarrier2() { barrier2 = null; }
+    #endregion
 }
