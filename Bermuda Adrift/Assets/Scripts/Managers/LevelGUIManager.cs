@@ -18,7 +18,7 @@ public class LevelGUIManager : MonoBehaviour
     private Tower option1;
     private Tower option2;
     private Tower option3;
-    int previousLevel;
+    int previousLevel = 1;
 
     Tower activeTower;
 

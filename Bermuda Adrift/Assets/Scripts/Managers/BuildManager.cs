@@ -79,8 +79,7 @@ public class PlaceableData
     }
     public int getUpgradeLevel() 
     {
-        if (towerData == null)
-            return 0;
+        if (towerData == null) { return upgradeLevel; }
 
         upgradeLevel = towerData.getUpgradeLevel();
         return upgradeLevel;
@@ -512,7 +511,7 @@ public class BuildManager : MonoBehaviour
                 }
 
                 currentBuilding.SendMessage("placeTower");
-                currentBuilding.SendMessage("setUpgrade", pd.getUpgradeLevel());
+                currentBuilding.GetComponent<TowerAI>().StartCoroutine("setUpgrade", pd.getUpgradeLevel());
             }
             else
             {

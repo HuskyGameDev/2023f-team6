@@ -62,8 +62,7 @@ public class TowerAI : MonoBehaviour
     {
         nozzle = Instantiate(nozzle, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         anim = nozzle.GetComponent<Animator>();     //Starting-up animation could be the default animation which then goes into the idle animation unconditionally
-        //colliders = new BoxCollider2D[1];
-        //colliders[0] = gameObject.GetComponent<BoxCollider2D>();
+        anim.runtimeAnimatorController = tower.getAnim();
         if (tower.getBaseSprite() == null)
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         else
@@ -280,17 +279,45 @@ public class TowerAI : MonoBehaviour
 
         return returnScrap;
     }
-    public void setUpgrade(int upgradeLevel)   //Sets a tower's upgrade level and makes the animations match
+    public IEnumerator setUpgrade(int upgradeLevel)   //Sets a tower's upgrade level and makes the animations match
     {
-        Debug.Log(upgradeLevel);
-        this.upgradeLevel = upgradeLevel;
+        yield return new WaitForEndOfFrame();
 
-        if (upgradeLevel <= 0) anim.Play("Setup");
-        if (upgradeLevel == 1) anim.Play("U1Transition");
-        if (upgradeLevel == 2) anim.Play("A1Transition");
-        if (upgradeLevel == 3) anim.Play("B1Transition");
-        if (upgradeLevel == 4) anim.Play("A2Transition");
-        if (upgradeLevel == 5) anim.Play("B2Transition");
+        if (upgradeLevel <= 0) 
+        { 
+            anim.Play("Setup");
+            this.upgradeLevel = 0;
+        }
+        if (upgradeLevel == 1) 
+        {
+            gameManager.addScrap(tower.U1getCost());
+            this.upgradeLevel = 0;
+            upgrade(true);
+        }
+        if (upgradeLevel == 2)
+        {
+            gameManager.addScrap(tower.UA1getCost());
+            this.upgradeLevel = 1;
+            upgrade(true);
+        }
+        if (upgradeLevel == 3)
+        {
+            gameManager.addScrap(tower.UB1getCost());
+            this.upgradeLevel = 1;
+            upgrade(false);
+        }
+        if (upgradeLevel == 4)
+        {
+            gameManager.addScrap(tower.UA2getCost());
+            this.upgradeLevel = 2;
+            upgrade(true);
+        }
+        if (upgradeLevel == 5)
+        {
+            gameManager.addScrap(tower.UB2getCost());
+            this.upgradeLevel = 3;
+            upgrade(true);
+        }
     }
     #endregion
 
