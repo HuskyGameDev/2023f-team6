@@ -15,12 +15,16 @@ public class PlayerData {
     List<string> saveStrings;
     List<float> locations;
     List<int> upgrades;
+    List<Tower> placeables;
+    List<string> blueprintStrings;
 
     public PlayerData(EnemyManager enemies, Centerpiece center, GameManager game, BuildManager build){
         towers = build.GetPlaceableDatas();
+        placeables = build.getPlaceables();
         saveStrings = new List<string>();
         locations = new List<float>();
         upgrades = new List<int>();
+        blueprintStrings = new List<string>();
 
         foreach (PlaceableData pd in towers)
         {
@@ -32,6 +36,12 @@ public class PlayerData {
 
         }
         towers = null;
+
+        foreach (Tower t in placeables)
+        {
+            blueprintStrings.Add(t.getSaveString());
+        }
+        placeables = null;
 
         round = enemies.getRound();
         total = enemies.getTotal();
@@ -84,5 +94,10 @@ public class PlayerData {
 
     public List<int> getUpgrades(){
         return upgrades;
+    }
+
+    public List<string> getBlueprints()
+    {
+        return blueprintStrings;
     }
 }

@@ -657,5 +657,13 @@ public class BuildManager : MonoBehaviour
     public void setBarrier1(BarrierScriptable b) { barrier1 = b; }
     public void setBarrier2(BarrierScriptable b) { barrier2 = b; }
     public void clearBarrier2() { barrier2 = null; }
+    public List<Tower> getPlaceables() { return placeables; }
+    public void setPlaceables(List<Tower> p)
+    {
+        foreach (Tower t in p)
+        {
+            addToList(t);
+        }
+    }
     #endregion
 }

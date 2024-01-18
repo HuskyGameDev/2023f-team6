@@ -186,7 +186,6 @@ public class EnemyManager : MonoBehaviour
     }
     public void setRound(int newRound) {
         Round = newRound;
-        onRoundEnd?.Invoke(Round);
     }
     public void setTotal(int newTotal) {
         total = newTotal;

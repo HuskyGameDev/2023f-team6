@@ -70,6 +70,9 @@ public class SaveManager : MonoBehaviour
         List<float> locations = data.getLocations();
         List<int> upgrades = data.getUpgrades();
         List<PlaceableData> towers = new List<PlaceableData>();
+        List<Tower> blueprints = new List<Tower>();
+        List<string> blueStrings = data.getBlueprints();
+
         int i = 0;
         foreach(string s in saveStrings){
             int locIndex = i*3;
@@ -79,6 +82,13 @@ public class SaveManager : MonoBehaviour
             i++;
         }
         build.loadPlaceables(towers);
+        
+        foreach(string s in blueStrings)
+        {
+            //PlaceableData tower = new PlaceableData(pdb.getMatchingObject(s));
+            blueprints.Add((Tower) pdb.getMatchingObject(s));
+        }
+        build.setPlaceables(blueprints);
     }
 
     public void endRoundSave(int i){
