@@ -114,16 +114,19 @@ public class TowerAI : MonoBehaviour
             return;
         }
 
-        if (getRange() != 1)
-        {
-            if (getTowerRange() >= 0)
-                gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange() * getRange();
-        }
-        if (target != null) //Turn towards target every frame
-            targetPoint();
-
         if (gameManager.getGameState() == GameManager.GameState.BossRound || gameManager.getGameState() == GameManager.GameState.Defend)
+        {
             newTarget();
+
+            if (target != null) //Turn towards target every frame
+                targetPoint();
+
+            if (getRange() != 1)
+            {
+                if (getTowerRange() >= 0)
+                    gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange() * getRange();
+            }
+        }
     }
     private void placeTower() { placed = true; }
 
@@ -138,9 +141,13 @@ public class TowerAI : MonoBehaviour
         lightningResistance = tower.getLightningResistance() + 1;
 
         extras = tower.getExtraPriorities();
-        if (extras.Length > 0) { sortExtras(); }
-
-        changePriorityFunction(Priority.Closest);
+        if (extras.Length > 0) 
+        {
+            sortExtras();
+            changePriorityFunction(extras[0]);
+        }
+        else
+            changePriorityFunction(Priority.Closest);
 
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         if (getTowerRange() >= 0)
@@ -516,20 +523,10 @@ public class TowerAI : MonoBehaviour
     }
     float getScoreByWaterStrong(GameObject g)
     {
-        if (g == null || g.GetComponent<AI>() == null || g.GetComponent<AI>().getType() == Enemy.Types.Airborne || g.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-        {
-            return 0;
-        }
-
         return getScoreByStrongest(g);
     }
     float getScoreByAirStrong(GameObject g)
     {
-        if (g == null || g.GetComponent<AI>() == null || g.GetComponent<AI>().getType() == Enemy.Types.Underwater || g.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-        {
-            return 0;
-        }
-
         return getScoreByStrongest(g);
     }
     public Priority getPriority()
@@ -843,7 +840,7 @@ public class TowerAI : MonoBehaviour
         if (buffs == null) return 1;
 
         float range = 1;
-        for (int i = 0; buffs[i] != null && i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
         {
             range *= buffs[i].getRange();
         }
@@ -909,6 +906,11 @@ public class TowerAI : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision) //If the collision is an enemy, add it to the list
     {
         if (!collision.CompareTag("Enemy")) return;
+
+        //Checks for onlyWater and onlyAir done here instead of in the score functions
+        if (getPriority() == Priority.OnlyWater && (collision.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)) return;
+        if (getPriority() == Priority.OnlyAir && (collision.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)) return;
+
         AddTarget(collision.gameObject);
     }
     public void OnTriggerExit2D(Collider2D collision)   //Remove an enemy from the list of targets when it exits the range

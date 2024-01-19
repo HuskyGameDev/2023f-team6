@@ -119,6 +119,10 @@ public class BuildManager : MonoBehaviour
     }
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();  //Having some troubles with placeable datas being null, so I have these in both awake and start to be safe
+        placeables = new List<Tower>();
+        placeableDatas = new List<PlaceableData>();
+
         clearBuyables();
         reloadBuyables();
     }

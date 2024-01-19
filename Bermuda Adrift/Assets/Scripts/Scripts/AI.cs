@@ -549,7 +549,7 @@ public class AI : MonoBehaviour
         if (newDebuff == null) { yield break; }
         addDebuff(newDebuff);
 
-        if (newDebuff.getStunned())
+        if (newDebuff.getStunned() && enemy.getType() != Enemy.Types.WaterBoss && enemy.getType() != Enemy.Types.AirborneBoss)
             stop = true;
 
         //if (getDistracted())
@@ -638,6 +638,12 @@ public class AI : MonoBehaviour
     private float getSpeedMult()    //Gives total speed penalty/buff (multiplicative)
     {
         float speedMult = 1;
+
+        if (Mathf.Abs(transform.position.x) > (Camera.main.transform.position.x + Camera.main.orthographicSize) * 1.5f || Mathf.Abs(transform.position.y) > Camera.main.transform.position.y + Camera.main.orthographicSize) //Extra speed boost until fully on screen
+            speedMult = 2;
+        else if (damage == 0 && enemy.getSpeed() < 3 && Physics2D.Raycast(transform.position, transform.position, 0.01f, 1 << 6).collider != null)   //If a slow enemy hasn't taken damage and isn't in a channel, give a speed buff
+            speedMult = 1.5f;
+
         for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
         {
             speedMult *= debuffs[i].getSpeed();

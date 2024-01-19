@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   meleeHitboxes: {fileID: 0}
-  bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
-  buff: {fileID: 0}
+  bullet: {fileID: 11400000, guid: 59dc73c01c0c4854cb7ea69b778fd8b9, type: 2}
   destinedBullet: {fileID: 0}
+  targetedAttacker: {fileID: 0}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 0}
   bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
   slot: 1
   cooldown: 0

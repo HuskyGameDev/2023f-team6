@@ -19,23 +19,9 @@ public class SaveManager : MonoBehaviour
     }
 
     private void Update(){
-        state = game.getGameState();
-        if(state == GameManager.GameState.Defend){
-            beginRoundSave();
-        }
-
-        /*
-        if(state == GameManager.GameState.Idle){
-            endRoundSave();
-        }
-        */
 
         if(Input.GetKeyDown("m")){
             LoadPlayer();
-        }
-
-        if(state == GameManager.GameState.GameOver){
-            DeletePlayer();
         }
 
         if(Input.GetKeyDown("9")){
@@ -44,7 +30,15 @@ public class SaveManager : MonoBehaviour
     }
 
     private void OnEnable(){
-            EnemyManager.onRoundEnd += endRoundSave;
+        EnemyManager.onRoundEnd += endRoundSave;
+        GameManager.OnRoundStart += beginRoundSave;
+        GameManager.OnGameEnd += DeletePlayer;
+    }
+    private void OnDisable()
+    {
+        EnemyManager.onRoundEnd -= endRoundSave;
+        GameManager.OnRoundStart -= beginRoundSave;
+        GameManager.OnGameEnd -= DeletePlayer;
     }
 
     public void beginRoundSave(){

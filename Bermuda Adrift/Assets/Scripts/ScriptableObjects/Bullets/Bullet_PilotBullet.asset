@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
-  m_Name: Bullet_PistolShot
+  m_Name: Bullet_PilotBullet
   m_EditorClassIdentifier: 
   projectileSpeed: 50
-  damage: 6
+  damage: 3
   AOE: 0
   effect: 0
   scale: 0.3
   timer: -1
-  animator: {fileID: 9100000, guid: 5c7e3d02dff0c9d438c3c599926f8fbf, type: 2}
+  animator: {fileID: 9100000, guid: e5c3517dac166904a85386116e3e9ad7, type: 2}
   FriendlyFire: 0
   Homing: 0
   debuff: {fileID: 0}
-  pierce: 3
+  pierce: 0
   AOETimer: -1
   UnderwaterDamage: 1
   AirborneDamage: 1

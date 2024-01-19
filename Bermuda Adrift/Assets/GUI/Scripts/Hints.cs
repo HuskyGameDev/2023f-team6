@@ -82,8 +82,9 @@ public class Hints : MonoBehaviour
     }
     void loopAttacks()
     {
-        stack.Push("For some attacks, you can hold down the button to keep attacking");
+        bookHelp();
         stack.Push("If you hold down the button for any attack, it will activate once it's cooldown finishes");
+        stack.Push("For some attacks, you can hold down the button to keep attacking");
 
         Attack.loopUsed -= loopAttacks;
     }
@@ -93,14 +94,6 @@ public class Hints : MonoBehaviour
 
         Attack.barrelUsed -= shootBarrels;
     }
-    /*
-    void twoTowers() 
-    {
-        stack.Push("If you click on a tower, you can upgrade it to make it much more powerful");
-
-        BuildManager.OnTwoTowersPlaced -= twoTowers;
-    }
-    */
     void decoyDeath()
     {
         stack.Push("Some enemies will attract all the attention of your towers. Apart from that, they're mostly harmless");
@@ -128,6 +121,10 @@ public class Hints : MonoBehaviour
         stack.Push("The scrap these creatures give you have some strange properties. Maybe the papers they drop can give insight into their uses");
 
         GameManager.OnLevelUp -= levelExplanations;
+    }
+    void bookHelp()
+    {
+        stack.Push("Click the \" ? \" button to learn more stuff these tips can't tell you!");
     }
     #endregion
 }

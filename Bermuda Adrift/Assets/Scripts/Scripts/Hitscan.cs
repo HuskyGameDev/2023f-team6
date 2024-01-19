@@ -18,6 +18,7 @@ public class Hitscan : MonoBehaviour
     private Bullet.Effects effect;
     private float critChance;
     private float levelScale = 1;
+    private float distanceTraveled = 0;
 
     [SerializeField] private Transform sprite;
 
@@ -86,6 +87,7 @@ public class Hitscan : MonoBehaviour
         if (!stop)
         {
             gameObject.transform.Translate(transform.up * bullet.getProjectileSpeed() * Time.deltaTime);
+            distanceTraveled += (transform.up * bullet.getProjectileSpeed() * Time.deltaTime).magnitude;
 
             if (Mathf.Abs(gameObject.transform.position.x) >= Mathf.Abs((camera.transform.position.x - camera.orthographicSize) * 2f) || Mathf.Abs(gameObject.transform.position.y) >= Mathf.Abs(camera.transform.position.y - camera.orthographicSize * 1.15f))
             {
@@ -188,18 +190,28 @@ public class Hitscan : MonoBehaviour
         stop = false;
     }
 
+    private float damageFalloff()
+    {
+        if (!gameObject.CompareTag("Friendly")) return 1;
+
+        float multiplier = -0.25f * Mathf.Atan(0.5f * (distanceTraveled - 14)) + 0.7f;
+        Debug.Log("Distance is " + distanceTraveled + ", Multiplier is " + multiplier);
+
+        return multiplier;
+    }
     private void dealDamage(Collider2D collision)
     {
         if (collision.name == "AOETrigger") return;
         int crit = critCalc();
+            
 
         if (crit > 1)
         {
             if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-                collision.gameObject.SendMessage("CritDamage", damage * underwaterMult * crit * levelScale);
+                collision.gameObject.SendMessage("CritDamage", damage * underwaterMult * crit * levelScale * damageFalloff());
 
             else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-                collision.gameObject.SendMessage("CritDamage", damage * airborneMult * crit * levelScale);
+                collision.gameObject.SendMessage("CritDamage", damage * airborneMult * crit * levelScale * damageFalloff());
 
             else
                 collision.gameObject.SendMessage("CritDamage", damage);
@@ -207,10 +219,10 @@ public class Hitscan : MonoBehaviour
         else
         {
             if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-                collision.gameObject.SendMessage("TakeDamage", damage * underwaterMult * levelScale);
+                collision.gameObject.SendMessage("TakeDamage", damage * underwaterMult * levelScale * damageFalloff());
 
             else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-                collision.gameObject.SendMessage("TakeDamage", damage * airborneMult * levelScale);
+                collision.gameObject.SendMessage("TakeDamage", damage * airborneMult * levelScale * damageFalloff());
 
             else
                 collision.gameObject.SendMessage("TakeDamage", damage);
@@ -239,7 +251,10 @@ public class Hitscan : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; }
+        if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; } //Only hit enemies, and be able to be shot by player bullets if friendly fir eis turned on
+
+        if ((collision.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.GetComponent<AI>().getType() == Enemy.Types.WaterBoss) && underwaterMult == 0) return;   //Pass through enemies if it won't affect them
+        if ((collision.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss) && airborneMult == 0) return;
 
         pierce--;
         if (bullet.getAOE() == 0 || (landed && effect != Bullet.Effects.Bait) || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times
