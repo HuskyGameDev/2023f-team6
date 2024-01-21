@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 1
+  name: Hamster
   Health: 70
   Damage: 0
   Speed: 1

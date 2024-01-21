@@ -27,7 +27,7 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd += addToRound;
         EnemyManager.onRoundEnd += clearTowerTextInt;
         EnemyManager.onEnemyDeath += updateEnemyCount;
-        EnemyManager.onEnemySpawn += updateEnemyCount;
+        EnemyManager.allEnemiesSpawned += updateEnemyCount;
         GameManager.onScrapCollect += addScrapGUI;
         GameManager.onXPCollect += addXPGUI;
         GameManager.onRoundEnd += enableStrategizeGUI;
@@ -46,7 +46,7 @@ public class GUIManager : MonoBehaviour
         EnemyManager.onRoundEnd -= addToRound;
         EnemyManager.onRoundEnd -= clearTowerTextInt;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
-        EnemyManager.onEnemySpawn -= updateEnemyCount;
+        EnemyManager.allEnemiesSpawned -= updateEnemyCount;
         GameManager.onScrapCollect -= addScrapGUI;
         GameManager.onXPCollect -= addXPGUI;
         GameManager.onRoundEnd -= enableStrategizeGUI;

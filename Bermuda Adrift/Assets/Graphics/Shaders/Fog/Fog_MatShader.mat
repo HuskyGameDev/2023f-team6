@@ -62,17 +62,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Fog2Scale: 5
-    - _FogScale: 43.57
-    - _PixelFactor: 32
+    - _Fog2Scale: 5.99
+    - _FogScale: 80.71
+    - _PixelFactor: 16
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _speedTime: 0.1
+    - _speedTime: 0.4
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _FogColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0}
-    - _FogSpeed: {r: 0.02, g: 0, b: 0, a: 0}
+    - _FogColor: {r: 0.88515824, g: 0.88515824, b: 0.88515824, a: 0}
+    - _FogSpeed: {r: 0.15, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8814588654190267443

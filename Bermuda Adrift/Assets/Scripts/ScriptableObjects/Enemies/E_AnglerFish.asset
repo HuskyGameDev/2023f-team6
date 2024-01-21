@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 0
+  name: Angler Fish
   Health: 15
   Damage: 3
   Speed: 2
@@ -30,3 +31,6 @@ MonoBehaviour:
   minion: {fileID: 0}
   bossWarning: 
   bossApproaching: 
+  availableAttacks: 
+  phase2switch: 0
+  Phase2ExtraAttacks: 

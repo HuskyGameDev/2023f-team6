@@ -15,6 +15,8 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private SpecialTypes specialType;
 
+    [SerializeField] private string name;
+    [SerializeField] private int pageNumber;
     [SerializeField] private int Health;
     [SerializeField] private int Damage;
     [SerializeField] private float Speed;
@@ -48,6 +50,7 @@ public class Enemy : ScriptableObject
 
     public Types getType() { return Type; }
     public SpecialTypes getSpecialType() { return specialType; }
+    public string getName() { return name; }
     public int getHealth() { return Health; }
     public int getDamage() { return Damage; }
     public float getSpeed() { return Speed; }

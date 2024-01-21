@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BookManager : MonoBehaviour
 {
     Animator animator;
+    int numPagesUnlocked = 6;
+
+    private void OnEnable()
+    {
+        Unlocks.enemyUnlocked += addEntry;
+    }
+    private void OnDisable()
+    {
+        Unlocks.enemyUnlocked -= addEntry;
+    }
 
     private void Awake()
     {
@@ -35,5 +46,15 @@ public class BookManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         page.SetActive(true);
+    }
+
+    public void createLockedEntries()
+    {
+
+    }
+
+    public void addEntry(Enemy e)
+    {
+        GameObject newEntry = new GameObject();
     }
 }

@@ -8,7 +8,8 @@ public class EnemyManager : MonoBehaviour
 {
     public static event Action<int> onRoundEnd;
     public static event Action<int> onEnemyDeath;
-    public static event Action<int> onEnemySpawn;
+    public static event Action<Enemy> onEnemySpawn;
+    public static event Action<int> allEnemiesSpawned;
 
     new private Camera camera;  //Not sure what the warning is, but when I changed the name it broke several things
     private int total;
@@ -92,17 +93,20 @@ public class EnemyManager : MonoBehaviour
             for (; i < total / 2; i++)
             {
                 var tempEnemy = Instantiate(prefab, new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
-                tempEnemy.SendMessage("setEnemy", enemySet[randomEnemy()]);
-
+                Enemy newEnemy = enemySet[randomEnemy()];
+                tempEnemy.SendMessage("setEnemy", newEnemy);
+                onEnemySpawn?.Invoke(newEnemy);
             }
             for (; i < total; i++)
             {
                 var tempEnemy = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
-                tempEnemy.SendMessage("setEnemy", enemySet[randomEnemy()]);
+                Enemy newEnemy = enemySet[randomEnemy()];
+                tempEnemy.SendMessage("setEnemy", newEnemy);
+                onEnemySpawn?.Invoke(newEnemy);
             }
         }
 
-        onEnemySpawn?.Invoke(total);
+        allEnemiesSpawned?.Invoke(total);
     }
     private int randomEnemy()   //Chooses a random enemy from the enemySet based on the rarity. Actual rarity is slightly different than the rarity in the enemy file
     {
@@ -205,4 +209,7 @@ public class EnemyManager : MonoBehaviour
             
         return Bosses[upcomingBossRound % Bosses.Length];
     }
+
+    public Enemy[] getAllEnemies() { return allEnemies; }
+    public Enemy[] getAllBosses() { return Bosses; }
 }

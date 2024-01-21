@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 0
+  name: Blue Fish Person
   Health: 20
   Damage: 5
   Speed: 3

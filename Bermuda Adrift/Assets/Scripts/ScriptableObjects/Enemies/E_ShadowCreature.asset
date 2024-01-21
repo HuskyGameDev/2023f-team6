@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   specialType: 0
+  name: Shadow Creature
   Health: 5
   Damage: 1
   Speed: 2
