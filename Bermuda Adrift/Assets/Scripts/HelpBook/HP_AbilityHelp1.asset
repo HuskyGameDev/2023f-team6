@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761cb8201fbbd53449d37ea7fc71c80e, type: 3}
+  m_Name: HP_AbilityHelp1
+  m_EditorClassIdentifier: 
+  pageBlocks: []
+  prefab: {fileID: 939626438385691952, guid: 7154924f2c1180a45b1fb3f516f8930d, type: 3}
+  height: 75
+  contents:
+  - 'Primary:   LMB'
+  goToPageNumber: 0
