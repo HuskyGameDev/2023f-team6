@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Pathfinding;
 
 public class AI : MonoBehaviour
 {
@@ -42,6 +42,13 @@ public class AI : MonoBehaviour
     private Buffs debuffToInflict;
     private Buffs[] debuffs;
 
+    private float nextWaypointDistance = 0.5f;
+    private Path path;
+    private int currentWaypoint;
+    Seeker seeker;
+    [SerializeField] private Enemy tempEnemy;
+
+
     #region Setup and Update
     public void setEnemy(Enemy newEnemy)    //Setup function when told what type of enemy to be
     {
@@ -76,16 +83,17 @@ public class AI : MonoBehaviour
             StartCoroutine(randomAttacks());
 
         SetupHealthBar?.Invoke(Health);
+
+        nearestEntrance();  //Sets the entrance to be going towards
+        seeker = gameObject.GetComponent<Seeker>();
+        seeker.StartPath(transform.position, goal.position, OnPathComplete);
     }
     private void Start()    //Set up what setEnemy didn't
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
         animator = gameObject.GetComponent<Animator>();
         movement = gameObject.transform;
-
-        nearestEntrance();  //Sets the entrance to be going towards
-
-        turn();
+        debuffs = new Buffs[10];
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
@@ -94,11 +102,18 @@ public class AI : MonoBehaviour
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 
+        if (path == null)
+        {
+            nearestEntrance();
+            seeker = gameObject.GetComponent<Seeker>();
+            seeker.StartPath(transform.position, goal.position, OnPathComplete);
+        }
+
         if (!arrived)
         {
             move();
 
-            if (transform.position.magnitude <= 2.5)  //Stop when they reach the center and set position to a spot depending on the lane they're in. This needs to be redone at some point, maybe use hitboxes?
+            if (currentWaypoint >= path.vectorPath.Count)  //Stop when they reach the center
             {
                 nowArriving();
             }
@@ -107,24 +122,32 @@ public class AI : MonoBehaviour
     #endregion
 
     #region Movement functions
-    private void move() //Moves towards the goal
+    private void OnPathComplete(Path p)
     {
-        turn();
-
-        if (goal != null && goal.position != null && !stop)
+        if (!p.error)
         {
-            movement.position = Vector3.MoveTowards(movement.position, goal.position, enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult()); ;
-            if (movement.position == goal.position && !getDistracted())
-                enteringChannel();
+            path = p;
+            currentWaypoint = 0;
         }
     }
-    private void turn() //Face towards current goal
+    private void move() //Moves towards the goal
     {
-        if (goal != null && !noRotation)    //Face towards goal. Default is noRotation being false now. This function can be modified once we standardize the artstyle and the default direction
+        //goal != null && goal.position != null &&
+        if (!stop)
         {
-            //Only rotates once, so if we do knockback or something we'll have to put this in the Update function or the TakeDamage function
-            float z = (Mathf.Atan2(movement.position.y - goal.position.y, movement.position.x - goal.position.x) * (180 / Mathf.PI)); //Atan2 gives inverse tan in radians from current cordinates, transform takes degrees
-            movement.localRotation = Quaternion.Euler(0, 0, z);  //Faces towards goal (If sprites faces left)
+            Vector3 direction = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+            Debug.Log(currentWaypoint + ", " + path.vectorPath[currentWaypoint] + ", " + transform.position + ", " + goal.position);
+            movement.position += direction * enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult();
+            if (movement.position == goal.position && !getDistracted())
+                animator.SetTrigger("InChannel");
+
+            float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+            if (distance < nextWaypointDistance)
+            {
+                currentWaypoint++;
+                if (currentWaypoint == path.vectorPath.Count)
+                    nextWaypointDistance = 0;
+            }
         }
     }
     private void nowArriving()  //Sets the position that the enemy will be attacking the center form
@@ -132,14 +155,7 @@ public class AI : MonoBehaviour
         arrived = true;     //This section of code will only run once
         //stop = true;
         animator.SetBool("Attacking", true);    //Start animations
-
-        if (enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss)
-        {
-            if (movement.position.x < 0) { movement.SetPositionAndRotation(new Vector3(-2.5f, 0), movement.rotation); }        //Left lane
-            else if (movement.position.x > 0) { movement.SetPositionAndRotation(new Vector3(2.5f, 0), movement.rotation); }    //Right lane
-            else if (movement.position.y > 0) { movement.SetPositionAndRotation(new Vector3(0, 2.5f), movement.rotation); }    //Top lane
-            else { movement.SetPositionAndRotation(new Vector3(0, -2.5f), movement.rotation); }                                //Bottom Lane
-        }
+        goal = FindObjectOfType<Centerpiece>().transform;
 
         StartCoroutine(attack(goal.gameObject));
     }
@@ -338,13 +354,19 @@ public class AI : MonoBehaviour
     #endregion
 
     #region Goal Setters
+    private void updatePath()   //Updates the path without changing the goal
+    {
+        seeker.StartPath(transform.position, goal.position, OnPathComplete);
+    }
     private void nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
     {
+        /*
         if (enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss)
         {
             goal = FindObjectOfType<Centerpiece>().transform;
             return;
         }
+        */
 
         GameObject[] entrances;
 
@@ -373,18 +395,6 @@ public class AI : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().flipY = !gameObject.GetComponent<SpriteRenderer>().flipY;
             }
-        }
-    }
-    void enteringChannel()  //Set the goal to be the centerpiece and rotate to point at it
-    {
-        if (Math.Abs(goal.position.x) == 7.5 || Math.Abs(goal.position.y) == 7.5)
-        {
-            goalGO = GameObject.FindGameObjectWithTag("Center");
-            goal = goalGO.transform;    //Set new goal to the centerpiece. Could maybe just set the goal to be 0,0 for efficiency and so we don't need the centerpiece tag
-
-            animator.SetTrigger("InChannel");
-
-            turn();
         }
     }
     #endregion
@@ -680,6 +690,7 @@ public class AI : MonoBehaviour
     private float getHealthMult()   //Gives total percent health increase (multiplicative)
     {
         float mult = 1;
+
         for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
         {
             mult *= debuffs[i].getHealth();

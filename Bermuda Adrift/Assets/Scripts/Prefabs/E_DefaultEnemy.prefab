@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7883539249785375889}
   - component: {fileID: -5528712832521496312}
   - component: {fileID: 279866851160389067}
+  - component: {fileID: -2420328113886661760}
   m_Layer: 0
   m_Name: E_DefaultEnemy
   m_TagString: Enemy
@@ -140,6 +141,7 @@ MonoBehaviour:
   extra: {fileID: 0}
   bullet: {fileID: 0}
   noRotation: 1
+  tempEnemy: {fileID: 0}
 --- !u!61 &7883539249785375889
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -225,6 +227,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-2420328113886661760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3398399399289917803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!1001 &3563211004676212490
 PrefabInstance:
   m_ObjectHideFlags: 0
