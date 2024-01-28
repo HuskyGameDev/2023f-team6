@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillTree : MonoBehaviour
 {
@@ -12,36 +14,23 @@ public class SkillTree : MonoBehaviour
     public string[] SkillNames;
     public string[] SkillDescriptions;
 
-    public List<Skill> SkillList;
+    public Skill[] SkillList;
     public GameObject SkillHolder;
 
     public int SkillPoint;
+
+    public TMP_Text TitleText;
+    public TMP_Text DescriptionText;
+
+
 
 
     // Start is called before the first frame update
     private void Start()
     {
-        SkillPoint = 5;
 
-        SkillLevels = new int[10];
-        SkillCaps = new[] { 1 };
-        SkillNames = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", };
-        SkillDescriptions = new[] {
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        "What",
-        };
-
-        foreach (var skill in SkillHolder.GetComponentInChildren<Skill>()) SkillList.Add(skill);
-        for (var i = 0; i < SkillList.Count; i++) SkillList[i].id = i;
+        //foreach (var skill in SkillHolder.GetComponentInChildren<Skill>()) SkillList.Add(skill);
+        for (var i = 0; i < SkillList.Length; i++) SkillList[i].id = i;
 
 
     }
@@ -49,6 +38,25 @@ public class SkillTree : MonoBehaviour
     // Update is called once per frame
     void UpdateAllSkillUI()
     {
-        foreach (var skill in SkillList) skill.UpdateUI();
+
+        foreach (var skill in SkillList)
+        {
+            int id = skill.getID();
+
+            TitleText.text = $"{skillTree.SkillLevels[id]}/{skillTree.SkillCaps[id]}\n{skillTree.SkillNames[id]}";
+            DescriptionText.text = $"{skillTree.SkillDescriptions[id]}\n Cost: {skillTree.SkillPoint}/1 SP";
+
+            GetComponent<Image>().color = skillTree.SkillLevels[id] >= skillTree.SkillCaps[id] ? Color.yellow
+                : skillTree.SkillPoint >= 1 ? Color.green : Color.white;
+        }
     }
+
+    public void Buy(Skill skill)
+    {
+        int id = skill.getID();
+        if (skillTree.SkillPoint < 1 || skillTree.SkillLevels[id] >= skillTree.SkillCaps[id]) return;
+        skillTree.SkillPoint -= 1;
+        skillTree.SkillLevels[id]++;
+    }
+
 }
