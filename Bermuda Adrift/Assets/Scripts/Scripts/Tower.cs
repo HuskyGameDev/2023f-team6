@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower", order = 2)]
+[CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/Tower")]
 public class Tower : ScriptableObject
 {
     [SerializeField] private string saveString;
@@ -90,7 +90,9 @@ public class Tower : ScriptableObject
     [SerializeField] private Sprite baseSprite;
     [SerializeField] private float rarity;      //For use in the level system. Rarity of it showing up in the level up
     [SerializeField] private bool cantTurn;
+    [SerializeField] private bool noUpgrades;
     [SerializeField] private TowerAI.Priority[] extraPriorities;
+    [SerializeField] private bool unlocked;
 
 
     public string getSaveString() { return saveString; }
@@ -101,8 +103,11 @@ public class Tower : ScriptableObject
     public float getRange() { return range; }
     public RuntimeAnimatorController getAnim() { return anim; }
     public Sprite getBaseSprite() { return baseSprite; }
+    public bool getNoUpgrades() { return noUpgrades; }
     public TowerAI.Priority[] getExtraPriorities() { return extraPriorities; }
+    public bool getUnlocked() { return unlocked; }
 
+    public void unlock() { unlocked = true; }
 
     public Bullet getDefaultBullet() { return defaultBullet; }
     public int getCost() { return cost; }

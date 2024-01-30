@@ -26,8 +26,14 @@ public class DirectionalAnimations : MonoBehaviour
 
     private void direction()
     {
-        movingX = location.position.x - ai.getGoal().position.x;
-        movingY = location.position.y - ai.getGoal().position.y;
+        try
+        {
+            movingX = location.position.x - ai.getGoal().x;
+            movingY = location.position.y - ai.getGoal().y;
+        } catch (Exception e)
+        {
+            //Don't update if there's an error
+        }
 
         Vector2 movementVec = new Vector2(movingX, movingY);
         movementVec = movementVec.normalized;

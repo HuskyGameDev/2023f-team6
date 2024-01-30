@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Machine Gun
   Description: Fires weak bullets very quickly
   damageMult: 1
-  turnSpeed: 0.5
+  turnSpeed: 0.75
   range: 7
   defaultBullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   cost: 250
@@ -25,7 +25,7 @@ MonoBehaviour:
   U1Name: Double Barrel
   U1Description: Fire Bullets quicker
   U1damageMult: 1
-  U1turnSpeed: 0.5
+  U1turnSpeed: 0.75
   U1range: 7
   U1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   U1cost: 300
@@ -34,7 +34,7 @@ MonoBehaviour:
   UA1Name: Armor Piercing Rounds
   UA1Description: Bullets fire farther and pierce through more enemies
   UA1damageMult: 1
-  UA1turnSpeed: 0.5
+  UA1turnSpeed: 0.75
   UA1range: 10
   UA1Bullet: {fileID: 11400000, guid: 6e2f38178b70c5c47895e910fe856be8, type: 2}
   UA1cost: 200
@@ -43,7 +43,7 @@ MonoBehaviour:
   UA2Name: Nation Killer
   UA2Description: Bullets Pierce and Reach Infinitely
   UA2damageMult: 3
-  UA2turnSpeed: 0.5
+  UA2turnSpeed: 0.75
   UA2range: -1
   UA2Bullet: {fileID: 11400000, guid: 118ec04a81b82c24fa8244bf81bb60e6, type: 2}
   UA2cost: 300
@@ -52,7 +52,7 @@ MonoBehaviour:
   UB1Name: More Bullet per Bullet
   UB1Description: Bullets do more Damage
   UB1damageMult: 2
-  UB1turnSpeed: 0.5
+  UB1turnSpeed: 0.75
   UB1range: 7
   UB1Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   UB1cost: 350
@@ -61,7 +61,7 @@ MonoBehaviour:
   UB2Name: Rain of Death
   UB2Description: Never stops shooting
   UB2damageMult: 2
-  UB2turnSpeed: 0.5
+  UB2turnSpeed: 0.75
   UB2range: 7
   UB2Bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
   UB2cost: 400

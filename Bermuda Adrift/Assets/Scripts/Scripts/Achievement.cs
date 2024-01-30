@@ -5,17 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Achievement", menuName = "ScriptableObjects/Achievement")]
 public class Achievement : ScriptableObject
 {
-    [SerializeField] private bool achieved;
+    [SerializeField] private string Name;
+    [SerializeField] private string Description;
 
     [SerializeField] private Tower associatedTower;
     [SerializeField] private BarrierScriptable associatedBarrier;
     [SerializeField] private Player associatedCharacter;
 
-    public void unlock() { achieved = true; }
+    [SerializeField] private int skillPoints;
 
 
-    public bool isUnlocked() { return achieved; }
+    public string getName() { return Name; }
+    public string getDescription() { return Description; }
     public Tower getAssociatedTower() { return associatedTower; }
     public BarrierScriptable getAssociatedBarrier() { return associatedBarrier; }
     public Player getAssociatedCharacter() { return associatedCharacter; }
+    public int getSkillPoints() { return skillPoints; }
 }

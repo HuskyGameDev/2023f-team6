@@ -43,7 +43,7 @@ public class TargetedAttacks : MonoBehaviour
 
         if (target != null)
         {
-            target.SendMessage("TakeDamage", damage);   //Can be used as a damaging move against bosses, but can't crit
+            target.SendMessage("TakeDamage", damage * FindObjectOfType<GameManager>().getLevelScale());   //Can be used as a damaging move against bosses, but can't crit
             target.SendMessage("Forget");   //Could be changed later if we decide to have something else that works like this
         }
     }

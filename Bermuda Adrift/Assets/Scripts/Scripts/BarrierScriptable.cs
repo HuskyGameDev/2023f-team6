@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenuAttribute(fileName = "Barrier", menuName = "ScriptableObjects/Barrier", order = 0)]
+[CreateAssetMenuAttribute(fileName = "Barrier", menuName = "ScriptableObjects/Barrier")]
 public class BarrierScriptable : ScriptableObject
 {
     [SerializeField] private string saveString;
@@ -11,6 +11,7 @@ public class BarrierScriptable : ScriptableObject
     public enum Effect { Blockade, Effect }
     [SerializeField] private string barrierName;
     [SerializeField] private string description;
+    [SerializeField] private bool unlocked;
     [SerializeField] private Effect effect;
     [SerializeField] private int Health;
     [SerializeField] private int cost;
@@ -19,9 +20,12 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animator;
     [SerializeField] private Sprite Thumbnail;
 
+    public void unlock() { unlocked = true; }
+
     public string getSaveString() { return saveString; }
     public string getName() { return barrierName; }
     public string getDescription() { return description; }
+    public bool getUnlocked() { return unlocked; }
     public Effect getEffect() { return effect; }
     public int getHealth() { return Health; }
     public int getCost() { return cost; }

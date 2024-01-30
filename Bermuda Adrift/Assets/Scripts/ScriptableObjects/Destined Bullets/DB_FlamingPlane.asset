@@ -18,6 +18,6 @@ MonoBehaviour:
   AOE: 7
   angle: 40
   timeToLand: 3
-  delayTime: 5
+  delayTime: 1
   damage: 50
   scrapBonus: 200

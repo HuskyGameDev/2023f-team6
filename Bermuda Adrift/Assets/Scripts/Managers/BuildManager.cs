@@ -449,32 +449,32 @@ public class BuildManager : MonoBehaviour
         int raftMask = 1 << 3;
         int waterMask = 1 << 4;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, channelMask).collider == null
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, channelMask).collider == null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, raftMask).collider != null
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, raftMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, waterMask).collider != null)    //Top right corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, waterMask).collider != null)    //Top right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, channelMask).collider == null
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, channelMask).collider == null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, raftMask).collider != null
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, raftMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, waterMask).collider != null)  //Down right corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, waterMask).collider != null)  //Down right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, channelMask).collider == null
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, channelMask).collider == null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, raftMask).collider != null
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, raftMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, waterMask).collider != null)  //Up left corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, waterMask).collider != null)  //Up left corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, channelMask).collider == null
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, channelMask).collider == null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, raftMask).collider != null
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, raftMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, waterMask).collider != null)  //Down left corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, waterMask).collider != null)  //Down left corner
             return false;
 
         return true;
@@ -563,7 +563,14 @@ public class BuildManager : MonoBehaviour
     }
     private IEnumerator tempTower(GameObject g, float duration) //Deletes a temporary tower after a specified duration
     {
-        yield return new WaitForSeconds(duration);
+        float timePassed = 0;
+
+        while (timePassed < duration)
+        {
+            if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)
+                timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
 
         g.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Destroy");
     }

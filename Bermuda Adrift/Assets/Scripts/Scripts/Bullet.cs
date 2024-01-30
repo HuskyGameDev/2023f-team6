@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Bullet", menuName = "ScriptableObjects/Bullet", order = 2)]
+[CreateAssetMenu(fileName = "Bullet", menuName = "ScriptableObjects/Bullet")]
 public class Bullet : ScriptableObject
 {
     [SerializeField] private int projectileSpeed;

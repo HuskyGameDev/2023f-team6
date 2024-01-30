@@ -24,11 +24,7 @@ public class AI : MonoBehaviour
     [SerializeField] private GameObject extra;
     [SerializeField] private Bullet bullet;
 
-    private Transform movement;
     private int newMaxHealth;
-
-    private Transform goal;
-    private GameObject goalGO;
 
     private bool arrived;
     private int Health;
@@ -45,8 +41,9 @@ public class AI : MonoBehaviour
     private float nextWaypointDistance = 0.5f;
     private Path path;
     private int currentWaypoint;
+    private Vector3 currentWaypointPosition;
     Seeker seeker;
-    [SerializeField] private Enemy tempEnemy;
+    bool airborne;
 
 
     #region Setup and Update
@@ -84,15 +81,23 @@ public class AI : MonoBehaviour
 
         SetupHealthBar?.Invoke(Health);
 
-        nearestEntrance();  //Sets the entrance to be going towards
-        seeker = gameObject.GetComponent<Seeker>();
-        seeker.StartPath(transform.position, goal.position, OnPathComplete);
+        if (enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss)
+        {
+            airborne = true;
+            Destroy(seeker);
+        }
+        else
+        {
+            airborne = false;
+
+            seeker = gameObject.GetComponent<Seeker>();
+            seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
+        }
     }
     private void Start()    //Set up what setEnemy didn't
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
         animator = gameObject.GetComponent<Animator>();
-        movement = gameObject.transform;
         debuffs = new Buffs[10];
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
@@ -102,18 +107,17 @@ public class AI : MonoBehaviour
 
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 
-        if (path == null)
+        if (path == null && !airborne)
         {
-            nearestEntrance();
             seeker = gameObject.GetComponent<Seeker>();
-            seeker.StartPath(transform.position, goal.position, OnPathComplete);
+            seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
         }
 
         if (!arrived)
         {
             move();
 
-            if (currentWaypoint >= path.vectorPath.Count)  //Stop when they reach the center
+            if (path != null && currentWaypoint >= path.vectorPath.Count && isEndpoint())  //Stop when they reach the center
             {
                 nowArriving();
             }
@@ -124,10 +128,12 @@ public class AI : MonoBehaviour
     #region Movement functions
     private void OnPathComplete(Path p)
     {
-        if (!p.error)
+        if (!p.error && !airborne)
         {
             path = p;
             currentWaypoint = 0;
+            nextWaypointDistance = 0.5f;
+            currentWaypointPosition = path.vectorPath[currentWaypoint];
         }
     }
     private void move() //Moves towards the goal
@@ -135,18 +141,20 @@ public class AI : MonoBehaviour
         //goal != null && goal.position != null &&
         if (!stop)
         {
-            Vector3 direction = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-            Debug.Log(currentWaypoint + ", " + path.vectorPath[currentWaypoint] + ", " + transform.position + ", " + goal.position);
-            movement.position += direction * enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult();
-            if (movement.position == goal.position && !getDistracted())
-                animator.SetTrigger("InChannel");
+            Vector3 direction = (currentWaypointPosition - transform.position).normalized;
+            gameObject.transform.position += direction * enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult();
 
-            float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+            float distance = Vector2.Distance(transform.position, currentWaypointPosition);
             if (distance < nextWaypointDistance)
             {
                 currentWaypoint++;
-                if (currentWaypoint == path.vectorPath.Count)
+                if (currentWaypoint >= path.vectorPath.Count)
+                {
                     nextWaypointDistance = 0;
+                    currentWaypointPosition = path.vectorPath[path.vectorPath.Count - 1];
+                }
+                else
+                    currentWaypointPosition = path.vectorPath[currentWaypoint];
             }
         }
     }
@@ -155,9 +163,8 @@ public class AI : MonoBehaviour
         arrived = true;     //This section of code will only run once
         //stop = true;
         animator.SetBool("Attacking", true);    //Start animations
-        goal = FindObjectOfType<Centerpiece>().transform;
 
-        StartCoroutine(attack(goal.gameObject));
+        StartCoroutine(attack(FindObjectOfType<Centerpiece>().gameObject));
     }
     #endregion
 
@@ -177,9 +184,6 @@ public class AI : MonoBehaviour
                 foreach (Enemy.Attack a in enemy.getPhase2Attacks())
                     availableAttacks.Add(a);
             }
-
-            if (goal.position == Vector3.zero && enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss) //If it's in a channel, no more atacks
-                break;
 
             if (gameObject.activeInHierarchy)
             {
@@ -354,48 +358,61 @@ public class AI : MonoBehaviour
     #endregion
 
     #region Goal Setters
-    private void updatePath()   //Updates the path without changing the goal
+    private void updatePath()   //Updates the path when the goal possibly changed
     {
-        seeker.StartPath(transform.position, goal.position, OnPathComplete);
+        seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
     }
-    private void nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
+    private Vector3 nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
     {
-        /*
         if (enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss)
         {
-            goal = FindObjectOfType<Centerpiece>().transform;
-            return;
+            currentWaypointPosition = FindObjectOfType<Centerpiece>().transform.position;
+            return currentWaypointPosition;
         }
-        */
 
-        GameObject[] entrances;
+        Vector3 goal = Vector3.zero;
 
-        entrances = GameObject.FindGameObjectsWithTag("Entrance");
-        goal = null;
+        GameObject[] entrances = GameObject.FindGameObjectsWithTag("Entrance");
+        if (entrances.Length <= 0)
+            return goal;
+
         float distance = Mathf.Infinity;
-        Vector3 pos = movement.position;
+        Vector3 pos = gameObject.transform.position;
         foreach (GameObject go in entrances)    //Iterate through all entrances, picking the closest one. Should only be 4 items, so efficiency shouldn't be a huge problem
         {
             Vector3 diff = go.transform.position - pos;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
             {
-                goal = go.transform;
+                goal = go.transform.position;
                 distance = curDistance;
             }
         }
 
-        if ((goal.position.x < 0 || goal.position.y > 0) && gameObject.GetComponent<DirectionalAnimations>() == null)   //Flips the sprite if it's on the left/top of the screen. If we go fully top-down with the sprites, we can get rid of this
+        return goal;
+    }
+    private bool isEndpoint()   //Returns true if the enemy is at the end of a channel, returns false if it's a bait locatione
+    {
+        GameObject[] entrances = GameObject.FindGameObjectsWithTag("Entrance");
+
+        GameObject goal = entrances[0];
+
+        float distance = Mathf.Infinity;
+        Vector3 pos = gameObject.transform.position;
+        foreach (GameObject go in entrances)    //Iterate through all entrances, picking the closest one. Should only be 4 items, so efficiency shouldn't be a huge problem
         {
-            if (noRotation)
+            Vector3 diff = go.transform.position - pos;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
             {
-                gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
-            }
-            else
-            {
-                gameObject.GetComponent<SpriteRenderer>().flipY = !gameObject.GetComponent<SpriteRenderer>().flipY;
+                goal = go;
+                distance = curDistance;
             }
         }
+        if (goal.layer == 1)
+            return true;
+        else
+            return false;
     }
     #endregion
 
@@ -413,7 +430,9 @@ public class AI : MonoBehaviour
 
         //Debug.Log("Normal: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
 
-        OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
+        if (!forgotten) //Not even damage popups appear when an enemy is forgotten
+            OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
+
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
@@ -425,9 +444,9 @@ public class AI : MonoBehaviour
         damage += (int)(moreDamage * getArmor());
         animator.SetTrigger("TookDamage");
 
-        //Debug.Log("Crit: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
+        if (!forgotten) //Not even damage popups appear when an enemy is forgotten
+            OnCrit?.Invoke((int)(moreDamage * getArmor()));
 
-        OnCrit?.Invoke((int)(moreDamage * getArmor()));
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
@@ -441,7 +460,9 @@ public class AI : MonoBehaviour
 
         //Debug.Log("Status: -" + moreDamage + " => " + Health + " / " + enemy.getHealth());
 
-        OnStatusDamage?.Invoke((int)(moreDamage * getArmor()), color);
+        if (!forgotten) //Not even damage popups appear when an enemy is forgotten
+            OnStatusDamage?.Invoke((int)(moreDamage * getArmor()), color);
+
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
     }
@@ -458,7 +479,7 @@ public class AI : MonoBehaviour
 
         animator.SetBool("Dead", true);
 
-        if (!goal.CompareTag("Entrance") && !goal.CompareTag("Center")) Destroy(goal.gameObject);
+        //if (!goal.CompareTag("Entrance") && !goal.CompareTag("Center")) Destroy(goal.gameObject);
 
         OnEnemyDeath?.Invoke();
 
@@ -497,7 +518,7 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-    public Transform getGoal() { return goal; } //Only used in the directional animation script
+    public Vector3 getGoal() { return nearestEntrance(); } //Only used in the directional animation script
 
     private void Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
     {
@@ -511,8 +532,10 @@ public class AI : MonoBehaviour
     }
 
     #region Debuff Managing
-    private void Forget()   //50-50 chance to either instakill or become invisible to towers
+    private void Forget()   //50-50 chance to either instakill or become invisible to players
     {
+        if (forgotten) return;
+
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss) return;
 
         if (Random.Range(0, 2) == 0)
@@ -521,11 +544,8 @@ public class AI : MonoBehaviour
             return;
         }
 
-        Debug.Log("Forgotten");
-
-        TowerAI[] towers = FindObjectsOfType<TowerAI>();
-        foreach (TowerAI t in towers)
-            t.SendMessage("forget", gameObject);
+        GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(transform.GetChild(0).gameObject);
         forgotten = true;
     }
     private void addDebuff(Buffs debuff)    //Add a debuff to the list of debuffs
@@ -603,36 +623,6 @@ public class AI : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
     }
-    private void baited(GameObject bait) { StartCoroutine(goToBaited(bait, bait.GetComponent<Hitscan>().getAOETimer())); }
-    private IEnumerator goToBaited(GameObject bait, float time)    //Temporarily changes where the enemy thinks the goal is
-    {
-        if (!goal.CompareTag("Center") && enemy.getType() != Enemy.Types.WaterBoss && enemy.getType() != Enemy.Types.AirborneBoss) //Won't work on enemies in the channels
-        {
-            goal = new GameObject().transform;
-
-            Vector3 newGoalPosition = bait.transform.position;
-
-
-            if (enemy.getType() != Enemy.Types.Airborne && enemy.getType() != Enemy.Types.AirborneBoss)
-            {
-                //Left/Right edges
-                if (newGoalPosition.x < 7f && newGoalPosition.x > 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = 7.5f;
-                else if (newGoalPosition.x > -7f && newGoalPosition.x < 0 && Mathf.Abs(newGoalPosition.y) > 1f && Mathf.Abs(newGoalPosition.y) < 7f) newGoalPosition.x = -7.5f;
-
-                //Top/Bottom edges
-                if (newGoalPosition.y < 7f && newGoalPosition.y > 1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = 7.5f;
-                else if (newGoalPosition.y > -7f && newGoalPosition.y < -1f && Mathf.Abs(newGoalPosition.x) > 1f && Mathf.Abs(newGoalPosition.x) < 7f) newGoalPosition.y = -7.5f;
-            }
-
-            goal.position = newGoalPosition;
-
-            yield return new WaitForSeconds(time);
-
-            Destroy(goal.gameObject);
-            nearestEntrance();
-        }
-
-    }
     #endregion
 
     #region Get Functions
@@ -651,8 +641,6 @@ public class AI : MonoBehaviour
 
         if (Mathf.Abs(transform.position.x) > (Camera.main.transform.position.x + Camera.main.orthographicSize) * 1.5f || Mathf.Abs(transform.position.y) > Camera.main.transform.position.y + Camera.main.orthographicSize) //Extra speed boost until fully on screen
             speedMult = 2;
-        else if (damage == 0 && enemy.getSpeed() < 3 && Physics2D.Raycast(transform.position, transform.position, 0.01f, 1 << 6).collider != null)   //If a slow enemy hasn't taken damage and isn't in a channel, give a speed buff
-            speedMult = 1.5f;
 
         for (int i = 0; i < debuffs.Length && debuffs[i] != null; i++)
         {

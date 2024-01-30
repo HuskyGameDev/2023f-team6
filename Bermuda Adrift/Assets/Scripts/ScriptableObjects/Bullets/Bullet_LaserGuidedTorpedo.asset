@@ -20,7 +20,7 @@ MonoBehaviour:
   timer: -1
   animator: {fileID: 9100000, guid: 6e0cde46a4f51cb4db712ac5fd03289d, type: 2}
   FriendlyFire: 0
-  Homing: 0.5
+  Homing: 5
   debuff: {fileID: 0}
   pierce: 0
   AOETimer: -1

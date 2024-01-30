@@ -22,7 +22,7 @@ MonoBehaviour:
   buff: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
   bulletPrefab: {fileID: 0}
   slot: 2
-  cooldown: 10
+  cooldown: 8
   thumbnail: {fileID: -944231584, guid: fcc7e456ab8794649a2164a724e21960, type: 3}
   ModelSprite: {fileID: 0}
   Name: Splitting Headache

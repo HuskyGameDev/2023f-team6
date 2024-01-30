@@ -37,7 +37,7 @@ MonoBehaviour:
   UA1turnSpeed: 1
   UA1range: 8
   UA1Bullet: {fileID: 11400000, guid: 8023c4e255bc85843be12a19e65a19c0, type: 2}
-  UA1cost: 500
+  UA1cost: 400
   UA1LightningResistance: 0
   UA1image: {fileID: -2090480115, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UA2Name: Blood In The Water
@@ -46,7 +46,7 @@ MonoBehaviour:
   UA2turnSpeed: 1
   UA2range: 8
   UA2Bullet: {fileID: 11400000, guid: eb94cfcbaf05de049b35868b39c2d720, type: 2}
-  UA2cost: 600
+  UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: -1899072108, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB1Name: Quick-Spin
@@ -55,7 +55,7 @@ MonoBehaviour:
   UB1turnSpeed: 1
   UB1range: 8
   UB1Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
-  UB1cost: 250
+  UB1cost: 350
   UB1LightningResistance: 0
   UB1image: {fileID: -15425042, guid: f880803e86d74f545afac358feaffbda, type: 3}
   UB2Name: Vortex Engine
@@ -64,7 +64,7 @@ MonoBehaviour:
   UB2turnSpeed: 0.5
   UB2range: 10
   UB2Bullet: {fileID: 11400000, guid: b40feab6783aabe4ebc39d4d96090cc7, type: 2}
-  UB2cost: 350
+  UB2cost: 500
   UB2LightningResistance: 0
   UB2image: {fileID: 275122526, guid: f880803e86d74f545afac358feaffbda, type: 3}
   anim: {fileID: 9100000, guid: 3ecbcf65cc8dca746aae3755ec982d9f, type: 2}

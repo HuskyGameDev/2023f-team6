@@ -12,7 +12,7 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
-    public enum Priority { Closest, Furthest, Strongest, Fastest, OnlyWater, OnlyAir };
+    public enum Priority { Closest, Furthest, Strongest, Weakest, Fastest, OnlyWater, OnlyAir };
 
     private Tower tower;
     [SerializeField] private GameObject nozzle;
@@ -31,8 +31,8 @@ public class TowerAI : MonoBehaviour
     private BuildManager buildManager;
     private Animator anim;
 
-    private Buffs[] buffs;
-    private GameObject[] enemiesInRange;
+    private List<Buffs> buffs;
+    private List<GameObject> enemiesInRange;
 
     private bool placed = false;
     //private BoxCollider2D[] colliders;
@@ -70,11 +70,12 @@ public class TowerAI : MonoBehaviour
 
         gameManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<GameManager>();
         buildManager = FindObjectOfType<BuildManager>();
-        buffs = new Buffs[10];
-        enemiesInRange = new GameObject[27];
+        buffs = new List<Buffs>();
+        enemiesInRange = new List<GameObject>();
 
         if (gameManager.getGameState() == GameManager.GameState.Defend || gameManager.getGameState() == GameManager.GameState.BossRound)    //Sets a new target if created during a round. Just in case someone manages to place a tower during a round
         {
+            rangeReset();
             newTarget();
             StartRound();
         }
@@ -359,6 +360,15 @@ public class TowerAI : MonoBehaviour
         boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
         boolet.SendMessage("setCritChance", getCritChance());
     }
+    private void rangeReset()
+    {
+        enemiesInRange.Clear();
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemiesInRange.Add(enemy);
+        }
+        prioritize();
+    }
     private void newTarget()    //Set target to closest enemy in range
     {
         /*
@@ -390,12 +400,14 @@ public class TowerAI : MonoBehaviour
 
         if (getTowerRange() == -1 && enemiesInRange[0] == null)
         {
-            enemiesInRange = GameObject.FindGameObjectsWithTag("Enemy");
+            enemiesInRange.Clear();
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                enemiesInRange.Add(enemy);
             prioritize();
         }
 
         //displayList();
-        if (enemiesInRange[0] == null)
+        if (enemiesInRange.Count <= 0 || enemiesInRange[0] == null)
         {
             target = null;
             //Debug.Log("Null target");
@@ -415,7 +427,6 @@ public class TowerAI : MonoBehaviour
     }
 
     #region Priority functions
-
     private void priorityUpdate(bool Left)
     {
         if (Left)
@@ -472,12 +483,15 @@ public class TowerAI : MonoBehaviour
     }
     private void changePriorityFunction(Priority newPriority)
     {
+        //Debug.Log(newPriority);
         if (newPriority == Priority.Closest)
             getScore = getScoreByClosest;
         else if (newPriority == Priority.Furthest)
             getScore = getScoreByFurthest;
         else if (newPriority == Priority.Strongest)
             getScore = getScoreByStrongest;
+        else if (newPriority == Priority.Weakest)
+            getScore = getScoreByWeakest;
         else if (newPriority == Priority.Fastest)
             getScore = getScoreBySpeed;
         else if (newPriority == Priority.OnlyWater)
@@ -529,6 +543,10 @@ public class TowerAI : MonoBehaviour
     {
         return getScoreByStrongest(g);
     }
+    float getScoreByWeakest(GameObject g)
+    {
+        return -getScoreByStrongest(g);
+    }
     public Priority getPriority()
     {
         if (getScore == getScoreByClosest)
@@ -537,6 +555,8 @@ public class TowerAI : MonoBehaviour
             return Priority.Furthest;
         if (getScore == getScoreByStrongest)
             return Priority.Strongest;
+        if (getScore == getScoreByWeakest)
+            return Priority.Weakest;
         if (getScore == getScoreBySpeed)
             return Priority.Fastest;
         if (getScore == getScoreByWaterStrong)
@@ -564,12 +584,12 @@ public class TowerAI : MonoBehaviour
 
     private void prioritize()  //Sorts enemies by the set priority
     {
-        for (int g = 0; g < enemiesInRange.Length; g++)
+        for (int i = 0; i < enemiesInRange.Count; i++)
         {
-            if (enemiesInRange[g] != null && enemiesInRange[g].name == "AOETrigger")
-            {
-                enemiesInRange[g] = null;
-            } 
+            if (enemiesInRange[i] != null && enemiesInRange[i].name.CompareTo("AOETrigger") == 0) {
+                enemiesInRange.Remove(enemiesInRange[i]);
+                i--;
+            }
         }
 
         if (isEmpty()) return;
@@ -582,7 +602,7 @@ public class TowerAI : MonoBehaviour
             while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
                 decoysEnd++;
 
-            for (int i = decoysEnd + 1; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Move decoys to the front
+            for (int i = decoysEnd + 1; i < enemiesInRange.Count && enemiesInRange[i] != null; i++) //Move decoys to the front
             {
                 if (enemiesInRange[i].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
                 {
@@ -606,9 +626,9 @@ public class TowerAI : MonoBehaviour
                 }
             }
             
-            for (int i = decoysEnd; i < enemiesInRange.Length; i++) //Sort the normal enemies
+            for (int i = decoysEnd; i < enemiesInRange.Count; i++) //Sort the normal enemies
             {
-                for (int j = i; i < enemiesInRange.Length && enemiesInRange[i] != null; i++)
+                for (int j = i; i < enemiesInRange.Count && enemiesInRange[i] != null; i++)
                 {
                     if (enemiesInRange[j] != null && enemiesInRange[i] != null && getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
@@ -625,7 +645,7 @@ public class TowerAI : MonoBehaviour
             while (enemiesInRange[decoysEnd] != null && enemiesInRange[decoysEnd].GetComponent<AI>() != null && enemiesInRange[decoysEnd].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
                 decoysEnd++;
 
-            for (int i = decoysEnd + 1; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Move decoys to the front
+            for (int i = decoysEnd + 1; i < enemiesInRange.Count && enemiesInRange[i] != null; i++) //Move decoys to the front
             {
                 if (enemiesInRange[i].GetComponent<AI>().getSpecialType() != Enemy.SpecialTypes.Decoy)
                 {
@@ -649,9 +669,9 @@ public class TowerAI : MonoBehaviour
                 }
             }
 
-            for (int i = decoysEnd; i < enemiesInRange.Length && enemiesInRange[i] != null; i++) //Sort the normal enemies
+            for (int i = decoysEnd; i < enemiesInRange.Count && enemiesInRange[i] != null; i++) //Sort the normal enemies
             {
-                for (int j = i; i < enemiesInRange.Length; i++)
+                for (int j = i; i < enemiesInRange.Count; i++)
                 {
                     if (getScore(enemiesInRange[j]) > getScore(enemiesInRange[i]))    //Ordered by enemy strength from strongest to weakest
                     {
@@ -668,14 +688,13 @@ public class TowerAI : MonoBehaviour
         //    debug += g.GetComponent<AI>().getName() + ", ";
         //Debug.Log(debug);
     }
-
     private void shiftUp()
     {
         if (isEmpty() || isFull()) return;
 
-        foreach (GameObject g in enemiesInRange)
+        for (int j = 0; j < enemiesInRange.Count; j++)
         {
-            for (int i = 0; i < enemiesInRange.Length - 1; i++)
+            for (int i = 0; i < enemiesInRange.Count - 1; i++)
             {
                 if (enemiesInRange[i] == null)
                 {
@@ -685,7 +704,6 @@ public class TowerAI : MonoBehaviour
             }
         }
     }
-
     private bool isEmpty()
     {
         bool output = true;
@@ -709,22 +727,12 @@ public class TowerAI : MonoBehaviour
 
     private void AddTarget(GameObject newTarget)    //Adds an enemy to the list of enemies in range (unless it's forgotten)
     {
-        if (newTarget.GetComponent<AI>().getForgotten()) return;
-
-        for (int i = 0; i < enemiesInRange.Length; i++)
-        {
-            if (enemiesInRange[i] == null)
-            {
-                enemiesInRange[i] = newTarget;
-                prioritize();
-                return;
-            }
-        }
+        enemiesInRange.Add(newTarget);
+        prioritize();
     }
-
     private void forget(GameObject enemy)
     {
-        for (int i = 0; i < enemiesInRange.Length; i++)
+        for (int i = 0; i < enemiesInRange.Count; i++)
         {
             if (enemiesInRange[i] == enemy)
             {
@@ -757,7 +765,7 @@ public class TowerAI : MonoBehaviour
     #region Buff/Debuff Managing
     private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
-        for (int i = 0; i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Count; i++)
         {
             if (buffs[i] == null)
             {
@@ -769,11 +777,11 @@ public class TowerAI : MonoBehaviour
     private void removeBuff(Buffs debuff) //Removes a debuff from the list of debuffs currently applied
     {
         int i = 0;
-        for (; i < buffs.Length; i++)
+        for (; i < buffs.Count; i++)
         {
             if (buffs[i] == debuff)
             {
-                for (; i < buffs.Length - 1; i++)
+                for (; i < buffs.Count - 1; i++)
                 {
                     buffs[i] = buffs[i + 1];
                 }
@@ -811,7 +819,7 @@ public class TowerAI : MonoBehaviour
     private float getFireRate()    //Gives total speed penalty/buff (multiplicative)
     {
         float fireRate = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             fireRate *= buffs[i].getFireRate();
         }
@@ -820,7 +828,7 @@ public class TowerAI : MonoBehaviour
     private float getTurnSpeed()    //Gives total turn speed penalty/buff (multiplicative)
     {
         float turnSpeed = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             turnSpeed *= buffs[i].getTurnSpeed();
         }
@@ -829,7 +837,7 @@ public class TowerAI : MonoBehaviour
     private float getDamage()    //Gives total damage penalty/buff (multiplicative)
     {
         float damage = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             damage *= buffs[i].getDamage();
         }
@@ -840,7 +848,7 @@ public class TowerAI : MonoBehaviour
         if (buffs == null) return 1;
 
         float range = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             range *= buffs[i].getRange();
         }
@@ -849,7 +857,7 @@ public class TowerAI : MonoBehaviour
     private float getCritChance()    //Gives total damage penalty/buff (multiplicative)
     {
         float crit = 1;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             crit *= buffs[i].getCritChance();
         }
@@ -858,7 +866,7 @@ public class TowerAI : MonoBehaviour
     private bool getIgnoreDecoys()
     {
         bool ignoreDecoys = false;
-        for (int i = 0; i < buffs.Length && buffs[i] != null; i++)
+        for (int i = 0; i < buffs.Count && buffs[i] != null; i++)
         {
             ignoreDecoys = ignoreDecoys || buffs[i].getIgnoreDecoys();
         }

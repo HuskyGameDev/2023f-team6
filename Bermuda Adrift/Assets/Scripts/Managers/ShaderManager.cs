@@ -10,7 +10,11 @@ public class ShaderManager : MonoBehaviour
     [SerializeField] private Material bloodWater;
     [SerializeField] private GameObject water;
 
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+            startBossRound();
+    }
     public void startBossRound()
     {
         rain.SetActive(true);

@@ -99,7 +99,19 @@ public class UpgradeMenuHandler : MonoBehaviour
         if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
         if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
 
-        if (upgradeLevel >= 4)  //Displays only the destroy button when it's fully upgraded
+        if (tower.getNoUpgrades())
+        {
+            upgrade1.SetActive(false);
+            headerText.text = tower.getName();
+
+            upgrade2.SetActive(false);
+            OneOption.SetActive(true);
+            TwoOptions.SetActive(false);
+
+            destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -243.2f);
+            destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Dismiss";
+        }
+        else if (upgradeLevel >= 4)  //Displays only the destroy button when it's fully upgraded
         {
             upgrade1.SetActive(false);
             if (upgradeLevel == 4)
@@ -346,6 +358,7 @@ public class UpgradeMenuHandler : MonoBehaviour
         if (currentTower.getPriority() == TowerAI.Priority.Closest) text.text = "Closest";
         if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
         if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
+        if (currentTower.getPriority() == TowerAI.Priority.Weakest) text.text = "Weakest";
         if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
         if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
         if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";

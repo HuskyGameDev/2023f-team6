@@ -42,11 +42,11 @@ MonoBehaviour:
   UA1image: {fileID: -1961827361, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   UA2Name: Elemental Vortex
   UA2Description: Channel lightning through the sheer force of explosions
-  UA2damageMult: 1
+  UA2damageMult: 0.75
   UA2turnSpeed: 0.75
   UA2range: 7
   UA2Bullet: {fileID: 11400000, guid: 88f3df537f374af4899f41f0a8e2e552, type: 2}
-  UA2cost: 300
+  UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: 1817036913, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   UB1Name: Laser Guidance
@@ -71,4 +71,5 @@ MonoBehaviour:
   baseSprite: {fileID: -1758812984, guid: ff4ee1650360beb4ea2adef86fb2cddf, type: 3}
   rarity: 0
   cantTurn: 0
-  extraPriorities: 04000000
+  noUpgrades: 0
+  extraPriorities: 05000000

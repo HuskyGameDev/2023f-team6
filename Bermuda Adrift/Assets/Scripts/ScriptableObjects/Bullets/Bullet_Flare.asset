@@ -19,9 +19,11 @@ MonoBehaviour:
   scale: 0.5
   timer: 1
   animator: {fileID: 9100000, guid: e820139fb3fdace449db29240fcf47f9, type: 2}
-  FriendlyFire: 0
+  FriendlyFire: 1
+  Homing: 0
   debuff: {fileID: 11400000, guid: 625faa70b7ffe624f9cf9e5bc1fbc807, type: 2}
   pierce: -1
   AOETimer: 4
-  UnderwaterDamage: 0
-  AirborneDamage: 0
+  UnderwaterDamage: 1
+  AirborneDamage: 1
+  types: []

@@ -19,7 +19,7 @@ MonoBehaviour:
   turnSpeed: 1
   range: 6
   defaultBullet: {fileID: 11400000, guid: 82182d90e7700b04b95e07c25cb78cdf, type: 2}
-  cost: 50
+  cost: 200
   lightningResistance: 0
   image: {fileID: 1777780787, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
   U1Name: More Scrap

@@ -19,6 +19,7 @@ public class Hitscan : MonoBehaviour
     private float critChance;
     private float levelScale = 1;
     private float distanceTraveled = 0;
+    private float homing;
 
     [SerializeField] private Transform sprite;
 
@@ -78,7 +79,18 @@ public class Hitscan : MonoBehaviour
             transform.GetChild(0).GetComponent<SpriteRenderer>().color = fade;
 
             if (AOETimer <= 0)
+            {
+                if (effect == Bullet.Effects.Bait)
+                {
+                    gameObject.tag = "Untagged";
+                    foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                    {
+                        enemy.SendMessage("updatePath");
+                    }
+                }
+
                 Destroy(gameObject);
+            }
         }
     }
 
@@ -86,7 +98,17 @@ public class Hitscan : MonoBehaviour
     {
         if (!stop)
         {
+            if (homing > 0 && nearestEnemy() != null)
+            {
+                Debug.Log(nearestEnemy().GetComponent<AI>().getName());
+                Vector3 offset = nearestEnemy().transform.position - transform.position;
+                Quaternion output = Quaternion.LookRotation(Vector3.forward, offset);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, output, homing * nearestEnemyDistance() * 10);
+            }
+            
             gameObject.transform.Translate(transform.up * bullet.getProjectileSpeed() * Time.deltaTime);
+
             distanceTraveled += (transform.up * bullet.getProjectileSpeed() * Time.deltaTime).magnitude;
 
             if (Mathf.Abs(gameObject.transform.position.x) >= Mathf.Abs((camera.transform.position.x - camera.orthographicSize) * 2f) || Mathf.Abs(gameObject.transform.position.y) >= Mathf.Abs(camera.transform.position.y - camera.orthographicSize * 1.15f))
@@ -94,6 +116,25 @@ public class Hitscan : MonoBehaviour
                 Destroy(gameObject);    //Delete the bullet if off screen
             }
         }
+    }
+    private GameObject nearestEnemy()
+    {
+        float distance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if ((enemy.transform.position - transform.position).sqrMagnitude < distance)
+            {
+                distance = (enemy.transform.position - transform.position).sqrMagnitude;
+                nearestEnemy = enemy;
+            }
+        }
+        return nearestEnemy;
+    }
+    private float nearestEnemyDistance()
+    {
+        return 1f / (nearestEnemy().transform.position - transform.position).sqrMagnitude;
     }
 
     public void Mult(float mult) { damage = (int) (damage * mult); }  //Multiplies base damage of the bullet by the damage multiplier of the tower when it's created
@@ -112,6 +153,7 @@ public class Hitscan : MonoBehaviour
         effect = bullet.getEffect();
         underwaterMult = bullet.getUnderwaterDamage();
         airborneMult = bullet.getAirborneDamage();
+        homing = bullet.getHomingStrength();
 
         pierce = bullet.getPierce();
         if (pierce == -1)
@@ -195,7 +237,6 @@ public class Hitscan : MonoBehaviour
         if (!gameObject.CompareTag("Friendly")) return 1;
 
         float multiplier = -0.25f * Mathf.Atan(0.5f * (distanceTraveled - 14)) + 0.7f;
-        Debug.Log("Distance is " + distanceTraveled + ", Multiplier is " + multiplier);
 
         return multiplier;
     }
@@ -251,10 +292,16 @@ public class Hitscan : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; } //Only hit enemies, and be able to be shot by player bullets if friendly fir eis turned on
+        if (collision.GetComponent<AI>() != null && collision.GetComponent<AI>().getForgotten() && gameObject.CompareTag("Friendly"))  //If an enemy is forgotten, player bullets can't hit it
+            return;
 
-        if ((collision.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.GetComponent<AI>().getType() == Enemy.Types.WaterBoss) && underwaterMult == 0) return;   //Pass through enemies if it won't affect them
-        if ((collision.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss) && airborneMult == 0) return;
+        if (collision.gameObject.tag != "Enemy" && !(collision.CompareTag("Friendly") && bullet.getFriendlyFire())) { return; } //Only hit enemies, and be able to be shot by player bullets if friendly fire is turned on
+
+        if (collision.GetComponent<AI>() != null)
+        {
+            if ((collision.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.GetComponent<AI>().getType() == Enemy.Types.WaterBoss) && underwaterMult == 0) return;   //Pass through enemies if it won't affect them
+            if ((collision.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss) && airborneMult == 0) return;
+        }
 
         pierce--;
         if (bullet.getAOE() == 0 || (landed && effect != Bullet.Effects.Bait) || effect == Bullet.Effects.None) //If a bullet has hit something, it won't do the AOE multiple times
@@ -297,9 +344,14 @@ public class Hitscan : MonoBehaviour
             {
                 stop = true;
                 landed = true;
-                collision.gameObject.SendMessage("baited", gameObject);
                 if (collision.name != "AOETrigger")
                     collision.gameObject.SendMessage("InflictDebuff", debuff);  //Should just be the Baited debuff, which just distracts the enemies
+
+                gameObject.tag = "Entrance";
+                foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    enemy.SendMessage("updatePath");
+                }
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {

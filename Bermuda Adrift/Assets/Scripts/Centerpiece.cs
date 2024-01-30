@@ -16,7 +16,17 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     private GameManager manager;
     private Transform Player;
     private SpriteRenderer spriteRenderer;
+    private int barrier;
+    private int barrierDamage;
 
+    private void OnEnable()
+    {
+        GameManager.onRoundEnd += resetBarrier;
+    }
+    private void OnDisable()
+    {
+        GameManager.onRoundEnd -= resetBarrier;
+    }
     private void Start() 
     { 
         manager = FindObjectOfType<GameManager>();
@@ -35,9 +45,15 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
             spriteRenderer.sortingOrder = 3;
     }
 
+    void resetBarrier() { barrierDamage = 0; }
+    void setBarrierStrength(int strength) { barrier = strength; }
+    void addBarrierStrength(int strength) { barrier += strength; }
+    void removeBarrierStrength(int strength) { barrier -= strength; }
+
     void TakeDamage(int damage)
     {
-        Health -= damage;
+        if (barrier > barrierDamage) { barrierDamage += damage; }
+        else { Health -= damage; }
 
         onCenterpieceDamage?.Invoke(damage);
         onCenterpieceDamaged?.Invoke();
