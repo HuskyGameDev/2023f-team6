@@ -32,6 +32,11 @@ public class SkillTree : MonoBehaviour
         //foreach (var skill in SkillHolder.GetComponentInChildren<Skill>()) SkillList.Add(skill);
         for (var i = 0; i < SkillList.Length; i++) SkillList[i].id = i;
 
+//       foreach (connector : RectTransform  in ConnectorHolder.GetComponentsInChildren<RectTransform>()) ConnectionList.Add(connector, GameObject);
+
+//        SkillList[0].ConnectedSkills = new[] (1, 2, 3);
+//        SkillList[1].ConnectedSkills = new[] (1, 2, 3);
+//        SkillList[2].ConnectedSkills = new[] (1, 2, 3);
 
     }
 
