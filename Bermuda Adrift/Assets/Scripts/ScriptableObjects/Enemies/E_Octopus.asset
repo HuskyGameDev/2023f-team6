@@ -15,10 +15,13 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Octopus
+  description: Is an octopus
+  pageNumber: 0
   Health: 20
   Damage: 2
   Speed: 3
   attackSpeed: 1
+  sprite: {fileID: 1358230883, guid: 1358718373f734644ad37c67392fd813, type: 3}
   xp: 40
   scrap: 40
   rarity: 0.1

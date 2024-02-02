@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   specialType: 0
+  name: The Shadow Self
+  description: The Shadow Self
+  pageNumber: 0
   Health: 4000
   Damage: 30
   Speed: 0.5
   attackSpeed: 0.25
+  sprite: {fileID: 1562784182, guid: 6fc0d514c43c33b42bf47820b5c4eb98, type: 3}
   xp: 2000
   scrap: 250
   rarity: 0.005
+  roundLimit: 0
   anim: {fileID: 9100000, guid: a538fb1e41b1b394d8155b1089110727, type: 2}
   xSize: 1
   ySize: 2

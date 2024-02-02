@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class Enemy : ScriptableObject
@@ -16,11 +17,13 @@ public class Enemy : ScriptableObject
     [SerializeField] private SpecialTypes specialType;
 
     [SerializeField] private string name;
+    [SerializeField] private string description;
     [SerializeField] private int pageNumber;
     [SerializeField] private int Health;
     [SerializeField] private int Damage;
     [SerializeField] private float Speed;
     [SerializeField] private float attackSpeed; //Less for faster
+    [SerializeField] private Sprite sprite;
 
     [SerializeField] private int xp;
     [SerializeField] private int scrap;
@@ -55,6 +58,9 @@ public class Enemy : ScriptableObject
     public int getDamage() { return Damage; }
     public float getSpeed() { return Speed; }
     public float getAttackSpeed() { return attackSpeed; }
+
+    public string getDescription() { return description; }
+    public Sprite getSprite() { return sprite; }
     public int getXP() { return xp; }
     public int getScrap() { return scrap; }
     public float getRarity() { return rarity; }

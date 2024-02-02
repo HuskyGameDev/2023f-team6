@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Ray
+  description: Is a ray
+  pageNumber: 0
   Health: 20
   Damage: 3
   Speed: 1.5
   attackSpeed: 1
+  sprite: {fileID: 938702120, guid: 2e9cfe962f150164881d81ec1e0f2595, type: 3}
   xp: 30
   scrap: 10
   rarity: 0.1
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 870ac8520cad7944d91492abb9033119, type: 2}
   xSize: 2
   ySize: 1

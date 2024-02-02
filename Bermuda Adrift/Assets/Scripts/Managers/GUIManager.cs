@@ -19,6 +19,8 @@ public class GUIManager : MonoBehaviour
     [SerializeField] GameObject CooldownIndicatorGUI;
     [SerializeField] TextMeshProUGUI towerName;
     [SerializeField] TextMeshProUGUI towerCost;
+    [SerializeField] Canvas logbookCanvas;
+    [SerializeField] GameObject logbookGrid;
 
     Resolution[] resolutions;
 
@@ -187,5 +189,27 @@ public class GUIManager : MonoBehaviour
         towerName.text = "Right Click";
         towerCost.text = "To Cancel";
         towerCost.color = Color.white;
+    }
+
+    public void enableCanvas(Canvas c)
+    {
+        c.enabled = true;
+    }
+
+    public void disableCanvas(Canvas c)
+    {
+        c.enabled = false;
+    }
+
+    public void openLogbook()
+    {
+        logbookCanvas.enabled = true;
+        logbookGrid.SetActive(true);
+    }
+
+    public void closeLogbook()
+    {
+        logbookCanvas.enabled = false;
+        logbookGrid.SetActive(false);
     }
 }
