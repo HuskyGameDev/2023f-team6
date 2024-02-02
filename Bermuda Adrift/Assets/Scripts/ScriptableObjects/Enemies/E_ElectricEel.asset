@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Electric Eel
+  description: Is an electric eel
+  pageNumber: 0
   Health: 15
   Damage: 3
   Speed: 2
   attackSpeed: 1
+  sprite: {fileID: -382406158, guid: 62c88568c5d21514cb8c904f64a8d2b3, type: 3}
   xp: 20
   scrap: 20
   rarity: 0.2
+  roundLimit: 0
   anim: {fileID: 9100000, guid: ba15f104298653f479bddbac3e61f53c, type: 2}
   xSize: 1.25
   ySize: 0.5

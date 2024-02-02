@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 1
   specialType: 0
   name: Seagull
+  description: Is a seagull
+  pageNumber: 0
   Health: 3
   Damage: 1
   Speed: 3
   attackSpeed: 1
+  sprite: {fileID: -603636446, guid: 0586acecff422e54bacb4d14033c0512, type: 3}
   xp: 5
   scrap: 2
   rarity: 0.3
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 47660f6024834ef49ba9f35d6755c88d, type: 2}
   xSize: 1
   ySize: 1

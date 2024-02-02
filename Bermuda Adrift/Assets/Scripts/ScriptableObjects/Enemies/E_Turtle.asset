@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Turtle
+  description: Is a turtle
+  pageNumber: 0
   Health: 15
   Damage: 1
   Speed: 2
   attackSpeed: 1
+  sprite: {fileID: 1329267352, guid: 884144bb302b60d47a5932809ce9d466, type: 3}
   xp: 25
   scrap: 25
   rarity: 0.15
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 38bb6657be9c0924e82941789c20964f, type: 2}
   xSize: 1
   ySize: 0.5

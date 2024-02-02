@@ -15,10 +15,13 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Shark
+  description: Is a shark
+  pageNumber: 0
   Health: 100
   Damage: 10
   Speed: 1
   attackSpeed: 1
+  sprite: {fileID: -218538214, guid: 76b45a52c934d3c4f98803a15a3ec282, type: 3}
   xp: 500
   scrap: 100
   rarity: 0.01

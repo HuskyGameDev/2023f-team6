@@ -15,10 +15,13 @@ MonoBehaviour:
   Type: 0
   specialType: 1
   name: Hamster
+  description: Is a hamster
+  pageNumber: 0
   Health: 70
   Damage: 0
   Speed: 1
   attackSpeed: 1
+  sprite: {fileID: 21300000, guid: 7cdd1d731c1b95441b967b9c13485352, type: 3}
   xp: 30
   scrap: 30
   rarity: 0.05

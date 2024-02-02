@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Swordfish
+  description: Is a swordfish
+  pageNumber: 0
   Health: 5
   Damage: 1
   Speed: 3
   attackSpeed: 1
+  sprite: {fileID: -1987615166, guid: f5c588f6e35097c4587ec7c95dcdb57d, type: 3}
   xp: 5
   scrap: 10
   rarity: 0.3
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 6ee413c2d009ee946bef8560636ac489, type: 2}
   xSize: 1.5
   ySize: 0.75

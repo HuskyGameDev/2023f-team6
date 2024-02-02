@@ -15,10 +15,13 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Blue Fish Person
+  description: Is a fish person that is blue
+  pageNumber: 0
   Health: 20
   Damage: 5
   Speed: 3
   attackSpeed: 1
+  sprite: {fileID: 21300000, guid: 3cb164f747e8dce40b749267d828f4f1, type: 3}
   xp: 20
   scrap: 20
   rarity: 0.1

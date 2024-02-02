@@ -15,10 +15,13 @@ MonoBehaviour:
   Type: 1
   specialType: 0
   name: Shadow Creature
+  description: Is a shadow creature
+  pageNumber: 0
   Health: 5
   Damage: 1
   Speed: 2
   attackSpeed: 1
+  sprite: {fileID: -2099569698, guid: 1c39e4cd431ec7b4fad80b6079d41889, type: 3}
   xp: 10
   scrap: 5
   rarity: 0.05

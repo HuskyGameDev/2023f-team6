@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   specialType: 0
+  name: Kraken
+  description: Purple kraken. Everyone is mad I made him purple.
+  pageNumber: 0
   Health: 2000
   Damage: 40
   Speed: 0.75
   attackSpeed: 1
+  sprite: {fileID: 1565997095, guid: ef380e578e26d0b448826f0d7c867acf, type: 3}
   xp: 3000
   scrap: 400
   rarity: 0.05
+  roundLimit: 0
   anim: {fileID: 9100000, guid: a40d5c6bf4f9d0244903aa83437c2cb1, type: 2}
   xSize: 5
   ySize: 6

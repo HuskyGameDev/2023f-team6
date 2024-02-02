@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Jellyfish
+  description: Is a jellyfish
+  pageNumber: 0
   Health: 10
   Damage: 2
   Speed: 1
   attackSpeed: 1
+  sprite: {fileID: -1872985577, guid: b53bca73f31dc5a4981a3623c284920a, type: 3}
   xp: 25
   scrap: 30
   rarity: 0.2
+  roundLimit: 0
   anim: {fileID: 9100000, guid: b5e61dcc23bb775499a459aac9e40211, type: 2}
   xSize: 0.75
   ySize: 1

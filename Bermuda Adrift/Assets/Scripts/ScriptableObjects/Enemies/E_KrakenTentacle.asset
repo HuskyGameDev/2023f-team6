@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Kraken Tentacle
+  description: Is a kraken tentacle
+  pageNumber: 0
   Health: 10
   Damage: 1
   Speed: 8
   attackSpeed: 0.5
+  sprite: {fileID: -710846752, guid: 3853f87623043cd4c97953b35d93b3d5, type: 3}
   xp: 10
   scrap: 0
   rarity: 0
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 67ee9a277d26ef546ad8bcd514452461, type: 2}
   xSize: 1.5
   ySize: 3

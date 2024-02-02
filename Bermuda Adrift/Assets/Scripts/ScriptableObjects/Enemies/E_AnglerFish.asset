@@ -15,13 +15,17 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   name: Angler Fish
+  description: Is a fish that angles.
+  pageNumber: 0
   Health: 15
   Damage: 3
   Speed: 2
   attackSpeed: 1
+  sprite: {fileID: -128143246, guid: 19ba6048febe4d34293e7fbe7c29369a, type: 3}
   xp: 25
   scrap: 10
   rarity: 0.2
+  roundLimit: 0
   anim: {fileID: 9100000, guid: 31de241dbaa712d4b971c886dc93cb4e, type: 2}
   xSize: 1.5
   ySize: 1
