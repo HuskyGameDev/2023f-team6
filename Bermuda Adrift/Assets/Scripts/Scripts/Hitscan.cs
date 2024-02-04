@@ -286,12 +286,6 @@ public class Hitscan : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)  //Makes bullet do damage and/or do its assigned AOE effect, then destroy the bullet gameObject
     {
-        if (stop && collision.CompareTag("Tower") && debuff != null)    //Buff other towers if they are inside an AOE buff. Could also debuff towers in a radius. Maybe we can use that
-        {
-            collision.gameObject.GetComponent<TowerAI>().StartCoroutine("Buff", debuff);
-            return;
-        }
-
         if (collision.GetComponent<AI>() != null && collision.GetComponent<AI>().getForgotten() && gameObject.CompareTag("Friendly"))  //If an enemy is forgotten, player bullets can't hit it
             return;
 

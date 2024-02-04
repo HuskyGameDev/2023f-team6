@@ -12,7 +12,7 @@ public class TowerAI : MonoBehaviour
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
 
-    public enum Priority { Closest, Furthest, Strongest, Weakest, Fastest, OnlyWater, OnlyAir };
+    public enum Priority { Closest, Furthest, Strongest, Weakest, Fastest, OnlyWater, OnlyAir, None };
 
     private Tower tower;
     [SerializeField] private GameObject nozzle;
@@ -35,7 +35,6 @@ public class TowerAI : MonoBehaviour
     private List<GameObject> enemiesInRange;
 
     private bool placed = false;
-    //private BoxCollider2D[] colliders;
     private Priority[] extras;
 
 
@@ -146,6 +145,9 @@ public class TowerAI : MonoBehaviour
         {
             sortExtras();
             changePriorityFunction(extras[0]);
+
+            if (extras[0] == Priority.None)
+                turnOnHitboxes();
         }
         else
             changePriorityFunction(Priority.Closest);
@@ -165,6 +167,10 @@ public class TowerAI : MonoBehaviour
 
         gameManager.addScrap(returnScrap);
         buildManager.removePosition(gameObject);
+
+        if (getPriority() == Priority.None)
+            clearNearbyBuff(getBulletBuff());
+
         Destroy(gameObject);
     }
     public void openUpgradeMenu()
@@ -173,7 +179,13 @@ public class TowerAI : MonoBehaviour
     }
     public void StartRound()    //Called when each round starts
     {
-        newTarget();
+        if (getPriority() == Priority.None)
+        {
+            buffNearby(getBulletBuff());
+            anim.SetBool("TargetFound", true);
+        }
+        else
+            newTarget();
     }
     #endregion
 
@@ -182,6 +194,9 @@ public class TowerAI : MonoBehaviour
     {
         if (upgradeLevel > 3)
             return;
+
+        if (getPriority() == Priority.None)
+            clearNearbyBuff(getBulletBuff());
 
         if (upgradeLevel == 0)  //Upgrade 1
         {
@@ -260,6 +275,9 @@ public class TowerAI : MonoBehaviour
                 gameManager.spendScrap(tower.UB2getCost());
             }
         }
+
+        if (getPriority() == Priority.None)
+            buffNearby(getBulletBuff());
 
         gameObject.GetComponent<CircleCollider2D>().enabled = true;
         if (getTowerRange() >= 0)
@@ -397,6 +415,7 @@ public class TowerAI : MonoBehaviour
             }
         }
         */
+        if (getPriority() == Priority.None) return;
 
         if (getTowerRange() == -1 && enemiesInRange[0] == null)
         {
@@ -429,6 +448,8 @@ public class TowerAI : MonoBehaviour
     #region Priority functions
     private void priorityUpdate(bool Left)
     {
+        if (getPriority() == Priority.None) return;
+
         if (Left)
         {
             if (getPriority() > Priority.Fastest)
@@ -498,6 +519,8 @@ public class TowerAI : MonoBehaviour
             getScore = getScoreByWaterStrong;
         else if (newPriority == Priority.OnlyAir)
             getScore = getScoreByAirStrong;
+        else if (newPriority == Priority.None)  //For totem pole. Makes it act differently from the other towers
+            getScore = dontGetScore;
     }
     float getScoreByClosest(GameObject g)
     {
@@ -547,6 +570,10 @@ public class TowerAI : MonoBehaviour
     {
         return -getScoreByStrongest(g);
     }
+    float dontGetScore(GameObject g)
+    {
+        return 0;
+    }
     public Priority getPriority()
     {
         if (getScore == getScoreByClosest)
@@ -563,6 +590,8 @@ public class TowerAI : MonoBehaviour
             return Priority.OnlyWater;
         if (getScore == getScoreByAirStrong)
             return Priority.OnlyAir;
+        if (getScore == dontGetScore)
+            return Priority.None;
 
         return 0;
     }
@@ -765,37 +794,89 @@ public class TowerAI : MonoBehaviour
     #region Buff/Debuff Managing
     private void addBuff(Buffs debuff)    //Add a debuff to the list of debuffs
     {
-        for (int i = 0; i < buffs.Count; i++)
-        {
-            if (buffs[i] == null)
-            {
-                buffs[i] = debuff;
-                return;
-            }
-        }
+        Debug.Log(tower.getName() + " receiving " + debuff.name + " debuff");
+        if ((debuff.getDuration() == -1 && buffs.Contains(debuff)) || tower.getName().CompareTo("Totem Pole") == 0) return;
+        Debug.Log("Not cancelled");
+
+        buffs.Add(debuff);
     }
     private void removeBuff(Buffs debuff) //Removes a debuff from the list of debuffs currently applied
     {
-        int i = 0;
-        for (; i < buffs.Count; i++)
-        {
-            if (buffs[i] == debuff)
-            {
-                for (; i < buffs.Count - 1; i++)
-                {
-                    buffs[i] = buffs[i + 1];
-                }
-                buffs[i] = null;
-            }
-        }
+        buffs.Remove(debuff);
     }
     private IEnumerator Buff(Buffs newDebuff)  //adds a debuff to the list
     {
+        if (getPriority() == Priority.None) yield break;    //So totem poles don't buff themselves
+
         addBuff(newDebuff);
+
+        if (newDebuff.getDuration() == -1) yield break;
 
         yield return new WaitForSeconds(newDebuff.getDuration());
 
         removeBuff(newDebuff);
+    }
+    private void buffNearby() { buffNearby(getBulletBuff()); }
+    private void buffNearby(Buffs buff) //Applies a buff to every tower in range
+    {
+        Debug.Log("Buffing nearby");
+        Vector3 position = transform.position;
+        int towerMask = 1 << 8;
+
+        Collider2D collider = Physics2D.Raycast(position, Vector3.up + Vector3.right, getTowerRange(), towerMask).collider;     //Top right corner
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.up + Vector3.left, getTowerRange(), towerMask).collider;                 //Top left corner
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down + Vector3.left, getTowerRange(), towerMask).collider;               //Bottom left corner
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down + Vector3.right, getTowerRange(), towerMask).collider;              //Bottom right corner
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.up, getTowerRange(), towerMask).collider;                                //Up
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down, getTowerRange(), towerMask).collider;                              //Down
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.left, getTowerRange(), towerMask).collider;                              //Left
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.right, getTowerRange(), towerMask).collider;                             //Right
+        if (collider != null) collider.transform.parent.GetComponent<TowerAI>().StartCoroutine("Buff", buff);
+    }
+    private void clearNearbyBuff() { clearNearbyBuff(getBulletBuff()); }
+    private void clearNearbyBuff(Buffs buff)    //Removes the given buff from all towers within range
+    {
+        Vector3 position = transform.position;
+        int towerMask = 1 << 8;
+
+        Collider2D collider = Physics2D.Raycast(position, Vector3.up + Vector3.right, getTowerRange(), towerMask).collider;     //Top right corner
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.up + Vector3.left, getTowerRange(), towerMask).collider;                 //Top left corner
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down + Vector3.left, getTowerRange(), towerMask).collider;               //Bottom left corner
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down + Vector3.right, getTowerRange(), towerMask).collider;              //Bottom right corner
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.up, getTowerRange(), towerMask).collider;                                //Up
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.down, getTowerRange(), towerMask).collider;                              //Down
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.left, getTowerRange(), towerMask).collider;                              //Left
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
+        collider = Physics2D.Raycast(position, Vector3.right, getTowerRange(), towerMask).collider;                             //Right
+        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+
     }
     private void lightningStrike(float duration) { StartCoroutine(tempDisable(duration)); }
     private IEnumerator tempDisable(float duration) //Temporarily stops the tower from firing
@@ -878,18 +959,18 @@ public class TowerAI : MonoBehaviour
     public float getTowerRange()
     {
         if (upgradeLevel == 0)
-            return tower.getRange();
+            return tower.getRange() * getRange();
         if (upgradeLevel == 1)
-            return tower.U1getRange();
+            return tower.U1getRange() * getRange();
         if (upgradeLevel == 2)
-            return tower.UA1getRange();
+            return tower.UA1getRange() * getRange();
         if (upgradeLevel == 3)
-            return tower.UB1getRange();
+            return tower.UB1getRange() * getRange();
         if (upgradeLevel == 4)
-            return tower.UA2getRange();
+            return tower.UA2getRange() * getRange();
         if (upgradeLevel == 5)
-            return tower.UB2getRange();
-        return tower.getRange();
+            return tower.UB2getRange() * getRange();
+        return tower.getRange() * getRange();
     }
     private int getLightningResistance()
     {
@@ -907,9 +988,25 @@ public class TowerAI : MonoBehaviour
             return tower.UB2getLightningResistance();
         return tower.getLightningResistance();
     }
+    public Buffs getBulletBuff()
+    {
+        if (upgradeLevel == 0)
+            return tower.getDefaultBullet().getDebuff();
+        if (upgradeLevel == 1)
+            return tower.U1getBullet().getDebuff();
+        if (upgradeLevel == 2)
+            return tower.UA1getBullet().getDebuff();
+        if (upgradeLevel == 3)
+            return tower.UB1getBullet().getDebuff();
+        if (upgradeLevel == 4)
+            return tower.UA2getBullet().getDebuff();
+        if (upgradeLevel == 5)
+            return tower.UB2getBullet().getDebuff();
+        return tower.getDefaultBullet().getDebuff();
+    }
     #endregion
 
-    private void turnOffHitboxes() { gameObject.GetComponent<CircleCollider2D>().enabled = false; } //Tower hitboxes mess with being able to click on other towers, so turn them off at the end of every round
+    private void turnOffHitboxes() { if (getPriority() != Priority.None) gameObject.GetComponent<CircleCollider2D>().enabled = false; } //Tower hitboxes mess with being able to click on other towers, so turn them off at the end of every round
     private void turnOnHitboxes() { if (getTowerRange() > 0) gameObject.GetComponent<CircleCollider2D>().enabled = true; }  //And turn them back on at the start of every round
     public void OnTriggerEnter2D(Collider2D collision) //If the collision is an enemy, add it to the list
     {

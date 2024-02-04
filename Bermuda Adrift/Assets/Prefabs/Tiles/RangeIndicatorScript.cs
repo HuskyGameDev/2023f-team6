@@ -36,7 +36,9 @@ public class RangeIndicatorScript : MonoBehaviour
             gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
         }
         else
+        {
             gameObject.transform.position = towerParent.transform.position;
+        }
     }
 
     public void updateRange(TowerAI towerAI)

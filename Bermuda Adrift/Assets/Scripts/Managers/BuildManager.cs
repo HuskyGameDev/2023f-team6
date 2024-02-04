@@ -439,6 +439,10 @@ public class BuildManager : MonoBehaviour
             ||
             Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, channelMask).collider != null)  //Down left corner
             return false;
+        if (Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, 1.4f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, 1.4f, channelMask).collider != null)   //Bottom line
+            return false;
 
 
         return true;

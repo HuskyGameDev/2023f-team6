@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb3d1baa8662384698235b35440d771, type: 3}
   m_Name: Buff_TotemPoleB1
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: -1
   description: 
   thumbnail: {fileID: 0}
   Distracted: 0

@@ -17,7 +17,7 @@ MonoBehaviour:
   Description: Empowers nearby towers
   damageMult: 0
   turnSpeed: 0
-  range: -1
+  range: 2
   defaultBullet: {fileID: 11400000, guid: 10977de8200c48346b972d4f85cc9731, type: 2}
   cost: 500
   lightningResistance: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   U1Description: Boosts the fire rate and damage of nearby towers even more
   U1damageMult: 0
   U1turnSpeed: 0
-  U1range: -1
+  U1range: 2
   U1Bullet: {fileID: 11400000, guid: 97ca07345b4c9524cace07b56a785e3a, type: 2}
   U1cost: 300
   U1LightningResistance: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   UA1Description: Increases the range of nearby towers
   UA1damageMult: 0
   UA1turnSpeed: 0
-  UA1range: -1
+  UA1range: 2
   UA1Bullet: {fileID: 11400000, guid: 3a8d113a9c63f0e48ad2dd5169aa956e, type: 2}
   UA1cost: 400
   UA1LightningResistance: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   UA2Description: Allows towers to ignore decoy enemies
   UA2damageMult: 0
   UA2turnSpeed: 0
-  UA2range: -1
+  UA2range: 2
   UA2Bullet: {fileID: 11400000, guid: e5a30eb4b8eafb74eb2adc788730452e, type: 2}
   UA2cost: 500
   UA2LightningResistance: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   UB1Description: Tower damage and speed increase even more
   UB1damageMult: 0
   UB1turnSpeed: 0
-  UB1range: -1
+  UB1range: 2
   UB1Bullet: {fileID: 11400000, guid: 517465e7b0f9e044caa3e0e3fd70e686, type: 2}
   UB1cost: 300
   UB1LightningResistance: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   UB2Description: Feel the Fury of the Sea
   UB2damageMult: 0
   UB2turnSpeed: 0
-  UB2range: -1
+  UB2range: 2
   UB2Bullet: {fileID: 11400000, guid: 6159390fae1b5254584ab7b4d2889864, type: 2}
   UB2cost: 600
   UB2LightningResistance: 0
@@ -71,4 +71,6 @@ MonoBehaviour:
   baseSprite: {fileID: 0}
   rarity: 0
   cantTurn: 1
-  extraPriorities: 
+  noUpgrades: 0
+  extraPriorities: 07000000
+  unlocked: 0

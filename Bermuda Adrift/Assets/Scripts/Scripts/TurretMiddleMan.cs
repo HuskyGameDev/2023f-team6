@@ -48,4 +48,20 @@ public class TurretMiddleMan : MonoBehaviour, IPointerDownHandler
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8
+            && collision.GetComponent<TowerAI>() != null
+            && collision.GetComponent<TowerAI>().getTower().getName().CompareTo("Totem Pole") == 0)
+            SendMessageUpwards("addBuff", collision.GetComponent<TowerAI>().getBulletBuff());
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8 
+            && collision.GetComponent<TowerAI>() != null 
+            && collision.GetComponent<TowerAI>().getTower().getName().CompareTo("Totem Pole") == 0)
+            SendMessageUpwards("removeBuff", collision.GetComponent<TowerAI>().getBulletBuff());
+    }
 }

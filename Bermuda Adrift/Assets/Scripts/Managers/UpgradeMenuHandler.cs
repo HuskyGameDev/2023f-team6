@@ -93,11 +93,13 @@ public class UpgradeMenuHandler : MonoBehaviour
         
         TextMeshProUGUI text = priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         if (currentTower.getPriority() == TowerAI.Priority.Closest) text.text = "Closest";
-        if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
-        if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
-        if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
-        if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
-        if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
+        else if (currentTower.getPriority() == TowerAI.Priority.Furthest) text.text = "Furthest";
+        else if (currentTower.getPriority() == TowerAI.Priority.Strongest) text.text = "Strongest";
+        else if (currentTower.getPriority() == TowerAI.Priority.Fastest) text.text = "Fastest";
+        else if (currentTower.getPriority() == TowerAI.Priority.OnlyWater) text.text = "Water Only";
+        else if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
+        else if (currentTower.getPriority() == TowerAI.Priority.None) text.text = "";
+        else text.text = "No text";
 
         if (tower.getNoUpgrades())
         {
