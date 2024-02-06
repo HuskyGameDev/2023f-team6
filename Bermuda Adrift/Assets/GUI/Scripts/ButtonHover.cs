@@ -27,6 +27,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (barrier != null)
             OnHoverEnterB?.Invoke(barrier);
 
+        AudioManager.Instance.PlaySFX("Menu Select Click");
+
         buttonDescription.SendMessage("mouseEnter");
     }
 

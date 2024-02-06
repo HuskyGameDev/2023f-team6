@@ -1092,7 +1092,8 @@ MonoBehaviour:
   mixer: {fileID: 0}
   musicSlider: {fileID: 0}
   SFXSlider: {fileID: 0}
-  backgroundMusic: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
+  musicSounds: []
+  sfxSounds: []
 --- !u!82 &43960050
 AudioSource:
   m_ObjectHideFlags: 0
