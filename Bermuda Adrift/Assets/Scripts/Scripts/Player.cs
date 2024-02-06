@@ -93,7 +93,7 @@ public class Player : ScriptableObject
     public bool altedSp() { return altSp; }
     public bool altedPa() { return altPa; }
     public string getDescription() { return description; }
-    public string getName() { return name; }
+    public string getName() { return characterName; }
     public Sprite getMainBodySprite() { return mainBodySprite; }
     public int getSpeed() { return speed; }
     public bool getUnlocked() { return unlocked; }

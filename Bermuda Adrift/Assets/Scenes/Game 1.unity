@@ -753,11 +753,18 @@ MonoBehaviour:
   contentBos: {fileID: 1973536930}
   contentTow: {fileID: 2137531557}
   contentCha: {fileID: 2139138728}
-  contentButton: {fileID: 5430115829010003288, guid: 1a7662a2b39a70749a3497776fe3a47e, type: 3}
+  canvasMain: {fileID: 239074157}
+  canvasEne: {fileID: 1835749753}
+  canvasBos: {fileID: 2138448602}
+  canvasTow: {fileID: 1789362848}
+  canvasCha: {fileID: 1362042558}
+  contentButtonEne: {fileID: 5430115829010003288, guid: 1a7662a2b39a70749a3497776fe3a47e, type: 3}
+  contentButtonTow: {fileID: 5430115829010003288, guid: 2d996edb4a737624c8f0ad459e155c83, type: 3}
+  contentButtonCha: {fileID: 5430115829010003288, guid: 5ec92eb2c3d120147a11202e89afe03e, type: 3}
   informationMask: {fileID: 1075989290}
-  entryDescription: {fileID: 0}
-  entryName: {fileID: 0}
-  entryIcon: {fileID: 0}
+  entryDescription: {fileID: 1958658820}
+  entryName: {fileID: 243140301}
+  entryIcon: {fileID: 2022940705}
   txtLoggedEne: {fileID: 2086749030}
   txtLoggedBos: {fileID: 2145421612}
   txtLoggedTow: {fileID: 1128123744}
@@ -781,10 +788,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: baddfa75645138349a939bb568ff6f1f, type: 2}
   - {fileID: 11400000, guid: aefcad05795496642a9091046525c9ac, type: 2}
   - {fileID: 11400000, guid: 3aaf601af0bdee64a909851d57e4b295, type: 2}
-  allTowers: []
+  allTowers:
+  - {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
+  - {fileID: 11400000, guid: 1834ddf0ddde47b4fbefb2c683e94294, type: 2}
+  - {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
+  - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
+  - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
+  - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
+  - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
+  - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
+  allCharacters: []
   unlockedEnemies: []
   unlockedBosses: []
   unlockedTowers: []
+  unlockedCharacters: []
 --- !u!1 &20578422
 GameObject:
   m_ObjectHideFlags: 0
@@ -17205,6 +17222,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: SetActiveFalse
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1075989290}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &293674441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23665,6 +23694,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: SetActiveFalse
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1075989290}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &465583347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26055,6 +26096,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 239074157}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Canvas, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: SetActiveFalse
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1075989290}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -31075,6 +31128,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: disableCanvas
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 239074157}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Canvas, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -41070,6 +41135,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 239074157}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Canvas, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: SetActiveFalse
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1075989290}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -73466,6 +73543,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038607808}
+        m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
+        m_MethodName: SetActiveFalse
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1075989290}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1718851906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83530,8 +83619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd2254c1da9444ba31740136ff6316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pilot: {fileID: 11400000, guid: 2c7301dfd237fdd43bd864a4c2d38df6, type: 2}
-  oldMan: {fileID: 11400000, guid: 2da40c1a7d778f745a240e96c11b0114, type: 2}
+  achievements: []
+  achievementPopup: {fileID: 0}
 --- !u!114 &2038607814
 MonoBehaviour:
   m_ObjectHideFlags: 0

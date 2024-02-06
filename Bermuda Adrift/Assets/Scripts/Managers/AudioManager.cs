@@ -3,37 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance;
+
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider SFXSlider;
-
-    [SerializeField] AudioClip backgroundMusic; //Will need to change when there's more songs
-    AudioSource source;
+    public Sound[] musicSounds, sfxSounds;
 
     private void Awake()
     {
-        source = gameObject.GetComponent<AudioSource>();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
 
-        source.clip = backgroundMusic;
-        quiet();
+            foreach (Sound s in musicSounds)
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.source.clip = s.clip;
+                s.source.outputAudioMixerGroup = mixer.FindMatchingGroups("Music")[0];
+
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+            }
+
+            foreach (Sound s in sfxSounds)
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.source.clip = s.clip;
+                s.source.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void PlaySound()
+    public void PlayMusic(string name)
     {
-        source.Play();
-        source.loop = true;
+        Sound s = Array.Find(musicSounds, sound => sound.name == name);
+        s.source.Play();
     }
 
-    public void StopSound()
+    public void PlaySFX(string name)
     {
-        source.Stop();
+        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
+        s.source.Play();
     }
-
-    public void quiet() { source.volume = 0.5f; }
-    public void fullVolume() { source.volume = 1f; }
 
     public void ChangeSFXVolume()
     {

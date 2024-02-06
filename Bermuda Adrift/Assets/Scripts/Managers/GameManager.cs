@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         level = 1;
         scrap = 0;
         XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
-        GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
+        //GameObject.Find("Audio Source").GetComponent<AudioManager>().PlaySound();
 
         if (Screen.width >= Screen.height * 16f / 9f)
             Screen.SetResolution(Screen.width, (int)(Screen.width * 9f / 16f), true);   //Forces a 16:9 ratio. Several things don't work with different resolutions (mainly UI)
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
             gameObject.SendMessage("SpawnEnemies");     //Sends a message to the EnemyManager
 
-            GameObject.Find("Audio Source").GetComponent<AudioManager>().fullVolume();
+            //GameObject.Find("Audio Source").GetComponent<AudioManager>().fullVolume();
 
         } else
             Debug.Log("Not idling");    //Maybe disable the button when we get it until the round is over?
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
 
     private void endRound() //Does everything that needs doing at the end of a round (received from enemyManager)
     {
-        GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
+        //GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
 
         if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning1());
