@@ -39,7 +39,7 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     }
     private void Update()
     {
-        if (Player.position.y >= 0)
+        if (Player.position.y >= transform.position.y)
             spriteRenderer.sortingOrder = 5;
         else
             spriteRenderer.sortingOrder = 3;

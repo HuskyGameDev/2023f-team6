@@ -71,7 +71,7 @@ public class GUIManager : MonoBehaviour
 
     public void LoadScene(int sceneIndex)
     {
-        if (FindObjectOfType<CharacterTracker>() == null || FindObjectOfType<CharacterTracker>().getCharacter().getUnlocked())
+        if (FindObjectOfType<SettingsTracker>() == null || FindObjectOfType<SettingsTracker>().getCharacter().getUnlocked())
             SceneManager.LoadScene(sceneIndex);
         else
             Debug.Log("Not unlocked!");

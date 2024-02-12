@@ -76,7 +76,7 @@ public class AchievementHandler : MonoBehaviour
 
     void unlockAchievement(int index)   //No popups, for loading
     {
-        if (index >= 32) return;
+        if (index >= 32 || index < 0) return;
 
         Achievement toBeUnlocked = achievements[index];
 

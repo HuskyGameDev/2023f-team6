@@ -42,8 +42,8 @@ public class AI : MonoBehaviour
     private Path path;
     private int currentWaypoint;
     private Vector3 currentWaypointPosition;
-    Seeker seeker;
-    bool airborne;
+    private Seeker seeker;
+    private bool airborne;
 
 
     #region Setup and Update

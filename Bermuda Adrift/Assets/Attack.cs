@@ -54,7 +54,7 @@ public class Attack : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         anim = gameObject.GetComponent<Animator>();
 
-        if (GameObject.FindAnyObjectByType<CharacterTracker>() == null)
+        if (GameObject.FindAnyObjectByType<SettingsTracker>() == null)
             setCharacter(character);
     }
     private void setCharacter(Player playerData)

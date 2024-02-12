@@ -56,7 +56,8 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(string name)
     {
         Sound s = Array.Find(sfxSounds, sound => sound.name == name);
-        s.source.Play();
+        if (s != null)
+            s.source.Play();
     }
 
     public void ChangeSFXVolume()

@@ -107,8 +107,9 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     private void Locate()   //Changes the animation based on which channel the barrier is in
     {
         if (animator == null) { return; }
+        Vector3 centerpiece = FindObjectOfType<Centerpiece>().transform.position;
 
-        Vector2 movementVec = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        Vector2 movementVec = new Vector2(gameObject.transform.position.x - centerpiece.x, gameObject.transform.position.y - centerpiece.y);
         movementVec = movementVec.normalized;
 
         animator.SetFloat("x", movementVec.x);
