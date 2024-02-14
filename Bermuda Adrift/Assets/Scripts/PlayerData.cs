@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class holds all data needed for a singular round
+ * of Bermuda: Adrift. An object of this class has the data
+ * for round number, center piece health, xp, scrap, level,
+ * blueprints, and towers placed.
+ */
+
 [System.Serializable]
 public class PlayerData {
     

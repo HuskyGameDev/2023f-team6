@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  This program is in charge of the SaveSystem program.
+ *  It uses the other managers in the game scene to feed
+ *  the necessary information into the SaveSystem, as 
+ *  well as deciding when to save or load based on in
+ *  game factors. It also translates the data from a
+ *  load into the desired in game function (e.g. an int
+ *  into the round number).
+ */
+
 public class SaveManager : MonoBehaviour
 {
     [SerializeField] EnemyManager enemies;
