@@ -74,7 +74,7 @@ public class Player : ScriptableObject
             return altPassive;
         return defPassive;
     }
-    public void unlock() { unlocked = true; }
+    public void setUnlock(bool unlock) { unlocked = unlock; }
 
 
     public Ability getDefPrimary() { return defPrimary; }

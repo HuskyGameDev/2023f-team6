@@ -24,7 +24,7 @@ MonoBehaviour:
   defPassive: {fileID: 11400000, guid: b9c38e93f2d3d4a438f2d7f197e45adc, type: 2}
   altPassive: {fileID: 0}
   description: This character has not been unlocked
-  name: ???
+  characterName: ???
   mainBodySprite: {fileID: 21300000, guid: e0b19e2cf0c655947a78f510814b3972, type: 3}
   speed: 0
   unlocked: 0

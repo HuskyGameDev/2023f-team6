@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class LevelGUIManager : MonoBehaviour
+public class LevelGUIManager : MonoBehaviour, IDataPersistence
 {
     public static event Action OnLevelUpOpen;
     public static event Action OnLevelUpClose;
@@ -112,6 +112,16 @@ public class LevelGUIManager : MonoBehaviour
         ChoicesCanvas.transform.GetChild(1).GetChild(0).GetChild(7).GetComponent<Button>().interactable = false;
         ChoicesCanvas.transform.GetChild(2).GetChild(0).GetChild(7).GetComponent<Button>().interactable = false;
     }
+    private int numOfUnlocked()
+    {
+        int total = 0;
+        foreach (Tower tower in allChoices)
+        {
+            if (tower.getUnlocked())
+                total++;
+        }
+        return total;
+    }
     public void addRandom()
     {
         Tower random = allChoices[Random.Range(0, allChoices.Length)];
@@ -122,5 +132,21 @@ public class LevelGUIManager : MonoBehaviour
     {
         foreach (Tower x in allChoices)
             buildManager.addToList(x);
+    }
+
+    public void LoadData(S_O_Saving saver)
+    {
+        foreach (Tower tower in allChoices)
+        {
+            tower.setUnlocked(saver.getTowerSave(tower.name));
+        }
+    }
+
+    public void SaveData(S_O_Saving saver)
+    {
+        foreach (Tower tower in allChoices)
+        {
+            saver.setTowerSave(tower.name, tower.getUnlocked());
+        }
     }
 }

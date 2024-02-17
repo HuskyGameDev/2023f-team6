@@ -50,9 +50,9 @@ public class AchievementHandler : MonoBehaviour
         if (toBeUnlocked.getAssociatedTower() != null)
             toBeUnlocked.getAssociatedTower().unlock();
         else if (toBeUnlocked.getAssociatedBarrier() != null)
-            toBeUnlocked.getAssociatedBarrier().unlock();
+            toBeUnlocked.getAssociatedBarrier().setUnlock(true);
         else if (toBeUnlocked.getAssociatedCharacter() != null)
-            toBeUnlocked.getAssociatedCharacter().unlock();
+            toBeUnlocked.getAssociatedCharacter().setUnlock(true);
         //Some achievements have none, unlocks anyway
 
         //Play achievement popup
@@ -83,9 +83,9 @@ public class AchievementHandler : MonoBehaviour
         if (toBeUnlocked.getAssociatedTower() != null)
             toBeUnlocked.getAssociatedTower().unlock();
         else if (toBeUnlocked.getAssociatedBarrier() != null)
-            toBeUnlocked.getAssociatedBarrier().unlock();
+            toBeUnlocked.getAssociatedBarrier().setUnlock(true);
         else if (toBeUnlocked.getAssociatedCharacter() != null)
-            toBeUnlocked.getAssociatedCharacter().unlock();
+            toBeUnlocked.getAssociatedCharacter().setUnlock(true);
     }
 
     void loadSave(int newSave)

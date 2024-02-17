@@ -25,7 +25,7 @@ MonoBehaviour:
   altPassive: {fileID: 0}
   description: He may be old, but he has plenty of friends to back him up. They are
     his friends, right?
-  characterName: 
+  characterName: The Old Man
   mainBodySprite: {fileID: 2142675960, guid: 827c720708928dc4ba1c9a1c70bc9fe7, type: 3}
   speed: 3
-  unlocked: 1
+  unlocked: 0

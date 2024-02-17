@@ -73,3 +73,4 @@ MonoBehaviour:
   cantTurn: 0
   noUpgrades: 0
   extraPriorities: 05000000
+  unlocked: 1

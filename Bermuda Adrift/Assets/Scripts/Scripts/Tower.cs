@@ -106,6 +106,7 @@ public class Tower : ScriptableObject
     public bool getNoUpgrades() { return noUpgrades; }
     public TowerAI.Priority[] getExtraPriorities() { return extraPriorities; }
     public bool getUnlocked() { return unlocked; }
+    public void setUnlocked(bool unlocked) { this.unlocked = unlocked; }
 
     public void unlock() { unlocked = true; }
 

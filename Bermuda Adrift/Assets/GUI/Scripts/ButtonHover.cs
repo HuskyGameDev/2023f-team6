@@ -29,13 +29,14 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         AudioManager.Instance.PlaySFX("Menu Select Click");
 
-        buttonDescription.SendMessage("mouseEnter");
+        if (buttonDescription != null)
+            buttonDescription.SendMessage("mouseEnter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         //OnHoverExit?.Invoke();
-
-        buttonDescription.SendMessage("mouseExit");
+        if (buttonDescription != null)
+            buttonDescription.SendMessage("mouseExit");
     }
 }
