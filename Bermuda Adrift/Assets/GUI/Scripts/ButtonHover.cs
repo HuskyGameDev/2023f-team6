@@ -36,6 +36,10 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         //OnHoverExit?.Invoke();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         if (buttonDescription != null)
             buttonDescription.SendMessage("mouseExit");
     }

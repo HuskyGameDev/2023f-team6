@@ -154,11 +154,7 @@ public class CharacterModelHandler : MonoBehaviour
         }
         else if (slot == 5 && mainBody != null) 
         {
-            if (character.getName().CompareTo("The Pirate") == 0)
-                mainBody.transform.localScale = new Vector3(1, 1);
-            else
-                mainBody.transform.localScale = new Vector3(1.5f, 1);
-
+            mainBody.transform.localScale = new Vector3(3f, 3f);
             mainBody.sprite = character.getMainBodySprite(); 
         }
     }
