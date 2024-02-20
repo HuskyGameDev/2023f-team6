@@ -24,12 +24,12 @@ public class Pausing : MonoBehaviour
 
         Transform canvas = transform.GetChild(0).GetChild(0);
 
-        main =     canvas.GetChild(1).gameObject;
-        settings = canvas.GetChild(2).gameObject;
+        main =     canvas.GetChild(0).gameObject;
+        settings = canvas.GetChild(1).gameObject;
+        video = canvas.GetChild(2).gameObject;
         sound =    canvas.GetChild(3).gameObject;
-        controls = canvas.GetChild(4).gameObject;
-        video =    canvas.GetChild(5).gameObject;
-        credits =  canvas.GetChild(6).gameObject;
+        credits =  canvas.GetChild(4).gameObject;
+        controls =  canvas.GetChild(5).gameObject;
 
         pauseMenu.SetActive(false);
     }

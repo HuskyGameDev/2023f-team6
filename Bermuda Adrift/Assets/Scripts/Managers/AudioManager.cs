@@ -8,7 +8,13 @@ using TMPro;
 
 public class AudioManager : MonoBehaviour, IDataPersistence
 {
-    public static AudioManager Instance;
+    private static AudioManager _instance;
+
+    public static AudioManager Instance
+    {
+        get { return _instance; }
+    }
+
 
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider mainSlider;
@@ -19,9 +25,14 @@ public class AudioManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
-        if (Instance == null)
+        if (_instance != null && _instance != this)
         {
-            Instance = this;
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            _instance = this;
             DontDestroyOnLoad(gameObject);
 
             foreach (Sound s in musicSounds)
@@ -52,10 +63,6 @@ public class AudioManager : MonoBehaviour, IDataPersistence
             SFXSlider.value = 100;
             SFXText.text = Mathf.Round(Mathf.Clamp(100 * SFXSlider.value, 0f, 100f)).ToString();
             */
-        }
-        else
-        {
-            Destroy(gameObject);
         }
 
         PlayMusic("Pirate Theme");
