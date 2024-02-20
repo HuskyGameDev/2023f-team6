@@ -71,4 +71,8 @@ MonoBehaviour:
   baseSprite: {fileID: 770356676, guid: 2c25dbb9bced58c459806c120742f6f3, type: 3}
   rarity: 0
   cantTurn: 0
+  noUpgrades: 0
   extraPriorities: 
+  unlocked: 0
+  logged: 0
+  dimensions: 2

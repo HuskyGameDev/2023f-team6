@@ -187,6 +187,11 @@ public class TowerAI : MonoBehaviour
         else
             newTarget();
     }
+    private void SetSize(int size)
+    {
+        transform.localScale = Vector3.right * size + Vector3.up * size;
+        nozzle.transform.localScale = Vector3.right * size + Vector3.up * size;
+    }
     #endregion
 
     #region Upgrade Methods
@@ -1004,6 +1009,7 @@ public class TowerAI : MonoBehaviour
             return tower.UB2getBullet().getDebuff();
         return tower.getDefaultBullet().getDebuff();
     }
+    public int getDimensions() { return tower.getDimensions(); }
     #endregion
 
     private void turnOffHitboxes() { if (getPriority() != Priority.None) gameObject.GetComponent<CircleCollider2D>().enabled = false; } //Tower hitboxes mess with being able to click on other towers, so turn them off at the end of every round

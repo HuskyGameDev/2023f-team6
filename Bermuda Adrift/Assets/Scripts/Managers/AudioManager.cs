@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour, IDataPersistence
 {
     public static AudioManager Instance;
 
@@ -44,12 +44,14 @@ public class AudioManager : MonoBehaviour
                 s.source.pitch = s.pitch;
             }
 
+            /*
             mainSlider.value = 100;
             mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
             musicSlider.value = 100;
             musicText.text = Mathf.Round(Mathf.Clamp(100 * musicSlider.value, 0f, 100f)).ToString();
             SFXSlider.value = 100;
             SFXText.text = Mathf.Round(Mathf.Clamp(100 * SFXSlider.value, 0f, 100f)).ToString();
+            */
         }
         else
         {
@@ -88,5 +90,27 @@ public class AudioManager : MonoBehaviour
     {
         mixer.SetFloat("MusicVolume", Mathf.Log10(musicSlider.value) * 20);
         musicText.text = Mathf.Round(Mathf.Clamp(100 * musicSlider.value, 0f, 100f)).ToString();
+    }
+
+    public void LoadData(S_O_Saving saver)
+    {
+        mainSlider.value = saver.audioData.MasterVolume;
+        mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
+        ChangeMainVolume();
+
+        musicSlider.value = saver.audioData.MusicVolume;
+        musicText.text = Mathf.Round(Mathf.Clamp(100 * musicSlider.value, 0f, 100f)).ToString();
+        ChangeMusicVolume();
+
+        SFXSlider.value = saver.audioData.SFXVolume;
+        SFXText.text = Mathf.Round(Mathf.Clamp(100 * SFXSlider.value, 0f, 100f)).ToString();
+        ChangeSFXVolume();
+    }
+
+    public void SaveData(S_O_Saving saver)
+    {
+        mixer.GetFloat("MasterVolume", out saver.audioData.MasterVolume);
+        mixer.GetFloat("MusicVolume", out saver.audioData.MusicVolume);
+        mixer.GetFloat("SFXVolume", out saver.audioData.SFXVolume);
     }
 }

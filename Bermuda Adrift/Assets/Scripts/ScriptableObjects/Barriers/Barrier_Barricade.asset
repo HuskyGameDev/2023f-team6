@@ -15,6 +15,7 @@ MonoBehaviour:
   saveString: barrier-barricade
   barrierName: Barricade
   description: Blocks enemies from progressing until it is destroyed
+  unlocked: 1
   effect: 0
   Health: 20
   cost: 150

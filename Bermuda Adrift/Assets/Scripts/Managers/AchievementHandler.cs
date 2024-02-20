@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AchievementHandler : MonoBehaviour
+public class AchievementHandler : MonoBehaviour, IDataPersistence
 {
     public static event Action<string, string> OnAchievementUnlocked;
 
@@ -46,9 +46,10 @@ public class AchievementHandler : MonoBehaviour
         if ((saveBits & (1 << index)) == (1 << index)) return;  //Return if the achievement is already unlocked
 
         Achievement toBeUnlocked = achievements[index];
+        toBeUnlocked.setUnlocked(true);
 
         if (toBeUnlocked.getAssociatedTower() != null)
-            toBeUnlocked.getAssociatedTower().unlock();
+            toBeUnlocked.getAssociatedTower().setUnlocked(true);
         else if (toBeUnlocked.getAssociatedBarrier() != null)
             toBeUnlocked.getAssociatedBarrier().setUnlock(true);
         else if (toBeUnlocked.getAssociatedCharacter() != null)
@@ -57,9 +58,6 @@ public class AchievementHandler : MonoBehaviour
 
         //Play achievement popup
         StartCoroutine(popupAchievement(toBeUnlocked.getName(), toBeUnlocked.getDescription()));
-
-        saveBits = saveBits | (1 << index);    //Set associated bit to 1
-        displaySave();
     }
     IEnumerator popupAchievement(string title, string description)
     {
@@ -76,41 +74,29 @@ public class AchievementHandler : MonoBehaviour
 
     void unlockAchievement(int index)   //No popups, for loading
     {
-        if (index >= 32 || index < 0) return;
-
         Achievement toBeUnlocked = achievements[index];
 
         if (toBeUnlocked.getAssociatedTower() != null)
-            toBeUnlocked.getAssociatedTower().unlock();
+            toBeUnlocked.getAssociatedTower().setUnlocked(true);
         else if (toBeUnlocked.getAssociatedBarrier() != null)
             toBeUnlocked.getAssociatedBarrier().setUnlock(true);
         else if (toBeUnlocked.getAssociatedCharacter() != null)
             toBeUnlocked.getAssociatedCharacter().setUnlock(true);
     }
 
-    void loadSave(int newSave)
+    public void LoadData(S_O_Saving saver)
     {
-        saveBits = newSave;
-        int check;
-
-        for (int i = 0; i < 32; i++)
+        foreach (Achievement ach in achievements)
         {
-            check = 1 << i;
-            if ((saveBits & check) == check)
-                unlockAchievement(i);
+            ach.setUnlocked(saver.getAchievementSave(ach.name).unlocked);
         }
     }
 
-    private void displaySave()
+    public void SaveData(S_O_Saving saver)
     {
-        string output = "";
-        for (int i = 7; i >= 0; i--)
+        foreach (Achievement ach in achievements)
         {
-            for (int j = 3; j >= 0; j--)
-                output += ((saveBits & (1 << (4 * i + j))) == (1 << (4 * i + j))) ? 1 : 0;
-            output += " ";
+            saver.getAchievementSave(ach.name).unlocked = ach.getUnlocked();
         }
-        Debug.Log(output);
     }
-    public int getAchievementSave() { return saveBits; }
 }

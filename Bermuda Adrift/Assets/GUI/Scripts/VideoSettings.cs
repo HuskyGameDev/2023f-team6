@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class VideoSettings : MonoBehaviour
+public class VideoSettings : MonoBehaviour, IDataPersistence
 {
     [SerializeField] GameObject optionPrefab;
 
@@ -225,5 +225,25 @@ public class VideoSettings : MonoBehaviour
     public void FullscreenOff()
     {
         Screen.fullScreen = false;
+    }
+
+    public void LoadData(S_O_Saving saver)
+    {
+        currentResolutionIndex = saver.videoData.resolution;
+        SetResolution(saver.videoData.resolution);
+
+        currentAspectIndex = saver.videoData.aspectRatio;
+        SetAspectRatio(saver.videoData.aspectRatio);
+
+        Screen.fullScreen = saver.videoData.fullscreen;
+    }
+
+    public void SaveData(S_O_Saving saver)
+    {
+        saver.videoData.aspectRatio = currentAspectIndex;
+
+        saver.videoData.resolution = currentResolutionIndex;
+
+        saver.videoData.fullscreen = Screen.fullScreen;
     }
 }

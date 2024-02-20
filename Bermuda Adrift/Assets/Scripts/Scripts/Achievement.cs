@@ -13,6 +13,7 @@ public class Achievement : ScriptableObject
     [SerializeField] private Player associatedCharacter;
 
     [SerializeField] private int skillPoints;
+    [SerializeField] private bool unlocked;
 
 
     public string getName() { return Name; }
@@ -21,4 +22,6 @@ public class Achievement : ScriptableObject
     public BarrierScriptable getAssociatedBarrier() { return associatedBarrier; }
     public Player getAssociatedCharacter() { return associatedCharacter; }
     public int getSkillPoints() { return skillPoints; }
+    public bool getUnlocked() { return unlocked; }
+    public void setUnlocked(bool unlocked) { this.unlocked = unlocked; }
 }

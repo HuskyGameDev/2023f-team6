@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 0
-  name: Angler Fish
+  Name: 
   description: Is a fish that angles.
   pageNumber: 0
   Health: 15
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 1

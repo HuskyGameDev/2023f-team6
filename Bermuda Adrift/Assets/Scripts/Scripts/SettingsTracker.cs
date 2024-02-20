@@ -50,7 +50,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     {
         foreach (Player player in characterChoices)
         {
-            player.setUnlock(saver.getCharacterSave(player.name));
+            player.setUnlock(saver.getCharacterSave(player.name).unlocked);
         }
     }
 
@@ -58,7 +58,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     {
         foreach (Player player in characterChoices)
         {
-            saver.setCharacterSave(player.name, player.getUnlocked());
+            saver.getCharacterSave(player.name).unlocked = player.getUnlocked();
         }
     }
 }

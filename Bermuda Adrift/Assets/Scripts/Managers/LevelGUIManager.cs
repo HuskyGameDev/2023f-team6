@@ -138,7 +138,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     {
         foreach (Tower tower in allChoices)
         {
-            tower.setUnlocked(saver.getTowerSave(tower.name));
+            tower.setUnlocked(saver.getTowerSave(tower.name).unlocked);
         }
     }
 
@@ -146,7 +146,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     {
         foreach (Tower tower in allChoices)
         {
-            saver.setTowerSave(tower.name, tower.getUnlocked());
+            saver.getTowerSave(tower.name).unlocked = tower.getUnlocked();
         }
     }
 }

@@ -93,6 +93,8 @@ public class Tower : ScriptableObject
     [SerializeField] private bool noUpgrades;
     [SerializeField] private TowerAI.Priority[] extraPriorities;
     [SerializeField] private bool unlocked;
+    [SerializeField] private bool logged;
+    [SerializeField] public int dimensions;
 
 
     public string getSaveString() { return saveString; }
@@ -101,14 +103,9 @@ public class Tower : ScriptableObject
     //public float getFireRate() { return fireRate; }
     public float getTurnSpeed() { return turnSpeed; }
     public float getRange() { return range; }
-    public RuntimeAnimatorController getAnim() { return anim; }
-    public Sprite getBaseSprite() { return baseSprite; }
+    
     public bool getNoUpgrades() { return noUpgrades; }
     public TowerAI.Priority[] getExtraPriorities() { return extraPriorities; }
-    public bool getUnlocked() { return unlocked; }
-    public void setUnlocked(bool unlocked) { this.unlocked = unlocked; }
-
-    public void unlock() { unlocked = true; }
 
     public Bullet getDefaultBullet() { return defaultBullet; }
     public int getCost() { return cost; }
@@ -117,7 +114,6 @@ public class Tower : ScriptableObject
     public string getName() { return Name; }
     public string getDescription() { return Description; }
     public Sprite getImage() { return image; }
-    public bool getCantTurn() { return cantTurn; }
 
     //Upgrade 1
     public float U1getDamageMult() { return U1damageMult; }
@@ -178,4 +174,13 @@ public class Tower : ScriptableObject
     public string UB2getName() { return UB2Name; }
     public string UB2getDescription() { return UB2Description; }
     public Sprite UB2getImage() { return UB2image; }
+
+    public RuntimeAnimatorController getAnim() { return anim; }
+    public Sprite getBaseSprite() { return baseSprite; }
+    public bool getUnlocked() { return unlocked; }
+    public void setUnlocked(bool unlocked) { this.unlocked = unlocked; }
+    public bool getLogged() { return logged; }
+    public void setLogged(bool logged) { this.logged = logged; }
+    public bool getCantTurn() { return cantTurn; }
+    public int getDimensions() { return dimensions; }
 }

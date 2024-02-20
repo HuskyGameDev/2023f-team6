@@ -13,6 +13,7 @@ public class PlaceableData
     BarrierScriptable barrierScriptable;
     Vector3 location;
     int upgradeLevel;
+    int dimensions;
     string saveString;
 
     public PlaceableData(GameObject go)
@@ -26,10 +27,12 @@ public class PlaceableData
         if (towerData != null)
         {
             saveString = towerData.getTower().getSaveString();
+            dimensions = towerData.getDimensions();
         }
         else
         {
             saveString = barrierData.getBarrier().getSaveString();
+            dimensions = 2;
         }
     }
 
@@ -42,11 +45,13 @@ public class PlaceableData
         {
             towerScriptable = (Tower) go;
             saveString = towerScriptable.getSaveString();
+            dimensions = towerScriptable.getDimensions();
         }
         catch (Exception e)
         {
             barrierScriptable = (BarrierScriptable) go;
             saveString = barrierScriptable.getSaveString();
+            dimensions = 2;
         }
 
     }
@@ -86,6 +91,7 @@ public class PlaceableData
     }
     public Vector3 getLocation() { return location; }
     public string getSaveString() { return saveString; }
+    public int getDimensions() { return dimensions; }
     //public void setLocation(Vector3 location) { this.location = location; }
 }
 public class BuildManager : MonoBehaviour
@@ -330,6 +336,7 @@ public class BuildManager : MonoBehaviour
 
             mostRecent = Instantiate(towerPrefabs[0]);
             mostRecentTower = scriptable;
+            mostRecent.SendMessage("SetSize", scriptable.getDimensions());
 
             mostRecent.SendMessage("place", scriptable);
             if (scriptable.getRange() > 0)
@@ -376,16 +383,17 @@ public class BuildManager : MonoBehaviour
         return true;
     }
 
-    public bool approvePosition(Vector3 position, int type) //0 for tower, 1 for barrier
+    public bool approvePosition(Vector3 position, int type) //0 for tower, 1 for barrier, 2 for small tower
     {
         Vector3 temp = Vector3.zero;
+
         foreach (PlaceableData pd in placeableDatas)
         {
             if (pd.getLocation() == Vector3.zero) { return true; }
 
             temp.x = position.x - pd.getLocation().x;
             temp.y = position.y - pd.getLocation().y;
-            if (temp.magnitude < 2)
+            if (temp.magnitude < pd.getDimensions())
             {
                 return false;
             }
@@ -393,18 +401,19 @@ public class BuildManager : MonoBehaviour
 
         if (type == 1)
             return raycastCornersBarrier(position);
-        return raycastCornersTower(position);
+        return raycastCornersTower(position, type);
     }
     public bool approvePosition(GameObject go)  //Goes through the positions of all other towers and checks for overlaps or being out of bounds
     {
         Vector3 temp = Vector3.zero;
+
         foreach (PlaceableData pd in placeableDatas)
         {
             if (pd.getLocation() == Vector3.zero) { return true; }
 
             temp.x = go.transform.position.x - pd.getLocation().x;
             temp.y = go.transform.position.y - pd.getLocation().y;
-            if (temp.magnitude < 2)
+            if (temp.magnitude < pd.getDimensions())
             {
                 return false;
             }
@@ -412,35 +421,45 @@ public class BuildManager : MonoBehaviour
 
         if (go.GetComponent<Barriers>() != null)
             return raycastCornersBarrier(go.transform.position);
+        else if (go.GetComponent<TowerAI>().getDimensions() == 1)
+            return raycastCornersTower(go.transform.position, 2);
         else
-            return raycastCornersTower(go.transform.position);
+            return raycastCornersTower(go.transform.position, 0);
     }
-    private bool raycastCornersTower(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water or a channel
+    private bool raycastCornersTower(Vector3 position, int type)   //Checks the corners of the tower to make sure it isn't touching the water or a channel
     {
         int waterMask = 1 << 4;
         int channelMask = 1 << 6;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, waterMask).collider != null
+        int dimensions;
+        if (type == 2)
+            dimensions = 1;
+        else
+            dimensions = 2;
+
+        float maxDistance = 0.5f * dimensions * Mathf.Sqrt(2f);
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.4f, channelMask).collider != null)    //Top right corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider != null)    //Top right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, waterMask).collider != null
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.4f, channelMask).collider != null)  //Down right corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)  //Down right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, waterMask).collider != null
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.4f, channelMask).collider != null)  //Up left corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider != null)  //Up left corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, waterMask).collider != null
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.4f, channelMask).collider != null)  //Down left corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider != null)  //Down left corner
             return false;
 
-        if (Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, 2f, waterMask).collider != null)   //Bottom line
+        if (Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, dimensions, waterMask).collider != null)   //Bottom line
             return false;
 
 

@@ -16,7 +16,7 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private SpecialTypes specialType;
 
-    [SerializeField] private string name;
+    [SerializeField] private string Name;
     [SerializeField] private string description;
     [SerializeField] private int pageNumber;
     [SerializeField] private int Health;
@@ -50,10 +50,12 @@ public class Enemy : ScriptableObject
     [SerializeField] private float phase2switch;
     [SerializeField] private Attack[] Phase2ExtraAttacks;
 
+    [SerializeField] private bool logged;
+
 
     public Types getType() { return Type; }
     public SpecialTypes getSpecialType() { return specialType; }
-    public string getName() { return name; }
+    public string getName() { return Name; }
     public int getHealth() { return Health; }
     public int getDamage() { return Damage; }
     public float getSpeed() { return Speed; }
@@ -77,4 +79,7 @@ public class Enemy : ScriptableObject
     public Attack[] getAvailableAttacks() { return availableAttacks; }
     public Attack[] getPhase2Attacks() { return Phase2ExtraAttacks; }
     public float phase2TriggerHealth() { return phase2switch; }
+
+    public bool getLogged() { return logged; }
+    public void setLogged(bool logged) { this.logged = logged; }
 }

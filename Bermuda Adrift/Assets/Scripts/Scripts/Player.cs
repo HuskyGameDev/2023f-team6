@@ -21,6 +21,7 @@ public class Player : ScriptableObject
     [SerializeField] private Sprite mainBodySprite;
     [SerializeField] private int speed;
     [SerializeField] private bool unlocked;
+    [SerializeField] private bool logged;
 
     private bool altP;
     private bool altS;
@@ -97,4 +98,7 @@ public class Player : ScriptableObject
     public Sprite getMainBodySprite() { return mainBodySprite; }
     public int getSpeed() { return speed; }
     public bool getUnlocked() { return unlocked; }
+
+    public bool getLogged() { return logged; }
+    public void setLogged(bool logged) { this.logged = logged; }
 }

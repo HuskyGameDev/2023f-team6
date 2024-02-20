@@ -74,3 +74,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 07000000
   unlocked: 0
+  logged: 0
+  dimensions: 2

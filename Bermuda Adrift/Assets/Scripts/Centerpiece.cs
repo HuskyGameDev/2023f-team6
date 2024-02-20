@@ -12,6 +12,7 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
 
 
     [SerializeField] private int maxHealth;
+    [SerializeField] private GameObject shield;
     private int Health;
     private GameManager manager;
     private Transform Player;

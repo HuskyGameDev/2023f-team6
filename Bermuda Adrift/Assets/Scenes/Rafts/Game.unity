@@ -24392,6 +24392,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b5880107b8fae46a04890eaaddb387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionPrefab: {fileID: 0}
+  ResolutionContent: {fileID: 0}
+  ResolutionText: {fileID: 0}
+  AspectContent: {fileID: 0}
+  AspectText: {fileID: 0}
 --- !u!114 &660777649
 MonoBehaviour:
   m_ObjectHideFlags: 0
