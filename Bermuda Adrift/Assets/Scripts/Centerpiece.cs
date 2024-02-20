@@ -13,20 +13,24 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
 
     [SerializeField] private int maxHealth;
     [SerializeField] private GameObject shield;
+    private GameObject shieldGO;
     private int Health;
     private GameManager manager;
     private Transform Player;
     private SpriteRenderer spriteRenderer;
-    private int barrier;
+    private int maxBarrier;
     private int barrierDamage;
+    private int barrierReflect;
 
     private void OnEnable()
     {
         GameManager.onRoundEnd += resetBarrier;
+        GameManager.onRoundEnd += resetBarrierReflect;
     }
     private void OnDisable()
     {
         GameManager.onRoundEnd -= resetBarrier;
+        GameManager.onRoundEnd -= resetBarrierReflect;
     }
     private void Start() 
     { 
@@ -35,6 +39,9 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         Health = maxHealth;
+        shieldGO = Instantiate(shield, transform);
+        shieldGO.GetComponent<Animator>().SetFloat("HealthPercent", 1);
+        shieldGO.SetActive(false);
 
         AddPhysics2DRaycaster();
     }
@@ -46,17 +53,46 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
             spriteRenderer.sortingOrder = 3;
     }
 
-    void resetBarrier() { barrierDamage = 0; }
-    void setBarrierStrength(int strength) { barrier = strength; }
-    void addBarrierStrength(int strength) { barrier += strength; }
-    void removeBarrierStrength(int strength) { barrier -= strength; }
-
-    void TakeDamage(int damage)
+    void resetBarrier() 
+    { 
+        barrierDamage = 0; 
+        maxBarrier = 0; 
+        shieldGO.SetActive(false); 
+        onCenterpieceDamaged?.Invoke();
+    }
+    void addBarrierStrength(int strength) 
+    { 
+        maxBarrier += strength; 
+        shieldGO.SetActive(true); 
+        onCenterpieceDamaged?.Invoke();
+    }
+    void resetBarrierReflect() 
+    { 
+        barrierReflect = 0; 
+        shieldGO.SetActive(false); 
+    }
+    void addBarrierReflect(int reflect) 
     {
-        if (barrier > barrierDamage) { barrierDamage += damage; }
-        else { Health -= damage; }
+        barrierReflect += reflect; 
+        shieldGO.SetActive(true);
+    }
 
-        onCenterpieceDamage?.Invoke(damage);
+    void barrierDestroyed() { shieldGO.SetActive(false); }
+
+    void TakeDamage((int, AI) enemyDamage)
+    {
+        if (maxBarrier > barrierDamage) 
+        {
+            if (barrierReflect > 0)
+                enemyDamage.Item2.SendMessage("TakeDamage", barrierReflect);
+
+            barrierDamage += enemyDamage.Item1; 
+            shieldGO.GetComponent<Animator>().SetFloat("HealthPercent", (float) (maxBarrier - barrierDamage) / maxBarrier); 
+        }
+        else { Health -= enemyDamage.Item1; }
+        
+        onCenterpieceDamage?.Invoke(enemyDamage.Item1);
+
         onCenterpieceDamaged?.Invoke();
 
         if (Health <= 0)
@@ -71,8 +107,10 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
         onCenterpieceDamaged?.Invoke(); //Updates the healthbar
     }
 
-    public int getHealth() { return Health; }
+    public int getHealth() { return Health + maxBarrier - barrierDamage; }
     public int getMaxHealth() { return maxHealth; }
+    public int getMaxBarrier() { return maxBarrier; }
+    public int getCurrentHealth() { return Health; }
 
     public void setHealth(int health) { Health = health; }
     public void OnPointerDown(PointerEventData eventData)

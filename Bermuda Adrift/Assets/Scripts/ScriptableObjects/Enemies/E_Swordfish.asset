@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 0
-  name: Swordfish
+  Name: Swordfish
   description: Is a swordfish
   pageNumber: 0
   Health: 5
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 0

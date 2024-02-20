@@ -23,14 +23,24 @@ public class SC_CircularLoading : MonoBehaviour
         centerpiece = FindObjectOfType<Centerpiece>();
 
         gameObject.GetComponent<Image>().fillAmount = 1;
+        transform.parent.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 0;
     }
 
     void updateHealthbar()
     {
-        progression = (float) centerpiece.getHealth() / centerpiece.getMaxHealth();
-        gameObject.GetComponent<Image>().fillAmount = progression;
-        transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = centerpiece.getHealth().ToString();
+        progression = (float) centerpiece.getCurrentHealth() / centerpiece.getMaxHealth();
+        if (centerpiece.getHealth() > centerpiece.getCurrentHealth())
+        {
+            transform.parent.GetChild(2).gameObject.GetComponent<Image>().fillAmount = (float)(centerpiece.getHealth() - centerpiece.getCurrentHealth()) / centerpiece.getMaxBarrier();
+            transform.parent.GetChild(2).gameObject.GetComponent<Image>().color = Color.cyan;
+        }
+        else
+        {
+            transform.parent.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 0;
+            gameObject.GetComponent<Image>().fillAmount = progression;
+            gameObject.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, progression);
+        }
 
-        gameObject.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, progression);
+        transform.parent.GetChild(3).GetComponent<TextMeshProUGUI>().text = centerpiece.getHealth().ToString();
     }
 }

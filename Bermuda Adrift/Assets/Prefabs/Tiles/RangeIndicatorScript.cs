@@ -33,7 +33,11 @@ public class RangeIndicatorScript : MonoBehaviour
         {
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+
+            if (FindObjectOfType<BuildManager>().getDimensions() % 2 == 0)
+                gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+            else
+                gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 2f) / 2f, Mathf.Round(mouseWorldPosition.y * 2f) / 2f);
         }
         else
         {

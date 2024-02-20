@@ -336,7 +336,7 @@ public class BuildManager : MonoBehaviour
 
             mostRecent = Instantiate(towerPrefabs[0]);
             mostRecentTower = scriptable;
-            mostRecent.SendMessage("SetSize", scriptable.getDimensions());
+            mostRecent.SendMessage("SetSize", (float) scriptable.getDimensions());
 
             mostRecent.SendMessage("place", scriptable);
             if (scriptable.getRange() > 0)
@@ -393,7 +393,7 @@ public class BuildManager : MonoBehaviour
 
             temp.x = position.x - pd.getLocation().x;
             temp.y = position.y - pd.getLocation().y;
-            if (temp.magnitude < pd.getDimensions())
+            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f)
             {
                 return false;
             }
@@ -413,16 +413,15 @@ public class BuildManager : MonoBehaviour
 
             temp.x = go.transform.position.x - pd.getLocation().x;
             temp.y = go.transform.position.y - pd.getLocation().y;
-            if (temp.magnitude < pd.getDimensions())
+            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f)
             {
+                Debug.Log("Overlapping" + pd.getLocation() + ", magnitude " + temp.magnitude + " < " + pd.getDimensions());
                 return false;
             }
         }
 
         if (go.GetComponent<Barriers>() != null)
             return raycastCornersBarrier(go.transform.position);
-        else if (go.GetComponent<TowerAI>().getDimensions() == 1)
-            return raycastCornersTower(go.transform.position, 2);
         else
             return raycastCornersTower(go.transform.position, 0);
     }
@@ -431,13 +430,31 @@ public class BuildManager : MonoBehaviour
         int waterMask = 1 << 4;
         int channelMask = 1 << 6;
 
-        int dimensions;
-        if (type == 2)
-            dimensions = 1;
-        else
-            dimensions = 2;
+        float dimensions = getDimensions();
 
-        float maxDistance = 0.5f * dimensions * Mathf.Sqrt(2f);
+        float maxDistance = dimensions * 0.5f * 1.4f;
+
+        /*
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider != null)
+            Debug.Log("Top Right Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider);
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider != null)
+            Debug.Log("Top Right Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider);
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
+            Debug.Log("Bottom Right Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider);
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
+            Debug.Log("Bottom Right Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider);
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
+            Debug.Log("Top Left Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider);
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
+            Debug.Log("Top Left Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider);
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
+            Debug.Log("Bottom Left Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider);
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
+            Debug.Log("Bottom Left Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider);
+        */
 
         if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider != null
             ||
@@ -697,6 +714,12 @@ public class BuildManager : MonoBehaviour
         {
             addToList(t);
         }
+    }
+    public int getDimensions()
+    {
+        if (mostRecent != null && mostRecent.GetComponent<TowerAI>() != null)
+            return mostRecentTower.getDimensions();
+        else return 2;
     }
     #endregion
 }

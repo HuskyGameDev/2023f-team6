@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   specialType: 0
-  name: Serpent
+  Name: Sea Serpent
   description: Is a serpent
   pageNumber: 0
   Health: 1000
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 000000000100000002000000
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 0

@@ -18,6 +18,7 @@ public class TowerAI : MonoBehaviour
     [SerializeField] private GameObject nozzle;
 
     [SerializeField] private GameObject bullet;
+    //[SerializeField] private Tower testingTower;
     private Bullet bulletScript;
 
     private int upgradeLevel = 0;
@@ -78,6 +79,8 @@ public class TowerAI : MonoBehaviour
             newTarget();
             StartRound();
         }
+
+        //if (tower == null) place(testingTower);
     }
     private void Update()
     {
@@ -103,7 +106,11 @@ public class TowerAI : MonoBehaviour
 
             var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0f;
-            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+
+            if (getDimensions() % 2 == 0)
+                gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+            else
+                gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 2f) / 2f, Mathf.Round(mouseWorldPosition.y * 2f) / 2f);
 
             if (gameManager.getGameState() != GameManager.GameState.Idle)
             {
@@ -186,11 +193,20 @@ public class TowerAI : MonoBehaviour
         }
         else
             newTarget();
+
+        if (tower.getName().CompareTo("Shield Generator") == 0)
+        {
+            FindObjectOfType<Centerpiece>().SendMessage("addBarrierStrength", getTowerTurnSpeed());
+            FindObjectOfType<Centerpiece>().SendMessage("addBarrierReflect", getTowerDamageMult());
+        }
     }
-    private void SetSize(int size)
+    private void SetSize(float size)
     {
+        if (size == 2)
+            size = 1.5f;
+
         transform.localScale = Vector3.right * size + Vector3.up * size;
-        nozzle.transform.localScale = Vector3.right * size + Vector3.up * size;
+        nozzle.transform.localScale = Vector3.right + Vector3.up;
     }
     #endregion
 
@@ -422,7 +438,7 @@ public class TowerAI : MonoBehaviour
         */
         if (getPriority() == Priority.None) return;
 
-        if (getTowerRange() == -1 && enemiesInRange[0] == null)
+        if (getTowerRange() == -1 && enemiesInRange.Count > 0 && enemiesInRange[0] == null)
         {
             enemiesInRange.Clear();
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -1008,6 +1024,39 @@ public class TowerAI : MonoBehaviour
         if (upgradeLevel == 5)
             return tower.UB2getBullet().getDebuff();
         return tower.getDefaultBullet().getDebuff();
+    }
+    public float getTowerTurnSpeed()
+    {
+        Debug.Log(upgradeLevel);
+        if (upgradeLevel == 0)
+            return tower.getTurnSpeed();
+        if (upgradeLevel == 1)
+            return tower.U1getTurnSpeed();
+        if (upgradeLevel == 2)
+            return tower.UA1getTurnSpeed();
+        if (upgradeLevel == 3)
+            return tower.UB1getTurnSpeed();
+        if (upgradeLevel == 4)
+            return tower.UA2getTurnSpeed();
+        if (upgradeLevel == 5)
+            return tower.UB2getTurnSpeed();
+        return tower.getTurnSpeed();
+    }
+    public float getTowerDamageMult()
+    {
+        if (upgradeLevel == 0)
+            return tower.getDamageMult();
+        if (upgradeLevel == 1)
+            return tower.U1getDamageMult();
+        if (upgradeLevel == 2)
+            return tower.UA1getDamageMult();
+        if (upgradeLevel == 3)
+            return tower.UB1getDamageMult();
+        if (upgradeLevel == 4)
+            return tower.UA2getDamageMult();
+        if (upgradeLevel == 5)
+            return tower.UB2getDamageMult();
+        return tower.getDamageMult();
     }
     public int getDimensions() { return tower.getDimensions(); }
     #endregion

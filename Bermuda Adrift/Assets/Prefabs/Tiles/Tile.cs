@@ -18,12 +18,21 @@ public class Tile : MonoBehaviour
         //Follow mouse in the grid
         var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f;
-        gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x), Mathf.Round(mouseWorldPosition.y));
+        if (buildManager.getDimensions() % 2 == 1)
+        {
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x * 2f) / 2f, Mathf.Round(mouseWorldPosition.y * 2f) / 2f);
+        }
+        else
+            gameObject.transform.position = new Vector3(Mathf.Round(mouseWorldPosition.x) , Mathf.Round(mouseWorldPosition.y));
 
         //Light up in in the right/wrong spot
         if (buildManager.approvePosition(transform.position, type)) { enterCorrect(); }
         else { enterIncorrect(); }
 
+        if (type == 0)
+        {
+            transform.localScale = (Vector3.up + Vector3.right) * buildManager.getDimensions();
+        }
     }
     private void OnDisable()
     {

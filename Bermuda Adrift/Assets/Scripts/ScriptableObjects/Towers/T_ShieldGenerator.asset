@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa876f6fdfe16748b8251c22c9adee0, type: 3}
+  m_Name: T_ShieldGenerator
+  m_EditorClassIdentifier: 
+  saveString: shield-generator
+  Name: Shield Generator
+  Description: Creates a shield around your centerpiece, protecting it from damage
+  damageMult: 0
+  turnSpeed: 10
+  range: -1
+  defaultBullet: {fileID: 0}
+  cost: 250
+  lightningResistance: 1
+  image: {fileID: -464829535, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  U1Name: Solar Power
+  U1Description: The generates a stronger shield
+  U1damageMult: 0
+  U1turnSpeed: 20
+  U1range: -1
+  U1Bullet: {fileID: 0}
+  U1cost: 200
+  U1LightningResistance: 1
+  U1image: {fileID: -2085881013, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  UA1Name: Broken Capacitors
+  UA1Description: Sketchy wiring shocks enemies that touch its shield
+  UA1damageMult: 4
+  UA1turnSpeed: 20
+  UA1range: -1
+  UA1Bullet: {fileID: 0}
+  UA1cost: 300
+  UA1LightningResistance: 1
+  UA1image: {fileID: -486424888, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  UA2Name: Energy Void
+  UA2Description: Absorbs the energy of all who touch it
+  UA2damageMult: 10
+  UA2turnSpeed: 20
+  UA2range: -1
+  UA2Bullet: {fileID: 0}
+  UA2cost: 400
+  UA2LightningResistance: 1
+  UA2image: {fileID: -1764909198, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  UB1Name: Nuclear Fusion
+  UB1Description: More efficient power makes a more powerful shield
+  UB1damageMult: 0
+  UB1turnSpeed: 30
+  UB1range: -1
+  UB1Bullet: {fileID: 0}
+  UB1cost: 250
+  UB1LightningResistance: 1
+  UB1image: {fileID: 1126817741, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  UB2Name: Antimatter Reactor
+  UB2Description: The epitome of energy
+  UB2damageMult: 0
+  UB2turnSpeed: 50
+  UB2range: -1
+  UB2Bullet: {fileID: 0}
+  UB2cost: 450
+  UB2LightningResistance: 1
+  UB2image: {fileID: 910952120, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  anim: {fileID: 9100000, guid: 507260b78cbd0de4197237e3e491f710, type: 2}
+  baseSprite: {fileID: 0}
+  rarity: 0
+  cantTurn: 1
+  noUpgrades: 0
+  extraPriorities: 
+  unlocked: 0
+  logged: 0
+  dimensions: 1

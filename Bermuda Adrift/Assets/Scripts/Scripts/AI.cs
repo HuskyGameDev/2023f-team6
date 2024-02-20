@@ -145,6 +145,13 @@ public class AI : MonoBehaviour
             gameObject.transform.position += direction * enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult();
 
             float distance = Vector2.Distance(transform.position, currentWaypointPosition);
+
+            if ((enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss) && distance < 2)
+            {
+                stop = true;
+                nowArriving();
+            }
+
             if (distance < nextWaypointDistance)
             {
                 currentWaypoint++;
@@ -158,7 +165,7 @@ public class AI : MonoBehaviour
             }
         }
     }
-    private void nowArriving()  //Sets the position that the enemy will be attacking the center form
+    private void nowArriving()  //Sets the position that the enemy will be attacking the center from
     {
         arrived = true;     //This section of code will only run once
         //stop = true;
@@ -499,7 +506,7 @@ public class AI : MonoBehaviour
 
         while (recipient != null)
         {
-            recipient.SendMessage("TakeDamage", (int)(enemy.getDamage() * getDamageMult()));
+            recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult()), this));
 
             if (debuffToInflict != null)
                 recipient.SendMessage("InflictDebuff", debuffToInflict);

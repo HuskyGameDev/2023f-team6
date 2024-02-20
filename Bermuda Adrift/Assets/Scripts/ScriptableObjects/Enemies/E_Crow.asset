@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   specialType: 0
-  name: Crow
+  Name: Crow
   description: Is a crow
   pageNumber: 0
   Health: 3
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 0

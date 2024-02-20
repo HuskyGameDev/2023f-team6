@@ -1089,10 +1089,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b9cd64e51e7d04f87ad9e41b53f127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 95e412652bebd5347bddfca622d5855a, type: 2}
+  mainSlider: {fileID: 0}
+  mainText: {fileID: 0}
+  musicText: {fileID: 0}
+  SFXText: {fileID: 0}
   musicSlider: {fileID: 0}
   SFXSlider: {fileID: 0}
-  musicSounds: []
+  musicSounds:
+  - name: Pirate Theme
+    clip: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
   sfxSounds: []
 --- !u!82 &43960050
 AudioSource:
@@ -24124,6 +24133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b5880107b8fae46a04890eaaddb387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionPrefab: {fileID: 0}
+  ResolutionContent: {fileID: 0}
+  ResolutionText: {fileID: 0}
+  AspectContent: {fileID: 0}
+  AspectText: {fileID: 0}
 --- !u!114 &660777649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32672,6 +32686,7 @@ RectTransform:
   m_Children:
   - {fileID: 1156874936}
   - {fileID: 849875020}
+  - {fileID: 1651892024}
   - {fileID: 1422709729}
   m_Father: {fileID: 739393902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33715,6 +33730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  shield: {fileID: 543659514001770713, guid: 49255c0b5d1d10e40805ad6c001037de, type: 3}
 --- !u!61 &1093243193
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -70827,6 +70843,94 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1651892023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1651892024}
+  - component: {fileID: 1651892027}
+  - component: {fileID: 1651892026}
+  - component: {fileID: 1651892025}
+  m_Layer: 5
+  m_Name: Barrier Health
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1651892024
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651892023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1043893778}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 349.8, y: 181.7}
+  m_SizeDelta: {x: 61.245, y: 61.245}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1651892025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651892023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71369e32f79dfc43a5ec0aba28054ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1651892026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651892023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0.99999976, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 169d8f4d949a65a41904c78d7878b64b, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1651892027
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651892023}
+  m_CullTransparentMesh: 1
 --- !u!1 &1656008239
 GameObject:
   m_ObjectHideFlags: 0
@@ -77686,6 +77790,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
   - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
   - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
+  - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0

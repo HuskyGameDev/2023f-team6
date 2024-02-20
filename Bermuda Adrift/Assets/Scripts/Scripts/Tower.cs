@@ -94,7 +94,7 @@ public class Tower : ScriptableObject
     [SerializeField] private TowerAI.Priority[] extraPriorities;
     [SerializeField] private bool unlocked;
     [SerializeField] private bool logged;
-    [SerializeField] public int dimensions;
+    [SerializeField] private int dimensions;
 
 
     public string getSaveString() { return saveString; }

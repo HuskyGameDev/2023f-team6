@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   specialType: 0
-  name: The Shadow Self
+  Name: Shadow Self
   description: The Shadow Self
   pageNumber: 0
   Health: 4000
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 0000000001000000
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 0

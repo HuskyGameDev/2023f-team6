@@ -82,9 +82,9 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
         gameObject.GetComponent<SpriteRenderer>().sprite = barrier.getStartingSprite();
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage((int, AI) enemyDamage)
     {
-        health -= (int) (damage * armor);
+        health -= (int) (enemyDamage.Item1 * armor);
         Debug.Log("Barrier health: " + health);
         if (health <= 0)
         {
@@ -158,7 +158,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
         while (Time.time < startTime + duration) //Even if no DOT, still waits until the end of the duration
         {
             if (damage > 0)
-                TakeDamage(damage);
+                TakeDamage((damage, null));
 
             yield return new WaitForSeconds(speed);
         }

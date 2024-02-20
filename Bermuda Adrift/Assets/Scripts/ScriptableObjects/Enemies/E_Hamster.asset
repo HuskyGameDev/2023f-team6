@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   specialType: 1
-  name: Hamster
+  Name: Hamster
   description: Is a hamster
   pageNumber: 0
   Health: 70
@@ -38,3 +38,4 @@ MonoBehaviour:
   availableAttacks: 
   phase2switch: 0
   Phase2ExtraAttacks: 
+  logged: 0
