@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: I_CrashedPlane
   m_EditorClassIdentifier: 
   type: 0
-  rarity: 1
+  rarity: 0.1
   scrapBonus: 500
   buff: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
   sprite: {fileID: 619080796, guid: 0f4ed46bd9acb5946ae8c4311bb3e205, type: 3}

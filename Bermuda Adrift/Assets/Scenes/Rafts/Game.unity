@@ -85212,7 +85212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -216, y: -1348}
+  m_AnchoredPosition: {x: -215.99997, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031664637
@@ -85752,6 +85752,9 @@ MonoBehaviour:
   islandRarity: 1
   islands:
   - {fileID: 11400000, guid: 8cc561454df92d84a9496a1c9b98204d, type: 2}
+  - {fileID: 11400000, guid: 20d6920cb1f104445b76e944799a2efc, type: 2}
+  - {fileID: 11400000, guid: 13ecd38e2825c7c419cb99e446cb8bbd, type: 2}
+  - {fileID: 11400000, guid: 043bb8382974e444f80fa91acfd5b8e8, type: 2}
 --- !u!1 &2039801569
 GameObject:
   m_ObjectHideFlags: 0

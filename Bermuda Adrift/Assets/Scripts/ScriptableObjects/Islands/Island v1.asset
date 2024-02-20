@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Island v1
   m_EditorClassIdentifier: 
   type: 0
-  rarity: 0
-  scrapBonus: 0
+  rarity: 0.2
+  scrapBonus: 500
   buff: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 9df8423d2ffbe144ab1e53288a473aa0, type: 3}
