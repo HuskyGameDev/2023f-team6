@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e0f0920e95ec6149a7243804d53abe6, type: 3}
-  m_Name: I_CrashedPlane
+  m_Name: Island
   m_EditorClassIdentifier: 
   type: 0
-  rarity: 1
-  scrapBonus: 500
-  buff: {fileID: 11400000, guid: e01f4fa192e5bd14fa47b431aad846d5, type: 2}
-  sprite: {fileID: 619080796, guid: 0f4ed46bd9acb5946ae8c4311bb3e205, type: 3}
+  rarity: 0
+  scrapBonus: 0
+  buff: {fileID: 0}

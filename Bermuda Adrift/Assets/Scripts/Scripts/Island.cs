@@ -24,9 +24,12 @@ public class Island : ScriptableObject
     //Special interaction
     //Nothing here yet either
 
+    [SerializeField] private Sprite sprite;
+
 
     public islandType getIslandType() { return type; }
     public float getRarity() { return rarity; }
     public int getScrapBonus() { return scrapBonus; }
     public Buffs getBuff() { return buff; }
+    public Sprite getSprite() { return sprite; }
 }

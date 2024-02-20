@@ -33,6 +33,7 @@ public class IslandManager : MonoBehaviour
 
         return false;
     }
+
     #region Island randomness/rarity
     private Island randomIsland()
     {

@@ -18,6 +18,7 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
     {
         this.island = newIsland;
         //Set sprite (animator will be the same for all and will move the island around)
+        gameObject.GetComponent<SpriteRenderer>().sprite = newIsland.getSprite();
     }
 
 
