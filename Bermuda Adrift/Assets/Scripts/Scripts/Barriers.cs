@@ -43,6 +43,9 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
                     OnTowerPlacedBM?.Invoke(gameObject);
                     placed = true;
                     GameObject.Find("Managers").GetComponent<GameManager>().spendScrap(barrier.getCost());
+
+                    if (barrier.getEffect() == BarrierScriptable.Effect.Platform)
+                        gameObject.layer = 9;
                 }
             }
             else if (Input.GetMouseButtonDown(1))
@@ -84,14 +87,56 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
 
     private void TakeDamage((int, AI) enemyDamage)
     {
+        if (barrier.getEffect() == BarrierScriptable.Effect.Explosion)
+        {
+            explosion();
+            return;
+        }
+
+        if (barrier.getDamage() > 0)
+            enemyDamage.Item2.SendMessage("TakeDamage", barrier.getDamage());
+
         health -= (int) (enemyDamage.Item1 * armor);
-        Debug.Log("Barrier health: " + health);
         if (health <= 0)
         {
-            Debug.Log("Destroying barrier");
             buildManager.removePosition(gameObject);
             Destroy(gameObject);
         }
+    }
+    private void explosion()
+    {
+        List<AI> enemies = new List<AI>(FindObjectsOfType<AI>());
+        List<AI> validEnemies = new List<AI>();
+
+        Vector3 enemyPosition;
+
+        foreach (AI enemy in enemies)
+        {
+            enemyPosition = enemy.transform.position;
+            enemyPosition.z = 0;
+            if ((enemyPosition - gameObject.transform.position).magnitude <= health)  //Radius is determined by the initial health
+            {
+                validEnemies.Add(enemy);
+            }
+        }
+
+        foreach (AI enemy in validEnemies)
+        {
+            enemy.SendMessage("TakeDamage", barrier.getDamage());
+        }
+
+        Camera.main.SendMessage("cameraShake", 0.25f);
+        transform.localScale = new Vector3(health, health);
+        gameObject.GetComponent<Animator>().SetTrigger("Explosion");
+    }
+    public void deleteBarrier() 
+    {
+        try
+        {
+            buildManager.removePosition(gameObject);
+        }
+        catch (Exception e) { Debug.Log("Failed to remove position: " + e); }
+        Destroy(gameObject);
     }
     private void repair(int damage)
     {

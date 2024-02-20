@@ -23,6 +23,11 @@ MonoBehaviour:
   - totem-pole
   - barrier-barricade
   - barrier-fishing-net
+  - shield-generator
+  - reinforced-barrier
+  - explosive-barricade
+  - floating-mine
+  - platform-barrier
   matchObjects:
   - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   - {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
@@ -34,3 +39,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
   - {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
   - {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}
+  - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
+  - {fileID: 11400000, guid: 532bd38f285888448ba8920149275a88, type: 2}
+  - {fileID: 11400000, guid: 6d847a584156d894781f4ad9c9fe5691, type: 2}
+  - {fileID: 11400000, guid: c2a8362b16b5ead4194af93c64b69572, type: 2}
+  - {fileID: 11400000, guid: 88f1db238f22e2c41a87d04b53728469, type: 2}

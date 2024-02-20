@@ -382,7 +382,21 @@ public class BuildManager : MonoBehaviour
             return mostRecent.GetComponent<Barriers>().getPlaced();
         return true;
     }
+    private bool isAPlatform(PlaceableData pd)
+    {
+        if (pd.getPlaceableType() != typeof(Barriers))
+        {
+            return false;
+        }
 
+        if (((Barriers)pd.getPlaceableData()).getEffect() == BarrierScriptable.Effect.Platform)
+        {
+            return true;
+        }
+        Debug.Log("Not a platform");
+
+        return false;
+    }
     public bool approvePosition(Vector3 position, int type) //0 for tower, 1 for barrier, 2 for small tower
     {
         Vector3 temp = Vector3.zero;
@@ -393,15 +407,18 @@ public class BuildManager : MonoBehaviour
 
             temp.x = position.x - pd.getLocation().x;
             temp.y = position.y - pd.getLocation().y;
-            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f)
+            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f && !isAPlatform(pd))
             {
                 return false;
             }
+
+            if (isAPlatform(pd) && temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f && (position.x != pd.getLocation().x || position.y != pd.getLocation().y))  //Must be centered on the platform
+                return false;
         }
 
         if (type == 1)
             return raycastCornersBarrier(position);
-        return raycastCornersTower(position, type);
+        return raycastCornersTower(position);
     }
     public bool approvePosition(GameObject go)  //Goes through the positions of all other towers and checks for overlaps or being out of bounds
     {
@@ -413,22 +430,28 @@ public class BuildManager : MonoBehaviour
 
             temp.x = go.transform.position.x - pd.getLocation().x;
             temp.y = go.transform.position.y - pd.getLocation().y;
-            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f)
+            if (temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f && !isAPlatform(pd))
             {
                 Debug.Log("Overlapping" + pd.getLocation() + ", magnitude " + temp.magnitude + " < " + pd.getDimensions());
                 return false;
             }
+
+            if (isAPlatform(pd) && temp.magnitude < pd.getDimensions() / 2f + getDimensions() / 2f && (go.transform.position.x != pd.getLocation().x || go.transform.position.y != pd.getLocation().y))  //Must be centered on the platform
+                return false;
         }
 
+        if (go.GetComponent<Barriers>() != null && go.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Platform)
+            return raycastCornersPlatform(go.transform.position);
         if (go.GetComponent<Barriers>() != null)
             return raycastCornersBarrier(go.transform.position);
         else
-            return raycastCornersTower(go.transform.position, 0);
+            return raycastCornersTower(go.transform.position);
     }
-    private bool raycastCornersTower(Vector3 position, int type)   //Checks the corners of the tower to make sure it isn't touching the water or a channel
+    private bool raycastCornersTower(Vector3 position)   //Checks the corners of the tower to make sure it isn't touching the water or a channel
     {
         int waterMask = 1 << 4;
         int channelMask = 1 << 6;
+        int platformMask = 1 << 9;
 
         float dimensions = getDimensions();
 
@@ -439,50 +462,82 @@ public class BuildManager : MonoBehaviour
             Debug.Log("Top Right Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider);
         if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider != null)
             Debug.Log("Top Right Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider);
+        if ((Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider == null)
+            &&
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, platformMask).collider == null)
+            Debug.Log("Not on a platform");
 
         if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
             Debug.Log("Bottom Right Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider);
         if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
             Debug.Log("Bottom Right Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider);
+        if ((Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider == null)
+            &&
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, platformMask).collider == null)
+            Debug.Log("Not on a platform");
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
+            if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
             Debug.Log("Top Left Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider);
         if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
             Debug.Log("Top Left Corner touching " + Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider);
+        if ((Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider == null)
+            &&
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, platformMask).collider == null)
+            Debug.Log("Not on a platform");
 
         if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null)
             Debug.Log("Bottom Left Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider);
         if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
             Debug.Log("Bottom Left Corner touching " + Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider);
+        if ((Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider == null)
+            &&
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, platformMask).collider == null)
+            Debug.Log("Not on a platform");
         */
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider != null
+
+        if ((Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider != null)    //Top right corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, maxDistance, platformMask).collider == null)    //Top right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null
+        if ((Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)  //Down right corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, maxDistance, platformMask).collider == null)  //Down right corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider != null
+        if ((Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider != null)  //Up left corner
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, maxDistance, platformMask).collider == null)  //Up left corner
             return false;
 
-        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider != null
+        if ((Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, waterMask).collider != null
             ||
-            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider != null)  //Down left corner
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, channelMask).collider != null)
+            &&
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, maxDistance, platformMask).collider == null)  //Down left corner
             return false;
 
-        if (Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, dimensions, waterMask).collider != null)   //Bottom line
+        if (Physics2D.Raycast(Vector3.down + Vector3.left, Vector3.down + Vector3.right, dimensions, waterMask).collider != null)   //Bottom line, just checking for centerpiece
             return false;
-
 
         return true;
     }
-    private bool raycastCornersBarrier(Vector3 position) //If in a channel, not touching the raft, and not 
+    private bool raycastCornersBarrier(Vector3 position) //If in a channel, not touching the raft, and not touching the outside water
     {
         int channelMask = 1 << 6;
         int raftMask = 1 << 3;
@@ -514,6 +569,51 @@ public class BuildManager : MonoBehaviour
             Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, raftMask).collider != null
             ||
             Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, waterMask).collider != null)  //Down left corner
+            return false;
+
+        return true;
+    }
+    private bool raycastCornersPlatform(Vector3 position) //If in a channel, not touching the raft, not touching the outside water, and not touching a bridge
+    {
+        int channelMask = 1 << 6;
+        int raftMask = 1 << 3;
+        int waterMask = 1 << 4;
+        int bridgeMask = 1 << 7;
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.right, 1.3f, bridgeMask).collider != null)    //Top right corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.right, 1.3f, bridgeMask).collider != null)  //Down right corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.up + Vector3.left, 1.3f, bridgeMask).collider != null)  //Up left corner
+            return false;
+
+        if (Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, channelMask).collider == null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, raftMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, waterMask).collider != null
+            ||
+            Physics2D.Raycast(position, Vector3.down + Vector3.left, 1.3f, bridgeMask).collider != null)  //Down left corner
             return false;
 
         return true;
@@ -653,9 +753,22 @@ public class BuildManager : MonoBehaviour
 
         foreach (PlaceableData pd in placeableDatas)
         {
-            if (pd.getPlaceableData() == comparison)
+            if (pd.getPlaceableData() == comparison)    //Can remove duplicates
             {
                 placeableDatas.Remove(pd);
+                if (isAPlatform(pd))
+                    removeTower(go.transform.position);
+                return;
+            }
+        }
+    }
+    public void removeTower(Vector3 position)
+    {
+        foreach (PlaceableData pd in placeableDatas)
+        {
+            if (pd.getLocation() == position && pd.getPlaceableType() == typeof(TowerAI))
+            {
+                ((TowerAI)pd.getPlaceableData()).SendMessage("destroyTower");
                 return;
             }
         }

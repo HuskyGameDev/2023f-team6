@@ -529,7 +529,7 @@ public class AI : MonoBehaviour
 
     private void Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
     {
-        if (barrier.GetComponent<Barriers>().getEffect() == BarrierScriptable.Effect.Blockade) {
+        if (barrier.GetComponent<Barriers>().getEffect() != BarrierScriptable.Effect.Effect) {
             StartCoroutine(attack(barrier));    //Start attacking
         } else
         {

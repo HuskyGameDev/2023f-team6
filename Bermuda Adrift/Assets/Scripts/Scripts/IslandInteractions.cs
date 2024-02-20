@@ -21,6 +21,10 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
         gameObject.GetComponent<SpriteRenderer>().sprite = newIsland.getSprite();
     }
 
+    public void deleteIsland()
+    {
+        islandManager.deleteIsland(this);
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

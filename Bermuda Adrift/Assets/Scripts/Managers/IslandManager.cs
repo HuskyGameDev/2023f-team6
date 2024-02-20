@@ -84,6 +84,9 @@ public class IslandManager : MonoBehaviour
         island = Instantiate(islandPrefab);  //Island animator will move it around properly
         Island chosenIsland = randomIsland();
 
+        if (island.GetComponent<CircleCollider2D>() != null)
+            island.GetComponent<CircleCollider2D>().enabled = true;
+
         island.SendMessage("setIsland", chosenIsland);
         islandDiscovered?.Invoke(chosenIsland);
     }
@@ -96,13 +99,10 @@ public class IslandManager : MonoBehaviour
 
         if (island.GetComponent<CircleCollider2D>() != null)
             island.GetComponent<CircleCollider2D>().enabled = false;
-
-        StartCoroutine(deleteIsland(5));
     }
-    private IEnumerator deleteIsland(float waitTime)
+    public void deleteIsland(IslandInteractions island)
     {
-        yield return new WaitForSeconds(waitTime);
-        Destroy(island);
+        Destroy(island.gameObject);
     }
 
     private void interact(Island island)

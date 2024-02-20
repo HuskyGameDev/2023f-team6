@@ -8,13 +8,14 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private string saveString;
 
     [SerializeField] 
-    public enum Effect { Blockade, Effect }
+    public enum Effect { Blockade, Effect, Explosion, Platform }
     [SerializeField] private string barrierName;
     [SerializeField] private string description;
     [SerializeField] private bool unlocked;
     [SerializeField] private Effect effect;
     [SerializeField] private int Health;
     [SerializeField] private int cost;
+    [SerializeField] private int damage;
     [SerializeField] private Buffs debuff;
     [SerializeField] private Sprite startingSprite;
     [SerializeField] private RuntimeAnimatorController animator;
@@ -29,6 +30,7 @@ public class BarrierScriptable : ScriptableObject
     public Effect getEffect() { return effect; }
     public int getHealth() { return Health; }
     public int getCost() { return cost; }
+    public int getDamage() { return damage; }
     public Buffs getDebuff() { return debuff; }
     public Sprite getStartingSprite() { return startingSprite; }
     public RuntimeAnimatorController getAnimator() { return animator; }

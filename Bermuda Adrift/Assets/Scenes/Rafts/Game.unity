@@ -17216,8 +17216,8 @@ MonoBehaviour:
   towerPrefabs:
   - {fileID: 3129294144544831156, guid: 130f3d44a590cf9439d3fdc1dd4eeaad, type: 3}
   - {fileID: 331806046385309275, guid: 0cf2112da1e16394886153ecf3972c7e, type: 3}
-  barrier1: {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
-  barrier2: {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}
+  barrier1: {fileID: 11400000, guid: c2a8362b16b5ead4194af93c64b69572, type: 2}
+  barrier2: {fileID: 11400000, guid: 88f1db238f22e2c41a87d04b53728469, type: 2}
 --- !u!1 &390763249
 GameObject:
   m_ObjectHideFlags: 0
@@ -35404,7 +35404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1071102701
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64829,7 +64829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1271838838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82597,6 +82597,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
   - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
   - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
+  - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85212,7 +85213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -215.99997, y: -1348}
+  m_AnchoredPosition: {x: -216, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031664637

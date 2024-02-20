@@ -141,7 +141,6 @@ MonoBehaviour:
   extra: {fileID: 0}
   bullet: {fileID: 0}
   noRotation: 1
-  tempEnemy: {fileID: 0}
 --- !u!61 &7883539249785375889
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad553b0c11f8f6f45920753d3eba1447, type: 3}
+  m_Name: Barrier_FloatingMine
+  m_EditorClassIdentifier: 
+  saveString: floating-mine
+  barrierName: Floating Mine
+  description: Powerful explosives can take down even the mightiest of foes
+  unlocked: 0
+  effect: 2
+  Health: 6
+  cost: 500
+  damage: 2000
+  debuff: {fileID: 0}
+  startingSprite: {fileID: 330191402, guid: ffeef026d56537c439d7c6070a5e1fe1, type: 3}
+  animator: {fileID: 9100000, guid: a741af02f96cce24cacb1164a800dc23, type: 2}
+  Thumbnail: {fileID: -1166972497, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
