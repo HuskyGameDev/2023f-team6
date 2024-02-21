@@ -8,6 +8,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public Tower tower;
     public BarrierScriptable barrier;
+    [SerializeField] Button menuButton;
     public static event Action<Tower> OnHoverEnter;
     public static event Action<BarrierScriptable> OnHoverEnterB;
     //public static event Action OnHoverExit;
@@ -26,8 +27,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             OnHoverEnter?.Invoke(tower);
         else if (barrier != null)
             OnHoverEnterB?.Invoke(barrier);
-
-        AudioManager.Instance.PlaySFX("Menu Select Click");
+        else if (menuButton != null)
+        {
+            AudioManager.Instance.PlaySFX("Menu Select Click");
+            gameObject.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(1.25f, 1.25f, 1.25f);
+        }
 
         if (buttonDescription != null)
             buttonDescription.SendMessage("mouseEnter");
@@ -36,6 +40,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         //OnHoverExit?.Invoke();
+
+        if (menuButton != null)
+        {
+            gameObject.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+        }
 
         if (buttonDescription != null)
             buttonDescription.SendMessage("mouseExit");
