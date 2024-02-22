@@ -39,7 +39,7 @@ public class AllTiles : MonoBehaviour
 
     void DeactivateTiles()
     {
-        gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        for (int i = 0; i < gameObject.transform.GetChild(0).childCount; i++)
+            gameObject.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
     }
 }

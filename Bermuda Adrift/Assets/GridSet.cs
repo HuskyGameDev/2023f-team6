@@ -16,17 +16,17 @@ public class GridSet : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        startColor = sr.color;
+        //startColor = sr.color;
     }
 
     private void OnMouseEnter()
     {
-        sr.color = hoverColor ;
+        //sr.color = hoverColor ;
     }
 
     private void OnMouseExit()
     {
-        sr.color = startColor;
+        //sr.color = startColor;
     }
 
     /*private void OnMouseDown()

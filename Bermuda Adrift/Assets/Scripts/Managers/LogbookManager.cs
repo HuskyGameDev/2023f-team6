@@ -59,6 +59,11 @@ public class LogbookManager : MonoBehaviour
             newButton.GetComponent<UnlockableButtonEnemy>().enemy = e;
             newButton.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "???";
             newButton.transform.GetChild(0).GetComponent<Image>().sprite = e.getSprite();
+
+            if (e.getLogged())
+            {
+                StartCoroutine(delayedUnlock(e));
+            }
         }
 
         foreach (Enemy e in allBosses)
@@ -67,6 +72,11 @@ public class LogbookManager : MonoBehaviour
             newButton.GetComponent<UnlockableButtonEnemy>().enemy = e;
             newButton.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "???";
             newButton.transform.GetChild(0).GetComponent<Image>().sprite = e.getSprite();
+
+            if (e.getLogged())
+            {
+                StartCoroutine(delayedUnlock(e));
+            }
         }
 
         foreach (Tower t in allTowers)
@@ -75,6 +85,11 @@ public class LogbookManager : MonoBehaviour
             newButton.GetComponent<UnlockableButtonTower>().tower = t;
             newButton.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "???";
             newButton.transform.GetChild(0).GetComponent<Image>().sprite = t.getImage();
+
+            if (t.getLogged())
+            {
+                StartCoroutine(delayedUnlock(t));
+            }
         }
 
         foreach (Player p in allCharacters)
@@ -83,12 +98,34 @@ public class LogbookManager : MonoBehaviour
             newButton.GetComponent<UnlockableButtonCharacter>().player = p;
             newButton.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "???";
             newButton.transform.GetChild(0).GetComponent<Image>().sprite = p.getMainBodySprite();
+
+            if (p.getLogged())
+            {
+                StartCoroutine(delayedUnlock(p));
+            }
         }
+
+        //refreshLogbook();
 
         txtLoggedBos.GetComponent<TextMeshProUGUI>().text = unlockedBosses.Count + " / " + allBosses.Length;
         txtLoggedEne.GetComponent<TextMeshProUGUI>().text = unlockedEnemies.Count + " / " + allEnemies.Length;
         txtLoggedTow.GetComponent<TextMeshProUGUI>().text = unlockedTowers.Count + " / " + allTowers.Length;
         txtLoggedCha.GetComponent<TextMeshProUGUI>().text = unlockedCharacters.Count + " / " + allCharacters.Length;
+    }
+    IEnumerator delayedUnlock(Enemy e)
+    {
+        yield return new WaitForEndOfFrame();
+        unlockEnemy(e);
+    }
+    IEnumerator delayedUnlock(Tower t)
+    {
+        yield return new WaitForEndOfFrame();
+        unlockTower(t);
+    }
+    IEnumerator delayedUnlock(Player p)
+    {
+        yield return new WaitForEndOfFrame();
+        unlockCharacter(p);
     }
 
     public void unlockEnemy(Enemy e)
@@ -141,6 +178,35 @@ public class LogbookManager : MonoBehaviour
             txtLoggedCha.GetComponent<TextMeshProUGUI>().text = unlockedCharacters.Count + " / " + allCharacters.Length;
         }
     }
+
+    /*
+    private void refreshLogbook()
+    {
+        foreach (Enemy e in allEnemies)
+        {
+            if (e.getLogged())
+                unlockEnemy(e);
+        }
+
+        foreach (Enemy boss in allBosses)
+        {
+            if (boss.getLogged())
+                unlockEnemy(boss);
+        }
+
+        foreach (Tower t in allTowers)
+        {
+            if (t.getLogged())
+                unlockTower(t);
+        }
+
+        foreach (Player p in allCharacters)
+        {
+            if (p.getLogged())
+                unlockCharacter(p);
+        }
+    }
+    */
 
     public void openEnemyInformation(Enemy e)
     {

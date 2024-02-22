@@ -21,8 +21,10 @@ public class GUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI towerCost;
     [SerializeField] Canvas logbookCanvas;
     [SerializeField] GameObject logbookGrid;
+    [SerializeField] Image raft;
 
     Resolution[] resolutions;
+
 
     private void OnEnable()
     {
@@ -69,10 +71,10 @@ public class GUIManager : MonoBehaviour
         clearTowerText();
     }
 
-    public void LoadScene(int sceneIndex)
+    public void LoadScene(int scene)
     {
         if (FindObjectOfType<SettingsTracker>() == null || FindObjectOfType<SettingsTracker>().getCharacter().getUnlocked())
-            SceneManager.LoadScene(sceneIndex);
+            SceneManager.LoadScene(scene);
         else
             Debug.Log("Not unlocked!");
     }
@@ -211,5 +213,9 @@ public class GUIManager : MonoBehaviour
     {
         logbookCanvas.enabled = false;
         logbookGrid.SetActive(false);
+    }
+    public void setRaftImage(Sprite newImage)
+    {
+        raft.sprite = newImage;
     }
 }

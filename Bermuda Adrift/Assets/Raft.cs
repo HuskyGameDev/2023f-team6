@@ -30,11 +30,13 @@ public class Raft : MonoBehaviour
         var c2 = new Vector3(tBounds.max.x, tBounds.max.y) + tp;
         var c3 = new Vector3(tBounds.max.x, tBounds.min.y) + tp;
 
+        /*
         //grid = new Grid(tile, tileParent, tilemap.size.x / 2, tilemap.size.y / 2, 2f, c0);
         Instantiate(tile, tileParent.transform);
         Instantiate(rangeIndicator, tileParent.transform);
         var barrierTiles = Instantiate(tile, tileParent.transform);
         barrierTiles.GetComponent<Tile>().setType(1);
+        */
     }
 
     private void Update()
