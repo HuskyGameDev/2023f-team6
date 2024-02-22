@@ -193,12 +193,12 @@ public class GUIManager : MonoBehaviour
 
     public void enableCanvas(Canvas c)
     {
-        c.gameObject.SetActive(true);
+        c.enabled = true;
     }
 
     public void disableCanvas(Canvas c)
     {
-        c.gameObject.SetActive(false);
+        c.enabled = false;
     }
 
     public void openLogbook()

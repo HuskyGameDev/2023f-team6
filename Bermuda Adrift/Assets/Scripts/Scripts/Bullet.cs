@@ -26,6 +26,8 @@ public class Bullet : ScriptableObject
 
     [SerializeField] private Bullet[] types;    //Used for bullets that can be any random bullet in a range
 
+    [SerializeField] private TrailRenderer bulletTrail;
+
     public enum Restrictions { None, }
 
     //Get Functions

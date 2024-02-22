@@ -2521,6 +2521,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &91739452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14956,6 +14968,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &257120281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17972,7 +17996,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 18
   m_TargetDisplay: 0
 --- !u!1 &409308131
 GameObject:
@@ -19836,7 +19860,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 18
   m_TargetDisplay: 0
 --- !u!114 &473574513
 MonoBehaviour:
@@ -21369,6 +21393,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &504781521
@@ -24018,7 +24054,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 18
   m_TargetDisplay: 0
 --- !u!114 &610138408
 MonoBehaviour:
@@ -36340,6 +36376,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1108272923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39313,6 +39361,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1160945756
@@ -66239,7 +66299,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 18
   m_TargetDisplay: 0
 --- !u!114 &1324699785
 MonoBehaviour:
@@ -67348,7 +67408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -70257,7 +70317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -74504,7 +74564,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 18
   m_TargetDisplay: 0
 --- !u!114 &1642463030
 MonoBehaviour:
@@ -75379,6 +75439,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1670920052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76105,6 +76177,36 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 8
       m_TileSpriteIndex: 8
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -2, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -1, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 0, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -76924,8 +77026,8 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: b03746aae95755d4ab31638edadf9209, type: 2}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 3
+    m_Data: {fileID: 11400000, guid: 885af95cc4450cd4b8769c61783ad368, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d5ad16591c1ec6c42bc955c32d92e876, type: 2}
   - m_RefCount: 6
@@ -76943,7 +77045,7 @@ Tilemap:
   - m_RefCount: 6
     m_Data: {fileID: 11400000, guid: 69044eb20dce5174eb80d5d7036608cf, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 59fcbf2b43ab0924fb24958309d7793f, type: 2}
+    m_Data: {fileID: 11400000, guid: d32b42c056f62fa4c9cd310d0a4c851b, type: 2}
   - m_RefCount: 18
     m_Data: {fileID: 11400000, guid: 3ebf2349066a9814da17debdfba95b45, type: 2}
   - m_RefCount: 11
@@ -76957,8 +77059,8 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: d6851abfe9f2b914eae6ab4b1762c1e9, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 98fc8f870d3326a42a512739c69c43fe, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 3
+    m_Data: {fileID: 21300000, guid: 2a9185f1e6f7e0c478448a308ada1a1b, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 9602264fb7dda424281beab219149f43, type: 3}
   - m_RefCount: 6
@@ -76974,7 +77076,7 @@ Tilemap:
   - m_RefCount: 6
     m_Data: {fileID: 21300000, guid: 797558aaf682e8240936901755a881ad, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 7d5f8510d8fc9d74783c194f57600f1f, type: 3}
+    m_Data: {fileID: 21300000, guid: 4ee1fc3caa9139d4ca457c7826fe1e9b, type: 3}
   - m_RefCount: 18
     m_Data: {fileID: 21300000, guid: 7afa486e7e155034cb6b833fc53eae90, type: 3}
   - m_RefCount: 11
@@ -76984,7 +77086,7 @@ Tilemap:
   - m_RefCount: 12
     m_Data: {fileID: 21300000, guid: a84a471dbd7a6be4187665739078266f, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 117
+  - m_RefCount: 120
     m_Data:
       e00: 1
       e01: 0
@@ -77003,7 +77105,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 117
+  - m_RefCount: 120
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -77401,7 +77503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
@@ -77523,19 +77625,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: 95e412652bebd5347bddfca622d5855a, type: 2}
-  mainSlider: {fileID: 0}
-  mainText: {fileID: 0}
-  musicText: {fileID: 0}
-  SFXText: {fileID: 0}
-  musicSlider: {fileID: 0}
-  SFXSlider: {fileID: 0}
+  mainSlider: {fileID: 299249694}
+  mainText: {fileID: 1472151168}
+  musicText: {fileID: 1344667603}
+  SFXText: {fileID: 1720067671}
+  musicSlider: {fileID: 1652005966}
+  SFXSlider: {fileID: 768308576}
   musicSounds:
   - name: Pirate Theme
     clip: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
     volume: 1
-    pitch: 0.56
+    pitch: 0.9
     source: {fileID: 0}
-  sfxSounds: []
+  sfxSounds:
+  - name: Button Click
+    clip: {fileID: 8300000, guid: bd4222455acffcd4ababb95db8574dc8, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1 &1740341031
 GameObject:
   m_ObjectHideFlags: 0
@@ -78717,6 +78824,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1774088246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78859,6 +78978,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1777826758
@@ -81189,6 +81320,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1877523535
@@ -84943,7 +85086,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018809176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -85326,7 +85469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -216, y: -1348}
+  m_AnchoredPosition: {x: -216.00003, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031664637

@@ -54,15 +54,6 @@ public class AudioManager : MonoBehaviour, IDataPersistence
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
             }
-
-            /*
-            mainSlider.value = 100;
-            mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
-            musicSlider.value = 100;
-            musicText.text = Mathf.Round(Mathf.Clamp(100 * musicSlider.value, 0f, 100f)).ToString();
-            SFXSlider.value = 100;
-            SFXText.text = Mathf.Round(Mathf.Clamp(100 * SFXSlider.value, 0f, 100f)).ToString();
-            */
         }
 
         PlayMusic("Pirate Theme");
@@ -85,7 +76,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
     public void ChangeMainVolume()
     {
         mixer.SetFloat("MasterVolume", Mathf.Log10(mainSlider.value) * 20);
-        mainText.text = mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
+        mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
     }
     public void ChangeSFXVolume()
     {
@@ -102,6 +93,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
     public void LoadData(S_O_Saving saver)
     {
         mainSlider.value = saver.audioData.MasterVolume;
+        Debug.Log(mainSlider.value);
         mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
         ChangeMainVolume();
 
@@ -116,8 +108,8 @@ public class AudioManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(S_O_Saving saver)
     {
-        mixer.GetFloat("MasterVolume", out saver.audioData.MasterVolume);
-        mixer.GetFloat("MusicVolume", out saver.audioData.MusicVolume);
-        mixer.GetFloat("SFXVolume", out saver.audioData.SFXVolume);
+        saver.audioData.MasterVolume = mainSlider.value;
+        saver.audioData.MusicVolume = musicSlider.value;
+        saver.audioData.SFXVolume = SFXSlider.value;
     }
 }
