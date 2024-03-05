@@ -12,6 +12,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     [SerializeField] private BarrierScriptable barrier2;
 
     int raftSelected;
+    bool resettingScene;
 
     #region Setup
     private void OnEnable()
@@ -46,9 +47,12 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
 
         yield return new WaitForEndOfFrame();
 
+        AstarPath.active.Scan();
+
         GameObject.Find("Player").SendMessage("setCharacter", character);
         FindObjectOfType<BuildManager>().setBarrier1(barrier1);
         FindObjectOfType<BuildManager>().setBarrier2(barrier2);
+        FindObjectOfType<BuildManager>().reloadBuyables();
     }
 
     public void setRaft(int raft)
@@ -97,7 +101,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     }
     private void OnLevelWasLoaded(int level)
     {
-        if (level >= 1)
+        if (level >= 1 && !resettingScene)
         {
             StartCoroutine(setSettingsInScene());
         }

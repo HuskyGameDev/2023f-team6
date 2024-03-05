@@ -68,20 +68,6 @@ public class GameManager : MonoBehaviour
     
     private void Update()
     {
-        //f to start a round
-        if (Input.GetKeyDown("f"))  //Replaced in the main scene, but still useful for testing in other scenes
-        {
-            startRound();
-        }
-        else if (Input.GetKeyDown("n"))
-            addScrap(100);
-        else if (Input.GetKeyDown("z"))
-            addScrap(1000);
-        else if (Input.GetKeyDown("b"))
-            addXP(100);
-        
-
-
         levelUp();
     }
 

@@ -63,6 +63,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
     {
         Sound s = Array.Find(musicSounds, sound => sound.name == name);
         s.source.Play();
+        s.source.loop = true;
     }
 
     public void PlaySFX(string name)

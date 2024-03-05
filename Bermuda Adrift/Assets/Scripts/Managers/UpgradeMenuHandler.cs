@@ -259,6 +259,7 @@ public class UpgradeMenuHandler : MonoBehaviour
         TwoOptions.SetActive(false);
         OneOption.SetActive(true);
         repairSlider.gameObject.SetActive(true);
+        repairSlider.interactable = true;
         repairButton.SetActive(true);
         destroyButton.SetActive(false);
         headerText.text = "Centerpiece";
@@ -266,10 +267,23 @@ public class UpgradeMenuHandler : MonoBehaviour
         priorityChanger.SetActive(true);
         priorityChanger.transform.GetChild(1).GetComponent<Button>().interactable = false;
         priorityChanger.transform.GetChild(2).GetComponent<Button>().interactable = false;
-        priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Drag to repair";
 
-        repairSlider.maxValue = center.getMaxHealth();
-        repairSlider.value = center.getHealth();
+        if (center.getMaxHealth() - center.getHealth() <= 0)
+            priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No Repair Needed";
+        else
+            priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Drag bar to repair";
+
+        if (center.getMaxHealth() - center.getHealth() > 0)
+        {
+            repairSlider.maxValue = center.getMaxHealth() - center.getHealth();
+            repairSlider.value = 0;
+        }
+        else
+        {
+            repairSlider.maxValue = 1;
+            repairSlider.value = 0;
+            repairSlider.interactable = false;
+        }
 
         currentHealth = center.getHealth();
 
@@ -278,14 +292,16 @@ public class UpgradeMenuHandler : MonoBehaviour
 
     public void updateRepairMenu()
     {
+        /*
         if (repairSlider.value <= currentHealth) 
         { 
             repairSlider.value = currentHealth;
             repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair 0 Damage: 0 Scrap";
             return;
         }
+        */
 
-        repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair " + Mathf.RoundToInt(repairSlider.value - currentHealth) + " Damage: " + getRepairScrap(Mathf.RoundToInt(repairSlider.value - currentHealth)) + " Scrap";
+        repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair " + Mathf.RoundToInt(repairSlider.value) + " Damage: " + getRepairScrap(Mathf.RoundToInt(repairSlider.value)) + " Scrap";
     }
     private int getReturnScrap(Tower tower, int upgradeLevel)
     {
@@ -331,20 +347,20 @@ public class UpgradeMenuHandler : MonoBehaviour
     }
     public void repair()
     {
-        int cost = getRepairScrap((int)(repairSlider.value - currentHealth));
+        int cost = getRepairScrap((int)repairSlider.value);
         GameManager manager = FindObjectOfType<GameManager>();
         if (!manager.cost(cost)) return;
 
-        healedSoFar += (int) (repairSlider.value - currentHealth);
+        healedSoFar += (int) repairSlider.value;
 
         if (currentBarrier != null)
         {
-            currentBarrier.SendMessage("repair", repairSlider.value - currentHealth);
+            currentBarrier.SendMessage("repair", repairSlider.value);
             updateMenu(currentBarrier);
         }
         else
         {
-            centerpiece.SendMessage("repair", repairSlider.value - currentHealth);
+            centerpiece.SendMessage("repair", repairSlider.value);
             updateMenu(centerpiece);
         }
         manager.spendScrap(cost);

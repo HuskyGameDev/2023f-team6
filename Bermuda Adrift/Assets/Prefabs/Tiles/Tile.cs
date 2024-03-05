@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     SpriteRenderer sR;
-    int type;
+    [SerializeField] int type;
     BuildManager buildManager;
     // Start is called before the first frame update
     void Start()
@@ -52,5 +52,5 @@ public class Tile : MonoBehaviour
     {
         sR.color = new Vector4(0, 0, 0, 0.75f);
     }
-    public void setType(int type) { this.type = type; }
+    //public void setType(int type) { this.type = type; }
 }

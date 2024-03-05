@@ -16,6 +16,7 @@ public class Pausing : MonoBehaviour
     GameObject controls;
     GameObject video;
     GameObject credits;
+    [SerializeField] GameObject ButtonBlocker;
 
 
     private void Start()
@@ -64,6 +65,7 @@ public class Pausing : MonoBehaviour
     public void OnPause()
     {
         // Open & Close pause menu
+        ButtonBlocker.SetActive(!pauseMenu.activeSelf);
         pauseMenu.SetActive(!pauseMenu.activeSelf);
 
         //Stop & Start time

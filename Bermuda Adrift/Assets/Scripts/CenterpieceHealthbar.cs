@@ -7,7 +7,6 @@ using TMPro;
 public class SC_CircularLoading : MonoBehaviour
 {
     [Range(0, 1)]
-    private Centerpiece centerpiece;
     private float progression;
 
     private void OnEnable()
@@ -20,14 +19,14 @@ public class SC_CircularLoading : MonoBehaviour
     }
     private void Start()
     {
-        centerpiece = FindObjectOfType<Centerpiece>();
-
         gameObject.GetComponent<Image>().fillAmount = 1;
         transform.parent.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 0;
     }
 
     void updateHealthbar()
     {
+        Centerpiece centerpiece = FindObjectOfType<Centerpiece>();
+
         progression = (float) centerpiece.getCurrentHealth() / centerpiece.getMaxHealth();
         if (centerpiece.getHealth() > centerpiece.getCurrentHealth())
         {

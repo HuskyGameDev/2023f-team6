@@ -29,3 +29,4 @@ MonoBehaviour:
   mainBodySprite: {fileID: -2010298464, guid: 108c2fb3a2d50454e9e6d9e20053618f, type: 3}
   speed: 5
   unlocked: 0
+  logged: 0

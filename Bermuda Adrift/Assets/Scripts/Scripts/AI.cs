@@ -102,9 +102,6 @@ public class AI : MonoBehaviour
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
-        if (Input.GetKeyDown("p"))
-            TakeDamage(Health);
-
         healthCheck();    //Constantly update health to deal with health buffs being added/wearing off
 
         if (path == null && !airborne)
@@ -300,6 +297,8 @@ public class AI : MonoBehaviour
             //Play coming up animation
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
+        updatePath();
+
         stop = false;   //Resume going towards raft
     }
     IEnumerator Heal()  //Heal 10% of their current health

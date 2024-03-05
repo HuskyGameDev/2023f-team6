@@ -28,17 +28,6 @@ public class SaveManager : MonoBehaviour
         build = FindObjectOfType<BuildManager>();
     }
 
-    private void Update(){
-
-        if(Input.GetKeyDown("m")){
-            LoadPlayer();
-        }
-
-        if(Input.GetKeyDown("9")){
-            DeletePlayer();
-        }
-    }
-
     private void OnEnable(){
         EnemyManager.onRoundEnd += endRoundSave;
         GameManager.OnRoundStart += beginRoundSave;

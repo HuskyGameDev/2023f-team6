@@ -13,12 +13,6 @@ public class AchievementHandler : MonoBehaviour, IDataPersistence
 
     [SerializeField] GameObject achievementPopup;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-            unlockAchievement("Ach_Man_In_The_Mirror");
-    }
-
     Achievement getAchievement(string name)
     {
         foreach (Achievement a in achievements)

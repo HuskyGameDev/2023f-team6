@@ -355,11 +355,49 @@ public class Attack : MonoBehaviour
     public void resetMove(String boolName) { anim.SetBool(boolName, false); }
 
     #region Melee Attacks
-    public void setDirection(int i) { direction = i; }
+    int getDirection() 
+    {
+        var mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0f;
+        Vector3 AimVector = mouseWorldPosition - gameObject.transform.position;
+        AimVector.Normalize();
+
+        if (AimVector.x < Mathf.Cos(22.5f) && AimVector.x > Mathf.Cos(67.5f))   //Up right or Down Right
+        {
+            if (AimVector.y > 0)
+                return 5;                   //Up Right
+            else
+                return 7;                   //Down Right
+        }
+        else if (AimVector.x <= Mathf.Cos(67.5f) && AimVector.x >= -1 * Mathf.Cos(67.5f))    //Up or Down
+        {
+            if (AimVector.y > 0) 
+                return 4;                   //Up
+            else 
+                return 0;                  //Down
+        }
+        else if(AimVector.x > -1 * Mathf.Cos(22.5f) && AimVector.x < -1 * Mathf.Cos(67.5f))  //Up Left or Down Left
+        {
+            if (AimVector.y > 0)
+                return 3;                   //Up Left
+            else
+                return 1;                   //Down Left
+        }
+        else //Left or Right
+        {
+            if (AimVector.x < 0)
+                return 2;                   //Left
+            else
+                return 6;                   //Right
+        }
+
+    }
     private void attackMelee(Ability ability) //Handles melee attacks
     {
         if (ability.getAttackType() != Ability.attackType.melee)
             return;
+
+        direction = getDirection();
 
         if (ability.getSlot() == 1)
         {

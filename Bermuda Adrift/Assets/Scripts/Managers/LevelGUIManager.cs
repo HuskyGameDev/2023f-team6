@@ -36,12 +36,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     }
     private void Update()
     {
-        if (Input.GetKeyDown("x"))
-            addAll();
-        for (int i = 1; i < 10; i++)
-        {
-            if (Input.GetKeyDown(i.ToString())) buildManager.addToList(allChoices[i-1]);
-        }
+        
     }
 
     private void levelUpScreen()
@@ -127,8 +122,13 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
         Tower random = allChoices[Random.Range(0, allChoices.Length)];
         buildManager.addToList(random);
     }
-
-    void addAll()
+    public void addIndex(int i)
+    {
+        if (i < 0)
+            i = 10;
+        buildManager.addToList(allChoices[i]);
+    }
+    public void addAll()
     {
         foreach (Tower x in allChoices)
             buildManager.addToList(x);

@@ -134,6 +134,8 @@ public class TowerAI : MonoBehaviour
                     gameObject.GetComponent<CircleCollider2D>().radius = getTowerRange() * getRange();
             }
         }
+        else
+            anim.SetBool("TargetFound", false);
     }
     private void placeTower() { placed = true; }
 
@@ -438,7 +440,9 @@ public class TowerAI : MonoBehaviour
         */
         if (getPriority() == Priority.None) return;
 
-        if (getTowerRange() == -1 && enemiesInRange.Count > 0 && enemiesInRange[0] == null)
+        if (getTowerRange() == -1 
+            //&& enemiesInRange.Count > 0 && enemiesInRange[0] == null
+            )
         {
             enemiesInRange.Clear();
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
