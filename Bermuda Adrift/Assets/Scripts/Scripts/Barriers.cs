@@ -211,7 +211,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("OnPointerDown");
-        if (placed && FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle && barrier.getName().CompareTo("Barricade") != 0)
+        if (placed)
             onClicked?.Invoke(this);
     }
 
@@ -221,6 +221,8 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
         if (physicsRaycaster == null)
         {
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+
+            Camera.main.GetComponent<Physics2DRaycaster>().eventMask = LayerMask.GetMask(new string[] { "Default", "Towers" });
         }
     }
 

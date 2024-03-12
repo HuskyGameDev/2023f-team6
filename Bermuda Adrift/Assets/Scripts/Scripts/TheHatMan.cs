@@ -31,6 +31,7 @@ public class TheHatMan : MonoBehaviour, IPointerDownHandler
         if (physicsRaycaster == null)
         {
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+            Camera.main.GetComponent<Physics2DRaycaster>().eventMask = LayerMask.GetMask(new string[] { "Default", "Towers" });
         }
     }
     private IEnumerator fadeAway()

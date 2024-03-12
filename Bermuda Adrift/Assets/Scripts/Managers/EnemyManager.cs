@@ -23,6 +23,8 @@ public class EnemyManager : MonoBehaviour
 
     private List<Enemy> enemySet;
 
+    private float eliteChance;
+
     private void Start()
     {
         camera = Camera.main;
@@ -30,6 +32,7 @@ public class EnemyManager : MonoBehaviour
         loopSpot = 1;
 
         enemySet = randomizedSet();
+        setDifficulty();
         //displayEnemySet();
     }
 
@@ -94,7 +97,12 @@ public class EnemyManager : MonoBehaviour
             {
                 var tempEnemy = Instantiate(prefab, new Vector3(Random.Range(leftBound(), -leftBound()), posNeg() * lowerBound()), Quaternion.identity);    //Top/Bottom enemies
                 Enemy newEnemy = enemySet[randomEnemy()];
-                tempEnemy.SendMessage("setEnemy", newEnemy);
+
+                if (Random.Range(0, 1f) <= eliteChance)
+                    tempEnemy.SendMessage("setEliteEnemy", newEnemy);
+                else
+                    tempEnemy.SendMessage("setEnemy", newEnemy);
+
                 onEnemySpawn?.Invoke(newEnemy);
             }
             for (; i < total; i++)
@@ -102,6 +110,10 @@ public class EnemyManager : MonoBehaviour
                 var tempEnemy = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);   //Left/Right Enemies
                 Enemy newEnemy = enemySet[randomEnemy()];
                 tempEnemy.SendMessage("setEnemy", newEnemy);
+
+                if (Random.Range(0, 1f) <= eliteChance)
+                    tempEnemy.SendMessage("setEliteEnemy", newEnemy);
+
                 onEnemySpawn?.Invoke(newEnemy);
             }
         }
@@ -162,10 +174,22 @@ public class EnemyManager : MonoBehaviour
         }
         //Add Score points?
     }
+
+    public void setDifficulty()
+    {
+        GameManager.Difficulty diff = FindObjectOfType<GameManager>().getDifficulty();
+
+        if (diff == GameManager.Difficulty.Easy)
+            eliteChance = 0;
+        else if (diff == GameManager.Difficulty.Medium)
+            eliteChance = 0.1f;
+        else if (diff == GameManager.Difficulty.Hard)
+            eliteChance = 0.2f;
+    }
     
     private int posNeg()    //Randomly returns either -1 or 1
     {
-        int i = (int)Random.Range(0, 2);
+        int i = Random.Range(0, 2);
         if (i == 0)
             return -1;
         else

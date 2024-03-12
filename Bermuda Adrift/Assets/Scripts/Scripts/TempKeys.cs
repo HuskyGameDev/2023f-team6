@@ -7,6 +7,8 @@ public class TempKeys : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    #if UNITY_EDITOR
+
         //  X - Add all
         if (Input.GetKeyDown("x"))
             FindObjectOfType<LevelGUIManager>().addAll();
@@ -51,5 +53,7 @@ public class TempKeys : MonoBehaviour
         //  V - Unlock the Old Man's Achievement
         if (Input.GetKeyDown("v"))
             FindObjectOfType<AchievementHandler>().SendMessage("unlockAchievement", "Ach_Man_In_The_Mirror");
+
+    #endif
     }
 }

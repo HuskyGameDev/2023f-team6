@@ -19,7 +19,6 @@ public class UpgradeMenuHandler : MonoBehaviour
     private GameObject repairButton;
     private GameObject priorityChanger;
 
-    private int currentHealth;
     private int healedSoFar;
 
     private TowerAI currentTower;
@@ -207,6 +206,7 @@ public class UpgradeMenuHandler : MonoBehaviour
             TwoOptions.SetActive(false);
             OneOption.SetActive(true);
             repairSlider.gameObject.SetActive(true);
+            repairSlider.interactable = true;
             repairButton.SetActive(true);
             destroyButton.SetActive(true);
             destroyButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(17, -245.45f);
@@ -219,10 +219,21 @@ public class UpgradeMenuHandler : MonoBehaviour
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
             headerText.text = barrier.getName();
 
-            repairSlider.maxValue = barrier.getMaxHealth();
-            repairSlider.value = barrier.getHealth();
+            repairSlider.maxValue = barrier.getMaxHealth() - barrier.getHealth();
 
-            currentHealth = barrier.getHealth();
+            if (barrier.getMaxHealth() - barrier.getHealth() > 0)
+            {
+                repairSlider.maxValue = barrier.getMaxHealth() - barrier.getHealth();
+                repairSlider.value = 0;
+                priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Drag bar to repair";
+            }
+            else
+            {
+                priorityChanger.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No Repair Needed";
+                repairSlider.maxValue = 1;
+                repairSlider.value = 0;
+                repairSlider.interactable = false;
+            }
 
             updateRepairMenu();
         }
@@ -241,7 +252,6 @@ public class UpgradeMenuHandler : MonoBehaviour
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
             headerText.text = barrier.getName();
 
-            currentHealth = barrier.getHealth();
 
             updateRepairMenu();
         }
@@ -284,8 +294,6 @@ public class UpgradeMenuHandler : MonoBehaviour
             repairSlider.value = 0;
             repairSlider.interactable = false;
         }
-
-        currentHealth = center.getHealth();
 
         updateRepairMenu();
     }

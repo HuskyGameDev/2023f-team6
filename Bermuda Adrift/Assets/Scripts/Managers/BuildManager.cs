@@ -393,7 +393,6 @@ public class BuildManager : MonoBehaviour
         {
             return true;
         }
-        Debug.Log("Not a platform");
 
         return false;
     }
@@ -684,8 +683,8 @@ public class BuildManager : MonoBehaviour
         while (!approvePosition(position, 0))
         {
             Debug.Log("Rejected (" + position.x + ", " + position.y + ")");
-            position.x = Random.Range(-7, 7);
-            position.y = Random.Range(-7, 7);
+            position.x = Random.Range(-10, 10);
+            position.y = Random.Range(-10, 10);
         }
         return position;
     }

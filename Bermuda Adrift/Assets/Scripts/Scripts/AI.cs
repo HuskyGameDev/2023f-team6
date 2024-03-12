@@ -44,6 +44,9 @@ public class AI : MonoBehaviour
     private Vector3 currentWaypointPosition;
     private Seeker seeker;
     private bool airborne;
+    private int scrapValue;
+    private float speed;
+    private bool elite;
 
 
     #region Setup and Update
@@ -64,6 +67,9 @@ public class AI : MonoBehaviour
             bullet = enemy.getBullet();
 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
+
+        scrapValue = enemy.getScrap();
+        speed = enemy.getSpeed();
 
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss && enemyManager.getRound() % 10 == 0)    //Boss health scaling during boss rounds, but not when a normal enemy
         {    
@@ -120,6 +126,63 @@ public class AI : MonoBehaviour
             }
         }
     }
+
+    private void setEliteEnemy(Enemy newEnemy)
+    {
+        Debug.Log("Elite Spawned: " + enemy.getName());
+        //More Health, Damage, Speed, and Scrap value
+        elite = true;
+
+        enemyManager = FindObjectOfType<EnemyManager>();
+        enemy = newEnemy;
+        debuffs = new Buffs[10];
+
+        Health = (int)(enemy.getHealth() * enemyManager.getRoundScale() * 1.25f);   //More Health
+        newMaxHealth = Health;
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
+        debuffToInflict = enemy.getDefuff();
+
+        if (enemy.getExtra() != null)
+            extra = enemy.getExtra();
+        if (enemy.getBullet() != null)
+            bullet = enemy.getBullet();
+
+        gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
+
+        scrapValue = (int) (enemy.getScrap() * 1.25f);  //Extra Scrap value
+        speed = enemy.getSpeed() * 1.25f;   //Extra speed
+
+        if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss && enemyManager.getRound() % 10 == 0)    //Boss health scaling during boss rounds, but not when a normal enemy
+        {
+            Health = (int)(enemy.getHealth() * Mathf.Pow(1.25f, enemyManager.getRound() / 10f) * 1.25f);    //Extra health
+            newMaxHealth = Health;
+        }
+
+        if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
+            StartCoroutine(Buffs());
+        else if (extra != null && extra.name == "Bullet_EnemyBullet" && bullet != null)
+            StartCoroutine(Bullets());
+
+        if (enemy.getAvailableAttacks().Length > 0)
+            StartCoroutine(randomAttacks());
+
+        SetupHealthBar?.Invoke(Health);
+
+        if (enemy.getType() == Enemy.Types.Airborne || enemy.getType() == Enemy.Types.AirborneBoss)
+        {
+            airborne = true;
+            Destroy(seeker);
+        }
+        else
+        {
+            airborne = false;
+
+            seeker = gameObject.GetComponent<Seeker>();
+            seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
+        }
+
+        //Start particle effects
+    }
     #endregion
 
     #region Movement functions
@@ -139,7 +202,7 @@ public class AI : MonoBehaviour
         if (!stop)
         {
             Vector3 direction = (currentWaypointPosition - transform.position).normalized;
-            gameObject.transform.position += direction * enemy.getSpeed() * Time.deltaTime * 0.5f * getSpeedMult();
+            gameObject.transform.position += direction * speed * Time.deltaTime * 0.5f * getSpeedMult();
 
             float distance = Vector2.Distance(transform.position, currentWaypointPosition);
 
@@ -476,7 +539,7 @@ public class AI : MonoBehaviour
     {
         if (dead) return;
 
-        enemyManager.SendMessage("addScrap", enemy.getScrap());
+        enemyManager.SendMessage("addScrap", scrapValue);
         enemyManager.SendMessage("addXP", enemy.getXP());
 
         enemyManager.SendMessage("EnemyDown");
@@ -505,7 +568,10 @@ public class AI : MonoBehaviour
 
         while (recipient != null)
         {
-            recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult()), this));
+            if (elite)
+                recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult() * 1.25f), this));
+            else
+                recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult()), this));
 
             if (debuffToInflict != null)
                 recipient.SendMessage("InflictDebuff", debuffToInflict);

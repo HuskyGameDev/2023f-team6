@@ -23,15 +23,21 @@ public class Attack : MonoBehaviour
     private Movement movement;
     private bool primaryOnCooldown;
     private float primaryCooldown;
+    private KeyCode primaryButton = KeyCode.Mouse0;
 
     private bool secondaryOnCooldown;
     private float secondaryCooldown = 1f;
+    private KeyCode secondaryButton = KeyCode.Mouse1;
 
     private bool utilityOnCooldown;
     private float utilityCooldown = 6f;
+    private KeyCode utilityButton = KeyCode.Q;
 
     private bool specialOnCooldown;
     private float specialCooldown = 10f;
+    private KeyCode specialButton = KeyCode.R;
+
+    private KeyCode currentButton;
 
     private int direction;
     private int attackCooldownFrames = 5;
@@ -185,19 +191,16 @@ public class Attack : MonoBehaviour
 
         anim.speed = getAttackSpeed();
 
-        if ((Input.GetMouseButtonDown(0) || (character.getPrimary().canBeLooped() && Input.GetMouseButton(0)) || (!primaryOnCooldown && !anim.GetBool("Primary") && Input.GetMouseButton(0)))) { primary(); }
-        else if (Input.GetMouseButtonDown(1) || (character.getSecondary().canBeLooped() && Input.GetMouseButton(1)) || (!secondaryOnCooldown && !anim.GetBool("Secondary") && Input.GetMouseButton(1))) { secondary(); }
-        else if (Input.GetKeyDown("q") || (character.getUtility().canBeLooped() && Input.GetKey("q")) || (!utilityOnCooldown && !anim.GetBool("Utility") && Input.GetKey("q"))) { utility(); }
-        else if (Input.GetKeyDown("r") || (character.getSpecial().canBeLooped() && Input.GetKey("r")) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey("r"))) { special(); }
+        setCurrentButton();
 
-        if (Input.GetMouseButtonUp(0))
-            anim.SetBool("Primary", false);
-        if (Input.GetMouseButtonUp(1))
-            anim.SetBool("Secondary", false);
-        if (Input.GetKeyUp("q"))
-            anim.SetBool("Utility", false);
-        if (Input.GetKeyUp("r"))
-            anim.SetBool("Special", false);
+        if (currentButton == primaryButton) { primary(); }
+
+        else if (currentButton == secondaryButton) { secondary(); }
+
+        else if (currentButton == utilityButton) { utility(); }
+
+        else if (currentButton == specialButton) { special(); }
+        
 
         if (primaryOnCooldown)
             updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
@@ -210,53 +213,95 @@ public class Attack : MonoBehaviour
     }
 
     #region Attacks
+    private void primaryCancel()
+    {
+        anim.ResetTrigger("Primary");
+        anim.Play("Idle");
+    }
+    private void setCurrentButton()
+    {
+        //Input.GetKeyDown(specialButton) || (character.getSpecial().canBeLooped() && Input.GetKey(specialButton)) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey("r"))
+        //Priority: Special, then Utility, then Secondary, then Primary
+
+        if (Input.GetKeyDown(specialButton) || (character.getSpecial().canBeLooped() && Input.GetKey(specialButton)) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey(specialButton)))
+            currentButton = specialButton;
+        else if (Input.GetKeyDown(utilityButton) || (character.getUtility().canBeLooped() && Input.GetKey(utilityButton)) || (!utilityOnCooldown && !anim.GetBool("Utility") && Input.GetKey(utilityButton)))
+            currentButton = utilityButton;
+        else if (Input.GetKeyDown(secondaryButton) || (character.getSecondary().canBeLooped() && Input.GetKey(secondaryButton)) || (!secondaryOnCooldown && !anim.GetBool("Secondary") && Input.GetKey(secondaryButton)))
+            currentButton = secondaryButton;
+        else if (Input.GetKeyDown(primaryButton) || (character.getPrimary().canBeLooped() && Input.GetKey(primaryButton)) ||(!primaryOnCooldown && !anim.GetBool("Primary") && Input.GetKey(primaryButton)))
+            currentButton = primaryButton;
+        else
+            currentButton = KeyCode.None;
+    }
     public void primary()
     {
+        //Debug.Log("Primary");
+        if (primaryCooldown > 0)
+        {
+            primaryOnCooldown = true;
+        }
+
         if (!primaryOnCooldown && !otherAttackActive(1))
         {
-            if (!(anim.GetBool("Primary") && character.getPrimary().directionLocked()))
+            if (!character.getPrimary().directionLocked())
             {
                 anim.SetFloat("AttackDirectionX", movement.getAim().x);
                 anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
-
-            anim.SetBool("Primary", true);
-            StartCoroutine(antiHold(character.getPrimary().canBeLooped(), 1));
         }
+
+        anim.SetTrigger("Primary");
     }
     public void secondary()
     {
-        if (!secondaryOnCooldown && !otherAttackActive(2))
+        //Debug.Log("Secondary");
+        if (!secondaryOnCooldown)
         {
-            if (!(anim.GetBool("Secondary") && character.getSecondary().directionLocked()))
+            primaryCancel();
+
+            if (secondaryCooldown > 0)
+                secondaryOnCooldown = true;
+
+            if (!character.getSecondary().directionLocked())
             {
                 anim.SetFloat("AttackDirectionX", movement.getAim().x);
                 anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
-            anim.SetBool("Secondary", true);
-            StartCoroutine(antiHold(character.getSecondary().canBeLooped(), 2));
+            anim.SetTrigger("Secondary");
         }
     }
     public void utility()
     {
-        if (!utilityOnCooldown && !otherAttackActive(3))
+        //Debug.Log("Utility");
+        if (!utilityOnCooldown)
         {
-            if (!(anim.GetBool("Utility") && character.getUtility().directionLocked()))
+            primaryCancel();
+
+            if (utilityCooldown > 0)
+                utilityOnCooldown = true;
+
+            if (!character.getUtility().directionLocked())
             {
                 anim.SetFloat("AttackDirectionX", movement.getAim().x);
                 anim.SetFloat("AttackDirectionY", movement.getAim().y);
             }
 
-            anim.SetBool("Utility", true);
-            StartCoroutine(antiHold(character.getUtility().canBeLooped(), 3));
+            anim.SetTrigger("Utility");
         }
     }
     public void special()
     {
-        if (!specialOnCooldown && !otherAttackActive(4))
+        //Debug.Log("Special");
+        if (!specialOnCooldown)
         {
-            if (!(anim.GetBool("Special") && character.getSpecial().directionLocked()))
+            primaryCancel();
+
+            if (specialCooldown > 0)
+                specialOnCooldown = true;
+
+            if (!character.getSpecial().directionLocked())
             {
                 anim.SetFloat("AttackDirectionX", movement.getAim().x);
                 anim.SetFloat("AttackDirectionY", movement.getAim().y);
@@ -265,23 +310,13 @@ public class Attack : MonoBehaviour
             if (character.name == "P_Pirate")
                 barrelUsed?.Invoke();
 
-            anim.SetBool("Special", true);
-            StartCoroutine(antiHold(character.getSpecial().canBeLooped(), 4));
+            anim.SetTrigger("Special");
         }
     }
     public void attack(Ability ability)    //Handles projectiles and buffs
     {
         if (attackCooldownBool) { return; }
-        attackCooldownBool = true;
-
-        if (ability.getSlot() == 1 && primaryCooldown > 0)
-            primaryOnCooldown = true;
-        else if (ability.getSlot() == 2 && secondaryCooldown > 0)
-            secondaryOnCooldown = true;
-        else if (ability.getSlot() == 3 && utilityCooldown > 0)
-            utilityOnCooldown = true;
-        else if (ability.getSlot() == 4 && specialCooldown > 0)
-            specialOnCooldown = true;
+        attackCooldownBool = true;            
 
         if (ability.getAttackType() == Ability.attackType.melee)
             attackMelee(ability);
@@ -352,6 +387,16 @@ public class Attack : MonoBehaviour
                 anim.SetBool("Special", false);
         }
     }
+    /*
+    private IEnumerator regularReset()
+    {
+        while (gameObject.activeInHierarchy)
+        {
+            for (int i = 0; i < 10; i++)
+                yield return new WaitForEndOfFrame();
+        }
+    }
+    */
     public void resetMove(String boolName) { anim.SetBool(boolName, false); }
 
     #region Melee Attacks
@@ -497,15 +542,21 @@ public class Attack : MonoBehaviour
     }
     #endregion
 
-    private bool otherAttackActive(int currentAttack)   //Returns true if another attack anim bool is active
+    private bool otherAttackActive(int currentAttack)   //Returns true if another attack anim bool is active, but false if the bool is the primary
     {
         if (currentAttack == 1 && (anim.GetBool("Secondary") || anim.GetBool("Utility") || anim.GetBool("Special")))
             return true;
-        else if (currentAttack == 2 && (anim.GetBool("Primary") || anim.GetBool("Utility") || anim.GetBool("Special")))
+        else if (currentAttack == 2 && (
+            //anim.GetBool("Primary") || 
+            anim.GetBool("Utility") || anim.GetBool("Special")))
             return true;
-        else if (currentAttack == 3 && (anim.GetBool("Primary") || anim.GetBool("Secondary") || anim.GetBool("Special")))
+        else if (currentAttack == 3 && (
+            //anim.GetBool("Primary") || 
+            anim.GetBool("Secondary") || anim.GetBool("Special")))
             return true;
-        else if (currentAttack == 4 && (anim.GetBool("Primary") || anim.GetBool("Secondary") || anim.GetBool("Utility")))
+        else if (currentAttack == 4 && (
+            //anim.GetBool("Primary") || 
+            anim.GetBool("Secondary") || anim.GetBool("Utility")))
             return true;
 
         return false;

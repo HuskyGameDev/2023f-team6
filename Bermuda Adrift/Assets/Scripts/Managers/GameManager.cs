@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -48,12 +49,14 @@ public class GameManager : MonoBehaviour
     }
 
     private GameState state;
-    private Player character;
+    public enum Difficulty { Easy, Medium, Hard };
+    [SerializeField] private Difficulty difficulty;
    
     private void Start()
     {
         Time.timeScale = 1;
         state = GameState.Idle;
+        AddPhysics2DRaycaster();
 
         level = 1;
         scrap = 0;
@@ -69,6 +72,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         levelUp();
+    }
+    private void AddPhysics2DRaycaster()
+    {
+        Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
+        if (physicsRaycaster == null)
+        {
+            Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+        }
+        Camera.main.GetComponent<Physics2DRaycaster>().eventMask = LayerMask.GetMask(new string[] { "Default", "Towers" });
     }
 
     public void startRound()   //Sets up everything when a round starts
@@ -195,4 +207,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    public Difficulty getDifficulty() { return difficulty; }
 }
