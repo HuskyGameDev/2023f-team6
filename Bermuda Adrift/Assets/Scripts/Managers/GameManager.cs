@@ -160,53 +160,40 @@ public class GameManager : MonoBehaviour
         onScrapCollect?.Invoke(scrap);
     }
 
-    public void setScrap(int newScrap) {
+    public void setScrap(int newScrap) 
+    {
         scrap = newScrap;
         onScrapCollect?.Invoke(scrap);
     }
 
-    public void setXP(int newXP) {
+    public void setXP(int newXP)
+    {
         XP = newXP;
         onXPCollect?.Invoke(XP, XPNeeded);
     }
 
-    public void setLevel(int newLevel)
-    {
-        level = newLevel;
-    }
+    public void setLevel(int newLevel) { level = newLevel; }
 
-    public int getScrap(){
-        return scrap;
-    }
+    public int getScrap() { return scrap; }
 
-    public int getXP(){
-        return XP;
-    }
+    public int getXP() { return XP; }
 
-    public int getLevel()
-    {
-        return level;
-    }
+    public int getLevel() { return level; }
 
-    public float getLevelScale()
-    {
-        return (float) Math.Pow(1.3, (double) getLevel() - 1);
-    }
+    public float getLevelScale() { return (float) Math.Pow(1.3, (double) getLevel() - 1); }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+    public void QuitGame() { Application.Quit(); }
 
-    public void freezeTime()
-    {
-        Time.timeScale = 0;
-    }
+    public void freezeTime() { Time.timeScale = 0; }
 
-    public void unfreezeTime()
-    {
-        Time.timeScale = 1;
-    }
+    public void unfreezeTime() { Time.timeScale = 1; }
 
     public Difficulty getDifficulty() { return difficulty; }
+
+    public void skipToRound(int round)
+    {
+        gameObject.GetComponent<EnemyManager>().setRound(round - 1);
+        foreach (AI ai in FindObjectsOfType<AI>())
+            ai.SendMessage("death");
+    }
 }

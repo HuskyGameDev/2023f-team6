@@ -135,6 +135,7 @@ public class LogbookManager : MonoBehaviour
             if (!unlockedBosses.Contains(e))
             {
                 unlockedBosses.Add(e);
+                e.setLogged(true);
 
                 Debug.Log("Added Boss: " + e.getName());
 
@@ -146,6 +147,7 @@ public class LogbookManager : MonoBehaviour
             if (!unlockedEnemies.Contains(e))
             {
                 unlockedEnemies.Add(e);
+                e.setLogged(true);
 
                 Debug.Log("Added Enemy: " + e.getName());
 
@@ -161,6 +163,7 @@ public class LogbookManager : MonoBehaviour
         if (!unlockedTowers.Contains(t))
         {
             unlockedTowers.Add(t);
+            t.setLogged(true);
 
             Debug.Log("Added Tower: " + t.getName());
 
@@ -173,6 +176,7 @@ public class LogbookManager : MonoBehaviour
         if (!unlockedCharacters.Contains(p))
         {
             unlockedCharacters.Add(p);
+            p.setLogged(true);
 
             Debug.Log("Added Character: " + p.getName());
             txtLoggedCha.GetComponent<TextMeshProUGUI>().text = unlockedCharacters.Count + " / " + allCharacters.Length;

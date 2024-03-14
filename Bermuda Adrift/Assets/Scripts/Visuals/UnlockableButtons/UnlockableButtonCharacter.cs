@@ -30,6 +30,7 @@ public class UnlockableButtonCharacter : UnlockableButtonBase
             borderImage.color = Color.white;
             backgroundImage.color = myCol;
             txt.text = player.getName();
+            FindObjectOfType<DataPersistenceManager>().getSavingData().getCharacterSave(p.name).logged = true;
         }
     }
 

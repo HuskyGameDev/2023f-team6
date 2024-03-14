@@ -28,4 +28,4 @@ MonoBehaviour:
   Name: This Shot Isn't For You
   description: Fire a piercing, high damage shot
   looped: 0
-  lockedDirection: 1
+  lockedDirection: 0

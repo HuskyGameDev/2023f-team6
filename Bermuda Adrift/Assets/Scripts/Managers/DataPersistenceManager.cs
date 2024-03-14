@@ -23,6 +23,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log(Application.persistentDataPath);
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
@@ -68,4 +69,5 @@ public class DataPersistenceManager : MonoBehaviour
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
+    public S_O_Saving getSavingData() { return savingData; }
 }

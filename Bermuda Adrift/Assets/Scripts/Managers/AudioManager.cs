@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
     public void LoadData(S_O_Saving saver)
     {
         mainSlider.value = saver.audioData.MasterVolume;
-        Debug.Log(mainSlider.value);
+        //Debug.Log(mainSlider.value);
         mainText.text = Mathf.Round(Mathf.Clamp(100 * mainSlider.value, 0f, 100f)).ToString();
         ChangeMainVolume();
 

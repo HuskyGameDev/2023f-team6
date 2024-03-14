@@ -84,7 +84,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LevelAnimations1
+  m_Name: LevelAnimations3
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -180,7 +180,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c572d8baa14f2504990c1ea2748ea5d7, type: 2}
+  m_Motion: {fileID: 7400000, guid: dacb28a4ec7f7a54da97f7151e15b341, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

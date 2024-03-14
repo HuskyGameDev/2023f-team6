@@ -30,6 +30,7 @@ public class UnlockableButtonTower : UnlockableButtonBase
             borderImage.color = Color.white;
             backgroundImage.color = myCol;
             txt.text = tower.getName();
+            FindObjectOfType<DataPersistenceManager>().getSavingData().getTowerSave(t.name).logged = true;
         }
     }
 

@@ -15,6 +15,7 @@ public class S_O_Saving
     public Locks_n_Logs TorpedoLauncher;
     public Locks_n_Logs TotemPole;
     public Locks_n_Logs TriCannon;
+    public Locks_n_Logs ShieldGenerator;
 
     public Locks_n_Logs getTowerSave(string name)
     {
@@ -26,6 +27,7 @@ public class S_O_Saving
         else if (name.CompareTo("T_TorpedoLauncher") == 0) return TorpedoLauncher;
         else if (name.CompareTo("T_TotemPole") == 0) return TotemPole;
         else if (name.CompareTo("T_TriCannon") == 0) return TriCannon;
+        else if (name.CompareTo("T_ShieldGenerator") == 0) return ShieldGenerator;
 
         Debug.Log(name + " had no matches");
         return null;
@@ -199,6 +201,7 @@ public class S_O_Saving
     #region Settings
     public AudioData audioData;
     public VideoData videoData;
+    public bool screenShake;
     #endregion
 
     #region Last-picked items
@@ -288,6 +291,7 @@ public class S_O_Saving
         #region Settings
         audioData = new AudioData();
         videoData = new VideoData();
+        screenShake = true;
         #endregion
     }
 }

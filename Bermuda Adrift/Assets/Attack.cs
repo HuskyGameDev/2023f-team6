@@ -200,7 +200,13 @@ public class Attack : MonoBehaviour
         else if (currentButton == utilityButton) { utility(); }
 
         else if (currentButton == specialButton) { special(); }
-        
+
+        if (!anim.GetBool("Locked"))
+        {
+            anim.SetFloat("AttackDirectionX", movement.getAim().x);
+            anim.SetFloat("AttackDirectionY", movement.getAim().y);
+        }
+
 
         if (primaryOnCooldown)
             updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
@@ -237,21 +243,16 @@ public class Attack : MonoBehaviour
     public void primary()
     {
         //Debug.Log("Primary");
-        if (primaryCooldown > 0)
-        {
-            primaryOnCooldown = true;
-        }
-
         if (!primaryOnCooldown && !otherAttackActive(1))
         {
-            if (!character.getPrimary().directionLocked())
-            {
-                anim.SetFloat("AttackDirectionX", movement.getAim().x);
-                anim.SetFloat("AttackDirectionY", movement.getAim().y);
-            }
-        }
+            if (primaryCooldown > 0)
+                primaryOnCooldown = true;
 
-        anim.SetTrigger("Primary");
+            if (character.getPrimary().directionLocked())
+                anim.SetBool("Locked", true);
+
+            anim.SetTrigger("Primary");
+        }
     }
     public void secondary()
     {
@@ -263,11 +264,8 @@ public class Attack : MonoBehaviour
             if (secondaryCooldown > 0)
                 secondaryOnCooldown = true;
 
-            if (!character.getSecondary().directionLocked())
-            {
-                anim.SetFloat("AttackDirectionX", movement.getAim().x);
-                anim.SetFloat("AttackDirectionY", movement.getAim().y);
-            }
+            if (character.getSecondary().directionLocked())
+                anim.SetBool("Locked", true);
 
             anim.SetTrigger("Secondary");
         }
@@ -282,11 +280,8 @@ public class Attack : MonoBehaviour
             if (utilityCooldown > 0)
                 utilityOnCooldown = true;
 
-            if (!character.getUtility().directionLocked())
-            {
-                anim.SetFloat("AttackDirectionX", movement.getAim().x);
-                anim.SetFloat("AttackDirectionY", movement.getAim().y);
-            }
+            if (character.getUtility().directionLocked())
+                anim.SetBool("Locked", true);
 
             anim.SetTrigger("Utility");
         }
@@ -301,11 +296,8 @@ public class Attack : MonoBehaviour
             if (specialCooldown > 0)
                 specialOnCooldown = true;
 
-            if (!character.getSpecial().directionLocked())
-            {
-                anim.SetFloat("AttackDirectionX", movement.getAim().x);
-                anim.SetFloat("AttackDirectionY", movement.getAim().y);
-            }
+            if (character.getSpecial().directionLocked())
+                anim.SetBool("Locked", true);
 
             if (character.name == "P_Pirate")
                 barrelUsed?.Invoke();
@@ -387,16 +379,6 @@ public class Attack : MonoBehaviour
                 anim.SetBool("Special", false);
         }
     }
-    /*
-    private IEnumerator regularReset()
-    {
-        while (gameObject.activeInHierarchy)
-        {
-            for (int i = 0; i < 10; i++)
-                yield return new WaitForEndOfFrame();
-        }
-    }
-    */
     public void resetMove(String boolName) { anim.SetBool(boolName, false); }
 
     #region Melee Attacks
@@ -523,21 +505,33 @@ public class Attack : MonoBehaviour
         {
             primaryOnCooldown = false;
             anim.SetBool("Primary", false);
+
+            if (character.getPrimary().directionLocked())
+                anim.SetBool("Locked", false);
         }
         else if (type == 1)
         {
             secondaryOnCooldown = false;
             anim.SetBool("Secondary", false);
+
+            if (character.getSecondary().directionLocked())
+                anim.SetBool("Locked", false);
         }
         else if (type == 2)
         {
             utilityOnCooldown = false;
             anim.SetBool("Utility", false);
+
+            if (character.getUtility().directionLocked())
+                anim.SetBool("Locked", false);
         }
         else if (type == 3)
         {
             specialOnCooldown = false;
             anim.SetBool("Special", false);
+
+            if (character.getSpecial().directionLocked())
+                anim.SetBool("Locked", false);
         }
     }
     #endregion

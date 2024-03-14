@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
 {
+    bool screenShakeEnabled;
     public void cameraShake(float magnitude) { StartCoroutine(camShake(magnitude)); }   //0.25f seems to be a good magnitude. More magnitude = stronger shakes
     private IEnumerator camShake(float magnitude)   //Moves the camera left, right, up, and down (in that order) by magnitude then back to original position
     {
@@ -29,4 +30,6 @@ public class CameraEffects : MonoBehaviour
 
         transform.Translate(Vector3.up * magnitude);
     }
+
+    public void setEnabled(bool enabled) { screenShakeEnabled = enabled; }
 }

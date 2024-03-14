@@ -31,7 +31,11 @@ public class AnimationHandler : MonoBehaviour
         Centerpiece.onClicked += upgradeMenu_SlideIn;
         Barriers.onClicked += upgradeMenu_SlideIn;
         LevelGUIManager.OnLevelUpOpen += levelUpScreen_SlideIn;
+        LevelGUIManager.OnLevelUpOpen1Option += levelUpScreen_SlideIn1;
+        LevelGUIManager.OnLevelUpOpen2Options += levelUpScreen_SlideIn2;
         LevelGUIManager.OnLevelUpClose += levelUpScreen_SlideOut;
+        LevelGUIManager.OnLevelUpClose1Option += levelUpScreen_SlideOut1;
+        LevelGUIManager.OnLevelUpClose2Options += levelUpScreen_SlideOut2;
     }
 
     private void OnDisable()
@@ -52,11 +56,11 @@ public class AnimationHandler : MonoBehaviour
     {
         buyMenu.Play("BuyMenu_SlideIn");
     }
-
     void BuyMenu_SlideOut()
     {
         buyMenu.Play("BuyMenu_SlideOut");
     }
+
     void upgradeMenu_SlideIn(GameObject go) 
     {
         onUpgradeOpened?.Invoke(go.GetComponent<TowerAI>());
@@ -93,6 +97,7 @@ public class AnimationHandler : MonoBehaviour
             upgradeMenu.Play("SlideOut");
         }
     }
+    
     void tooltipsPopup()
     {
         if (!tooltipOnScreen)
@@ -110,14 +115,12 @@ public class AnimationHandler : MonoBehaviour
         }
     }
 
-    void levelUpScreen_SlideIn()
-    {
-        StartCoroutine(levelUp_SlideIn());
-    }
-    void levelUpScreen_SlideOut()
-    {
-        StartCoroutine(levelUp_SlideOut());
-    }
+    void levelUpScreen_SlideIn() { StartCoroutine(levelUp_SlideIn()); }
+    void levelUpScreen_SlideIn1() { StartCoroutine(levelUp_SlideIn1()); }
+    void levelUpScreen_SlideIn2() { StartCoroutine(levelUp_SlideIn2()); }
+    void levelUpScreen_SlideOut() { StartCoroutine(levelUp_SlideOut()); }
+    void levelUpScreen_SlideOut1() { StartCoroutine(levelUp_SlideOut1()); }
+    void levelUpScreen_SlideOut2() { StartCoroutine(levelUp_SlideOut2()); }
     private IEnumerator levelUp_SlideIn()
     {
         gameObject.GetComponent<GameManager>().freezeTime();
@@ -131,6 +134,23 @@ public class AnimationHandler : MonoBehaviour
 
         levelUpCard3.Play("SlideIn");
     }
+    private IEnumerator levelUp_SlideIn1()
+    {
+        gameObject.GetComponent<GameManager>().freezeTime();
+
+        yield return new WaitForEndOfFrame();
+
+        levelUpCard2.Play("SlideIn");
+    }
+    private IEnumerator levelUp_SlideIn2()
+    {
+        gameObject.GetComponent<GameManager>().freezeTime();
+        levelUpCard1.Play("SlideInMid");
+
+        yield return new WaitForSecondsRealtime(0.25f);
+
+        levelUpCard2.Play("SlideInMid");
+    }
     private IEnumerator levelUp_SlideOut()
     {
         gameObject.GetComponent<GameManager>().unfreezeTime();
@@ -143,5 +163,22 @@ public class AnimationHandler : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         levelUpCard3.Play("SlideOut");
+    }
+    private IEnumerator levelUp_SlideOut1()
+    {
+        gameObject.GetComponent<GameManager>().unfreezeTime();
+
+        yield return new WaitForEndOfFrame();
+
+        levelUpCard2.Play("SlideOut");
+    }
+    private IEnumerator levelUp_SlideOut2()
+    {
+        gameObject.GetComponent<GameManager>().unfreezeTime();
+        levelUpCard1.Play("SlideOutMid");
+
+        yield return new WaitForSeconds(0.25f);
+
+        levelUpCard2.Play("SlideOutMid");
     }
 }

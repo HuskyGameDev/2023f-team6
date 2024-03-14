@@ -40,6 +40,7 @@ public class UnlockableButtonEnemy : UnlockableButtonBase
             borderImage.color = Color.white;
             backgroundImage.color = myCol;
             txt.text = e.getName();
+            FindObjectOfType<DataPersistenceManager>().getSavingData().getEnemySave(e.name).logged = true;
         }
     }
 

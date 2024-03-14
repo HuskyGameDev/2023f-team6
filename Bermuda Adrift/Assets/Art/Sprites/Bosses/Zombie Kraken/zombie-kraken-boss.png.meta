@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0e67e2bf5a56414986598740cf8baea
-      internalID: 114395884
+      spriteID: dd36829df96ff8540beb0b89eaa49c55
+      internalID: 1800353384
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e7034a07525cff49a5b75f545ef1c9d
-      internalID: -1089894651
+      spriteID: a7962ba8ddbb9fc4f92380780471cfd0
+      internalID: -603481780
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c4a9a2867b423843926962de8f8aa6a
-      internalID: -102265989
+      spriteID: c13b6b92c89bb8347a5f74ef629f55e6
+      internalID: -357355843
       vertices: []
       indices: 
       edges: []
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bf854bb064aae14ea22983320d50820
-      internalID: 718655503
+      spriteID: fd21b4a9656ebab43870baf9d120cc02
+      internalID: -1195788601
       vertices: []
       indices: 
       edges: []
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fb852d668b51aa43b236372199ba9ad
-      internalID: -672713678
+      spriteID: 381d5e04cf3c0384082d2f21fc506d34
+      internalID: -1834236452
       vertices: []
       indices: 
       edges: []
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0313887bdc4d70c448b1a6176159d5ea
-      internalID: 2129943407
+      spriteID: 180ac7e4e55d35e49a0380d48eba9b78
+      internalID: -1327470482
       vertices: []
       indices: 
       edges: []
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c09707994f9d19f4abf81cd9d38b5737
-      internalID: -276859017
+      spriteID: f3161e11480b9bd4a9fee5dd2b03f332
+      internalID: -405948241
       vertices: []
       indices: 
       edges: []
@@ -271,8 +271,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75d4288217ab4f8449e613817237d6df
-      internalID: 1386609321
+      spriteID: c7c1e01df530fa341a72af6cbd40122d
+      internalID: -339426811
       vertices: []
       indices: 
       edges: []
@@ -292,8 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d90639af5de9ec240ae51ed239ccccdb
-      internalID: -1752155905
+      spriteID: 03fa3909f3e8e18458c3403e42304a14
+      internalID: -548511382
       vertices: []
       indices: 
       edges: []
@@ -313,8 +313,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 592ed366d1537ac4aa0a03603024b0c3
-      internalID: 781554621
+      spriteID: 6ae62023fa1ac2d48bf8d8457212a09f
+      internalID: -394688298
       vertices: []
       indices: 
       edges: []
@@ -334,8 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26ce7be47745b08468f5f7687525fc90
-      internalID: -1865533260
+      spriteID: 70eb0720dcd684c4eac7a164dd9e85a5
+      internalID: 868934189
       vertices: []
       indices: 
       edges: []
@@ -355,8 +355,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c0200978de1ca542850e59056b5cc0e
-      internalID: -1838390845
+      spriteID: 5d654f16ff6f54d4c85676d28e2ea093
+      internalID: -158454918
       vertices: []
       indices: 
       edges: []
@@ -372,18 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      zombie-kraken-boss_0: 114395884
-      zombie-kraken-boss_1: -1089894651
-      zombie-kraken-boss_10: -1865533260
-      zombie-kraken-boss_11: -1838390845
-      zombie-kraken-boss_2: -102265989
-      zombie-kraken-boss_3: 718655503
-      zombie-kraken-boss_4: -672713678
-      zombie-kraken-boss_5: 2129943407
-      zombie-kraken-boss_6: -276859017
-      zombie-kraken-boss_7: 1386609321
-      zombie-kraken-boss_8: -1752155905
-      zombie-kraken-boss_9: 781554621
+      zombie-kraken-boss_0: 1800353384
+      zombie-kraken-boss_1: -603481780
+      zombie-kraken-boss_10: 868934189
+      zombie-kraken-boss_11: -158454918
+      zombie-kraken-boss_2: -357355843
+      zombie-kraken-boss_3: -1195788601
+      zombie-kraken-boss_4: -1834236452
+      zombie-kraken-boss_5: -1327470482
+      zombie-kraken-boss_6: -405948241
+      zombie-kraken-boss_7: -339426811
+      zombie-kraken-boss_8: -548511382
+      zombie-kraken-boss_9: -394688298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

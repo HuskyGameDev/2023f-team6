@@ -13,6 +13,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
 
     int raftSelected;
     bool resettingScene;
+    bool screenShake;
 
     #region Setup
     private void OnEnable()
@@ -53,6 +54,8 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
         FindObjectOfType<BuildManager>().setBarrier1(barrier1);
         FindObjectOfType<BuildManager>().setBarrier2(barrier2);
         FindObjectOfType<BuildManager>().reloadBuyables();
+
+        Camera.main.GetComponent<CameraEffects>().setEnabled(screenShake);
     }
 
     public void setRaft(int raft)
@@ -79,17 +82,15 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
         }
         barrier2 = barrier;
     }
-
-    bool noScreenShake;
-    public void setScreenShake(bool screenShake) { noScreenShake = screenShake; }
-    public bool getScreenShake() { return noScreenShake; }
+    public void setScreenShake(bool screenShake) { this.screenShake = screenShake; }
+    public bool getScreenShake() { return screenShake; }
 
     public void LoadData(S_O_Saving saver)
     {
         foreach (Player player in characterChoices)
-        {
             player.setUnlock(saver.getCharacterSave(player.name).unlocked);
-        }
+
+        setScreenShake(saver.screenShake);
     }
 
     public void SaveData(S_O_Saving saver)
