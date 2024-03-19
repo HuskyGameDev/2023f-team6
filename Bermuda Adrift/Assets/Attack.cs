@@ -59,12 +59,11 @@ public class Attack : MonoBehaviour
     {
         movement = gameObject.GetComponent<Movement>();
         anim = gameObject.GetComponent<Animator>();
-
-        if (GameObject.FindAnyObjectByType<SettingsTracker>() == null)
-            setCharacter(character);
     }
     private void setCharacter(Player playerData)
     {
+        anim = anim = gameObject.GetComponent<Animator>();
+
         character = playerData;
         anim.runtimeAnimatorController = playerData.getAnim();
 
@@ -226,7 +225,6 @@ public class Attack : MonoBehaviour
     }
     private void setCurrentButton()
     {
-        //Input.GetKeyDown(specialButton) || (character.getSpecial().canBeLooped() && Input.GetKey(specialButton)) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey("r"))
         //Priority: Special, then Utility, then Secondary, then Primary
 
         if (Input.GetKeyDown(specialButton) || (character.getSpecial().canBeLooped() && Input.GetKey(specialButton)) || (!specialOnCooldown && !anim.GetBool("Special") && Input.GetKey(specialButton)))
@@ -250,6 +248,8 @@ public class Attack : MonoBehaviour
 
             if (character.getPrimary().directionLocked())
                 anim.SetBool("Locked", true);
+            else
+                anim.SetBool("Locked", false);
 
             anim.SetTrigger("Primary");
         }
@@ -380,6 +380,7 @@ public class Attack : MonoBehaviour
         }
     }
     public void resetMove(String boolName) { anim.SetBool(boolName, false); }
+    public void unlockDirection() { anim.SetBool("Locked", false); }
 
     #region Melee Attacks
     int getDirection() 

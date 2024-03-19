@@ -8,6 +8,7 @@ public class ShaderManager : MonoBehaviour
     [SerializeField] private GameObject rain;
     [SerializeField] private Material normalWater;
     [SerializeField] private Material bloodWater;
+    [SerializeField] private Material shadowWater;
     [SerializeField] private GameObject water;
 
     private void Update()
@@ -24,5 +25,9 @@ public class ShaderManager : MonoBehaviour
     {
         rain.SetActive(false);
         water.GetComponent<TilemapRenderer>().material = normalWater;
+    }
+    public void finalBossRound()
+    {
+        water.GetComponent<TilemapRenderer>().material = shadowWater;
     }
 }

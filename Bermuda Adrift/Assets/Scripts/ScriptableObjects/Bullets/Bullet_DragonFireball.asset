@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccbc839cd9a6914981023d5bb1f1514, type: 3}
+  m_Name: Bullet_DragonFireball
+  m_EditorClassIdentifier: 
+  projectileSpeed: 40
+  damage: 10
+  AOE: 0
+  effect: 0
+  scale: 1
+  timer: -1
+  animator: {fileID: 9100000, guid: 54f622b27ead3a14a88a9d4a0d2700dc, type: 2}
+  FriendlyFire: 1
+  Homing: 0
+  debuff: {fileID: 0}
+  pierce: 0
+  AOETimer: -1
+  UnderwaterDamage: 1
+  AirborneDamage: 1
+  types: []
+  bulletTrail: {fileID: 0}

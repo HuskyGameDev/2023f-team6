@@ -32,6 +32,7 @@ public class AI : MonoBehaviour
     private bool stop;
     private bool dead;
     private bool forgotten = false;
+    private float wall;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
@@ -77,11 +78,6 @@ public class AI : MonoBehaviour
             newMaxHealth = Health;
         }
 
-        if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
-            StartCoroutine(Buffs());
-        else if (extra != null && extra.name == "Bullet_EnemyBullet" && bullet != null)
-            StartCoroutine(Bullets());
-
         if (enemy.getAvailableAttacks().Length > 0)
             StartCoroutine(randomAttacks());
 
@@ -91,6 +87,7 @@ public class AI : MonoBehaviour
         {
             airborne = true;
             Destroy(seeker);
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
         }
         else
         {
@@ -105,6 +102,7 @@ public class AI : MonoBehaviour
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy
         animator = gameObject.GetComponent<Animator>();
         debuffs = new Buffs[10];
+        wall = 1;
     }
     void Update()   //Temp buttons, move, and check if the enemy has arrived at the center
     {
@@ -126,7 +124,6 @@ public class AI : MonoBehaviour
             }
         }
     }
-
     private void setEliteEnemy(Enemy newEnemy)
     {
         Debug.Log("Elite Spawned: " + enemy.getName());
@@ -137,7 +134,8 @@ public class AI : MonoBehaviour
         enemy = newEnemy;
         debuffs = new Buffs[10];
 
-        Health = (int)(enemy.getHealth() * enemyManager.getRoundScale() * 1.25f);   //More Health
+        //Health = (int)(enemy.getHealth() * enemyManager.getRoundScale() * 1.25f);   //More Health
+        Health = (int)(enemy.getHealth() * enemyManager.getRoundScale());   //Not more Health
         newMaxHealth = Health;
         gameObject.GetComponent<Animator>().runtimeAnimatorController = enemy.getAnim();
         debuffToInflict = enemy.getDefuff();
@@ -157,11 +155,6 @@ public class AI : MonoBehaviour
             Health = (int)(enemy.getHealth() * Mathf.Pow(1.25f, enemyManager.getRound() / 10f) * 1.25f);    //Extra health
             newMaxHealth = Health;
         }
-
-        if (extra != null && extra.name == "Buff_EnemyBuff" && debuffToInflict != null)
-            StartCoroutine(Buffs());
-        else if (extra != null && extra.name == "Bullet_EnemyBullet" && bullet != null)
-            StartCoroutine(Bullets());
 
         if (enemy.getAvailableAttacks().Length > 0)
             StartCoroutine(randomAttacks());
@@ -202,7 +195,7 @@ public class AI : MonoBehaviour
         if (!stop)
         {
             Vector3 direction = (currentWaypointPosition - transform.position).normalized;
-            gameObject.transform.position += direction * speed * Time.deltaTime * 0.5f * getSpeedMult();
+            gameObject.transform.position += direction * speed * Time.deltaTime * 0.5f * getSpeedMult() * wall;
 
             float distance = Vector2.Distance(transform.position, currentWaypointPosition);
 
@@ -233,6 +226,8 @@ public class AI : MonoBehaviour
 
         StartCoroutine(attack(FindObjectOfType<Centerpiece>().gameObject));
     }
+    public void Stop() { stop = true; }
+    public void Go() { stop = false; }
     #endregion
 
     #region Attack loop
@@ -248,6 +243,7 @@ public class AI : MonoBehaviour
 
             if ( (float) Health / newMaxHealth < enemy.phase2TriggerHealth())
             {
+                animator.SetTrigger("Phase Change");
                 foreach (Enemy.Attack a in enemy.getPhase2Attacks())
                     availableAttacks.Add(a);
             }
@@ -255,7 +251,6 @@ public class AI : MonoBehaviour
             if (gameObject.activeInHierarchy)
             {
                 int chosenIndex = Random.Range(0, availableAttacks.Count);
-                Debug.Log("Chosen: " + chosenIndex + " / " + availableAttacks.Count);
                 Enemy.Attack chosenAttack = availableAttacks[chosenIndex];
 
                 if (!stop)
@@ -263,37 +258,93 @@ public class AI : MonoBehaviour
             }
         }
     }
-
     void interpretAttack(Enemy.Attack attack)
     {
         Debug.Log(attack);
+
         if (attack == Enemy.Attack.Minions)
-            StartCoroutine(Minions());
+        {
+            if (animExists("Minions"))
+                animator.SetTrigger("Minions");
+            else
+                StartCoroutine(Minions());
+        }
 
         if (attack == Enemy.Attack.Resurface)
-            StartCoroutine(Resurface());
+        {
+            if (animExists("Resurface"))
+                animator.SetTrigger("Resurface");
+            else
+                StartCoroutine(Resurface());
+        }
 
         if (attack == Enemy.Attack.Heal)
-            StartCoroutine(Heal());
+        {
+            if (animExists("Heal"))
+                animator.SetTrigger("Heal");
+            else
+                StartCoroutine(Heal());
+        }
 
-        if (attack == Enemy.Attack.Projectile)  //Still needs work
-            StartCoroutine(Bullets());
-
-        if (attack == Enemy.Attack.AOEBuff) //Still needs work
-            StartCoroutine(Buffs());
+        if (attack == Enemy.Attack.Projectile)
+        {
+            if (animExists("Projectile"))
+                animator.SetTrigger("Projectile");
+            else
+                StartCoroutine(Bullets());
+        }
 
         if (attack == Enemy.Attack.Lightning)
-            LightningStrike();
+        {
+            if (animExists("Lightning"))
+                animator.SetTrigger("Lightning");
+            else
+                StartCoroutine(LightningStrike());
+        }
 
+        if (attack == Enemy.Attack.Wall)
+        {
+            if (animExists("Wall"))
+                animator.SetTrigger("Wall");
+            else
+                StartCoroutine(Wall());
+        }
+
+        if (attack == Enemy.Attack.Jump)
+        {
+            if (animExists("Jump"))
+                animator.SetTrigger("Jump");
+            else
+                StartCoroutine(Jump());
+        }
+    }
+    bool animExists(string name)    //Returns true if an animation state exists in the animator
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
+    #region Attack Coroutines
     IEnumerator Minions()   //Summon minions behind it
     {
-        Debug.Log("Minions");
-        stop = true;    //Stop while spawning
-        int total = enemyManager.getRound() / 10 + 2;  //start with 3 minions + 1 more every 10 rounds
+        animator.SetTrigger("Minions");
 
-        if (gameObject.transform.position.x < -4)   //Spawns the enemies behind itself, so different relative positions depending on what side of the screen they're on
+        stop = true;    //Stop while spawning
+
+        int total;
+        if (enemyManager.getRound() < 80)
+            total = enemyManager.getRound() / 10 + 2;  //start with 3 minions + 1 more every 10 rounds
+        else
+            total = 10;
+
+        if (gameObject.transform.position.x < 0)   //Spawns the enemies behind itself, so different relative positions depending on what side of the screen they're on
         {
             for (int i = 0; i < total; i++)
             {
@@ -312,7 +363,7 @@ public class AI : MonoBehaviour
                 }
             }
         }
-        else if (gameObject.transform.position.x > 4)   //Right side of the screen
+        else if (gameObject.transform.position.x > 0)   //Right side of the screen
         {
             for (int i = 0; i < total; i++)
             {
@@ -336,17 +387,17 @@ public class AI : MonoBehaviour
     }
     IEnumerator Resurface() //Dive underwater and reappear at a random spot on the other side of the screen. Could come up really far away, could come up really close
     {
-        Debug.Log("Resurface");
+        animator.SetTrigger("Resurface");
         stop = true;    //Stop to dive under
+
         if (gameObject.transform.position.x < 0)    //Start on left side
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;   //Can't be shot while underwater
-            //Play going-under animation
             yield return new WaitForSeconds(1f);
             gameObject.transform.position = new Vector3(Random.Range(8f, 20f), Random.Range(-10f, 10f));    //Pick random spot on right side of screen
             nearestEntrance();  //Switch the goal to the entrance that's nearest now
             yield return new WaitForSeconds(1f);
-            //Play coming up animation
+
             gameObject.GetComponent<BoxCollider2D>().enabled = true;    //can now be shot again
         }
         else  //Start on Right Side
@@ -360,13 +411,14 @@ public class AI : MonoBehaviour
             //Play coming up animation
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
-        updatePath();
+        if (gameObject.GetComponent<Seeker>() != null)
+            updatePath();
 
         stop = false;   //Resume going towards raft
     }
     IEnumerator Heal()  //Heal 10% of their current health
     {
-        Debug.Log("Heal");
+        animator.SetTrigger("Heal");
         stop = true;    //Stop to heal
         yield return new WaitForSeconds(1f);
 
@@ -380,50 +432,172 @@ public class AI : MonoBehaviour
 
         stop = false;   //Resume
     }
-    IEnumerator Buffs()
-    {
-        Debug.Log("AOE Buff");
-
-        stop = true;
-
-        Buffs buff = debuffToInflict;
-           
-        yield return new WaitForSeconds(enemy.getAttackSpeed() * getAttackSpeed() * 2f);
-
-        var effect = Instantiate(extra, gameObject.transform.position, Quaternion.identity);
-        effect.SendMessage("setBuff", buff);
-        //effect.SendMessage("setRadius", 4);
-
-        yield return new WaitForSeconds(1f);
-        Destroy(effect);
-
-        stop = false;
-    }
     IEnumerator Bullets()
     {
-        Debug.Log("Projectiles");
         stop = true;
 
         yield return new WaitForSeconds(1);
+        animator.SetTrigger("Projectile");
 
-        Vector3 offset = Vector3.zero - transform.position;
+        Vector3 offset = FindObjectOfType<Centerpiece>().transform.position - transform.position;
         Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
         var boolet = Instantiate(extra, gameObject.transform.position, Quaternion.Euler(output.eulerAngles - (output.eulerAngles / 2)));
         boolet.SendMessage("setBullet", bullet);
 
         stop = false;
     }
-    void LightningStrike()
+    IEnumerator LightningStrike()
+    {
+        stop = true;
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(strike());
+
+        stop = false;
+    }
+    IEnumerator strike()
     {
         TowerAI target = FindObjectOfType<BuildManager>().getTowerOfType("Lightning Rod");
+
+        animator.SetTrigger("Lightning");
 
         if (target == null)
         {
             target = FindObjectOfType<BuildManager>().getRandomTower();
         }
 
+        if (target == null)
+            yield break;
+
+        GameObject lightningBolt = GameObject.Find("Lightning");
+
+        lightningBolt.transform.position = target.transform.position;
         target.SendMessage("lightningStrike", 5f);
+
+        for (int i = 0; i < 5; i++)
+            lightningBolt.transform.GetChild(i).gameObject.SetActive(false);
+
+
+        lightningBolt.transform.GetChild(0).gameObject.SetActive(false);
+        for (int i = 1; i < 5; i++)
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+
+            lightningBolt.transform.GetChild(i - 1).gameObject.SetActive(false);
+            lightningBolt.transform.GetChild(i).gameObject.SetActive(true);
+        }
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        for (int i = 0; i < 5; i++)
+            lightningBolt.transform.GetChild(i).gameObject.SetActive(false);
     }
+    IEnumerator Wall()
+    {
+        wall = 0f;
+
+        animator.SetTrigger("Wall");
+        yield return new WaitForSeconds(5f);
+
+        wall = 1f;
+    }
+    IEnumerator Jump()
+    {
+        wall = 5f;
+
+        animator.SetTrigger("Jump");
+        yield return new WaitForSeconds(5f);
+
+        wall = 1f;
+    }
+    #endregion
+
+    #region Direct Attacks
+    public void MinionAttack() //Summons 2 minions
+    {
+        if (gameObject.transform.position.x < 0)
+        {
+            var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);   //Maybe an animation for when they get summoned?
+            minion.SendMessage("setEnemy", enemy.getMinion());
+            enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
+
+
+            minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + -5), Quaternion.identity);
+            minion.SendMessage("setEnemy", enemy.getMinion());
+            enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
+        }
+        else
+        {
+            var minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + 5), Quaternion.identity);   //Maybe an animation for when they get summoned?
+            minion.SendMessage("setEnemy", enemy.getMinion());
+            enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
+
+
+            minion = Instantiate(prefab, new Vector3(gameObject.transform.position.x + 5, gameObject.transform.position.y + -5), Quaternion.identity);
+            minion.SendMessage("setEnemy", enemy.getMinion());
+            enemyManager.newEnemies(); //Let the Enemy manager know more enemies are being spawned
+        }
+    }
+    public void ResurfaceAttackPt1()   //Disable Hitbox
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;   //Can't be shot while underwater
+    }
+    public void ResurfaceAttackPt2()   //Enable hitbox and move
+    {
+        if (gameObject.transform.position.x < 0)
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            gameObject.transform.position = new Vector3(Random.Range(8f, 20f), Random.Range(-10f, 10f));    //Pick random spot on right side of screen
+            nearestEntrance();
+        }
+        else
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            gameObject.transform.position = new Vector3(Random.Range(-20f, -8f), Random.Range(-10f, 10f));  //Random spot on left side of the screen
+            nearestEntrance();
+        }
+        updatePath();
+    }
+    public void HealAttack()
+    {
+        int toHeal = (int)(Health * 0.1f);
+        OnEnemyHurt?.Invoke(-toHeal);
+        Health += toHeal; //Is 10% of their current health more balanced or their max health? The max health is always going to be more than what the current health will heal, but is that a good or bad thing?
+        if (Health > enemy.getHealth()) //To prevent overhealing (or maybe we'd want them to be able to do that?
+            Health = enemy.getHealth();
+    }
+    public void ProjectileAttack()
+    {
+        Vector3 offset = FindObjectOfType<Centerpiece>().transform.position - transform.position;
+        Quaternion output = Quaternion.LookRotation(Vector3.forward, offset).normalized;
+        var boolet = Instantiate(extra, gameObject.transform.position, Quaternion.Euler(output.eulerAngles - (output.eulerAngles / 2)));
+        boolet.SendMessage("setBullet", bullet);
+    }
+    public void LightningStrikeAttack()
+    {
+        StartCoroutine(strike());
+    }
+    public void WallStart() { wall = 0f; }
+    public void WallEnd() { wall = 1; }
+    public void JumpStart() { wall = 5; }
+    public void JumpEnd() { wall = 1; }
+    #endregion
+
     #endregion
 
     #region Goal Setters
@@ -490,8 +664,8 @@ public class AI : MonoBehaviour
     {
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
 
-        Health -= (int) (moreDamage * getArmor());
-        damage += (int) (moreDamage * getArmor());
+        Health -= (int) (moreDamage * getArmor() * wall);
+        damage += (int) (moreDamage * getArmor() * wall);
         animator.SetTrigger("TookDamage");
 
         //if (enemy.getType() == Enemy.Types.WaterBoss)
@@ -500,7 +674,7 @@ public class AI : MonoBehaviour
         //Debug.Log("Normal: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
 
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
-            OnEnemyHurt?.Invoke((int)(moreDamage * getArmor()));
+            OnEnemyHurt?.Invoke((int)(moreDamage * getArmor() * wall));
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
@@ -509,12 +683,12 @@ public class AI : MonoBehaviour
     {
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
 
-        Health -= (int)(moreDamage * getArmor());
-        damage += (int)(moreDamage * getArmor());
+        Health -= (int)(moreDamage * getArmor() * wall);
+        damage += (int)(moreDamage * getArmor() * wall);
         animator.SetTrigger("TookDamage");
 
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
-            OnCrit?.Invoke((int)(moreDamage * getArmor()));
+            OnCrit?.Invoke((int)(moreDamage * getArmor() * wall));
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
@@ -530,7 +704,7 @@ public class AI : MonoBehaviour
         //Debug.Log("Status: -" + moreDamage + " => " + Health + " / " + enemy.getHealth());
 
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
-            OnStatusDamage?.Invoke((int)(moreDamage * getArmor()), color);
+            OnStatusDamage?.Invoke(moreDamage, color);
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
@@ -590,7 +764,7 @@ public class AI : MonoBehaviour
     }
     #endregion
 
-    public Vector3 getGoal() { return nearestEntrance(); } //Only used in the directional animation script
+    public Vector3 getGoal() { return FindObjectOfType<Centerpiece>().transform.position; } //Only used in the directional animation script
 
     private void Barrier(GameObject barrier) //Goes into attacking mode until the barrier is destroyed
     {

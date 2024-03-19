@@ -17,7 +17,7 @@ MonoBehaviour:
   Name: Hamster
   description: Is a hamster
   pageNumber: 0
-  Health: 70
+  Health: 50
   Damage: 0
   Speed: 1
   attackSpeed: 1
@@ -35,7 +35,7 @@ MonoBehaviour:
   minion: {fileID: 0}
   bossWarning: 
   bossApproaching: 
-  availableAttacks: 
+  availableAttacks: 08000000
   phase2switch: 0
   Phase2ExtraAttacks: 
   logged: 0

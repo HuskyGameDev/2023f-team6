@@ -103,7 +103,10 @@ public class Movement : MonoBehaviour
     }
     public void Stop() { stop = 0.25f; }
     public void fullStop() { stop = 0f; }
-    public void resume() { stop = 1; }
+    public void resume() 
+    { 
+        stop = 1;
+    }
 
 
     public void buff(Buffs buff) 

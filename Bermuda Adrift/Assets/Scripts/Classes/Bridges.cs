@@ -13,6 +13,10 @@ public class Bridges : MonoBehaviour
     {
         GameManager.onRoundEnd += opaque;
     }
+    private void OnDisable()
+    {
+        GameManager.onRoundEnd -= opaque;
+    }
 
     // Start is called before the first frame update
     void Start()

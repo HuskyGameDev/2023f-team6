@@ -20,6 +20,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private Enemy[] allEnemies;
     [SerializeField] private Enemy[] Bosses;
+    [SerializeField] private Enemy theMaestro;
 
     private List<Enemy> enemySet;
 
@@ -74,6 +75,9 @@ public class EnemyManager : MonoBehaviour
         {
             total = Round / 100 + 1;  //Only spawns 1 boss. After Round 100 start spawning 2, then 3 on round 200, etc
 
+            if (Round == 100)
+                total = 1;
+
             //int i = (Round - 10) / 10;    //If we wanted to go in a specific order through the bosses
 
 
@@ -119,6 +123,16 @@ public class EnemyManager : MonoBehaviour
         }
 
         allEnemiesSpawned?.Invoke(total);
+    }
+    public void summonFinalBoss()
+    {
+        BroadcastMessage("finalBossRound");
+
+        var boss = Instantiate(prefab, new Vector3(posNeg() * leftBound(), Random.Range(lowerBound(), -lowerBound())), Quaternion.identity);    //Creates boss enemy on left or right of the screen
+
+        boss.SendMessage("setEnemy", theMaestro);  //Spawn final boss
+
+        total = 1;
     }
     private int randomEnemy()   //Chooses a random enemy from the enemySet based on the rarity. Actual rarity is slightly different than the rarity in the enemy file
     {

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_Whale
+  m_EditorClassIdentifier: 
+  Type: 2
+  specialType: 0
+  Name: Whale
+  description: 
+  pageNumber: 0
+  Health: 5000
+  Damage: 5
+  Speed: 0.5
+  attackSpeed: 1
+  sprite: {fileID: 2044264688, guid: b9a816b95668d964aa4b76b689b1593b, type: 3}
+  xp: 10000
+  scrap: 10000
+  rarity: 0
+  roundLimit: 0
+  anim: {fileID: 9100000, guid: 164d6a72019d73f499a7c705dfc6e6af, type: 2}
+  xSize: 16
+  ySize: 3
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
+  minion: {fileID: 0}
+  bossWarning: 
+  bossApproaching: 
+  availableAttacks: 
+  phase2switch: 0
+  Phase2ExtraAttacks: 
+  logged: 0

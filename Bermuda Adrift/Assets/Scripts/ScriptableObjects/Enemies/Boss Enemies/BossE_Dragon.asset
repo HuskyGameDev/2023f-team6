@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_Dragon
+  m_EditorClassIdentifier: 
+  Type: 2
+  specialType: 0
+  Name: Dragon
+  description: 
+  pageNumber: 0
+  Health: 4000
+  Damage: 50
+  Speed: 1
+  attackSpeed: 1
+  sprite: {fileID: 508816844, guid: ea0c7c35b9b71af46b52c77fc2fe05df, type: 3}
+  xp: 10000
+  scrap: 10000
+  rarity: 0.01
+  roundLimit: 0
+  anim: {fileID: 9100000, guid: 4269026e7fb572e448df6296b382b9e8, type: 2}
+  xSize: 8
+  ySize: 3
+  debuff: {fileID: 0}
+  extra: {fileID: 2066208556199720336, guid: e2f1f3fc2ba2683428f550c057f95699, type: 3}
+  bullet: {fileID: 11400000, guid: 1b21f0f9f7f2b084aaa67e91aeb313a6, type: 2}
+  minion: {fileID: 0}
+  bossWarning: 
+  bossApproaching: 
+  availableAttacks: 03000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 
+  logged: 0

@@ -57,12 +57,14 @@ public class S_O_Saving
     public Locks_n_Logs Pirate;
     public Locks_n_Logs Pilot;
     public Locks_n_Logs Old_Man;
+    public Locks_n_Logs Cultist;
 
     public Locks_n_Logs getCharacterSave(string name)
     {
         if (name.CompareTo("P_Pirate") == 0) return Pirate;
         else if (name.CompareTo("P_Pilot") == 0) return Pilot;
         else if (name.CompareTo("P_OldMan") == 0) return Old_Man;
+        else if (name.CompareTo("P_Cultist") == 0) return Cultist;
 
         Debug.Log("No matches for " + name);
         return null;
@@ -95,10 +97,17 @@ public class S_O_Saving
     public Locks_n_Logs Shark;
     public Locks_n_Logs Swordfish;
     public Locks_n_Logs Turtle;
+    public Locks_n_Logs Parrot;
 
     public Locks_n_Logs Sea_Serpent;
     public Locks_n_Logs Kraken;
     public Locks_n_Logs Shadow_Self;
+    public Locks_n_Logs Davy_Jones_Locker;
+    public Locks_n_Logs Ghost_Ship;
+    public Locks_n_Logs Megalodon;
+    public Locks_n_Logs Roc;
+    public Locks_n_Logs Whale;
+    public Locks_n_Logs The_Maestro;
 
     public Locks_n_Logs getEnemySave(string name)
     {
@@ -115,9 +124,17 @@ public class S_O_Saving
         if (name.CompareTo("E_Shark") == 0) return Shark;
         if (name.CompareTo("E_Swordfish") == 0) return Swordfish;
         if (name.CompareTo("E_Turtle") == 0) return Turtle;
+        if (name.CompareTo("E_Parrot") == 0) return Parrot;
+
         if (name.CompareTo("BossE_Serpent") == 0) return Sea_Serpent;
         if (name.CompareTo("BossE_Kraken") == 0) return Kraken;
         if (name.CompareTo("BossE_ShadowSelf") == 0) return Shadow_Self;
+        if (name.CompareTo("BossE_DavyJonesLocker") == 0) return Davy_Jones_Locker;
+        if (name.CompareTo("BossE_GhostShip") == 0) return Ghost_Ship;
+        if (name.CompareTo("BossE_Megalodon") == 0) return Megalodon;
+        if (name.CompareTo("BossE_Roc") == 0) return Roc;
+        if (name.CompareTo("BossE_Whale") == 0) return Whale;
+        if (name.CompareTo("BossE_TheMaestro") == 0) return The_Maestro;
 
         Debug.Log("No matches for " + name);
         return null;

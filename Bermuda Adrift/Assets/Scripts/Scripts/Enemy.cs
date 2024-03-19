@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Enemy : ScriptableObject
 {
     public enum Types { Underwater, Airborne, WaterBoss, AirborneBoss };
-    public enum Attack { Minions, Resurface, Heal, Projectile, Buff, AOEBuff, Lightning };
+    public enum Attack { Minions, Resurface, Heal, Projectile, Buff, AOEBuff, Lightning, Jump, Wall };
 
     [SerializeField] private Types Type;
 

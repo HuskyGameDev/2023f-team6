@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Island", menuName = "ScriptableObjects/Island")]
 public class Island : ScriptableObject
 {
-    public enum islandType { Materials, Shop, Buff, SpecialInteraction};
+    public enum islandType { Materials, Shop, Buff, Death, Obelisk };
 
 
     [SerializeField] private islandType type;
@@ -25,6 +25,7 @@ public class Island : ScriptableObject
     //Nothing here yet either
 
     [SerializeField] private Sprite sprite;
+    [SerializeField] private RuntimeAnimatorController anim;
 
 
     public islandType getIslandType() { return type; }
@@ -32,4 +33,5 @@ public class Island : ScriptableObject
     public int getScrapBonus() { return scrapBonus; }
     public Buffs getBuff() { return buff; }
     public Sprite getSprite() { return sprite; }
+    public RuntimeAnimatorController getAnimator() { return anim; }
 }

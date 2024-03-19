@@ -16,7 +16,8 @@ public class TempKeys : MonoBehaviour
         //  Numbers 1-0 - Add a specific blueprint
         for (int i = 1; i < 10; i++)
         {
-            if (Input.GetKeyDown(i.ToString())) FindObjectOfType<LevelGUIManager>().addIndex(i - 1);
+            if (Input.GetKeyDown(i.ToString()))
+                FindObjectOfType<LevelGUIManager>().addIndex(i - 1);
         }
 
         //  P - Kill all enemies
@@ -54,8 +55,19 @@ public class TempKeys : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
             FindObjectOfType<AchievementHandler>().SendMessage("unlockAchievement", "Ach_Man_In_The_Mirror");
 
+        //  O - Skip to the given round
         if (Input.GetKeyDown(KeyCode.O)) 
             FindObjectOfType<GameManager>().skipToRound(testRound);
+
+        //  I - Spawn an island
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (FindObjectOfType<IslandInteractions>() != null)
+                FindObjectOfType<IslandInteractions>().deleteIsland();
+
+            FindObjectOfType<IslandManager>().summonIsland();
+        }
+
     #endif
     }
 }

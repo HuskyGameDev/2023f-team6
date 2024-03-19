@@ -28,8 +28,9 @@ public class DirectionalAnimations : MonoBehaviour
     {
         try
         {
-            movingX = location.position.x - ai.getGoal().x;
-            movingY = location.position.y - ai.getGoal().y;
+            movingX = ai.getGoal().x - location.position.x;
+            movingY = ai.getGoal().y - location.position.y;
+
         } catch (Exception e)
         {
             //Don't update if there's an error
@@ -37,6 +38,8 @@ public class DirectionalAnimations : MonoBehaviour
 
         Vector2 movementVec = new Vector2(movingX, movingY);
         movementVec = movementVec.normalized;
+
+        //Debug.Log(movementVec);
 
         anim.SetFloat("moveX", movementVec.x);
         anim.SetFloat("moveY", movementVec.y);

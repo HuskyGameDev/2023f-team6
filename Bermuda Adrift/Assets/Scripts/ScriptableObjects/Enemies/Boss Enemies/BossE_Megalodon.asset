@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_Megalodon
+  m_EditorClassIdentifier: 
+  Type: 2
+  specialType: 0
+  Name: Megalodon
+  description: 
+  pageNumber: 0
+  Health: 4000
+  Damage: 75
+  Speed: 2
+  attackSpeed: 1
+  sprite: {fileID: 447481055, guid: ca733b7c63ca0e941af1198724f3ab5e, type: 3}
+  xp: 10000
+  scrap: 10000
+  rarity: 0.01
+  roundLimit: 0
+  anim: {fileID: 9100000, guid: 20c646133c6a4544eaf3ee83b703f3b9, type: 2}
+  xSize: 14
+  ySize: 5
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
+  minion: {fileID: 11400000, guid: 0875ed1d39b31ab4bad0d0a808de0faf, type: 2}
+  bossWarning: 
+  bossApproaching: 
+  availableAttacks: 010000000000000002000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 
+  logged: 0

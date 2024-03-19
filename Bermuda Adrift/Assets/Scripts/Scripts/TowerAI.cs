@@ -658,7 +658,7 @@ public class TowerAI : MonoBehaviour
 
             for (int i = decoysEnd + 1; i < enemiesInRange.Count && enemiesInRange[i] != null; i++) //Move decoys to the front
             {
-                if (enemiesInRange[i].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
+                if (enemiesInRange[i].GetComponent<AI>() != null && enemiesInRange[i].GetComponent<AI>().getSpecialType() == Enemy.SpecialTypes.Decoy)
                 {
                     GameObject temp = enemiesInRange[decoysEnd];
                     enemiesInRange[decoysEnd] = enemiesInRange[i];

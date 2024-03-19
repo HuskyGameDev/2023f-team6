@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_DavyJonesLocker
+  m_EditorClassIdentifier: 
+  Type: 2
+  specialType: 0
+  Name: Davy Jones' Locker
+  description: 
+  pageNumber: 0
+  Health: 4500
+  Damage: 20
+  Speed: 0.5
+  attackSpeed: 1
+  sprite: {fileID: -299459602, guid: 494c59958829fac479c7a64bc3d83592, type: 3}
+  xp: 2500
+  scrap: 500
+  rarity: 0.05
+  roundLimit: 0
+  anim: {fileID: 9100000, guid: ec21fb881c0dddc41befbb51d8d4f88b, type: 2}
+  xSize: 2.5
+  ySize: 4
+  debuff: {fileID: 0}
+  extra: {fileID: 2066208556199720336, guid: e2f1f3fc2ba2683428f550c057f95699, type: 3}
+  bullet: {fileID: 11400000, guid: 3b881265d58ddd243bdfe43edc32b860, type: 2}
+  minion: {fileID: 0}
+  bossWarning: The creaking of chains fills your ears
+  bossApproaching: The void calls to you
+  availableAttacks: 01000000080000000700000003000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 
+  logged: 0

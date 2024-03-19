@@ -17,7 +17,7 @@ MonoBehaviour:
   Name: Zombie Kraken
   description: The strength of this beast's hatred lasts beyond the grave
   pageNumber: 0
-  Health: 8000
+  Health: 4000
   Damage: 40
   Speed: 0.75
   attackSpeed: 1
@@ -36,6 +36,6 @@ MonoBehaviour:
   bossWarning: A foul smell permeates the air
   bossApproaching: The sea boils with hatred
   availableAttacks: 000000000100000002000000
-  phase2switch: 0
-  Phase2ExtraAttacks: 
+  phase2switch: 0.5
+  Phase2ExtraAttacks: 06000000
   logged: 0

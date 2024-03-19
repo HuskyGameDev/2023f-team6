@@ -35,7 +35,7 @@ MonoBehaviour:
   minion: {fileID: 0}
   bossWarning: 
   bossApproaching: 
-  availableAttacks: 
+  availableAttacks: 01000000
   phase2switch: 0
   Phase2ExtraAttacks: 
-  logged: 0
+  logged: 1

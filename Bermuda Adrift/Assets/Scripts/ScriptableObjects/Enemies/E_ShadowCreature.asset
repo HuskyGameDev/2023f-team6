@@ -32,10 +32,10 @@ MonoBehaviour:
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
-  minion: {fileID: 0}
+  minion: {fileID: 11400000}
   bossWarning: 
   bossApproaching: 
-  availableAttacks: 
+  availableAttacks: 00000000
   phase2switch: 0
   Phase2ExtraAttacks: 
   logged: 0

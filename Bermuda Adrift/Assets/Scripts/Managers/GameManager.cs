@@ -196,4 +196,8 @@ public class GameManager : MonoBehaviour
         foreach (AI ai in FindObjectsOfType<AI>())
             ai.SendMessage("death");
     }
+    private void finalBossRound()
+    {
+        state = GameState.BossRound;
+    }
 }

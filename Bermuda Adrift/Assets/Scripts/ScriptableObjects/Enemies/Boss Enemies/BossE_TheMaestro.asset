@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae319b923773304eb3ef2b3229dddc9, type: 3}
+  m_Name: BossE_TheMaestro
+  m_EditorClassIdentifier: 
+  Type: 3
+  specialType: 0
+  Name: The Maestro
+  description: A shadow in the dark, a drop in the ocean, a whisper in an orchestra.
+    Hidden within these, a god was born. - The Old Man
+  pageNumber: 1
+  Health: 10000
+  Damage: 100
+  Speed: 1
+  attackSpeed: 1
+  sprite: {fileID: -1072071629, guid: e896bb0a1cfbee54d9100653fd8c4d7c, type: 3}
+  xp: 1000000
+  scrap: 10000
+  rarity: 0
+  roundLimit: 0
+  anim: {fileID: 9100000, guid: 26655ff0c894906409749ee03b5b018a, type: 2}
+  xSize: 6
+  ySize: 12
+  debuff: {fileID: 0}
+  extra: {fileID: 0}
+  bullet: {fileID: 0}
+  minion: {fileID: 11400000, guid: 3aaf601af0bdee64a909851d57e4b295, type: 2}
+  bossWarning: 
+  bossApproaching: 
+  availableAttacks: 
+  phase2switch: 0.9
+  Phase2ExtraAttacks: 000000000100000002000000060000000700000008000000
+  logged: 0

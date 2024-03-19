@@ -10,6 +10,7 @@ public class IslandManager : MonoBehaviour
 
     [SerializeField] private GameObject islandPrefab;
     private GameObject island;
+    private int obelisks;
 
     [SerializeField] private float islandRarity;    //Chance for an island to appear after a round
 
@@ -105,14 +106,44 @@ public class IslandManager : MonoBehaviour
         Destroy(island.gameObject);
     }
 
-    private void interact(Island island)
+    public void summonIsland()
     {
-        if (island.getIslandType() == Island.islandType.Materials)
-            FindObjectOfType<GameManager>().addScrap(island.getScrapBonus());
+        island = Instantiate(islandPrefab);  //Island animator will move it around properly
+        Island chosenIsland = randomIsland();
 
-        if (island.getIslandType() == Island.islandType.Buff)
-            FindObjectOfType<Attack>().StartCoroutine("Buff", island.getBuff());
+        if (island.GetComponent<CircleCollider2D>() != null)
+            island.GetComponent<CircleCollider2D>().enabled = true;
 
-        removeIsland();
+        island.SendMessage("setIsland", chosenIsland);
+        islandDiscovered?.Invoke(chosenIsland);
     }
+
+    private void interact(IslandInteractions island)
+    {
+        island.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Activate");
+
+        if (island.getIsland().getIslandType() == Island.islandType.Materials)
+            FindObjectOfType<GameManager>().addScrap(island.getIsland().getScrapBonus());
+
+        if (island.getIsland().getIslandType() == Island.islandType.Buff)
+            FindObjectOfType<Attack>().StartCoroutine("Buff", island.getIsland().getBuff());
+
+        if (island.GetComponent<CircleCollider2D>() != null && island.getIsland().getIslandType() != Island.islandType.Shop)
+            island.GetComponent<CircleCollider2D>().enabled = false;
+
+        if (island.getIsland().getIslandType() == Island.islandType.Materials || island.getIsland().getIslandType() == Island.islandType.Buff)
+            removeIsland();
+
+        if (island.getIsland().getIslandType() == Island.islandType.Obelisk)
+        {
+            if (obelisks < 4)
+                obelisks++;
+            else
+            {
+                gameObject.GetComponent<EnemyManager>().summonFinalBoss(); //Summon The Maestro
+                removeIsland();
+            }
+        }
+    }
+    public int getObeliskCount() { return obelisks; }
 }

@@ -10,15 +10,32 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
-        islandManager = FindObjectOfType<IslandManager>();
         AddPhysics2DRaycaster();
     }
 
     private void setIsland(Island newIsland)
     {
-        this.island = newIsland;
+        islandManager = FindObjectOfType<IslandManager>();
+
+        island = newIsland;
         //Set sprite (animator will be the same for all and will move the island around)
-        gameObject.GetComponent<SpriteRenderer>().sprite = newIsland.getSprite();
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = newIsland.getSprite();
+        transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = newIsland.getAnimator();
+
+        if (island.getIslandType() == Island.islandType.Obelisk)
+        {
+            if (islandManager.getObeliskCount() == 0)
+                transform.GetChild(0).GetComponent<Animator>().Play("Obelisk_Y_idle");
+            if (islandManager.getObeliskCount() == 1)
+                transform.GetChild(0).GetComponent<Animator>().Play("Obelisk_B_idle");
+            if (islandManager.getObeliskCount() == 2)
+                transform.GetChild(0).GetComponent<Animator>().Play("Obelisk_R_idle");
+            if (islandManager.getObeliskCount() == 3)
+                transform.GetChild(0).GetComponent<Animator>().Play("Obelisk_P_idle");
+            if (islandManager.getObeliskCount() >= 4)
+                transform.GetChild(0).GetComponent<Animator>().Play("True_Obelisk_idle");
+        }
+
     }
 
     public void deleteIsland()
@@ -28,7 +45,7 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        islandManager.SendMessage("interact", island);
+        islandManager.SendMessage("interact", this);
     }
 
     private void AddPhysics2DRaycaster()
@@ -39,4 +56,6 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
         }
     }
+
+    public Island getIsland() { return island; }
 }

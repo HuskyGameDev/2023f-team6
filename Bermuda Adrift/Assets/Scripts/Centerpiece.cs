@@ -98,6 +98,22 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
         if (Health <= 0)
             manager.SendMessage("GameEnd");
     }
+    void bulletTakeDamage(int enemyDamage)
+    {
+        if (maxBarrier > barrierDamage)
+        {
+            barrierDamage += enemyDamage;
+            shieldGO.GetComponent<Animator>().SetFloat("HealthPercent", (float)(maxBarrier - barrierDamage) / maxBarrier);
+        }
+        else { Health -= enemyDamage; }
+
+        onCenterpieceDamage?.Invoke(enemyDamage);
+
+        onCenterpieceDamaged?.Invoke();
+
+        if (Health <= 0)
+            manager.SendMessage("GameEnd");
+    }
 
     private void InflictDebuff() { }    //probably won't do debuffs on the centerpiece, this is just to stop errors
 

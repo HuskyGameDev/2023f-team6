@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0f0920e95ec6149a7243804d53abe6, type: 3}
+  m_Name: I_DeathIsland
+  m_EditorClassIdentifier: 
+  type: 3
+  rarity: 0.1
+  scrapBonus: 0
+  buff: {fileID: 0}
+  sprite: {fileID: -1573395332, guid: 71ee79ed3c514354d8131656c4b336bf, type: 3}
+  anim: {fileID: 9100000, guid: 07c556fd4f12da74dafd2ecd25a1e76d, type: 2}
