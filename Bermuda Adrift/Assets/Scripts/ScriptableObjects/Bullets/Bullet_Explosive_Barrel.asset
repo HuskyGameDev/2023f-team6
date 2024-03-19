@@ -20,8 +20,12 @@ MonoBehaviour:
   timer: 3
   animator: {fileID: 9100000, guid: 9c3666c32b2db5044a13a85bf6a13757, type: 2}
   FriendlyFire: 1
+  Homing: 0
   debuff: {fileID: 11400000, guid: f94cf0ac8e7c797468a6612194fc85d0, type: 2}
   pierce: 3
   AOETimer: 1
   UnderwaterDamage: 1
   AirborneDamage: 1
+  types: []
+  bulletTrail: {fileID: 0}
+  audioString: Barrel Explosion

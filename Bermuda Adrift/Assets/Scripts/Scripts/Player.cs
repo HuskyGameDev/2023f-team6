@@ -98,7 +98,6 @@ public class Player : ScriptableObject
     public Sprite getMainBodySprite() { return mainBodySprite; }
     public int getSpeed() { return speed; }
     public bool getUnlocked() { return unlocked; }
-
     public bool getLogged() { return logged; }
     public void setLogged(bool logged) { this.logged = logged; }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 public class Attack : MonoBehaviour
 {
@@ -192,13 +193,25 @@ public class Attack : MonoBehaviour
 
         setCurrentButton();
 
-        if (currentButton == primaryButton) { primary(); }
+        if (currentButton == primaryButton) 
+        { 
+            primary();
+        }
 
-        else if (currentButton == secondaryButton) { secondary(); }
+        else if (currentButton == secondaryButton) 
+        { 
+            secondary();
+        }
 
-        else if (currentButton == utilityButton) { utility(); }
+        else if (currentButton == utilityButton) 
+        { 
+            utility();
+        }
 
-        else if (currentButton == specialButton) { special(); }
+        else if (currentButton == specialButton) 
+        { 
+            special();
+        }
 
         if (!anim.GetBool("Locked"))
         {
@@ -307,11 +320,18 @@ public class Attack : MonoBehaviour
     }
     public void attack(Ability ability)    //Handles projectiles and buffs
     {
+        if (ability.getAudioString() != null)
+            AudioManager.Instance.PlaySFX(ability.getAudioString());
+
         if (attackCooldownBool) { return; }
-        attackCooldownBool = true;            
+        attackCooldownBool = true;
 
         if (ability.getAttackType() == Ability.attackType.melee)
+        {
             attackMelee(ability);
+
+
+        }
         else if (ability.getAttackType() == Ability.attackType.projectile)
         {
             Vector3 offset = new Vector3(anim.GetFloat("AttackDirectionX"), anim.GetFloat("AttackDirectionY"));
@@ -325,7 +345,7 @@ public class Attack : MonoBehaviour
             intBullet.SendMessage("UnderwaterMult", getUnderwaterMult());
             intBullet.SendMessage("AirborneMult", getAirborneMult());
             intBullet.SendMessage("setLevelScale", GameObject.Find("Managers").GetComponent<GameManager>().getLevelScale());
-        } 
+        }
         else if (ability.getAttackType() == Ability.attackType.buff)
         {
             StartCoroutine(Buff(ability.getBuff()));
@@ -333,7 +353,7 @@ public class Attack : MonoBehaviour
         }
         else if (ability.getAttackType() == Ability.attackType.destinedProjectile)
         {
-            GameObject intBullet = Instantiate(ability.getBulletPrefab(), new Vector3(100f,100f), Quaternion.identity);
+            GameObject intBullet = Instantiate(ability.getBulletPrefab(), new Vector3(100f, 100f), Quaternion.identity);
             intBullet.SendMessage("setBullet", ability.getDestinedBullet());
             intBullet.SendMessage("Mult", getDamageMult());
             intBullet.SendMessage("setCritChance", getCrit());

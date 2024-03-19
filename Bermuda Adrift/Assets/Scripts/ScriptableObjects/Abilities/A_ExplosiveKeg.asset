@@ -15,8 +15,11 @@ MonoBehaviour:
   type: 1
   meleeHitboxes: {fileID: 0}
   bullet: {fileID: 11400000, guid: d1e767bd08b470649ac9e03f0fdfb59f, type: 2}
-  buff: {fileID: 0}
   destinedBullet: {fileID: 0}
+  targetedAttacker: {fileID: 0}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 0}
   bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
   slot: 4
   cooldown: 10
@@ -27,3 +30,4 @@ MonoBehaviour:
     on fire
   looped: 0
   lockedDirection: 0
+  audioString: Barrel Rolling

@@ -29,3 +29,4 @@ MonoBehaviour:
   description: Fire a piercing, high damage shot
   looped: 0
   lockedDirection: 0
+  audioString: Blunderbuss Fire

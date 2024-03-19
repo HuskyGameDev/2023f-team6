@@ -15,8 +15,11 @@ MonoBehaviour:
   type: 2
   meleeHitboxes: {fileID: 0}
   bullet: {fileID: 0}
-  buff: {fileID: 0}
   destinedBullet: {fileID: 11400000, guid: 296a012a10cf1dd4ea46ee8f4baa6596, type: 2}
+  targetedAttacker: {fileID: 0}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 0}
   bulletPrefab: {fileID: 8823190863568397684, guid: 56ea482041be5254bb8db812787806b4, type: 3}
   slot: 4
   cooldown: 60
@@ -26,3 +29,4 @@ MonoBehaviour:
   description: Call in a plane to defeat many enemies in a large area
   looped: 0
   lockedDirection: 0
+  audioString: Airstrike

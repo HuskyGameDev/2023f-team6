@@ -15,8 +15,11 @@ MonoBehaviour:
   type: 1
   meleeHitboxes: {fileID: 0}
   bullet: {fileID: 11400000, guid: ebee8274897edd3489ce5ea888c257fc, type: 2}
-  buff: {fileID: 0}
   destinedBullet: {fileID: 0}
+  targetedAttacker: {fileID: 0}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 0}
   bulletPrefab: {fileID: 3903083542384844113, guid: 34b13f58afbb076429ca6b6ee98630ab, type: 3}
   slot: 2
   cooldown: 10
@@ -26,3 +29,4 @@ MonoBehaviour:
   description: Fire a constant stream of bullets in one direction
   looped: 1
   lockedDirection: 1
+  audioString: 

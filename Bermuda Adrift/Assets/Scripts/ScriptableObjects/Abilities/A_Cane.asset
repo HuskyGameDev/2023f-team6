@@ -15,8 +15,11 @@ MonoBehaviour:
   type: 0
   meleeHitboxes: {fileID: 4240625610244105167, guid: 37f2de7155f7c7743bab47daeedba0b5, type: 3}
   bullet: {fileID: 0}
-  buff: {fileID: 0}
   destinedBullet: {fileID: 0}
+  targetedAttacker: {fileID: 0}
+  tempTower: {fileID: 0}
+  towerDuration: 0
+  buff: {fileID: 0}
   bulletPrefab: {fileID: 0}
   slot: 1
   cooldown: 0
@@ -26,3 +29,4 @@ MonoBehaviour:
   description: Stab an enemies with the sharp end of your cane
   looped: 1
   lockedDirection: 0
+  audioString: Cane

@@ -28436,7 +28436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftSelected: 0
-  character: {fileID: 11400000, guid: 2c7301dfd237fdd43bd864a4c2d38df6, type: 2}
+  character: {fileID: 11400000, guid: a1cdf67ab11154c439e72399ef2658a1, type: 2}
   barrier1: {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
   barrier2: {fileID: 11400000, guid: 532bd38f285888448ba8920149275a88, type: 2}
 --- !u!4 &450279484
@@ -114905,13 +114905,39 @@ MonoBehaviour:
   - name: Pirate Theme
     clip: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
     volume: 1
-    pitch: 0.9
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
   sfxSounds:
   - name: Button Click
     clip: {fileID: 8300000, guid: bd4222455acffcd4ababb95db8574dc8, type: 3}
     volume: 1
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Blunderbuss Fire
+    clip: {fileID: 8300000, guid: a2ec03bd968740546a696c1b6a28daea, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Barrel Rolling
+    clip: {fileID: 8300000, guid: c8759aa788364d54bbd3348581dd6f3e, type: 3}
+    volume: 1
+    pitch: 2.35
+    loop: 0
+    source: {fileID: 0}
+  - name: Barrel Explosion
+    clip: {fileID: 8300000, guid: dda6edc82798a2c48bd4fb7580a4de7e, type: 3}
+    volume: 0.5
+    pitch: 0.75
+    loop: 0
+    source: {fileID: 0}
+  - name: Drink Rum
+    clip: {fileID: 8300000, guid: 0eadd94ec75bcc147b1fdf30fa5e26a5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!1 &1740341031
 GameObject:

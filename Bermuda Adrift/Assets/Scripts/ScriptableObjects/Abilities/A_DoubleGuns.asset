@@ -29,3 +29,4 @@ MonoBehaviour:
   description: Quickly fire a pair of pistols
   looped: 1
   lockedDirection: 0
+  audioString: Double Guns

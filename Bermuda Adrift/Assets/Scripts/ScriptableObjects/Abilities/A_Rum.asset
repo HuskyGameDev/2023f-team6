@@ -29,3 +29,4 @@ MonoBehaviour:
   description: Drink a bottle of rum to move and attack faster
   looped: 0
   lockedDirection: 0
+  audioString: Drink Rum

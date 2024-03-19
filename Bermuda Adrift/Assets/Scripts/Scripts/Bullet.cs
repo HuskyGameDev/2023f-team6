@@ -28,6 +28,8 @@ public class Bullet : ScriptableObject
 
     [SerializeField] private TrailRenderer bulletTrail;
 
+    [SerializeField] private string audioString;
+
     public enum Restrictions { None, }
 
     //Get Functions
@@ -48,4 +50,5 @@ public class Bullet : ScriptableObject
     public bool hasTypes() { return types.Length > 0; }
     public int getNumOfTypes() { return types.Length; }
     public Bullet getBulletAtIndex(int i) { if (i < types.Length) return types[i]; else return null; }
+    public string getAudioString() { return audioString; }
 }

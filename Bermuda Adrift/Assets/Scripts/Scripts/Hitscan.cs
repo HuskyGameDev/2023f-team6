@@ -349,6 +349,8 @@ public class Hitscan : MonoBehaviour
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
+                AudioManager.Instance.PlaySFX(bullet.getAudioString());
+
                 camera.SendMessage("cameraShake", 0.25f);
                 
                 stop = true;

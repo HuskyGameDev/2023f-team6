@@ -29,3 +29,8 @@ MonoBehaviour:
   mainBodySprite: {fileID: 572034785, guid: f7b833a786cfbe044aa2e803a26b38ea, type: 3}
   speed: 7
   unlocked: 1
+  logged: 0
+  audioPrimary: 
+  audioSecondary: Blunderbuss Fire
+  audioUtility: Drink Rum
+  audioSpecial: Barrel Rolling

@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
 
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
             }
 
             foreach (Sound s in sfxSounds)
@@ -53,6 +54,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
 
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
             }
         }
 
