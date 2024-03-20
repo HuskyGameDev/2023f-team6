@@ -20,8 +20,8 @@ MonoBehaviour:
   Cooldowns: 1
   range: 1
   ignoreDecoys: 0
-  Speed: 1.5
-  AttackSpeed: 1.25
+  Speed: 2
+  AttackSpeed: 2
   underwaterMult: 1
   airborneMult: 1
   FireRate: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: I_DeathIsland
   m_EditorClassIdentifier: 
   type: 3
-  rarity: 0.1
+  rarity: 0.05
   scrapBonus: 0
   buff: {fileID: 0}
   sprite: {fileID: -1573395332, guid: 71ee79ed3c514354d8131656c4b336bf, type: 3}

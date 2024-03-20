@@ -10,8 +10,8 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     public static event Action onCenterpieceDamaged;
     public static event Action<Centerpiece> onClicked;
 
-
-    [SerializeField] private int maxHealth;
+    private CenterpieceScriptable center;
+    private int maxHealth;
     [SerializeField] private GameObject shield;
     private GameObject shieldGO;
     private int Health;
@@ -19,18 +19,25 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     private Transform Player;
     private SpriteRenderer spriteRenderer;
     private int maxBarrier;
-    private int barrierDamage;
+    private int barrierDamage = 0;
     private int barrierReflect;
+    private int regen;
 
     private void OnEnable()
     {
         GameManager.onRoundEnd += resetBarrier;
         GameManager.onRoundEnd += resetBarrierReflect;
+        GameManager.onRoundEnd += regenerate;
+
+        GameManager.OnRoundStart += barrierSetup;
     }
     private void OnDisable()
     {
         GameManager.onRoundEnd -= resetBarrier;
         GameManager.onRoundEnd -= resetBarrierReflect;
+        GameManager.onRoundEnd -= regenerate;
+
+        GameManager.OnRoundStart -= barrierSetup;
     }
     private void Start() 
     { 
@@ -53,10 +60,32 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
             spriteRenderer.sortingOrder = 3;
     }
 
+    public void setCenterpiece(CenterpieceScriptable centerpiece)
+    {
+        center = centerpiece;
+
+        maxHealth = center.getHealth();
+        Health = maxHealth;
+
+        maxBarrier = center.getBarrier();
+
+        regen = center.getRegen();
+        gameObject.GetComponent<SpriteRenderer>().sprite = center.getSprite();
+
+        onCenterpieceDamaged?.Invoke();
+        Debug.Log(maxHealth);
+    }
+
+    void barrierSetup()
+    {
+        if (maxBarrier > 0)
+            shieldGO.SetActive(true);
+    }
+
     void resetBarrier() 
     { 
         barrierDamage = 0; 
-        maxBarrier = 0; 
+        maxBarrier = center.getBarrier();
         shieldGO.SetActive(false); 
         onCenterpieceDamaged?.Invoke();
     }
@@ -78,6 +107,15 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     }
 
     void barrierDestroyed() { shieldGO.SetActive(false); }
+
+    void regenerate()
+    {
+        if (Health + regen > maxHealth)
+            maxHealth = Health + regen;
+
+        Health += regen;
+        onCenterpieceDamaged?.Invoke();
+    }
 
     void TakeDamage((int, AI) enemyDamage)
     {

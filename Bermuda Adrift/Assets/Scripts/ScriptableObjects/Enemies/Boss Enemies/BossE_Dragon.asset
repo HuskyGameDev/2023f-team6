@@ -33,8 +33,8 @@ MonoBehaviour:
   extra: {fileID: 2066208556199720336, guid: e2f1f3fc2ba2683428f550c057f95699, type: 3}
   bullet: {fileID: 11400000, guid: 1b21f0f9f7f2b084aaa67e91aeb313a6, type: 2}
   minion: {fileID: 0}
-  bossWarning: 
-  bossApproaching: 
+  bossWarning: Something huge is on the horizon
+  bossApproaching: The wind picks up...
   availableAttacks: 03000000
   phase2switch: 0
   Phase2ExtraAttacks: 

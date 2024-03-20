@@ -198,6 +198,8 @@ public class GameManager : MonoBehaviour
     }
     private void finalBossRound()
     {
+        OnRoundStart?.Invoke();
+        GameObject.Find("ButtonReady").SetActive(false);
         state = GameState.BossRound;
     }
 }

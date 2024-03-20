@@ -56,6 +56,5 @@ public class IslandInteractions : MonoBehaviour, IPointerDownHandler
             Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
         }
     }
-
     public Island getIsland() { return island; }
 }

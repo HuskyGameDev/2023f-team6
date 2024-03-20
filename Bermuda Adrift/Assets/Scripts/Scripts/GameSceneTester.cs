@@ -6,6 +6,7 @@ public class GameSceneTester : MonoBehaviour    //This script is so you don't ha
 {
     public int raftSelected;
     public Player character;
+    public CenterpieceScriptable centerpiece;
     public BarrierScriptable barrier1;
     public BarrierScriptable barrier2;
 
@@ -25,7 +26,6 @@ public class GameSceneTester : MonoBehaviour    //This script is so you don't ha
         if (raftSelected < 0)
             raftSelected = 0;
 
-        yield return new WaitForEndOfFrame();
         GameObject masterLayout = GameObject.Find("Raft Layouts");
         for (int i = 0; i < masterLayout.transform.childCount; i++)
             masterLayout.transform.GetChild(i).gameObject.SetActive(false);
@@ -40,5 +40,6 @@ public class GameSceneTester : MonoBehaviour    //This script is so you don't ha
         FindObjectOfType<BuildManager>().setBarrier1(barrier1);
         FindObjectOfType<BuildManager>().setBarrier2(barrier2);
         FindObjectOfType<BuildManager>().reloadBuyables();
+        FindObjectOfType<Centerpiece>().setCenterpiece(centerpiece);
     }
 }

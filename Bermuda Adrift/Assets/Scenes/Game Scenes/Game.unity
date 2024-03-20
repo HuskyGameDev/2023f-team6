@@ -1185,7 +1185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &34172213
 Transform:
   m_ObjectHideFlags: 0
@@ -23626,7 +23626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6c763eaeb74449bb7293fb45cc667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   shield: {fileID: 543659514001770713, guid: 49255c0b5d1d10e40805ad6c001037de, type: 3}
 --- !u!212 &310472270
 SpriteRenderer:
@@ -28437,6 +28436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raftSelected: 0
   character: {fileID: 11400000, guid: a1cdf67ab11154c439e72399ef2658a1, type: 2}
+  centerpiece: {fileID: 11400000, guid: 01ef03960fed9e442a46ed627c360fd3, type: 2}
   barrier1: {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
   barrier2: {fileID: 11400000, guid: 532bd38f285888448ba8920149275a88, type: 2}
 --- !u!4 &450279484
@@ -60875,7 +60875,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6c763eaeb74449bb7293fb45cc667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   shield: {fileID: 543659514001770713, guid: 49255c0b5d1d10e40805ad6c001037de, type: 3}
 --- !u!212 &938755369
 SpriteRenderer:
@@ -65899,7 +65898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6c763eaeb74449bb7293fb45cc667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   shield: {fileID: 543659514001770713, guid: 49255c0b5d1d10e40805ad6c001037de, type: 3}
 --- !u!61 &1093243193
 BoxCollider2D:
@@ -115529,7 +115527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6c763eaeb74449bb7293fb45cc667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   shield: {fileID: 543659514001770713, guid: 49255c0b5d1d10e40805ad6c001037de, type: 3}
 --- !u!212 &1766143212
 SpriteRenderer:

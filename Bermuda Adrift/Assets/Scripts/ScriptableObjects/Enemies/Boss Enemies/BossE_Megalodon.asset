@@ -33,8 +33,8 @@ MonoBehaviour:
   extra: {fileID: 0}
   bullet: {fileID: 0}
   minion: {fileID: 11400000, guid: 0875ed1d39b31ab4bad0d0a808de0faf, type: 2}
-  bossWarning: 
-  bossApproaching: 
+  bossWarning: The sea watches you
+  bossApproaching: An impossible presence is beneath you
   availableAttacks: 010000000000000002000000
   phase2switch: 0
   Phase2ExtraAttacks: 

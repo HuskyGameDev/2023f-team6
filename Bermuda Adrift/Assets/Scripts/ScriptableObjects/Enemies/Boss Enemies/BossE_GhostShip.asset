@@ -33,8 +33,8 @@ MonoBehaviour:
   extra: {fileID: 2066208556199720336, guid: e2f1f3fc2ba2683428f550c057f95699, type: 3}
   bullet: {fileID: 11400000, guid: 329ea5262b8602846b7c1006b6c59bf6, type: 2}
   minion: {fileID: 0}
-  bossWarning: 
-  bossApproaching: 
+  bossWarning: You feel like you're being watched
+  bossApproaching: The echoes of the dead flash before your eyes
   availableAttacks: 03000000
   phase2switch: 0
   Phase2ExtraAttacks: 

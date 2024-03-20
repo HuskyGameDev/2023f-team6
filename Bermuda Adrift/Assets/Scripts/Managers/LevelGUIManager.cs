@@ -95,7 +95,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
                 random[0] = Random.Range(0, allChoices.Length);
 
             //Make it 2 unique choices
-            while ((random[0] == random[1] && allChoices.Length >= 3) || !allChoices[random[1]].getUnlocked())
+            while (random[0] == random[1] || !allChoices[random[1]].getUnlocked())
                 random[1] = Random.Range(0, allChoices.Length);
 
             option1 = allChoices[random[0]];
@@ -136,10 +136,10 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
                 random[0] = Random.Range(0, allChoices.Length);
 
             //Make it 3 unique choices if possible
-            while ((random[0] == random[1] && allChoices.Length >= 3) || !allChoices[random[1]].getUnlocked())
+            while ((random[0] == random[1] || !allChoices[random[1]].getUnlocked()))
                 random[1] = Random.Range(0, allChoices.Length);
 
-            while (((random[2] == random[0] || random[2] == random[1]) && allChoices.Length >= 3) && !allChoices[random[2]].getUnlocked())
+            while (random[2] == random[0] || random[2] == random[1] || !allChoices[random[2]].getUnlocked())
                 random[2] = Random.Range(0, allChoices.Length);
 
             option1 = allChoices[random[0]];

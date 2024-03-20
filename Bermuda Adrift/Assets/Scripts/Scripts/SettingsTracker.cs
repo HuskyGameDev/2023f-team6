@@ -11,6 +11,8 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     [SerializeField] private BarrierScriptable barrier1;
     [SerializeField] private BarrierScriptable barrier2;
 
+    [SerializeField] private CenterpieceScriptable centerpiece;
+
     int raftSelected;
     bool resettingScene;
     bool screenShake;
@@ -54,6 +56,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
         FindObjectOfType<BuildManager>().setBarrier1(barrier1);
         FindObjectOfType<BuildManager>().setBarrier2(barrier2);
         FindObjectOfType<BuildManager>().reloadBuyables();
+        FindObjectOfType<Centerpiece>().setCenterpiece(centerpiece);
 
         Camera.main.GetComponent<CameraEffects>().setEnabled(screenShake);
     }
@@ -84,6 +87,8 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     }
     public void setScreenShake(bool screenShake) { this.screenShake = screenShake; }
     public bool getScreenShake() { return screenShake; }
+
+    public void setCenterpiece(CenterpieceScriptable centerpiece) { this.centerpiece = centerpiece; }
 
     public void LoadData(S_O_Saving saver)
     {

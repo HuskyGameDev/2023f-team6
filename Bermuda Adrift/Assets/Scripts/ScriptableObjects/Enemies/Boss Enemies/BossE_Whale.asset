@@ -33,8 +33,8 @@ MonoBehaviour:
   extra: {fileID: 0}
   bullet: {fileID: 0}
   minion: {fileID: 0}
-  bossWarning: 
-  bossApproaching: 
+  bossWarning: Spouts of water approach you
+  bossApproaching: The behemoth of the sea approaches
   availableAttacks: 
   phase2switch: 0
   Phase2ExtraAttacks: 

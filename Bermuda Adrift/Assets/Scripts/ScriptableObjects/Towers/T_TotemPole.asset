@@ -73,6 +73,6 @@ MonoBehaviour:
   cantTurn: 1
   noUpgrades: 0
   extraPriorities: 07000000
-  unlocked: 0
+  unlocked: 1
   logged: 0
   dimensions: 2
