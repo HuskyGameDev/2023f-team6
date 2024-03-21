@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e0f0920e95ec6149a7243804d53abe6, type: 3}
-  m_Name: I_Island v1
+  m_Name: I_Scrap
   m_EditorClassIdentifier: 
   type: 0
   rarity: 0.19
   scrapBonus: 500
   buff: {fileID: 0}
-  sprite: {fileID: 21300000, guid: 9df8423d2ffbe144ab1e53288a473aa0, type: 3}
+  sprite: {fileID: 21300000, guid: 951cc7716440c2f43bb6a6017a5f58dd, type: 3}
   anim: {fileID: 0}

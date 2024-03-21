@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e0f0920e95ec6149a7243804d53abe6, type: 3}
-  m_Name: I_Island v3
+  m_Name: I_Dmg_Buff
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   rarity: 0.19
-  scrapBonus: 500
-  buff: {fileID: 0}
-  sprite: {fileID: 21300000, guid: 9a1cbdccbeb9de84eaa9bd4cdae606fb, type: 3}
+  scrapBonus: 0
+  buff: {fileID: 11400000, guid: 491e44231fa6e2c40b9b8b47d4ce59b4, type: 2}
+  sprite: {fileID: 21300000, guid: 12eff220623d7e9438b43e397ef93dc2, type: 3}
   anim: {fileID: 0}

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e0f0920e95ec6149a7243804d53abe6, type: 3}
-  m_Name: I_Island v2
+  m_Name: I_Lower_Cooldowns
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   rarity: 0.19
-  scrapBonus: 500
-  buff: {fileID: 0}
-  sprite: {fileID: 21300000, guid: baf91e9f0da61cb45afab1bafce97582, type: 3}
+  scrapBonus: 0
+  buff: {fileID: 11400000, guid: b0419d64f9443d443b655e338c3a69a2, type: 2}
+  sprite: {fileID: 21300000, guid: 219ba141269eddc4fa24b8133390f891, type: 3}
   anim: {fileID: 0}
