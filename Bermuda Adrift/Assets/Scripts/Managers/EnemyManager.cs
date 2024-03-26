@@ -8,7 +8,6 @@ public class EnemyManager : MonoBehaviour
 {
     public static event Action<int> onRoundEnd;
     public static event Action<int> onEnemyDeath;
-    public static event Action<Enemy> onEnemySpawn;
     public static event Action<int> allEnemiesSpawned;
 
     new private Camera camera;  //Not sure what the warning is, but when I changed the name it broke several things
@@ -106,8 +105,6 @@ public class EnemyManager : MonoBehaviour
                     tempEnemy.SendMessage("setEliteEnemy", newEnemy);
                 else
                     tempEnemy.SendMessage("setEnemy", newEnemy);
-
-                onEnemySpawn?.Invoke(newEnemy);
             }
             for (; i < total; i++)
             {
@@ -117,8 +114,6 @@ public class EnemyManager : MonoBehaviour
 
                 if (Random.Range(0, 1f) <= eliteChance)
                     tempEnemy.SendMessage("setEliteEnemy", newEnemy);
-
-                onEnemySpawn?.Invoke(newEnemy);
             }
         }
 

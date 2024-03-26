@@ -12,11 +12,14 @@ public class UpgradeMenuHandler : MonoBehaviour
     private TextMeshProUGUI headerText;
     private GameObject OneOption;
     private GameObject TwoOptions;
+    private GameObject PlatformOption;
     private GameObject upgrade1;
     private GameObject upgrade2;
     private GameObject destroyButton;
     private Slider repairSlider;
+    private Slider platformRepairSlider;
     private GameObject repairButton;
+    private GameObject platformRepairButton;
     private GameObject priorityChanger;
 
     private int healedSoFar;
@@ -29,13 +32,18 @@ public class UpgradeMenuHandler : MonoBehaviour
     {
         headerText = transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         OneOption = transform.GetChild(1).gameObject;
-        TwoOptions = transform.GetChild(2).gameObject;
-        upgrade1 = transform.GetChild(3).gameObject;
-        upgrade2 = transform.GetChild(4).gameObject;
-        destroyButton = transform.GetChild(5).gameObject;
-        repairSlider = transform.GetChild(6).GetComponent<Slider>();
-        repairButton = transform.GetChild(7).gameObject;
-        priorityChanger = transform.GetChild(8).gameObject;
+        TwoOptions = transform.GetChild(3).gameObject;
+        PlatformOption = transform.GetChild(2).gameObject;
+        upgrade1 = transform.GetChild(4).gameObject;
+        upgrade2 = transform.GetChild(5).gameObject;
+        destroyButton = transform.GetChild(6).gameObject;
+        repairSlider = transform.GetChild(7).GetComponent<Slider>();
+        platformRepairSlider = transform.GetChild(8).GetComponent<Slider>();
+        repairButton = transform.GetChild(9).gameObject;
+        platformRepairButton = transform.GetChild(10).gameObject;
+        priorityChanger = transform.GetChild(11).gameObject;
+
+        closePlatformRepair();
     }
 
     private void OnEnable()
@@ -99,6 +107,11 @@ public class UpgradeMenuHandler : MonoBehaviour
         else if (currentTower.getPriority() == TowerAI.Priority.OnlyAir) text.text = "Air Only";
         else if (currentTower.getPriority() == TowerAI.Priority.None) text.text = "";
         else text.text = "No text";
+
+        if (onAPlatform() != null)
+            openPlatformRepair(onAPlatform());
+        else
+            closePlatformRepair();
 
         if (tower.getNoUpgrades())
         {
@@ -196,8 +209,12 @@ public class UpgradeMenuHandler : MonoBehaviour
 
         destroyButton.GetComponent<Button>().interactable = true;
 
+        closePlatformRepair();
+        
+
         BroadcastMessage("setBarrier", barrier.getBarrier());
         //BroadcastMessage("setUpgradeLevel", towerAI.getUpgradeLevel());
+        
 
         if (barrier.getEffect() == BarrierScriptable.Effect.Blockade)
         {
@@ -234,7 +251,7 @@ public class UpgradeMenuHandler : MonoBehaviour
                 repairSlider.value = 0;
                 repairSlider.interactable = false;
             }
-
+            
             updateRepairMenu();
         }
         else if (barrier.getEffect() == BarrierScriptable.Effect.Effect)
@@ -252,7 +269,7 @@ public class UpgradeMenuHandler : MonoBehaviour
             destroyButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Destroy: " + (barrier.getBarrier().getCost() / 2) + " Scrap";
             headerText.text = barrier.getName();
 
-
+            
             updateRepairMenu();
         }
     }
@@ -261,6 +278,8 @@ public class UpgradeMenuHandler : MonoBehaviour
         centerpiece = center;
         currentTower = null;
         currentBarrier = null;
+
+        closePlatformRepair();
 
         BroadcastMessage("clearDescription");
 
@@ -298,6 +317,50 @@ public class UpgradeMenuHandler : MonoBehaviour
         updateRepairMenu();
     }
 
+    Barriers onAPlatform()
+    {
+        RaycastHit2D[] colliders = Physics2D.RaycastAll(currentTower.transform.position, Vector2.down, 0.5f);
+        
+        foreach (RaycastHit2D collider in colliders)
+        {
+            if (collider.collider.gameObject.GetComponent<Barriers>() != null)
+            {
+                Debug.Log("On platform: " + collider.collider.gameObject.GetComponent<Barriers>().getBarrier().getName());
+                return collider.collider.gameObject.GetComponent<Barriers>();
+            }
+        }
+
+        Debug.Log("Not on a platform");
+        return null;
+    }
+    void openPlatformRepair(Barriers barrier)
+    {
+        PlatformOption.SetActive(true);
+        platformRepairButton.SetActive(true);
+        platformRepairSlider.gameObject.SetActive(true);
+        currentBarrier = barrier;
+
+        if (barrier.getMaxHealth() - barrier.getHealth() > 0)
+        {
+            platformRepairSlider.maxValue = barrier.getMaxHealth() - barrier.getHealth();
+            platformRepairSlider.value = 0;
+        }
+        else
+        {
+            platformRepairSlider.maxValue = 1;
+            platformRepairSlider.value = 0;
+            platformRepairSlider.interactable = false;
+        }
+
+        updatePlatformRepairMenu();
+    }
+    void closePlatformRepair()
+    {
+        PlatformOption.SetActive(false);
+        platformRepairButton.SetActive(false);
+        platformRepairSlider.gameObject.SetActive(false);
+    }
+
     public void updateRepairMenu()
     {
         /*
@@ -310,6 +373,10 @@ public class UpgradeMenuHandler : MonoBehaviour
         */
 
         repairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair " + Mathf.RoundToInt(repairSlider.value) + " Damage: " + getRepairScrap(Mathf.RoundToInt(repairSlider.value)) + " Scrap";
+    }
+    public void updatePlatformRepairMenu()
+    {
+        platformRepairButton.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Repair " + Mathf.RoundToInt(platformRepairSlider.value) + " Damage: " + getRepairScrap(Mathf.RoundToInt(platformRepairSlider.value)) + " Scrap";
     }
     private int getReturnScrap(Tower tower, int upgradeLevel)
     {
@@ -366,12 +433,26 @@ public class UpgradeMenuHandler : MonoBehaviour
             currentBarrier.SendMessage("repair", repairSlider.value);
             updateMenu(currentBarrier);
         }
-        else
+        else if (centerpiece != null)
         {
             centerpiece.SendMessage("repair", repairSlider.value);
             updateMenu(centerpiece);
         }
         manager.spendScrap(cost);
+    }
+    public void platformRepair()
+    {
+        int cost = getRepairScrap((int) platformRepairSlider.value);
+        GameManager manager = FindObjectOfType<GameManager>();
+        if (!manager.cost(cost)) return;
+
+        healedSoFar += (int) platformRepairSlider.value;
+
+        currentBarrier.SendMessage("repair", platformRepairSlider.value);
+
+        manager.spendScrap(cost);
+
+        openPlatformRepair(currentBarrier);
     }
     public void changePriority(bool left)
     {

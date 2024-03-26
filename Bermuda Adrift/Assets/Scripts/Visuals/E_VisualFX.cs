@@ -9,6 +9,7 @@ public class E_VisualFX : MonoBehaviour
     private TextMeshPro textMesh;
     private AI enemy;
     private Centerpiece centerpiece;
+    private Barriers barrier;
 
     private void OnEnable()
     {
@@ -18,10 +19,10 @@ public class E_VisualFX : MonoBehaviour
             enemy.OnCrit += CritDamagePopupSetup;
             enemy.OnStatusDamage += DOTDamagePopupSetup;
         }
+        else if (barrier != null)
+            barrier.onBarrierDamaged += CritDamagePopupSetup;
         else
-        {
             centerpiece.onCenterpieceDamage += CritDamagePopupSetup;
-        }
     }
 
     private void OnDisable()
@@ -32,17 +33,18 @@ public class E_VisualFX : MonoBehaviour
             enemy.OnCrit -= CritDamagePopupSetup;
             enemy.OnStatusDamage -= DOTDamagePopupSetup;
         }
+        else if (barrier != null)
+            barrier.onBarrierDamaged -= CritDamagePopupSetup;
         else
-        {
             centerpiece.onCenterpieceDamage -= CritDamagePopupSetup;
-        }
     }
 
     private void Awake()
     {
         textMesh = dmgPopupTxt.GetComponent<TextMeshPro>();
         enemy = gameObject.GetComponent<AI>();
-        if (enemy == null)
+        barrier = gameObject.GetComponent<Barriers>();
+        if (enemy == null && barrier == null)
             centerpiece = gameObject.GetComponent<Centerpiece>();
     }
 

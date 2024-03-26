@@ -17,12 +17,12 @@ public class Unlocks : MonoBehaviour
     public List<CharacterInfo> unlockedCharacters;
     private void OnEnable()
     {
-        EnemyManager.onEnemySpawn += unlockEnemy;
+        AI.OnUnlockEnemyDeath += unlockEnemy;
     }
 
     private void OnDisable()
     {
-        EnemyManager.onEnemySpawn -= unlockEnemy;
+        AI.OnUnlockEnemyDeath -= unlockEnemy;
     }
 
     private void Awake()

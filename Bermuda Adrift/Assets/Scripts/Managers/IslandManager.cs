@@ -89,7 +89,6 @@ public class IslandManager : MonoBehaviour
             island.GetComponent<CircleCollider2D>().enabled = true;
 
         island.SendMessage("setIsland", chosenIsland);
-        islandDiscovered?.Invoke(chosenIsland);
     }
     private void removeIsland()
     {
@@ -115,7 +114,6 @@ public class IslandManager : MonoBehaviour
             island.GetComponent<CircleCollider2D>().enabled = true;
 
         island.SendMessage("setIsland", chosenIsland);
-        islandDiscovered?.Invoke(chosenIsland);
     }
 
     private void interact(IslandInteractions island)
@@ -144,6 +142,8 @@ public class IslandManager : MonoBehaviour
                 removeIsland();
             }
         }
+
+        islandDiscovered?.Invoke(island.getIsland());
     }
     public int getObeliskCount() { return obelisks; }
 }

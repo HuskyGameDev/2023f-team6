@@ -99,6 +99,8 @@ public class BuildManager : MonoBehaviour
     public static event Action<Tower> OnTowerPicked;
     public static event Action<BarrierScriptable> OnBarrierPicked;
     public static event Action TooManyBlueprints;
+    public static event Action onRaftFull;
+    public static event Action<int> onBlueprintAdded;
 
     public static BuildManager main;
 
@@ -323,6 +325,8 @@ public class BuildManager : MonoBehaviour
 
         placeables.Add(script);
         reloadBuyables();
+
+        onBlueprintAdded?.Invoke(placeables.Count);
     }
     public void removeFromList(Tower script) { placeables.Remove(script); reloadBuyables(); } //Remove a buyable button from the list and reload all buttons
     #endregion
@@ -345,6 +349,7 @@ public class BuildManager : MonoBehaviour
                 towerRange = 1;
 
             //StartCoroutine(positionTracker());
+            randomApprovedTowerPosition();
         }
     }
     public void placeBarrier(BarrierScriptable scriptable)  //Creates a barrier with the given barrier scriptable
@@ -680,12 +685,18 @@ public class BuildManager : MonoBehaviour
     {
         Vector3 position = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7));
 
-        while (!approvePosition(position, 0))
+        float startTime = Time.time;
+
+        while (!approvePosition(position, 0) && Time.time < (startTime + 2))
         {
             Debug.Log("Rejected (" + position.x + ", " + position.y + ")");
             position.x = Random.Range(-10, 10);
             position.y = Random.Range(-10, 10);
         }
+
+        if (Time.time > (startTime + 2))
+            onRaftFull?.Invoke();
+
         return position;
     }
     public void placeRandom(Tower tower, float duration)    //Creates a temporary tower at a random position

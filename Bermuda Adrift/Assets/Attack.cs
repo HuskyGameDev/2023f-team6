@@ -690,4 +690,12 @@ public class Attack : MonoBehaviour
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
+
+    public bool idleAttacks()
+    {
+        if (currentButton != KeyCode.None)
+            return false;
+
+        return true;
+    }
 }

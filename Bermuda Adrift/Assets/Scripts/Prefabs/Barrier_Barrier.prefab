@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8588936609604893256}
   - component: {fileID: 1231584968725269850}
   - component: {fileID: 7897829081546859707}
+  - component: {fileID: 5448382335762196391}
   m_Layer: 0
   m_Name: Barrier_Barrier
   m_TagString: Barrier
@@ -165,3 +166,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5448382335762196391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331806046385309275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692b81132e27c454a9c8a0687f2b6d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgPopupTxt: {fileID: 1763371284213634994, guid: a2c99df1b5d7e68489b446bb693cff51, type: 3}

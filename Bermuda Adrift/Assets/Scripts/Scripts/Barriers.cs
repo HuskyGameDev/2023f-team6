@@ -10,6 +10,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     public static event Action OnTowerPlaced;
     public static event Action<GameObject> OnTowerPlacedBM;
     public static event Action<Barriers> onClicked;
+    public event Action<int> onBarrierDamaged;
 
     private BarrierScriptable barrier; //Won't need to be serialized after the placing is set up
     private BuildManager buildManager;
@@ -92,6 +93,8 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
             explosion();
             return;
         }
+
+        onBarrierDamaged?.Invoke(enemyDamage.Item1);
 
         if (barrier.getDamage() > 0)
             enemyDamage.Item2.SendMessage("TakeDamage", barrier.getDamage());

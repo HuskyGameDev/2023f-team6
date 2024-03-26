@@ -41,13 +41,13 @@ public class LogbookManager : MonoBehaviour
     public List<Player> unlockedCharacters;
     private void OnEnable()
     {
-        EnemyManager.onEnemySpawn += unlockEnemy;
+        AI.OnUnlockEnemyDeath += unlockEnemy;
         UnlockableButtonEnemy.UnlockableEnemyButtonClicked += openEnemyInformation;
     }
 
     private void OnDisable()
     {
-        EnemyManager.onEnemySpawn -= unlockEnemy;
+        AI.OnUnlockEnemyDeath -= unlockEnemy;
         UnlockableButtonEnemy.UnlockableEnemyButtonClicked += openEnemyInformation;
     }
 
