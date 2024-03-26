@@ -57,6 +57,8 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
 
         previousLevel = FindObjectOfType<GameManager>().getLevel();
 
+        AudioManager.Instance.PlaySFX("Level Up Bell");
+
         if (numOfUnlocked() == 1)
         {
             foreach (Tower t in allChoices)

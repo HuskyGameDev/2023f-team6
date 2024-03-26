@@ -59,6 +59,7 @@ public class AudioManager : MonoBehaviour, IDataPersistence
         }
 
         PlayMusic("Pirate Theme");
+        PlaySFX("Wind Ambience");
     }
 
     public void PlayMusic(string name)
@@ -75,6 +76,19 @@ public class AudioManager : MonoBehaviour, IDataPersistence
             s.source.Play();
     }
 
+    public void PlayOneShotSFX(string name)
+    {
+        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
+        if (s != null)
+            s.source.PlayOneShot(s.clip);
+    }
+
+    public void StopSFX(string name)
+    {
+        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
+        if (s != null)
+            s.source.Stop();
+    }
 
     public void ChangeMainVolume()
     {

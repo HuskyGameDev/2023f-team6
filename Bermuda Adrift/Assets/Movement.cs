@@ -15,6 +15,11 @@ public class Movement : MonoBehaviour
 
     private Buffs[] buffs;
 
+    private string[] footstepSounds = { "Footstep Wood 1", "Footstep Wood 2", "Footstep Wood 3", "Footstep Wood 4" };
+    public float minTimeBetweenFootsteps = 0.1f;
+    public float maxTimeBetweenFootsteps = 0.3f;
+    private float timeSinceLastFootstep;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,8 +92,23 @@ public class Movement : MonoBehaviour
         else
             yDirection = input.y;
 
-        if (xDirection == 0 && yDirection == 0) anim.SetBool("Moving", false);
-        else anim.SetBool("Moving", true);
+        if (xDirection == 0 && yDirection == 0)
+        {
+            anim.SetBool("Moving", false);
+        }
+        else
+        {
+            anim.SetBool("Moving", true);
+
+            if (Time.time - timeSinceLastFootstep >= Random.Range(minTimeBetweenFootsteps, maxTimeBetweenFootsteps))
+            {
+                if (stopped())
+                {
+                    AudioManager.Instance.PlayOneShotSFX(footstepSounds[Random.Range(0, footstepSounds.Length)]);
+                    timeSinceLastFootstep = Time.time;
+                }
+            }
+        }
         //transform.position = transform.position + new Vector3(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
         transform.position += new Vector3(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;
         //rb.velocity = new Vector2(xDirection, yDirection) * speed * getSpeed() * Time.fixedDeltaTime * stop;

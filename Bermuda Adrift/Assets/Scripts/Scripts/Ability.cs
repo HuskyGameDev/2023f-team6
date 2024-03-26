@@ -33,6 +33,7 @@ public class Ability : ScriptableObject
     [SerializeField] private bool looped;
     [SerializeField] private bool lockedDirection;
     [SerializeField] private string audioString;
+    [SerializeField] private string[] arrayAudioString;
 
     public attackType getAttackType() { return type; }
     public GameObject getHitboxes() { return meleeHitboxes; }
@@ -52,4 +53,5 @@ public class Ability : ScriptableObject
     public bool canBeLooped() { return looped; }
     public bool directionLocked() { return lockedDirection; }
     public string getAudioString() { return audioString; }
+    public string getArrayAudioString() { return arrayAudioString[Random.Range(0, arrayAudioString.Length)]; }
 }

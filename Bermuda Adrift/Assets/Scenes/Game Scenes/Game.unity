@@ -4930,6 +4930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e2f39a81cc8546a097a69d96ab01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenFootsteps: 0.3
+  maxTimeBetweenFootsteps: 0.6
 --- !u!95 &180927779
 Animator:
   serializedVersion: 5
@@ -51797,6 +51799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e2f39a81cc8546a097a69d96ab01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenFootsteps: 0.3
+  maxTimeBetweenFootsteps: 0.6
 --- !u!95 &801291190
 Animator:
   serializedVersion: 5
@@ -52906,6 +52910,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e2f39a81cc8546a097a69d96ab01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenFootsteps: 0.3
+  maxTimeBetweenFootsteps: 0.6
 --- !u!95 &872780715
 Animator:
   serializedVersion: 5
@@ -101418,6 +101424,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1738331855}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Round Start Bell
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1614307917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116166,18 +116184,102 @@ MonoBehaviour:
   - name: Barrel Rolling
     clip: {fileID: 8300000, guid: c8759aa788364d54bbd3348581dd6f3e, type: 3}
     volume: 1
-    pitch: 2.35
-    loop: 0
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
   - name: Barrel Explosion
     clip: {fileID: 8300000, guid: dda6edc82798a2c48bd4fb7580a4de7e, type: 3}
     volume: 0.5
-    pitch: 0.75
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Drink Rum
     clip: {fileID: 8300000, guid: 0eadd94ec75bcc147b1fdf30fa5e26a5, type: 3}
     volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Level Up Bell
+    clip: {fileID: 8300000, guid: 19f0b0ff6338dd747b8a98ec75e22ca8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Footstep Wood 1
+    clip: {fileID: 8300000, guid: f55c4b7410f61d647a7eb7018c614d2c, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Footstep Wood 2
+    clip: {fileID: 8300000, guid: cfd0c3105caa0b646ad1f87d55bd4fa7, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Footstep Wood 3
+    clip: {fileID: 8300000, guid: 55bac5341c23ce849b2f69012abb6da3, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Footstep Wood 4
+    clip: {fileID: 8300000, guid: 9324748e0d1ae3b4986fa414000601aa, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Round Start Bell
+    clip: {fileID: 8300000, guid: 7b08d2d7331af9843ae16fdc182c030c, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Wind Ambience
+    clip: {fileID: 8300000, guid: ea449aa8a4d5eb14ea97732e20b08fa9, type: 3}
+    volume: 0.05
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Cutlass Slash 1
+    clip: {fileID: 8300000, guid: b96d2008602c8fc47bcff61c71ab015c, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Cutlass Slash 2
+    clip: {fileID: 8300000, guid: 77abaffcc0c52b14c93129ff60469972, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Cutlass Slash 3
+    clip: {fileID: 8300000, guid: 27b4896b9008a6b43bcd5b7de5da0f65, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Enemy Impact 1
+    clip: {fileID: 8300000, guid: b2403714c42b3f342acbdabbc324c414, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Enemy Impact 2
+    clip: {fileID: 8300000, guid: f7a568e4dd316fd4b9c460d173c084fc, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Enemy Impact 3
+    clip: {fileID: 8300000, guid: dea6863c49898a245af7cbdc6f159615, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Enemy Impact 4
+    clip: {fileID: 8300000, guid: 1c635fc669335fb47a7b713b26c0afdc, type: 3}
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -125233,39 +125335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd2254c1da9444ba31740136ff6316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  achievements:
-  - {fileID: 11400000, guid: 6974a0256c39b0347bab72fe901984bb, type: 2}
-  - {fileID: 11400000, guid: afa03dae2d1434446b7a008d945f8f08, type: 2}
-  - {fileID: 11400000, guid: 2657af34ee9bbb64aa92e9e77198660d, type: 2}
-  - {fileID: 11400000, guid: 998e451e6a8043e4ebabec12c6af936d, type: 2}
-  - {fileID: 11400000, guid: 29b73e9f0b8341d49ba7a196da4dfdde, type: 2}
-  - {fileID: 11400000, guid: 4da9491500140a14abedbed7ce92f3d9, type: 2}
-  - {fileID: 11400000, guid: 11fb46fcbc4b460449f552007d2f9f1c, type: 2}
-  - {fileID: 11400000, guid: c7df96325d1c48d4d8b047d5fff685c3, type: 2}
-  - {fileID: 11400000, guid: aa327c8ad55f3ad4984662ea4722ceb2, type: 2}
-  - {fileID: 11400000, guid: 1c7a0f1fd27df5c40b5e745ad6116792, type: 2}
-  - {fileID: 11400000, guid: 151155b5149682543ac40c83a3887dc4, type: 2}
-  - {fileID: 11400000, guid: 41ed2e27ca2791f479368a2434f4b1ce, type: 2}
-  - {fileID: 11400000, guid: 82c1aaaead6b042489ab3d27b2fa9072, type: 2}
-  - {fileID: 11400000, guid: 45e38f0a42daa664ca07f14107d6e10c, type: 2}
-  - {fileID: 11400000, guid: b6a8af3af5d0386449e2794a7cf1906e, type: 2}
-  - {fileID: 11400000, guid: 250aa68f31ccff748ba0a52885eeb772, type: 2}
-  - {fileID: 11400000, guid: 250ee7614c60e0640af3634bac50a55a, type: 2}
-  - {fileID: 11400000, guid: bc6498f4b98362741b116495e70778fb, type: 2}
-  - {fileID: 11400000, guid: 742dab22d781b794eaf1e6c59da891a6, type: 2}
-  - {fileID: 11400000, guid: fa0a4c080793de841bb62de96f4f35c7, type: 2}
-  - {fileID: 11400000, guid: f9806c6072ca8664f916d3d7497a6c3a, type: 2}
-  - {fileID: 11400000, guid: d76572cd9b71e3f459cc8cc538ff4d9e, type: 2}
-  - {fileID: 11400000, guid: 1fa67da8e9a6bc944bed8ce14bbc91f7, type: 2}
-  - {fileID: 11400000, guid: 68f69f9aec320b64f8ca5b0144fd64e1, type: 2}
-  - {fileID: 11400000, guid: f0626aaecc947f44ab879a3aa002e19e, type: 2}
-  - {fileID: 11400000, guid: efeb3b38c25d1d4418d37ed099ffd882, type: 2}
-  - {fileID: 11400000, guid: 0db32857112fe8d4098019c0acc4c250, type: 2}
-  - {fileID: 11400000, guid: e7204b08418c14840807af80b4759673, type: 2}
-  - {fileID: 11400000, guid: bfd5f69b6a95ca24d990c755a22fb245, type: 2}
-  - {fileID: 11400000, guid: ae8198ec6aaa9f7499c3fc4567ce8371, type: 2}
-  - {fileID: 11400000, guid: 2740390866ace9d428c71b5df2cc1860, type: 2}
-  - {fileID: 11400000, guid: 6eacd4c4062ba1a4d919adc7ae37a5c2, type: 2}
   achievementPopup: {fileID: 919419399}
 --- !u!114 &2038607814
 MonoBehaviour:
@@ -125302,9 +125371,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 293677a1e8c64c246bd1975204dfb2c0, type: 2}
   - {fileID: 11400000, guid: 6d951c6ee041bbe4b9043a68ecb9b7f3, type: 2}
   - {fileID: 11400000, guid: 8cc561454df92d84a9496a1c9b98204d, type: 2}
-  - {fileID: 11400000, guid: 20d6920cb1f104445b76e944799a2efc, type: 2}
-  - {fileID: 11400000, guid: 13ecd38e2825c7c419cb99e446cb8bbd, type: 2}
-  - {fileID: 11400000, guid: 043bb8382974e444f80fa91acfd5b8e8, type: 2}
+  - {fileID: 11400000, guid: 2849e7167ce62ec4495a45349858d1c3, type: 2}
+  - {fileID: 11400000, guid: f6555dd39960879458d657fab1cdc7c7, type: 2}
+  - {fileID: 11400000, guid: f6a40aa466056ce4a990da0fae004a36, type: 2}
+  - {fileID: 11400000, guid: 9aa109670911eb8408e934d09fde2000, type: 2}
 --- !u!1 &2039801569
 GameObject:
   m_ObjectHideFlags: 0
@@ -129503,6 +129573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e2f39a81cc8546a097a69d96ab01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenFootsteps: 0.3
+  maxTimeBetweenFootsteps: 0.6
 --- !u!95 &2135632954
 Animator:
   serializedVersion: 5
@@ -130296,6 +130368,7 @@ Tilemap:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2038607806}
   - {fileID: 1427900360}
   - {fileID: 1114997580}
   - {fileID: 569147773}
@@ -130304,7 +130377,6 @@ SceneRoots:
   - {fileID: 1939975470}
   - {fileID: 1271838841}
   - {fileID: 519420032}
-  - {fileID: 2038607806}
   - {fileID: 542464308}
   - {fileID: 1515315869}
   - {fileID: 1133017996}

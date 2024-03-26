@@ -38,6 +38,9 @@ public class Hitscan : MonoBehaviour
 
         sprite.localRotation = transform.rotation;
         camera = Camera.main;   //Used for camera shake effects;
+
+        if (effect == Bullet.Effects.Explosion)
+            if (bullet.getLiveAudioString() != null) AudioManager.Instance.PlaySFX(bullet.getLiveAudioString());
     }
     private void Update()
     {
@@ -113,6 +116,8 @@ public class Hitscan : MonoBehaviour
 
             if (Mathf.Abs(gameObject.transform.position.x) >= Mathf.Abs((camera.transform.position.x - camera.orthographicSize) * 2f) || Mathf.Abs(gameObject.transform.position.y) >= Mathf.Abs(camera.transform.position.y - camera.orthographicSize * 1.15f))
             {
+                if (effect == Bullet.Effects.Explosion)
+                    if (bullet.getLiveAudioString() != null) AudioManager.Instance.StopSFX(bullet.getLiveAudioString());
                 Destroy(gameObject);    //Delete the bullet if off screen
             }
         }
@@ -244,7 +249,6 @@ public class Hitscan : MonoBehaviour
     {
         if (collision.name == "AOETrigger") return;
         int crit = critCalc();
-            
 
         if (crit > 1)
         {
@@ -349,7 +353,8 @@ public class Hitscan : MonoBehaviour
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
-                AudioManager.Instance.PlaySFX(bullet.getAudioString());
+                AudioManager.Instance.StopSFX(bullet.getLiveAudioString());
+                AudioManager.Instance.PlaySFX(bullet.getImpactAudioString());
 
                 camera.SendMessage("cameraShake", 0.25f);
                 

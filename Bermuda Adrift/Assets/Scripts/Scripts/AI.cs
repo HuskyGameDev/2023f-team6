@@ -24,6 +24,8 @@ public class AI : MonoBehaviour
     [SerializeField] private GameObject extra;
     [SerializeField] private Bullet bullet;
 
+    private string[] impactSounds = {"Enemy Impact 1", "Enemy Impact 2", "Enemy Impact 3", "Enemy Impact 4" };
+
     private int newMaxHealth;
 
     private bool arrived;
@@ -664,6 +666,8 @@ public class AI : MonoBehaviour
     {
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
 
+        AudioManager.Instance.PlaySFX(impactSounds[Random.Range(0, impactSounds.Length)]);
+
         Health -= (int) (moreDamage * getArmor() * wall);
         damage += (int) (moreDamage * getArmor() * wall);
         animator.SetTrigger("TookDamage");
@@ -682,6 +686,8 @@ public class AI : MonoBehaviour
     private void CritDamage(int moreDamage)
     {
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
+        AudioManager.Instance.PlaySFX(impactSounds[Random.Range(0, impactSounds.Length)]);
 
         Health -= (int)(moreDamage * getArmor() * wall);
         damage += (int)(moreDamage * getArmor() * wall);

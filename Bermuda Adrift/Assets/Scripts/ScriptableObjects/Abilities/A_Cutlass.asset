@@ -29,4 +29,8 @@ MonoBehaviour:
   description: Attack with a quick, short range attack
   looped: 1
   lockedDirection: 0
-  audioString: Cutlass
+  audioString: 
+  arrayAudioString:
+  - Cutlass Slash 1
+  - Cutlass Slash 2
+  - Cutlass Slash 3

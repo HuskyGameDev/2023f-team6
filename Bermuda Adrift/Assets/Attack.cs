@@ -320,16 +320,17 @@ public class Attack : MonoBehaviour
     }
     public void attack(Ability ability)    //Handles projectiles and buffs
     {
-        if (ability.getAudioString() != null)
-            AudioManager.Instance.PlaySFX(ability.getAudioString());
-
         if (attackCooldownBool) { return; }
         attackCooldownBool = true;
+
+        if (!ability.getAudioString().Equals(""))
+            AudioManager.Instance.PlaySFX(ability.getAudioString());
+        else if (!ability.getArrayAudioString().Equals(""))
+            AudioManager.Instance.PlaySFX(ability.getArrayAudioString());
 
         if (ability.getAttackType() == Ability.attackType.melee)
         {
             attackMelee(ability);
-
 
         }
         else if (ability.getAttackType() == Ability.attackType.projectile)
