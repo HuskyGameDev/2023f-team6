@@ -97,6 +97,10 @@ public class TowerAI : MonoBehaviour
                     anim.Play("Setup");
                     gameManager.spendScrap(tower.getCost());
                 }
+                else
+                {
+                    AudioManager.Instance.PlaySFX("Placement Failure");
+                }
             }
             else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown("escape"))
             {

@@ -63441,6 +63441,116 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975659669}
   m_CullTransparentMesh: 1
+--- !u!1 &976673829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 976673830}
+  - component: {fileID: 976673834}
+  - component: {fileID: 976673833}
+  - component: {fileID: 976673832}
+  - component: {fileID: 976673831}
+  m_Layer: 5
+  m_Name: SceneTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &976673830
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976673829}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4164006, y: 0.4164006, z: 0.4164006}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427900360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 3041.0347, y: 1711.364}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &976673831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976673829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd63c22044cc19c4a9b0af963ddca532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &976673832
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976673829}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2c519d89780510248bd1ad8c8aeccab9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &976673833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976673829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &976673834
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976673829}
+  m_CullTransparentMesh: 1
 --- !u!1 &977074410
 GameObject:
   m_ObjectHideFlags: 0
@@ -93404,6 +93514,7 @@ RectTransform:
   - {fileID: 1696507083}
   - {fileID: 2107640182}
   - {fileID: 668868648}
+  - {fileID: 976673830}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -116164,13 +116275,13 @@ MonoBehaviour:
   musicSounds:
   - name: Pirate Theme
     clip: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
-    volume: 1
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   sfxSounds:
   - name: Button Click
-    clip: {fileID: 8300000, guid: bd4222455acffcd4ababb95db8574dc8, type: 3}
+    clip: {fileID: 8300000, guid: 37bb026c61d6815408652db0e2368657, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -116280,6 +116391,30 @@ MonoBehaviour:
   - name: Enemy Impact 4
     clip: {fileID: 8300000, guid: 1c635fc669335fb47a7b713b26c0afdc, type: 3}
     volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Tower Upgrade
+    clip: {fileID: 8300000, guid: 0e9e15149e19c5a46a58b42b6d2edfb6, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Tooltip Popup
+    clip: {fileID: 8300000, guid: 7f2564582bb19c949bf2836c92b02a09, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Placement Failure
+    clip: {fileID: 8300000, guid: 60bb2cc45a0311b4398863e08a53f1c0, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Tower Select
+    clip: {fileID: 8300000, guid: 111a4fad88d986548b449f066d3e0324, type: 3}
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}

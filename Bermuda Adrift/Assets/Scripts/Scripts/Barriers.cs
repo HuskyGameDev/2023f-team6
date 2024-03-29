@@ -48,6 +48,10 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
                     if (barrier.getEffect() == BarrierScriptable.Effect.Platform)
                         gameObject.layer = 9;
                 }
+                else
+                {
+                    AudioManager.Instance.PlaySFX("Placement Failure");
+                }
             }
             else if (Input.GetMouseButtonDown(1))
             {

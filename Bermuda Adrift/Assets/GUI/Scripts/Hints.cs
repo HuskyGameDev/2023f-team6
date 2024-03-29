@@ -65,6 +65,8 @@ public class Hints : MonoBehaviour
         
         OnPopupAppeared?.Invoke();
 
+        AudioManager.Instance.PlaySFX("Tooltip Popup");
+
         StartCoroutine(delay(10f));
     }
     private IEnumerator delay(float timeOnScreen)

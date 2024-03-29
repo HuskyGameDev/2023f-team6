@@ -122,6 +122,8 @@ public class GameManager : MonoBehaviour
         }
 
         state = GameState.Idle;
+
+        AudioManager.Instance.PlaySFX("Round End");
     }
 
     private void GameEnd()
