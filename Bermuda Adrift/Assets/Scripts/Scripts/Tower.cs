@@ -57,6 +57,7 @@ public class Tower : ScriptableObject
     [SerializeField] private int UA2cost;
     [SerializeField] private int UA2LightningResistance;
     [SerializeField] private Sprite UA2image;
+    [SerializeField] private bool A2upgraded;
 
 
     //Upgrade B1
@@ -84,6 +85,7 @@ public class Tower : ScriptableObject
     [SerializeField] private int UB2cost;
     [SerializeField] private int UB2LightningResistance;
     [SerializeField] private Sprite UB2image;
+    [SerializeField] private bool B2upgraded;
 
     [Header("Misc")]
     [SerializeField] private RuntimeAnimatorController anim;
@@ -106,6 +108,9 @@ public class Tower : ScriptableObject
     
     public bool getNoUpgrades() { return noUpgrades; }
     public TowerAI.Priority[] getExtraPriorities() { return extraPriorities; }
+    public void upgradeA2() { A2upgraded = true; }
+    public void upgradeB2() { B2upgraded = true; }
+    public bool sawBothUpgrades() { return A2upgraded && B2upgraded; }
 
     public Bullet getDefaultBullet() { return defaultBullet; }
     public int getCost() { return cost; }

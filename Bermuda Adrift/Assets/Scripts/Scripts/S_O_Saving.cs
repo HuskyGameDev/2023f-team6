@@ -81,6 +81,7 @@ public class S_O_Saving
     #endregion
 
     #region Skills
+    public int totalPoints;
     #endregion
 
     #region Enemy Logs
@@ -102,11 +103,13 @@ public class S_O_Saving
     public Locks_n_Logs Sea_Serpent;
     public Locks_n_Logs Kraken;
     public Locks_n_Logs Shadow_Self;
+    public Locks_n_Logs Zombie_Kraken;
     public Locks_n_Logs Davy_Jones_Locker;
-    public Locks_n_Logs Ghost_Ship;
-    public Locks_n_Logs Megalodon;
     public Locks_n_Logs Roc;
     public Locks_n_Logs Whale;
+    public Locks_n_Logs Ghost_Ship;
+    public Locks_n_Logs Megalodon;
+    public Locks_n_Logs Dragon;
     public Locks_n_Logs The_Maestro;
 
     public Locks_n_Logs getEnemySave(string name)
@@ -129,11 +132,13 @@ public class S_O_Saving
         if (name.CompareTo("BossE_Serpent") == 0) return Sea_Serpent;
         if (name.CompareTo("BossE_Kraken") == 0) return Kraken;
         if (name.CompareTo("BossE_ShadowSelf") == 0) return Shadow_Self;
+        if (name.CompareTo("BossE_ZombieKraken") == 0) return Zombie_Kraken;
         if (name.CompareTo("BossE_DavyJonesLocker") == 0) return Davy_Jones_Locker;
-        if (name.CompareTo("BossE_GhostShip") == 0) return Ghost_Ship;
-        if (name.CompareTo("BossE_Megalodon") == 0) return Megalodon;
         if (name.CompareTo("BossE_Roc") == 0) return Roc;
         if (name.CompareTo("BossE_Whale") == 0) return Whale;
+        if (name.CompareTo("BossE_GhostShip") == 0) return Ghost_Ship;
+        if (name.CompareTo("BossE_Megalodon") == 0) return Megalodon;
+        if (name.CompareTo("BossE_Dragon") == 0) return Dragon;
         if (name.CompareTo("BossE_TheMaestro") == 0) return The_Maestro;
 
         Debug.Log("No matches for " + name);
@@ -142,51 +147,52 @@ public class S_O_Saving
     #endregion
 
     #region Achievements
-    public Locks_n_Logs Click_Me;
-    public Locks_n_Logs Completionist;
-    public Locks_n_Logs Devout_Follower;
-    public Locks_n_Logs Did_We_Escape;
-    public Locks_n_Logs Even_Further_Beyond;
-    public Locks_n_Logs Fin_Soup;
-    public Locks_n_Logs Full_Arsenal;
-    public Locks_n_Logs Gotcha;
-    public Locks_n_Logs Gotta_Go_Fast;
-    public Locks_n_Logs Hemophobia;
-    public Locks_n_Logs Immovable_Object;
-    public Locks_n_Logs In_And_Out;
-    public Locks_n_Logs Journalist;
-    public Locks_n_Logs Kamikaze_Director;
-    public Locks_n_Logs Land_Ho;
-    public Locks_n_Logs Looping_Memories;
     public Locks_n_Logs Man_In_The_Mirror;
-    public Locks_n_Logs New_Captain;
-    public Locks_n_Logs Not_Even_Worth_The_Time;
-    public Locks_n_Logs Pew_Pew;
-    public Locks_n_Logs Removable_Object;
-    public Locks_n_Logs Seedling;
-    public Locks_n_Logs Single_Minded;
-    public Locks_n_Logs Skill_Issue;
-    public Locks_n_Logs Swordmaster;
-    public Locks_n_Logs Tea_Time;
-    public Locks_n_Logs Thats_A_Lotta_Damage;
-    public Locks_n_Logs Unlucky;
-    public Locks_n_Logs Unstoppable_Force;
-    public Locks_n_Logs Were_Rich;
+    public Locks_n_Logs Land_Ho;
+
+    public Locks_n_Logs Fin_Soup;
+    public Locks_n_Logs Gotcha;
+    public Locks_n_Logs Full_Arsenal;
+    public Locks_n_Logs Even_Further_Beyond;
     public Locks_n_Logs Why_Are_You_Hoarding;
+    public Locks_n_Logs Unstoppable_Force;
+    public Locks_n_Logs Tea_Time;
+    public Locks_n_Logs Not_Even_Worth_The_Time;
+
+    public Locks_n_Logs In_And_Out;
+    public Locks_n_Logs Swordmaster;
+    public Locks_n_Logs Seedling;
+    public Locks_n_Logs Thats_A_Lotta_Damage;
+    public Locks_n_Logs Were_Rich;
+
+    public Locks_n_Logs Well_Done;
+    public Locks_n_Logs Unlucky;
+    public Locks_n_Logs Skill_Issue;
+
+    public Locks_n_Logs Immovable_Object;
+    public Locks_n_Logs Devout_Follower;
+    public Locks_n_Logs New_Captain;
+    public Locks_n_Logs Kamikaze_Director;
+    public Locks_n_Logs Looping_Memories;
+    public Locks_n_Logs Completionist;
     public Locks_n_Logs World_Tree;
+    public Locks_n_Logs Removable_Object;
+    public Locks_n_Logs Journalist;
+
+    public int decoysKilled;
+    public int pirateCount;
+    public int pilotCount;
+    public int oldManCount;
+    public int barrierDamage;
 
     public Locks_n_Logs getAchievementSave(string name)
     {
-        if (name.CompareTo("Ach_Click_Me") == 0) return Click_Me;
         if (name.CompareTo("Ach_Completionist") == 0) return Completionist;
         if (name.CompareTo("Ach_Devout_Follower") == 0) return Devout_Follower;
-        if (name.CompareTo("Ach_Did_We_Escape") == 0) return Did_We_Escape;
         if (name.CompareTo("Ach_Even_Further_Beyond") == 0) return Even_Further_Beyond;
         if (name.CompareTo("Ach_Fin_Soup") == 0) return Fin_Soup;
         if (name.CompareTo("Ach_Full_Arsenal") == 0) return Full_Arsenal;
         if (name.CompareTo("Ach_Gotcha") == 0) return Gotcha;
-        if (name.CompareTo("Ach_Gotta_Go_Fast") == 0) return Gotta_Go_Fast;
-        if (name.CompareTo("Ach_Hemophobia") == 0) return Hemophobia;
         if (name.CompareTo("Ach_Immovable_Object") == 0) return Immovable_Object;
         if (name.CompareTo("Ach_In_And_Out") == 0) return In_And_Out;
         if (name.CompareTo("Ach_Journalist") == 0) return Journalist;
@@ -196,10 +202,8 @@ public class S_O_Saving
         if (name.CompareTo("Ach_Man_In_The_Mirror") == 0) return Man_In_The_Mirror;
         if (name.CompareTo("Ach_New_Captain") == 0) return New_Captain;
         if (name.CompareTo("Ach_Not_Even_Worth_The_Time") == 0) return Not_Even_Worth_The_Time;
-        if (name.CompareTo("Ach_Pew_Pew") == 0) return Pew_Pew;
         if (name.CompareTo("Ach_Removable_Object") == 0) return Removable_Object;
         if (name.CompareTo("Ach_Seedling") == 0) return Seedling;
-        if (name.CompareTo("Ach_Single_Minded") == 0) return Single_Minded;
         if (name.CompareTo("Ach_Skill_Issue") == 0) return Skill_Issue;
         if (name.CompareTo("Ach_Swordmaster") == 0) return Swordmaster;
         if (name.CompareTo("Ach_Tea_Time") == 0) return Tea_Time;
@@ -207,6 +211,7 @@ public class S_O_Saving
         if (name.CompareTo("Ach_Unlucky") == 0) return Unlucky;
         if (name.CompareTo("Ach_Unstoppable_Force") == 0) return Unstoppable_Force;
         if (name.CompareTo("Ach_Were_Rich") == 0) return Were_Rich;
+        if (name.CompareTo("Ach_Well_Done") == 0) return Well_Done;
         if (name.CompareTo("Ach_Why_Are_You_Hoarding") == 0) return Why_Are_You_Hoarding;
         if (name.CompareTo("Ach_World_Tree") == 0) return World_Tree;
 
@@ -249,7 +254,11 @@ public class S_O_Saving
         Old_Man = new Locks_n_Logs();
         #endregion
 
-        #region Enemies
+        #region Skills
+        totalPoints = 0;
+        #endregion
+
+        #region Enemy Logs
         Angler_Fish = new Locks_n_Logs();
         Crow = new Locks_n_Logs();
         Electric_Eel = new Locks_n_Logs();
@@ -268,19 +277,23 @@ public class S_O_Saving
         Sea_Serpent = new Locks_n_Logs();
         Kraken = new Locks_n_Logs();
         Shadow_Self = new Locks_n_Logs();
-        #endregion
+        Zombie_Kraken = new Locks_n_Logs();
+        Davy_Jones_Locker = new Locks_n_Logs();
+        Roc = new Locks_n_Logs();
+        Whale = new Locks_n_Logs();
+        Ghost_Ship = new Locks_n_Logs();
+        Megalodon = new Locks_n_Logs();
+        Dragon = new Locks_n_Logs();
+        The_Maestro = new Locks_n_Logs();
+    #endregion
 
-        #region Achievements
-        Click_Me = new Locks_n_Logs();
-        Completionist = new Locks_n_Logs();
+    #region Achievements
+    Completionist = new Locks_n_Logs();
         Devout_Follower = new Locks_n_Logs();
-        Did_We_Escape = new Locks_n_Logs();
         Even_Further_Beyond = new Locks_n_Logs();
         Fin_Soup = new Locks_n_Logs();
         Full_Arsenal = new Locks_n_Logs();
         Gotcha = new Locks_n_Logs();
-        Gotta_Go_Fast = new Locks_n_Logs();
-        Hemophobia = new Locks_n_Logs();
         Immovable_Object = new Locks_n_Logs();
         In_And_Out = new Locks_n_Logs();
         Journalist = new Locks_n_Logs();
@@ -290,10 +303,8 @@ public class S_O_Saving
         Man_In_The_Mirror = new Locks_n_Logs();
         New_Captain = new Locks_n_Logs();
         Not_Even_Worth_The_Time = new Locks_n_Logs();
-        Pew_Pew = new Locks_n_Logs();
         Removable_Object = new Locks_n_Logs();
         Seedling = new Locks_n_Logs();
-        Single_Minded = new Locks_n_Logs();
         Skill_Issue = new Locks_n_Logs();
         Swordmaster = new Locks_n_Logs();
         Tea_Time = new Locks_n_Logs();
@@ -301,8 +312,15 @@ public class S_O_Saving
         Unlucky = new Locks_n_Logs();
         Unstoppable_Force = new Locks_n_Logs();
         Were_Rich = new Locks_n_Logs();
+        Well_Done = new Locks_n_Logs();
         Why_Are_You_Hoarding = new Locks_n_Logs();
         World_Tree = new Locks_n_Logs();
+
+        decoysKilled = 0;
+        pirateCount = 0;
+        pilotCount = 0;
+        oldManCount = 0;
+        barrierDamage = 0;
         #endregion
 
         #region Settings

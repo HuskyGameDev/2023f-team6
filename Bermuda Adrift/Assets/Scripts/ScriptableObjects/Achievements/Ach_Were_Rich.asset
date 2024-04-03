@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Ach_Were_Rich
   m_EditorClassIdentifier: 
   Name: We're Rich!
-  Description: Collect 1,000,000 scrap total
+  Description: Collect 100,000 scrap total
   associatedTower: {fileID: 0}
-  associatedBarrier: {fileID: 0}
+  associatedBarrier: {fileID: 11400000, guid: 88f1db238f22e2c41a87d04b53728469, type: 2}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 0}
   skillPoints: 0
+  unlocked: 0

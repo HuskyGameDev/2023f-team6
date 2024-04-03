@@ -222,6 +222,10 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     public void addRandom()
     {
         Tower random = allChoices[Random.Range(0, allChoices.Length)];
+
+        while (!random.getUnlocked())
+            random = allChoices[Random.Range(0, allChoices.Length)];
+
         buildManager.addToList(random);
     }
     public void addIndex(int i)

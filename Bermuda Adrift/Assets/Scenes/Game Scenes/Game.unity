@@ -28799,13 +28799,14 @@ GameObject:
   - component: {fileID: 450279483}
   - component: {fileID: 450279485}
   - component: {fileID: 450279486}
+  - component: {fileID: 450279487}
   m_Layer: 0
   m_Name: GameSceneTester
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &450279483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28864,6 +28865,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testRound: 10
+--- !u!114 &450279487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450279482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c59b64ec30321a4d8db1250440bf6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievements:
+  - {fileID: 11400000, guid: 250ee7614c60e0640af3634bac50a55a, type: 2}
+  - {fileID: 11400000, guid: b6a8af3af5d0386449e2794a7cf1906e, type: 2}
+  - {fileID: 11400000, guid: 4da9491500140a14abedbed7ce92f3d9, type: 2}
+  - {fileID: 11400000, guid: c7df96325d1c48d4d8b047d5fff685c3, type: 2}
+  - {fileID: 11400000, guid: 11fb46fcbc4b460449f552007d2f9f1c, type: 2}
+  - {fileID: 11400000, guid: 29b73e9f0b8341d49ba7a196da4dfdde, type: 2}
+  - {fileID: 11400000, guid: 2740390866ace9d428c71b5df2cc1860, type: 2}
+  - {fileID: 11400000, guid: afa03dae2d1434446b7a008d945f8f08, type: 2}
+  - {fileID: 11400000, guid: 2657af34ee9bbb64aa92e9e77198660d, type: 2}
+  - {fileID: 11400000, guid: 151155b5149682543ac40c83a3887dc4, type: 2}
+  - {fileID: 11400000, guid: 41ed2e27ca2791f479368a2434f4b1ce, type: 2}
+  - {fileID: 11400000, guid: 82c1aaaead6b042489ab3d27b2fa9072, type: 2}
+  - {fileID: 11400000, guid: 45e38f0a42daa664ca07f14107d6e10c, type: 2}
+  - {fileID: 11400000, guid: 250aa68f31ccff748ba0a52885eeb772, type: 2}
+  - {fileID: 11400000, guid: bc6498f4b98362741b116495e70778fb, type: 2}
+  - {fileID: 11400000, guid: 742dab22d781b794eaf1e6c59da891a6, type: 2}
+  - {fileID: 11400000, guid: f9806c6072ca8664f916d3d7497a6c3a, type: 2}
+  - {fileID: 11400000, guid: d76572cd9b71e3f459cc8cc538ff4d9e, type: 2}
+  - {fileID: 11400000, guid: 68f69f9aec320b64f8ca5b0144fd64e1, type: 2}
+  - {fileID: 11400000, guid: f0626aaecc947f44ab879a3aa002e19e, type: 2}
+  - {fileID: 11400000, guid: efeb3b38c25d1d4418d37ed099ffd882, type: 2}
+  - {fileID: 11400000, guid: 0db32857112fe8d4098019c0acc4c250, type: 2}
+  - {fileID: 11400000, guid: e7204b08418c14840807af80b4759673, type: 2}
+  - {fileID: 11400000, guid: bfd5f69b6a95ca24d990c755a22fb245, type: 2}
+  - {fileID: 11400000, guid: b4cb5f46b52560d428bdfc7b085ce68f, type: 2}
+  - {fileID: 11400000, guid: ae8198ec6aaa9f7499c3fc4567ce8371, type: 2}
+  - {fileID: 11400000, guid: 6eacd4c4062ba1a4d919adc7ae37a5c2, type: 2}
 --- !u!1 &451531659
 GameObject:
   m_ObjectHideFlags: 0
@@ -61080,7 +61121,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0bef61c1cb87d49419850f4db91c2aa9, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0

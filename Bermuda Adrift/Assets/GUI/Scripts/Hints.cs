@@ -127,6 +127,7 @@ public class Hints : MonoBehaviour
     void bookHelp()
     {
         stack.Push("Click the \" ? \" button to learn more stuff these tips can't tell you!");
+        stack.Push("Fun fact: Projectile damage gets weaker the farther it travels, but you do more damage up close!");
     }
     #endregion
 }

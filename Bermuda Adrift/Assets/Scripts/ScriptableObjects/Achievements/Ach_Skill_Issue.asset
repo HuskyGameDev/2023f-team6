@@ -17,4 +17,6 @@ MonoBehaviour:
   associatedTower: {fileID: 0}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 11400000, guid: 01ef03960fed9e442a46ed627c360fd3, type: 2}
   skillPoints: 0
+  unlocked: 0

@@ -11,6 +11,7 @@ public class TowerAI : MonoBehaviour
     public static event Action<GameObject> OnTowerPlacedBM; //Specifically for the build manager
     public static event Action OnUpgradeMenuOpen;
     public static event Action<TowerAI> OnUpgraded;
+    public static event Action<Tower> OnDoubleUpgraded;
 
     public enum Priority { Closest, Furthest, Strongest, Weakest, Fastest, OnlyWater, OnlyAir, None };
 
@@ -285,6 +286,10 @@ public class TowerAI : MonoBehaviour
                 turnSpeed = tower.UA2getTurnSpeed();
                 lightningResistance = tower.UA2getLightningResistance() + 1;
 
+                tower.upgradeA2();
+                if (tower.sawBothUpgrades())
+                    OnDoubleUpgraded?.Invoke(tower);
+
                 gameManager.spendScrap(tower.UA2getCost());
             }
             else
@@ -298,6 +303,10 @@ public class TowerAI : MonoBehaviour
                 damageMult = tower.UB2getDamageMult();
                 turnSpeed = tower.UB2getTurnSpeed();
                 lightningResistance = tower.UB2getLightningResistance() + 1;
+
+                tower.upgradeB2();
+                if (tower.sawBothUpgrades())
+                    OnDoubleUpgraded?.Invoke(tower);
 
                 gameManager.spendScrap(tower.UB2getCost());
             }

@@ -13,6 +13,8 @@ public class AI : MonoBehaviour
     public static event Action OnEnemyDeath;
     public static event Action OnDecoyDeath;
     public static event Action<Enemy> OnUnlockEnemyDeath;
+    public static event Action onMeleeKill;
+    public static event Action onMajorDamage;
 
     public event Action<int> SetupHealthBar;
 
@@ -672,6 +674,9 @@ public class AI : MonoBehaviour
         damage += (int) (moreDamage * getArmor() * wall);
         animator.SetTrigger("TookDamage");
 
+        if (moreDamage * getArmor() * wall >= 1000)
+            onMajorDamage?.Invoke();
+
         //if (enemy.getType() == Enemy.Types.WaterBoss)
         //    Debug.Log("Took " + (int)(moreDamage * getArmor()) + " damage, now at " + Health + " / " + newMaxHealth);
 
@@ -693,11 +698,65 @@ public class AI : MonoBehaviour
         damage += (int)(moreDamage * getArmor() * wall);
         animator.SetTrigger("TookDamage");
 
+        if (moreDamage * getArmor() * wall >= 1000)
+            onMajorDamage?.Invoke();
+
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
             OnCrit?.Invoke((int)(moreDamage * getArmor() * wall));
 
         if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
             death();
+    }
+    private void TakeDamageMelee(int moreDamage) //Receiver for damage numbers, go to debuff function if debuffed
+    {
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
+        AudioManager.Instance.PlaySFX(impactSounds[Random.Range(0, impactSounds.Length)]);
+
+        Health -= (int)(moreDamage * getArmor() * wall);
+        damage += (int)(moreDamage * getArmor() * wall);
+        animator.SetTrigger("TookDamage");
+
+        if (moreDamage * getArmor() * wall >= 1000)
+            onMajorDamage?.Invoke();
+
+        //if (enemy.getType() == Enemy.Types.WaterBoss)
+        //    Debug.Log("Took " + (int)(moreDamage * getArmor()) + " damage, now at " + Health + " / " + newMaxHealth);
+
+        //Debug.Log("Normal: -" + (moreDamage * getArmor()) + " => " + Health + " / " + enemy.getHealth());
+
+        if (!forgotten) //Not even damage popups appear when an enemy is forgotten
+            OnEnemyHurt?.Invoke((int)(moreDamage * getArmor() * wall));
+
+        if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
+        {
+            if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
+                onMeleeKill?.Invoke();
+            death();
+        }
+    }
+    private void CritDamageMelee(int moreDamage)
+    {
+        if (enemy.getSpecialType() == Enemy.SpecialTypes.Immune) return;
+
+        AudioManager.Instance.PlaySFX(impactSounds[Random.Range(0, impactSounds.Length)]);
+
+        Health -= (int)(moreDamage * getArmor() * wall);
+        damage += (int)(moreDamage * getArmor() * wall);
+        animator.SetTrigger("TookDamage");
+
+        if (moreDamage * getArmor() * wall >= 1000)
+            onMajorDamage?.Invoke();
+
+        if (!forgotten) //Not even damage popups appear when an enemy is forgotten
+            OnCrit?.Invoke((int)(moreDamage * getArmor() * wall));
+
+        if (Health <= 0 && !dead)   //Need the dead check or it'll count multiple deaths per enemy
+        {
+            if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss)
+                onMeleeKill?.Invoke();
+            death();
+        }
     }
     private void StatusDamage(int moreDamage, Color color)
     {

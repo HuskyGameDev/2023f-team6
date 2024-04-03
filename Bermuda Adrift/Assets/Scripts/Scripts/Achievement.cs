@@ -11,6 +11,7 @@ public class Achievement : ScriptableObject
     [SerializeField] private Tower associatedTower;
     [SerializeField] private BarrierScriptable associatedBarrier;
     [SerializeField] private Player associatedCharacter;
+    [SerializeField] private CenterpieceScriptable associatedCenterpiece;
 
     [SerializeField] private int skillPoints;
     [SerializeField] private bool unlocked;
@@ -21,6 +22,7 @@ public class Achievement : ScriptableObject
     public Tower getAssociatedTower() { return associatedTower; }
     public BarrierScriptable getAssociatedBarrier() { return associatedBarrier; }
     public Player getAssociatedCharacter() { return associatedCharacter; }
+    public CenterpieceScriptable getAssociatedCenterpiece() { return associatedCenterpiece; }
     public int getSkillPoints() { return skillPoints; }
     public bool getUnlocked() { return unlocked; }
     public void setUnlocked(bool unlocked) { this.unlocked = unlocked; }

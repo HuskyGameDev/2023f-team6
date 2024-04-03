@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Ach_Devout_Follower
   m_EditorClassIdentifier: 
   Name: Devout Follower
-  Description: Pray to a Cthulu statue
+  Description: Find an Obelisk
   associatedTower: {fileID: 0}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 0}
   skillPoints: 0
+  unlocked: 0

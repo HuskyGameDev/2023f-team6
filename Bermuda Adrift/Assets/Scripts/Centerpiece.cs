@@ -73,7 +73,6 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
         gameObject.GetComponent<SpriteRenderer>().sprite = center.getSprite();
 
         onCenterpieceDamaged?.Invoke();
-        Debug.Log(maxHealth);
     }
 
     void barrierSetup()

@@ -22,6 +22,8 @@ public class AchievementHandler : MonoBehaviour
             toBeUnlocked.getAssociatedBarrier().setUnlock(true);
         else if (toBeUnlocked.getAssociatedCharacter() != null)
             toBeUnlocked.getAssociatedCharacter().setUnlock(true);
+        else if (toBeUnlocked.getAssociatedCenterpiece() != null)
+            toBeUnlocked.getAssociatedCenterpiece().setUnlock(true);
         //Some achievements have none, unlocks anyway
 
         //Play achievement popup

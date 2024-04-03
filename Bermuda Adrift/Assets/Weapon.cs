@@ -41,16 +41,16 @@ public class Weapon : MonoBehaviour
         if (crit > 1)
         {
             if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-                collision.SendMessage("CritDamage", damage * dmgMult * airborneMult * crit * levelScale);
+                collision.SendMessage("CritDamageMelee", damage * dmgMult * airborneMult * crit * levelScale);
             else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-                collision.SendMessage("CritDamage", damage * dmgMult * underwaterMult * crit * levelScale);
+                collision.SendMessage("CritDamageMelee", damage * dmgMult * underwaterMult * crit * levelScale);
         }
         else
         {
             if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Airborne || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.AirborneBoss)
-                collision.SendMessage("TakeDamage", damage * dmgMult * airborneMult * levelScale);
+                collision.SendMessage("TakeDamageMelee", damage * dmgMult * airborneMult * levelScale);
             else if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
-                collision.SendMessage("TakeDamage", damage * dmgMult * underwaterMult * levelScale);
+                collision.SendMessage("TakeDamageMelee", damage * dmgMult * underwaterMult * levelScale);
         }
     }
 }

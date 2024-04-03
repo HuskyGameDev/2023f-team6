@@ -9,6 +9,7 @@ public class LogbookManager : MonoBehaviour
 {
     public static event Action<Enemy> EnemyUnlocked;
     public static event Action<Tower> TowerUnlocked;
+    public static event Action logbookFull;
 
     [SerializeField] RectTransform contentEne;
     [SerializeField] RectTransform contentBos;
@@ -42,6 +43,9 @@ public class LogbookManager : MonoBehaviour
     private void OnEnable()
     {
         AI.OnUnlockEnemyDeath += unlockEnemy;
+        AI.OnUnlockEnemyDeath += unlockCharacter;
+        TowerAI.OnDoubleUpgraded += unlockTower;
+
         UnlockableButtonEnemy.UnlockableEnemyButtonClicked += openEnemyInformation;
     }
 
@@ -155,6 +159,8 @@ public class LogbookManager : MonoBehaviour
             }
         }
 
+        if (logbookFilled())
+            logbookFull?.Invoke();
         EnemyUnlocked?.Invoke(e);
     }
 
@@ -167,16 +173,26 @@ public class LogbookManager : MonoBehaviour
 
             Debug.Log("Added Tower: " + t.getName());
 
+            if (logbookFilled())
+                logbookFull?.Invoke();
+
             txtLoggedTow.GetComponent<TextMeshProUGUI>().text = unlockedTowers.Count + " / " + allTowers.Length;
         }
     }
-
+    public void unlockCharacter(Enemy enemy)
+    {
+        if (enemy.getName().CompareTo("The Maestro") == 0)
+            unlockCharacter(FindObjectOfType<Attack>().getCharacter());
+    }
     public void unlockCharacter(Player p)
     {
         if (!unlockedCharacters.Contains(p))
         {
             unlockedCharacters.Add(p);
             p.setLogged(true);
+
+            if (logbookFilled())
+                logbookFull?.Invoke();
 
             Debug.Log("Added Character: " + p.getName());
             txtLoggedCha.GetComponent<TextMeshProUGUI>().text = unlockedCharacters.Count + " / " + allCharacters.Length;
@@ -223,5 +239,19 @@ public class LogbookManager : MonoBehaviour
         canvasBos.enabled = false;
         canvasTow.enabled = false;
         canvasCha.enabled = false;
+    }
+
+    bool logbookFilled()
+    {
+        if (unlockedBosses.Count == allBosses.Length
+            &&
+            unlockedEnemies.Count == allEnemies.Length
+            &&
+            unlockedTowers.Count == allTowers.Length
+            &&
+            unlockedCharacters.Count == allCharacters.Length)
+            return true;
+        else
+        return false;
     }
 }

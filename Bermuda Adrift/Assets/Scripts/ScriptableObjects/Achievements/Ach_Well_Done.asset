@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b9d52d6bb53f65498b137d0720b041d, type: 3}
-  m_Name: Ach_Gotta_Go_Fast
+  m_Name: Ach_Well_Done
   m_EditorClassIdentifier: 
-  Name: Gotta Go Fast
-  Description: Have max movement speed
-  associatedTower: {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
+  Name: Well Done
+  Description: Beat the Final Boss
+  associatedTower: {fileID: 0}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 11400000, guid: fa521d2d98585154da78b7c72e964cbd, type: 2}
   skillPoints: 0
+  unlocked: 0

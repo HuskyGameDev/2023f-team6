@@ -101,6 +101,7 @@ public class BuildManager : MonoBehaviour
     public static event Action TooManyBlueprints;
     public static event Action onRaftFull;
     public static event Action<int> onBlueprintAdded;
+    public static event Action onFullyUpgradedAll;
 
     public static BuildManager main;
 
@@ -117,6 +118,7 @@ public class BuildManager : MonoBehaviour
 
     private List<Tower> placeables;
     private List<PlaceableData> placeableDatas;
+    List<Tower> doubleUpgradedTowers;
 
     #region Setup stuff
     private void Awake()
@@ -124,6 +126,7 @@ public class BuildManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         placeables = new List<Tower>();
         placeableDatas = new List<PlaceableData>();
+        doubleUpgradedTowers = new List<Tower>();
     }
     void Start()
     {
@@ -138,11 +141,15 @@ public class BuildManager : MonoBehaviour
     {
         TowerAI.OnTowerPlacedBM += addPosition;
         Barriers.OnTowerPlacedBM += addPosition;
+        GameManager.OnGameEnd += wipeDoubleUpgraded;
+        TowerAI.OnDoubleUpgraded += addDoubleUpgraded;
     }
     private void OnDisable()
     {
         TowerAI.OnTowerPlacedBM -= addPosition;
         Barriers.OnTowerPlacedBM -= addPosition;
+        GameManager.OnGameEnd -= wipeDoubleUpgraded;
+        TowerAI.OnDoubleUpgraded -= addDoubleUpgraded;
     }
     #endregion
 
@@ -843,6 +850,19 @@ public class BuildManager : MonoBehaviour
         if (mostRecent != null && mostRecent.GetComponent<TowerAI>() != null)
             return mostRecentTower.getDimensions();
         else return 2;
+    }
+    public void addDoubleUpgraded(Tower tower)
+    {
+        if (!doubleUpgradedTowers.Contains(tower))
+            doubleUpgradedTowers.Add(tower);
+
+        if (doubleUpgradedTowers.Count >= 9)
+            onFullyUpgradedAll?.Invoke();
+    }
+    void wipeDoubleUpgraded() 
+    { 
+        if (doubleUpgradedTowers != null) 
+            doubleUpgradedTowers.Clear(); 
     }
     #endregion
 }

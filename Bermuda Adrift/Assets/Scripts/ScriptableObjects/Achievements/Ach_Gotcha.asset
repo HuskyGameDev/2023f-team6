@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Gotcha!
   Description: Kill 20 decoy enemies
-  associatedTower: {fileID: 0}
+  associatedTower: {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 0}
   skillPoints: 0
+  unlocked: 0

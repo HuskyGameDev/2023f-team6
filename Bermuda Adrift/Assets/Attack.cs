@@ -699,4 +699,5 @@ public class Attack : MonoBehaviour
 
         return true;
     }
+    public Player getCharacter() { return character; }
 }
