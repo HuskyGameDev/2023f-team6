@@ -32,25 +32,28 @@ public class S_O_Saving
         Debug.Log(name + " had no matches");
         return null;
     }
-    /*public void setTowerSave(string name, bool unlock)
-    {
-        if (name.CompareTo("T_Ballista") == 0) Ballista = unlock;
-        else if (name.CompareTo("T_Cannon") == 0) Cannon = unlock;
-        else if (name.CompareTo("T_LightningRod") == 0) LightningRod = unlock;
-        else if (name.CompareTo("T_Machine Gun") == 0) MachineGun = unlock;
-        else if (name.CompareTo("T_ScrapTurret") == 0) ScrapTurret = unlock;
-        else if (name.CompareTo("T_TorpedoLauncher") == 0) TorpedoLauncher = unlock;
-        else if (name.CompareTo("T_TotemPole") == 0) TotemPole = unlock;
-        else if (name.CompareTo("T_TriCannon") == 0) TriCannon = unlock;
-        else
-            Debug.Log(name + " had no matches");
-    }
-    */
     #endregion
 
     #region Barriers
     public Locks_n_Logs Barricade;
     public Locks_n_Logs Fish_Nets;
+    public Locks_n_Logs Explosive_Barricade;
+    public Locks_n_Logs Reinforced_Barricade;
+    public Locks_n_Logs Floating_Mine;
+    public Locks_n_Logs Platform_Barricade;
+
+    public Locks_n_Logs getBarrierSave(string name)
+    {
+        if (name.CompareTo("Barrier_Barricade") == 0) return Barricade;
+        else if (name.CompareTo("Barrier_FishingNets") == 0) return Fish_Nets;
+        else if (name.CompareTo("Barrier_ExplosiveBarricade") == 0) return Explosive_Barricade;
+        else if (name.CompareTo("Barrier_ReinforcedBarrier") == 0) return Reinforced_Barricade;
+        else if (name.CompareTo("Barrier_FloatingMine") == 0) return Floating_Mine;
+        else if (name.CompareTo("Barrier_PlatformBarrier") == 0) return Platform_Barricade;
+
+        Debug.Log(name + " had no matches");
+        return null;
+    }
     #endregion
 
     #region Characters
@@ -69,15 +72,6 @@ public class S_O_Saving
         Debug.Log("No matches for " + name);
         return null;
     }
-    /*public void setCharacterSave(string name, bool unlock)
-    {
-        if (name.CompareTo("P_Pirate") == 0) Pirate = unlock;
-        else if (name.CompareTo("P_Pilot") == 0) Pilot = unlock;
-        else if (name.CompareTo("P_OldMan") == 0) Old_Man = unlock;
-        else
-            Debug.Log("No matches for " + name);
-    }
-    */
     #endregion
 
     #region Skills
@@ -232,8 +226,7 @@ public class S_O_Saving
     {
         #region Towers
         Ballista = new Locks_n_Logs();
-        Cannon = new Locks_n_Logs();
-        Cannon.unlocked = true;     //Start the game with just the cannon
+        Cannon = new Locks_n_Logs(true);    //Start the game with just the cannon
         LightningRod = new Locks_n_Logs();
         MachineGun = new Locks_n_Logs();
         ScrapTurret = new Locks_n_Logs();
@@ -243,8 +236,12 @@ public class S_O_Saving
         #endregion
 
         #region Barriers
-        Barricade = new Locks_n_Logs();
+        Barricade = new Locks_n_Logs(true);
         Fish_Nets = new Locks_n_Logs();
+        Explosive_Barricade = new Locks_n_Logs();
+        Reinforced_Barricade = new Locks_n_Logs(false);
+        Floating_Mine = new Locks_n_Logs();
+        Platform_Barricade = new Locks_n_Logs();
         #endregion
 
         #region Characters
@@ -288,7 +285,7 @@ public class S_O_Saving
     #endregion
 
     #region Achievements
-    Completionist = new Locks_n_Logs();
+        Completionist = new Locks_n_Logs();
         Devout_Follower = new Locks_n_Logs();
         Even_Further_Beyond = new Locks_n_Logs();
         Fin_Soup = new Locks_n_Logs();

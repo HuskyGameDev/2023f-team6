@@ -13,4 +13,9 @@ public class Locks_n_Logs
         this.unlocked = false;
         this.logged = false;
     }
+    public Locks_n_Logs(bool unlocked)
+    {
+        this.unlocked = unlocked;
+        this.logged = false;
+    }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Centerpiece", menuName = "ScriptableObjects/Centerpiece")]
 public class CenterpieceScriptable : ScriptableObject
 {
+    [SerializeField] private string Name;
+    [SerializeField] private string Description;
+
     [SerializeField] private int health;
     [SerializeField] private int barrier;
     [SerializeField] private int regen;
@@ -13,6 +16,8 @@ public class CenterpieceScriptable : ScriptableObject
 
     public void setUnlock(bool unlocked) { this.unlocked = unlocked; }
 
+    public string getName() { return Name; }
+    public string getDescription() { return Description; }
     public int getHealth() { return health; }
     public int getBarrier() { return barrier; }
     public int getRegen() { return regen; }

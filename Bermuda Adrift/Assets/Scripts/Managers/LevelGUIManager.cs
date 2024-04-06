@@ -18,6 +18,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     private BuildManager buildManager;
     [SerializeField] private GameObject ChoicesCanvas;
     [SerializeField] private Tower[] allChoices;
+    [SerializeField] private BarrierScriptable[] allBarriers;
 
     private Tower option1;
     private Tower option2;
@@ -247,6 +248,14 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
             if (saver.getTowerSave(tower.name) != null)
                 tower.setUnlocked(saver.getTowerSave(tower.name).unlocked);
         }
+
+        foreach (BarrierScriptable barrier in allBarriers)
+        {
+            if (saver.getBarrierSave(barrier.name) != null)
+            {
+                barrier.setUnlock(saver.getBarrierSave(barrier.name).unlocked);
+            }
+        }
     }
 
     public void SaveData(S_O_Saving saver)
@@ -255,6 +264,14 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
         {
             if (saver.getTowerSave(tower.name) != null)
                 saver.getTowerSave(tower.name).unlocked = tower.getUnlocked();
+        }
+
+        foreach (BarrierScriptable barrier in allBarriers)
+        {
+            if (saver.getBarrierSave(barrier.name) != null)
+            {
+                saver.getBarrierSave(barrier.name).unlocked = barrier.getUnlocked();
+            }
         }
     }
 }

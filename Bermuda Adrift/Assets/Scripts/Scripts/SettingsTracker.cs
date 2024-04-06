@@ -90,6 +90,10 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
 
     public void setCenterpiece(CenterpieceScriptable centerpiece) { this.centerpiece = centerpiece; }
 
+    public BarrierScriptable getBarrier1() { return barrier1; }
+    public BarrierScriptable getBarrier2() { return barrier2; }
+    public CenterpieceScriptable getCenterpiece() { return centerpiece; }
+
     public void LoadData(S_O_Saving saver)
     {
         foreach (Player player in characterChoices)

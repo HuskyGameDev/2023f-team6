@@ -16,4 +16,4 @@ MonoBehaviour:
   barrier: 150
   regen: 0
   sprite: {fileID: -17301218, guid: cd23f600914fdb24aae564f75276ed07, type: 3}
-  unlocked: 1
+  unlocked: 0

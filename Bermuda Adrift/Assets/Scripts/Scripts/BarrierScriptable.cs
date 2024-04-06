@@ -21,7 +21,7 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animator;
     [SerializeField] private Sprite Thumbnail;
 
-    public void setUnlock(bool unlocked) { this.unlocked = unlocked; }
+    public void setUnlock(bool unlocked) { Debug.Log("Unlocking " + name); this.unlocked = unlocked; }
 
     public string getSaveString() { return saveString; }
     public string getName() { return barrierName; }

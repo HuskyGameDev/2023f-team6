@@ -19,6 +19,7 @@ MonoBehaviour:
   effect: 0
   Health: 20
   cost: 150
+  damage: 0
   debuff: {fileID: 0}
   startingSprite: {fileID: 21300000, guid: 58434a7e3b91b8946b773b5324ff5cc2, type: 3}
   animator: {fileID: 9100000, guid: 33b741c25d3e6da40b93220f81e12668, type: 2}

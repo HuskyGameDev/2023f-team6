@@ -56,6 +56,8 @@ public class HoverText : MonoBehaviour
         else
             position.y = mouseWorldPosition.y - (26f * descriptionBox.transform.localScale.y);
 
+        //Debug.Log(position);
+
         descriptionBox.gameObject.transform.position = position;
     }
     private void updateDescription(string title, string description)

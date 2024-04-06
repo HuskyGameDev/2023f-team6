@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonDescription : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ButtonDescription : MonoBehaviour
     [SerializeField] private Tower tower;
     [SerializeField] private Ability ability;
     [SerializeField] private BarrierScriptable barrier;
+    [SerializeField] private CenterpieceScriptable center;
     private int upgradeLevel;
 
     public void mouseEnter()
@@ -61,7 +63,14 @@ public class ButtonDescription : MonoBehaviour
             title = ability.getName();
             description = ability.getDescription();
         }
-        onDescriptionUpdate?.Invoke(title, description);
+        else if (center != null)
+        {
+            title = center.getName();
+            description = center.getDescription();
+        }
+
+        if (gameObject.GetComponent<Button>().interactable)
+            onDescriptionUpdate?.Invoke(title, description);
     }
     public void mouseExit()
     {

@@ -17,14 +17,13 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     bool noAttackBossAchieved;
     bool timedBossAchieved;
 
-    bool noAttacksThisRound;
+    bool noAttacksThisRound = false;
 
     float multikillLeeway = 0.25f;
     float multikillStartTime;
 
     float idleTime;
     float bossTime;
-    float bossIdleTime;
 
     GameManager gameManager;
 
@@ -88,6 +87,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         GameManager.onScrapCollect -= unlockPlatformBarricade;
         GameManager.OnGameEnd -= unlockRegeneratingCenterpiece;
         GameManager.onRoundEnd -= Round100;
+        GameManager.onRoundEnd -= unlockReinforcedBarricade;
 
         Barriers.onGlobalBarrierDamaged -= BarrierDamage;
 
@@ -130,9 +130,6 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
             if (FindObjectOfType<Movement>() != null && FindObjectOfType<Movement>().isIdle())
             {
                 bossTime += Time.deltaTime;
-
-                if (bossTime <= 10)
-                    unlockReinforcedBarricade();
             }
         }
     }
@@ -141,7 +138,6 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     {
         if (gameManager.gameObject.GetComponent<EnemyManager>().getRound() % 10 != 0 || gameManager.gameObject.GetComponent<EnemyManager>().getRound() < 10)
             return;
-
         if (noAttacksThisRound)
             unlockTriCannon();
 
@@ -253,6 +249,14 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     void unlockReinforcedBarricade()
     {
         //Kill a boss in 10 seconds
+        if (gameManager.gameObject.GetComponent<EnemyManager>().getRound() % 10 != 0 || gameManager.gameObject.GetComponent<EnemyManager>().getRound() < 10)
+            return;
+        if (bossTime > 10)
+        {
+            bossTime = 0;
+            return;
+        }
+        Debug.Log("Unlocking reinforced Barricade");
         timedBossAchieved = true;
         unlockAchievement("In and Out");
     }

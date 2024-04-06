@@ -8,6 +8,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public Tower tower;
     public BarrierScriptable barrier;
+    public CenterpieceScriptable centerpiece;
     [SerializeField] Button menuButton;
     public static event Action<Tower> OnHoverEnter;
     public static event Action<BarrierScriptable> OnHoverEnterB;

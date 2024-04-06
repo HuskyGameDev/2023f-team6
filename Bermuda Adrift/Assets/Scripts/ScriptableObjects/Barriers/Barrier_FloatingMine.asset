@@ -15,7 +15,7 @@ MonoBehaviour:
   saveString: floating-mine
   barrierName: Floating Mine
   description: Powerful explosives can take down even the mightiest of foes
-  unlocked: 0
+  unlocked: 1
   effect: 2
   Health: 6
   cost: 500

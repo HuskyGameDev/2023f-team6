@@ -15,7 +15,7 @@ MonoBehaviour:
   saveString: platform-barrier
   barrierName: Platform
   description: Towers can be placed on top, but it can still be destroyed by enemies
-  unlocked: 0
+  unlocked: 1
   effect: 3
   Health: 50
   cost: 250
