@@ -85,6 +85,7 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
             grid.GetChild(4).GetComponent<TextMeshProUGUI>().text = activeTower.getName();                          //Title
             grid.GetChild(5).GetComponent<TextMeshProUGUI>().text = activeTower.getDescription();                   //Description
             grid.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Cost: " + activeTower.getCost() + " Scrap";    //Cost
+            grid.GetChild(7).GetComponent<Button>().interactable = true;
 
             OnLevelUpOpen1Option?.Invoke();
         }

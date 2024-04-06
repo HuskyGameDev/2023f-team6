@@ -67,7 +67,6 @@ public class TempKeys : MonoBehaviour
 
             FindObjectOfType<IslandManager>().summonIsland();
         }
-
     #endif
     }
 }

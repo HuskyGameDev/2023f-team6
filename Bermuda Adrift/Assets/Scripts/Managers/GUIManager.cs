@@ -22,6 +22,8 @@ public class GUIManager : MonoBehaviour
     [SerializeField] Canvas logbookCanvas;
     [SerializeField] GameObject logbookGrid;
     [SerializeField] Image raft;
+    [SerializeField] Canvas Main;
+    bool toggle = true;
 
     Resolution[] resolutions;
 
@@ -69,6 +71,14 @@ public class GUIManager : MonoBehaviour
         resolutions = Screen.resolutions;
 
         clearTowerText();
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            toggle = !toggle;
+             Main.gameObject.SetActive(toggle);
+        }
     }
 
     public void LoadScene(int scene)

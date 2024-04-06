@@ -15803,6 +15803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!114 &248354164
 MonoBehaviour:
@@ -28806,7 +28807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &450279483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33565,6 +33566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!114 &594682907
 MonoBehaviour:
@@ -36882,6 +36884,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &668022958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52384,6 +52387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 834880947}
 --- !u!1 &849085061
 GameObject:
@@ -52557,6 +52561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 849085063}
 --- !u!1 &849875019
 GameObject:
@@ -53450,6 +53455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!114 &888223213
 MonoBehaviour:
@@ -63199,6 +63205,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &970757864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63213,6 +63220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!1 &971709319
 GameObject:
@@ -87088,6 +87096,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &1328736608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87102,6 +87111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!1 &1330075320
 GameObject:
@@ -93281,6 +93291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 1414627273}
 --- !u!1 &1415999581
 GameObject:
@@ -93874,6 +93885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!114 &1451308338
 MonoBehaviour:
@@ -103163,6 +103175,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &1673056601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103177,6 +103190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!1 &1682048192
 GameObject:
@@ -116766,6 +116780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 1754161690}
 --- !u!114 &1754161690
 MonoBehaviour:
@@ -119777,6 +119792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 1840709432}
 --- !u!1 &1844047424
 GameObject:
@@ -122301,6 +122317,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
   - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
   - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
+  allBarriers: []
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122991,6 +123008,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &1973366942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124043,6 +124061,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!1 &2010595500
 GameObject:
   m_ObjectHideFlags: 0
@@ -125367,6 +125386,7 @@ MonoBehaviour:
   logbookCanvas: {fileID: 1664167436}
   logbookGrid: {fileID: 1156155367}
   raft: {fileID: 0}
+  Main: {fileID: 1427900359}
 --- !u!114 &2038607809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130345,6 +130365,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
+  center: {fileID: 0}
 --- !u!114 &2145741566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130359,6 +130380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
+  centerpiece: {fileID: 0}
   menuButton: {fileID: 0}
 --- !u!1 &2147153436
 GameObject:
