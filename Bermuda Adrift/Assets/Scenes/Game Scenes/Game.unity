@@ -125046,7 +125046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -232, y: -1348}
+  m_AnchoredPosition: {x: -232.00003, y: -1348}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031664637
@@ -125403,6 +125403,7 @@ MonoBehaviour:
   center: {fileID: 1093243192}
   game: {fileID: 2038607807}
   pdb: {fileID: 11400000, guid: 6b244ecb3aa973b439cb865089a738ac, type: 2}
+  attack: {fileID: 180927777}
 --- !u!114 &2038607810
 MonoBehaviour:
   m_ObjectHideFlags: 0

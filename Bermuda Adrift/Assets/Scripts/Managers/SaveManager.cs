@@ -18,6 +18,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField] Centerpiece center;
     [SerializeField] GameManager game;
     [SerializeField] PlaceableDatabase pdb;
+    [SerializeField] Attack attack;
     private BuildManager build;
     private GameManager.GameState state;
     bool saved1 = false;
@@ -43,7 +44,7 @@ public class SaveManager : MonoBehaviour
     public void beginRoundSave(){
         if(!saved1){
             saved1 = true;
-            SaveSystem.savePlayer(enemies, center, game, build);
+            SaveSystem.savePlayer(enemies, center, game, build, attack);
         }
         saved2 = false;
     }
@@ -87,7 +88,7 @@ public class SaveManager : MonoBehaviour
     public void endRoundSave(int i){
         if(!saved2){
             saved2 = true;
-            SaveSystem.savePlayer(enemies, center, game, build);
+            SaveSystem.savePlayer(enemies, center, game, build, attack);
             Debug.Log("Saved at end of round");
             saved1 = false;
         }

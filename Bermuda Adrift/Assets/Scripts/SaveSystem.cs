@@ -13,12 +13,12 @@ using System.Runtime.Serialization.Formatters.Binary;
  */
 public static class SaveSystem {
     
-    public static void savePlayer(EnemyManager enemies, Centerpiece center, GameManager game, BuildManager build){
+    public static void savePlayer(EnemyManager enemies, Centerpiece center, GameManager game, BuildManager build, Attack attack){
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.data";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        PlayerData data = new PlayerData(enemies, center, game, build);
+        PlayerData data = new PlayerData(enemies, center, game, build, attack);
 
         formatter.Serialize(stream, data);
         stream.Close();

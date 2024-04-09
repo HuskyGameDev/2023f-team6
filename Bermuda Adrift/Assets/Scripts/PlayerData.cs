@@ -18,6 +18,10 @@ public class PlayerData {
     private int scrap;
     private int total;
     private int level;
+    private int character;
+    private int layout;
+    private string charName;
+    List<Player> player;
     List<PlaceableData> towers;
     List<string> saveStrings;
     List<float> locations;
@@ -25,13 +29,34 @@ public class PlayerData {
     List<Tower> placeables;
     List<string> blueprintStrings;
 
-    public PlayerData(EnemyManager enemies, Centerpiece center, GameManager game, BuildManager build){
+    public PlayerData(EnemyManager enemies, Centerpiece center, GameManager game, BuildManager build, Attack attack){
         towers = build.GetPlaceableDatas();
         placeables = build.getPlaceables();
         saveStrings = new List<string>();
         locations = new List<float>();
         upgrades = new List<int>();
+        player = new List<Player>();
         blueprintStrings = new List<string>();
+        player.Add(attack.getCharacter());
+
+        foreach(Player p in player)
+        {
+            if(p != null)
+            {
+                charName = p.getName();
+            }
+        }
+        
+        if(charName == "The Pirate")
+        {
+            character = 0;
+        }
+        else if(charName == "The Pilot")
+        {
+            character = 1;
+        }
+        else { character = 2; }
+        player = null;
 
         foreach (PlaceableData pd in towers)
         {
