@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f2071d34a9fb040b54ba8bb5e5d54b, type: 3}
   m_Name: C_RegenCenter
   m_EditorClassIdentifier: 
+  Name: Regenerating Centerpiece
+  Description: Regenerates a little health every round. Regenerating past max health
+    raises max health, but it can't be repaired
   health: 25
   barrier: 0
   regen: 5
   sprite: {fileID: 1429622208, guid: cd23f600914fdb24aae564f75276ed07, type: 3}
+  unlocked: 1

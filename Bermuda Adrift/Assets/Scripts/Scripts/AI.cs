@@ -15,6 +15,7 @@ public class AI : MonoBehaviour
     public static event Action<Enemy> OnUnlockEnemyDeath;
     public static event Action onMeleeKill;
     public static event Action onMajorDamage;
+    public static event Action OnEliteDeath;
 
     public event Action<int> SetupHealthBar;
 
@@ -789,6 +790,9 @@ public class AI : MonoBehaviour
 
         //if (!goal.CompareTag("Entrance") && !goal.CompareTag("Center")) Destroy(goal.gameObject);
 
+        if (elite)
+            OnEliteDeath?.Invoke();
+        
         OnEnemyDeath?.Invoke();
 
         if (enemy.getSpecialType() == Enemy.SpecialTypes.Decoy)

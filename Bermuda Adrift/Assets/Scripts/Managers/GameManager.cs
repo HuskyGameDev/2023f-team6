@@ -145,7 +145,14 @@ public class GameManager : MonoBehaviour
             setLevel(level += 1);
             OnLevelUp?.Invoke(getLevel());
             setXP(0);
-            XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+            //Level up faster on higher difficulties
+            if (difficulty == Difficulty.Hard)
+                XPNeeded = (Mathf.Pow((float)level, 1.25f) * 100.0f);
+            else if (difficulty == Difficulty.Medium)
+                XPNeeded = (Mathf.Pow((float)level, 1.35f) * 100.0f);
+            else
+                XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+            
         }
     }
 
@@ -190,6 +197,7 @@ public class GameManager : MonoBehaviour
 
     public void unfreezeTime() { Time.timeScale = 1; }
 
+    public void setDifficulty(int i) { this.difficulty = (Difficulty)i; }
     public Difficulty getDifficulty() { return difficulty; }
 
     public void skipToRound(int round)

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9d52d6bb53f65498b137d0720b041d, type: 3}
   m_Name: Ach_Tea_Time
   m_EditorClassIdentifier: 
-  Name: Tea time
+  Name: Tea Time
   Description: Be idle in combat for a total of 5 minutes
   associatedTower: {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
+  associatedCenterpiece: {fileID: 0}
   skillPoints: 0
+  unlocked: 0

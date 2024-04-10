@@ -420,6 +420,8 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     }
     void unlockAchievementSilent(Achievement toBeUnlocked)   //No popups, for loading
     {
+        //Debug.Log(FindObjectOfType<AchievementHandler>() + ", " + toBeUnlocked + ", " + toBeUnlocked.getUnlocked() + ", silent");
+
         if (toBeUnlocked.getAssociatedTower() != null)
             toBeUnlocked.getAssociatedTower().setUnlocked(true);
         else if (toBeUnlocked.getAssociatedBarrier() != null)
@@ -430,7 +432,12 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
             toBeUnlocked.getAssociatedCenterpiece().setUnlock(true);
     }
     void unlockAchievementSilent(string name) { unlockAchievementSilent(getAchievment(name)); }
-    void unlockAchievement(Achievement toBeUnlocked) { FindObjectOfType<AchievementHandler>().SendMessage("unlockAchievement", toBeUnlocked); }
+    void unlockAchievement(Achievement toBeUnlocked) 
+    {
+        //Debug.Log(FindObjectOfType<AchievementHandler>() + ", " + toBeUnlocked);
+        if (toBeUnlocked != null && FindObjectOfType<AchievementHandler>() != null)
+            FindObjectOfType<AchievementHandler>().SendMessage("unlockAchievement", toBeUnlocked);
+    }
     void unlockAchievement(string name) { unlockAchievement(getAchievment(name)); }
     #endregion
 
@@ -482,14 +489,14 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         lnl = saver.Even_Further_Beyond;
         if (lnl.unlocked)
         {
-            unlockAchievementSilent("Even Further Beyond");
+            unlockAchievementSilent("Even Further Beyond!");
             TowerAI.OnUpgraded -= unlockTotemPole;
         }
 
         lnl = saver.Why_Are_You_Hoarding;
         if (lnl.unlocked)
         {
-            unlockAchievementSilent("Why are you hoarding?");
+            unlockAchievementSilent("Ideas Galore");
             BuildManager.onBlueprintAdded -= unlockShieldGenerator;
         }
 
@@ -510,7 +517,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         lnl = saver.Not_Even_Worth_The_Time;
         if (lnl.unlocked)
         {
-            unlockAchievementSilent("Not even worth the time");
+            unlockAchievementSilent("Not Even Worth My Time");
             noAttackBossAchieved = true;
         }
         #endregion
@@ -526,7 +533,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         lnl = saver.Swordmaster;
         if (lnl.unlocked)
         {
-            unlockAchievement("Swordmaster");
+            unlockAchievementSilent("Swordmaster");
             AI.onMeleeKill -= unlockExplosiveBarricade;
         }
 
@@ -539,7 +546,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         lnl = saver.Thats_A_Lotta_Damage;
         if (lnl.unlocked)
         {
-            unlockAchievementSilent("Thats a lotta damage");
+            unlockAchievementSilent("That's a Lotta Damage");
             AI.onMajorDamage -= unlockFloatingMine;
         }
 
@@ -646,6 +653,11 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         }
         #endregion
 
+        decoysKilled = saver.decoysKilled;
+        pirateCount = saver.pirateCount;
+        pilotCount = saver.pilotCount;
+        oldManCount = saver.oldManCount;
+        barrierDamage = saver.barrierDamage;
     }
     public void SaveData(S_O_Saving saver)
     {

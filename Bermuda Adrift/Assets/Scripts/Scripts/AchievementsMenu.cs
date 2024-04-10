@@ -9,9 +9,13 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private GameObject achievementDisplay;
     [SerializeField] private Achievement[] achievements;
 
-    private void Start()
+    private void OnEnable()
     {
         reloadAchievements();
+    }
+    private void OnDisable()
+    {
+        deleteAchievementCards();
     }
 
     public void reloadAchievements()
@@ -40,13 +44,25 @@ public class AchievementsMenu : MonoBehaviour
             RectTransform rt = gameObject.GetComponent(typeof(RectTransform)) as RectTransform;
             rt.sizeDelta = new Vector2(1285, (achievements.Length - 2) * 230);
 
-            transform.parent.parent.GetChild(1).GetComponent<Scrollbar>().value = 1;
-
             if (a.getUnlocked())
                 currentPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
             else
                 currentPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.grey;
         }
+
+        StartCoroutine(scrollbarReset());
+    }
+    void deleteAchievementCards()
+    {
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+    }
+    IEnumerator scrollbarReset()
+    {
+        yield return new WaitForEndOfFrame();
+        transform.parent.parent.GetChild(1).GetComponent<Scrollbar>().value = 0.9760087f;
     }
 
     public void unlockAll()
@@ -56,6 +72,7 @@ public class AchievementsMenu : MonoBehaviour
             if (a.getAssociatedTower() != null) a.getAssociatedTower().setUnlocked(true);
             if (a.getAssociatedBarrier() != null) a.getAssociatedBarrier().setUnlock(true);
             if (a.getAssociatedCharacter() != null) a.getAssociatedCharacter().setUnlock(true);
+            if (a.getAssociatedCenterpiece() != null) a.getAssociatedCenterpiece().setUnlock(true);
 
             a.setUnlocked(true);
         }

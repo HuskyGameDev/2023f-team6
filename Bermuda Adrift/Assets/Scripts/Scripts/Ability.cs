@@ -53,5 +53,11 @@ public class Ability : ScriptableObject
     public bool canBeLooped() { return looped; }
     public bool directionLocked() { return lockedDirection; }
     public string getAudioString() { return audioString; }
-    public string getArrayAudioString() { return arrayAudioString[Random.Range(0, arrayAudioString.Length)]; }
+    public string getArrayAudioString() 
+    {
+        if (arrayAudioString.Length > 0)
+            return arrayAudioString[Random.Range(0, arrayAudioString.Length)];
+        else
+            return "";
+    }
 }

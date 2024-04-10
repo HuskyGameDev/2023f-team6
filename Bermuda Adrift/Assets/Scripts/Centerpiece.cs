@@ -164,6 +164,7 @@ public class Centerpiece : MonoBehaviour, IPointerDownHandler
     public int getMaxHealth() { return maxHealth; }
     public int getMaxBarrier() { return maxBarrier; }
     public int getCurrentHealth() { return Health; }
+    public CenterpieceScriptable getCenterpiece() { return center; }
 
     public void setHealth(int health) { Health = health; }
     public void OnPointerDown(PointerEventData eventData)

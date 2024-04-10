@@ -68,6 +68,11 @@ public class ButtonDescription : MonoBehaviour
             title = center.getName();
             description = center.getDescription();
         }
+        else    //Difficulty options
+        {
+            title = gameObject.name;
+            description = "Higher difficulties spawn powerful elite enemies more often";
+        }
 
         if (gameObject.GetComponent<Button>().interactable)
             onDescriptionUpdate?.Invoke(title, description);

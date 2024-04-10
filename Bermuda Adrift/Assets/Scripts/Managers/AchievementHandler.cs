@@ -14,6 +14,8 @@ public class AchievementHandler : MonoBehaviour
     {
         if (toBeUnlocked.getUnlocked()) return;  //Return if the achievement is already unlocked
 
+        Debug.Log("Unlocking achievement " + toBeUnlocked);
+
         toBeUnlocked.setUnlocked(true);
 
         if (toBeUnlocked.getAssociatedTower() != null)
@@ -27,7 +29,8 @@ public class AchievementHandler : MonoBehaviour
         //Some achievements have none, unlocks anyway
 
         //Play achievement popup
-        StartCoroutine(popupAchievement(toBeUnlocked));
+        if (achievementPopup != null)
+            StartCoroutine(popupAchievement(toBeUnlocked));
     }
     IEnumerator popupAchievement(Achievement achievement)
     {

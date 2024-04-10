@@ -275,6 +275,9 @@ public class UpgradeMenuHandler : MonoBehaviour
     }
     void updateMenu(Centerpiece center)
     {
+        if (center.getCenterpiece().getName().CompareTo("Regenerating Centerpiece") == 0)   //Can't repair regen centerpiece
+            return;
+
         centerpiece = center;
         currentTower = null;
         currentBarrier = null;
@@ -399,21 +402,26 @@ public class UpgradeMenuHandler : MonoBehaviour
     private int getRepairScrap(int toBeRepaired)
     {
         int repairScrap = 0;
+        int costPerLevel = 5;
 
         //Costs more if you've repaired before
         int startingPrice = healedSoFar % 10 + 1;
 
-        //First 10 health is 5 scrap per HP, then 10, then 15, and so on. Max is 2,205 scrap to heal from 1 hp. The higher the current HP, the cheaper
+
+        if (FindObjectOfType<Centerpiece>().getCenterpiece().getName().CompareTo("Reinforced Centerpiece") == 0)
+            costPerLevel = 10;
+
+        //First 10 health is 5 scrap per HP, then 10, then 15, and so on
         for (int i = startingPrice; toBeRepaired > 0; i++)
         {
             if (toBeRepaired < 10)
             {
-                repairScrap += toBeRepaired * 5 * i;
+                repairScrap += toBeRepaired * costPerLevel * i;
                 toBeRepaired = 0;
             }
             else
             {
-                repairScrap += 10 * 5 * i;
+                repairScrap += 10 * costPerLevel * i;
                 toBeRepaired -= 10;
             }
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9d52d6bb53f65498b137d0720b041d, type: 3}
   m_Name: Ach_Not_Even_Worth_The_Time
   m_EditorClassIdentifier: 
-  Name: Not Even Worth my Time
+  Name: Not Even Worth My Time
   Description: Defeat a boss without attacking
   associatedTower: {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
   associatedBarrier: {fileID: 0}

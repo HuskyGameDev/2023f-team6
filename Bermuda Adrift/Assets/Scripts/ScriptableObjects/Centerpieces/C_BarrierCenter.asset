@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f2071d34a9fb040b54ba8bb5e5d54b, type: 3}
   m_Name: C_BarrierCenter
   m_EditorClassIdentifier: 
+  Name: Barrier Centerpiece
+  Description: Almost no health, but generates a barrier on its own
   health: 1
   barrier: 150
   regen: 0
   sprite: {fileID: -17301218, guid: cd23f600914fdb24aae564f75276ed07, type: 3}
-  unlocked: 0
+  unlocked: 1

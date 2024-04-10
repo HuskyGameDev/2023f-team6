@@ -87,6 +87,11 @@ public class Tower : ScriptableObject
     [SerializeField] private Sprite UB2image;
     [SerializeField] private bool B2upgraded;
 
+    [Header("Skill Effect")]
+    [SerializeField] private Skill relatedSkill;
+    public enum skillStatEffect { Damage, Range, FireSpeed, Effectiveness }
+    [SerializeField] private skillStatEffect statEffect;
+
     [Header("Misc")]
     [SerializeField] private RuntimeAnimatorController anim;
     [SerializeField] private Sprite baseSprite;
@@ -179,6 +184,9 @@ public class Tower : ScriptableObject
     public string UB2getName() { return UB2Name; }
     public string UB2getDescription() { return UB2Description; }
     public Sprite UB2getImage() { return UB2image; }
+
+    public Skill getSkill() { return relatedSkill; }
+    public skillStatEffect getSkillEffect() { return statEffect; }
 
     public RuntimeAnimatorController getAnim() { return anim; }
     public Sprite getBaseSprite() { return baseSprite; }

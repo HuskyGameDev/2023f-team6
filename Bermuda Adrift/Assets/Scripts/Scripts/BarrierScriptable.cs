@@ -21,7 +21,12 @@ public class BarrierScriptable : ScriptableObject
     [SerializeField] private RuntimeAnimatorController animator;
     [SerializeField] private Sprite Thumbnail;
 
-    public void setUnlock(bool unlocked) { Debug.Log("Unlocking " + name); this.unlocked = unlocked; }
+    [Header("Skill Effect")]
+    [SerializeField] private Skill relatedSkill;
+    public enum skillStatEffect { Damage, Range, FireSpeed, Effectiveness }
+    [SerializeField] private skillStatEffect statEffect;
+
+    public void setUnlock(bool unlocked) { this.unlocked = unlocked; }
 
     public string getSaveString() { return saveString; }
     public string getName() { return barrierName; }
@@ -35,4 +40,6 @@ public class BarrierScriptable : ScriptableObject
     public Sprite getStartingSprite() { return startingSprite; }
     public RuntimeAnimatorController getAnimator() { return animator; }
     public Sprite getThumbnail() { return Thumbnail; }
+    public Skill getSkill() { return relatedSkill; }
+    public skillStatEffect getSkillEffect() { return statEffect; }
 }

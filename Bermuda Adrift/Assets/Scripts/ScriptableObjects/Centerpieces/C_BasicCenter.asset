@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f2071d34a9fb040b54ba8bb5e5d54b, type: 3}
   m_Name: C_BasicCenter
   m_EditorClassIdentifier: 
+  Name: Centerpiece
+  Description: The container that holds all your supplies, especially food
   health: 100
   barrier: 0
   regen: 0

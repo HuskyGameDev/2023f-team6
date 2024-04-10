@@ -23,6 +23,8 @@ public class Player : ScriptableObject
     [SerializeField] private bool unlocked;
     [SerializeField] private bool logged;
 
+    [SerializeField] private Skill[] associatedSkills;
+
     private bool altP;
     private bool altS;
     private bool altU;
@@ -100,4 +102,5 @@ public class Player : ScriptableObject
     public bool getUnlocked() { return unlocked; }
     public bool getLogged() { return logged; }
     public void setLogged(bool logged) { this.logged = logged; }
+    public Skill[] getSkills() { return associatedSkills; }
 }

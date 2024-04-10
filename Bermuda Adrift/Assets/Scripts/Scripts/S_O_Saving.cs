@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class S_O_Saving
@@ -70,6 +71,24 @@ public class S_O_Saving
         else if (name.CompareTo("P_Cultist") == 0) return Cultist;
 
         Debug.Log("No matches for " + name);
+        return null;
+    }
+    #endregion
+
+    #region Centerpieces
+    public Locks_n_Logs Basic;
+    public Locks_n_Logs Barrier;
+    public Locks_n_Logs Reinforced;
+    public Locks_n_Logs Regen;
+
+    public Locks_n_Logs getCenterpieceSave(string name)
+    {
+        if (name.CompareTo("Centerpiece") == 0) return Basic;
+        if (name.CompareTo("Barrier Centerpiece") == 0) return Barrier;
+        if (name.CompareTo("Reinforced Centerpiece") == 0) return Reinforced;
+        if (name.CompareTo("Regenerating Centerpiece") == 0) return Regen;
+
+        Debug.Log("No match for " + name);
         return null;
     }
     #endregion
@@ -218,6 +237,11 @@ public class S_O_Saving
     public AudioData audioData;
     public VideoData videoData;
     public bool screenShake;
+
+    public string primaryRebinds;
+    public string secondaryRebinds;
+    public string utilityRebinds;
+    public string specialRebinds;
     #endregion
 
     #region Last-picked items
@@ -251,8 +275,15 @@ public class S_O_Saving
         Old_Man = new Locks_n_Logs();
         #endregion
 
+        #region Centerpieces
+        Basic = new Locks_n_Logs(true);
+        Barrier = new Locks_n_Logs();
+        Reinforced = new Locks_n_Logs();
+        Regen = new Locks_n_Logs();
+        #endregion
+
         #region Skills
-        totalPoints = 0;
+    totalPoints = 0;
         #endregion
 
         #region Enemy Logs

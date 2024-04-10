@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9d52d6bb53f65498b137d0720b041d, type: 3}
   m_Name: Ach_Why_Are_You_Hoarding
   m_EditorClassIdentifier: 
-  Name: Full pamphlet
+  Name: Ideas Galore
   Description: Own 10 blueprints at once
   associatedTower: {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
   associatedBarrier: {fileID: 0}

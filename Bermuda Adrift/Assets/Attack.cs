@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 
 public class Attack : MonoBehaviour
 {
@@ -24,21 +25,23 @@ public class Attack : MonoBehaviour
     private Movement movement;
     private bool primaryOnCooldown;
     private float primaryCooldown;
-    private KeyCode primaryButton = KeyCode.Mouse0;
+    [SerializeField] public InputAction primaryButton;
+    private bool primaryButtonPressed;
 
     private bool secondaryOnCooldown;
     private float secondaryCooldown = 1f;
-    private KeyCode secondaryButton = KeyCode.Mouse1;
+    [SerializeField] public InputAction secondaryButton;
+    private bool secondaryButtonPressed;
 
     private bool utilityOnCooldown;
     private float utilityCooldown = 6f;
-    private KeyCode utilityButton = KeyCode.Q;
+    [SerializeField] public InputAction utilityButton;
+    private bool utilityButtonPressed;
 
     private bool specialOnCooldown;
     private float specialCooldown = 10f;
-    private KeyCode specialButton = KeyCode.R;
-
-    private KeyCode currentButton;
+    [SerializeField] public InputAction specialButton;
+    private bool specialButtonPressed;
 
     private int direction;
     private int attackCooldownFrames = 5;
@@ -50,16 +53,42 @@ public class Attack : MonoBehaviour
     {
         CooldownIndicator.cooldownComplete += cooldownFinished;
         CooldownIndicator.awoken += cooldownCreated;
+
+        primaryButton.Enable();
+        secondaryButton.Enable();
+        utilityButton.Enable();
+        specialButton.Enable();
     }
     private void OnDisable()
     {
         CooldownIndicator.cooldownComplete -= cooldownFinished;
         CooldownIndicator.awoken -= cooldownCreated;
+
+        primaryButton.Disable();
+        secondaryButton.Disable();
+        utilityButton.Disable();
+        specialButton.Disable();
     }
     private void Start()
     {
         movement = gameObject.GetComponent<Movement>();
         anim = gameObject.GetComponent<Animator>();
+
+        RegisterInputActions();
+    }
+    void RegisterInputActions()
+    {
+        primaryButton.performed += context => primaryButtonPressed = true;
+        primaryButton.canceled += context => primaryButtonPressed = false;
+
+        secondaryButton.performed += context => secondaryButtonPressed = true;
+        secondaryButton.canceled += context => secondaryButtonPressed = false;
+
+        utilityButton.performed += context => utilityButtonPressed = true;
+        utilityButton.canceled += context => utilityButtonPressed = false;
+
+        specialButton.performed += context => specialButtonPressed = true;
+        specialButton.canceled += context => specialButtonPressed = false;
     }
     private void setCharacter(Player playerData)
     {
@@ -191,6 +220,15 @@ public class Attack : MonoBehaviour
 
         anim.speed = getAttackSpeed();
 
+        if (primaryButtonPressed)
+            primary();
+        if (secondaryButtonPressed)
+            secondary();
+        if (utilityButtonPressed)
+            utility();
+        if (specialButtonPressed)
+            special();
+        /*
         setCurrentButton();
 
         if (currentButton == primaryButton) 
@@ -212,6 +250,7 @@ public class Attack : MonoBehaviour
         { 
             special();
         }
+        */
 
         if (!anim.GetBool("Locked"))
         {
@@ -219,7 +258,7 @@ public class Attack : MonoBehaviour
             anim.SetFloat("AttackDirectionY", movement.getAim().y);
         }
 
-
+        
         if (primaryOnCooldown)
             updateCooldowns?.Invoke(primaryCooldown * getCooldowns(), CooldownIndicator.position.primary);
         if (secondaryOnCooldown)
@@ -236,6 +275,7 @@ public class Attack : MonoBehaviour
         anim.ResetTrigger("Primary");
         anim.Play("Idle");
     }
+    /*
     private void setCurrentButton()
     {
         //Priority: Special, then Utility, then Secondary, then Primary
@@ -251,9 +291,11 @@ public class Attack : MonoBehaviour
         else
             currentButton = KeyCode.None;
     }
+    */
     public void primary()
     {
         //Debug.Log("Primary");
+
         if (!primaryOnCooldown && !otherAttackActive(1))
         {
             if (primaryCooldown > 0)
@@ -270,6 +312,7 @@ public class Attack : MonoBehaviour
     public void secondary()
     {
         //Debug.Log("Secondary");
+
         if (!secondaryOnCooldown)
         {
             primaryCancel();
@@ -286,6 +329,7 @@ public class Attack : MonoBehaviour
     public void utility()
     {
         //Debug.Log("Utility");
+
         if (!utilityOnCooldown)
         {
             primaryCancel();
@@ -302,6 +346,7 @@ public class Attack : MonoBehaviour
     public void special()
     {
         //Debug.Log("Special");
+
         if (!specialOnCooldown)
         {
             primaryCancel();
@@ -694,7 +739,11 @@ public class Attack : MonoBehaviour
 
     public bool idleAttacks()
     {
-        if (currentButton != KeyCode.None)
+        return false;
+        if (primaryButton.WasPerformedThisFrame() ||
+            secondaryButton.WasPerformedThisFrame() ||
+            utilityButton.WasPerformedThisFrame() ||
+            specialButton.WasPerformedThisFrame())
             return false;
 
         return true;

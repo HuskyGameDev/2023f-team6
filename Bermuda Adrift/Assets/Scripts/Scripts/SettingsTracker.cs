@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 public class SettingsTracker : MonoBehaviour, IDataPersistence
 {
@@ -12,6 +14,11 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     [SerializeField] private BarrierScriptable barrier2;
 
     [SerializeField] private CenterpieceScriptable centerpiece;
+
+    string primary;
+    string secondary;
+    string utility;
+    string special;
 
     int raftSelected;
     bool resettingScene;
@@ -59,6 +66,13 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
         FindObjectOfType<Centerpiece>().setCenterpiece(centerpiece);
 
         Camera.main.GetComponent<CameraEffects>().setEnabled(screenShake);
+
+        FindObjectOfType<Attack>().primaryButton.LoadBindingOverridesFromJson(primary);
+        FindObjectOfType<Attack>().secondaryButton.LoadBindingOverridesFromJson(secondary);
+        Debug.Log(secondary);
+
+        FindObjectOfType<Attack>().utilityButton.LoadBindingOverridesFromJson(utility);
+        FindObjectOfType<Attack>().specialButton.LoadBindingOverridesFromJson(special);
     }
 
     public void setRaft(int raft)
@@ -87,6 +101,13 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     }
     public void setScreenShake(bool screenShake) { this.screenShake = screenShake; }
     public bool getScreenShake() { return screenShake; }
+    public void setBinding(int attack, string bindings)
+    {
+        if (attack == 0) primary = bindings;
+        if (attack == 1) secondary = bindings;
+        if (attack == 2) utility = bindings;
+        if (attack == 3) special = bindings;
+    }
 
     public void setCenterpiece(CenterpieceScriptable centerpiece) { this.centerpiece = centerpiece; }
 
@@ -100,6 +121,8 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
             player.setUnlock(saver.getCharacterSave(player.name).unlocked);
 
         setScreenShake(saver.screenShake);
+
+        
     }
 
     public void SaveData(S_O_Saving saver)
@@ -108,6 +131,8 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
         {
             saver.getCharacterSave(player.name).unlocked = player.getUnlocked();
         }
+
+        
     }
     private void OnLevelWasLoaded(int level)
     {
