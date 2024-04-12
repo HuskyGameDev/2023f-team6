@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f410c91a06ced45b24afc230bf868a, type: 3}
   m_Name: S_Pr_CritUp
   m_EditorClassIdentifier: 
-  TitleText: 
-  DescriptionText: 
+  TitleText: Crit Rate Up
+  DescriptionText: Attacks deal critical damage even more often as the Pirate
   SkillCost: 0
+  sprite: {fileID: -1195651399, guid: 297764cfb0cafca4e937d7dd0faf67c0, type: 3}
   effectStrength: 0
-  Pairs: []
+  NumPaired: 0
   unlocked: 0

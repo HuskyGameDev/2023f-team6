@@ -49,6 +49,7 @@ MonoBehaviour:
   UA2cost: 400
   UA2LightningResistance: 1
   UA2image: {fileID: -1764909198, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  A2upgraded: 0
   UB1Name: Nuclear Fusion
   UB1Description: More efficient power makes a more powerful shield
   UB1damageMult: 0
@@ -67,6 +68,9 @@ MonoBehaviour:
   UB2cost: 450
   UB2LightningResistance: 1
   UB2image: {fileID: 910952120, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
+  B2upgraded: 0
+  relatedSkill: {fileID: 0}
+  statEffect: 4
   anim: {fileID: 9100000, guid: 507260b78cbd0de4197237e3e491f710, type: 2}
   baseSprite: {fileID: 0}
   rarity: 0

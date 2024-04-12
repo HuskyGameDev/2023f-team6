@@ -23,7 +23,7 @@ public class BarrierScriptable : ScriptableObject
 
     [Header("Skill Effect")]
     [SerializeField] private Skill relatedSkill;
-    public enum skillStatEffect { Damage, Range, FireSpeed, Effectiveness }
+    public enum skillStatEffect { None, Damage, Range, FireSpeed, Effectiveness }
     [SerializeField] private skillStatEffect statEffect;
 
     public void setUnlock(bool unlocked) { this.unlocked = unlocked; }

@@ -139,6 +139,7 @@ public class IslandManager : MonoBehaviour
             else
             {
                 gameObject.GetComponent<EnemyManager>().summonFinalBoss(); //Summon The Maestro
+                obelisks = 0;
                 removeIsland();
             }
         }

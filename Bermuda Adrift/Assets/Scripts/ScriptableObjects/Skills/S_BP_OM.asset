@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f410c91a06ced45b24afc230bf868a, type: 3}
+  m_Name: S_BP_OM
+  m_EditorClassIdentifier: 
+  TitleText: Start with a unique blueprint for Old Man
+  DescriptionText: Start every run as the Old Man with a Scrap Turret blueprint
+  SkillCost: 0
+  sprite: {fileID: 71927663, guid: 5610b04c74c5d3c479fc5fa7e9469e33, type: 3}
+  effectStrength: 0
+  NumPaired: 0
+  unlocked: 0

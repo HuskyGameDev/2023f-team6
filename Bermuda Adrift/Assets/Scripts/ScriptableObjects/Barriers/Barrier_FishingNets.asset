@@ -24,3 +24,5 @@ MonoBehaviour:
   startingSprite: {fileID: 21300000, guid: c8dc96cbe8f71cd449d5990433d7388d, type: 3}
   animator: {fileID: 0}
   Thumbnail: {fileID: 1013542995, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  relatedSkill: {fileID: 0}
+  statEffect: 4

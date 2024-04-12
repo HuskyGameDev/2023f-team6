@@ -89,7 +89,7 @@ public class Tower : ScriptableObject
 
     [Header("Skill Effect")]
     [SerializeField] private Skill relatedSkill;
-    public enum skillStatEffect { Damage, Range, FireSpeed, Effectiveness }
+    public enum skillStatEffect { None, Damage, Range, FireSpeed, Effectiveness }
     [SerializeField] private skillStatEffect statEffect;
 
     [Header("Misc")]

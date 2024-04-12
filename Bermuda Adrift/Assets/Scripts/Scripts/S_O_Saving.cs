@@ -95,6 +95,91 @@ public class S_O_Saving
 
     #region Skills
     public int totalPoints;
+
+    public Locks_n_Logs CenterpieceHealthUp;
+    public Locks_n_Logs MachineGunBuff;
+    public Locks_n_Logs MovementSpeedUp;
+    public Locks_n_Logs PlayerDamageUp;
+
+    public Locks_n_Logs MoreScrapDropped;
+    public Locks_n_Logs LightningRodBuff;
+    public Locks_n_Logs BallistaBuff;
+    public Locks_n_Logs CritChanceUp;
+
+    public Locks_n_Logs IslandChanceUp;
+    public Locks_n_Logs ShorterCooldowns;
+    public Locks_n_Logs TorpedoLauncherBuff;
+    public Locks_n_Logs ShieldGeneratorBuff;
+
+    public Locks_n_Logs BarrierHealthUp;
+    public Locks_n_Logs BarrierReflect;
+    public Locks_n_Logs FishingNetBuff;
+    public Locks_n_Logs CheaperTowers;
+
+    public Locks_n_Logs PR_BarrelAOE;
+    public Locks_n_Logs PR_SwordBuff;
+    public Locks_n_Logs PR_CritUp;
+    public Locks_n_Logs PR_Blueprint;
+
+    public Locks_n_Logs PI_EntendedTailwind;
+    public Locks_n_Logs PI_BaseDamageUp;
+    public Locks_n_Logs PI_DOTFlare;
+    public Locks_n_Logs PI_PlaneDamageUp;
+    public Locks_n_Logs PI_Blueprint;
+
+    public Locks_n_Logs OM_FireRateUp;
+    public Locks_n_Logs OM_OldFriendBuff;
+    public Locks_n_Logs OM_Blueprint;
+
+    public Locks_n_Logs TwoBarriers;
+    public Locks_n_Logs TwoBlueprints;
+    public Locks_n_Logs RandomBlueprintStart;
+
+
+    public Locks_n_Logs getSkillSave(string name)
+    {
+        if (name.CompareTo("Centerpiece Health Up") == 0) return CenterpieceHealthUp;
+        if (name.CompareTo("Machine Gun Damage Up") == 0) return MachineGunBuff;
+        if (name.CompareTo("Movement Speed Up") == 0) return MovementSpeedUp;
+        if (name.CompareTo("Player Damage Up") == 0) return PlayerDamageUp;
+
+        if (name.CompareTo("More Scrap") == 0) return MoreScrapDropped;
+        if (name.CompareTo("Lightning Rod Range Up") == 0) return LightningRodBuff;
+        if (name.CompareTo("Ballista Damage Up") == 0) return BallistaBuff;
+        if (name.CompareTo("Crit Chance Up") == 0) return CritChanceUp;
+
+        if (name.CompareTo("Island Chance Up") == 0) return IslandChanceUp;
+        if (name.CompareTo("Shorter Cooldowns") == 0) return ShorterCooldowns;
+        if (name.CompareTo("Torpedo Fire Speed Up") == 0) return TorpedoLauncherBuff;
+        if (name.CompareTo("Shield Generator Effectiveness Up") == 0) return ShieldGeneratorBuff;
+
+        if (name.CompareTo("Barrier Health Up") == 0) return BarrierHealthUp;
+        if (name.CompareTo("Barrier Damage Reflect") == 0) return BarrierReflect;
+        if (name.CompareTo("Fishing Nets Effectiveness Up") == 0) return FishingNetBuff;
+        if (name.CompareTo("Cheaper Towers") == 0) return CheaperTowers;
+
+        if (name.CompareTo("Barrel Radius Up") == 0) return PR_BarrelAOE;
+        if (name.CompareTo("Sharpened Sword") == 0) return PR_SwordBuff;
+        if (name.CompareTo("Crit Rate Up") == 0) return PR_CritUp;
+        if (name.CompareTo("Start with a unique blueprint for Pirate") == 0) return PR_Blueprint;
+
+        if (name.CompareTo("Tailwind Extended") == 0) return PI_EntendedTailwind;
+        if (name.CompareTo("Base damage up") == 0) return PI_BaseDamageUp;
+        if (name.CompareTo("Damaging Flares") == 0) return PI_DOTFlare;
+        if (name.CompareTo("Airstrike Damage Up") == 0) return PI_PlaneDamageUp;
+        if (name.CompareTo("Start with a unique blueprint for Pilot") == 0) return PI_Blueprint;
+
+        if (name.CompareTo("Fire Rate Up") == 0) return OM_FireRateUp;
+        if (name.CompareTo("Old Friend Effectiveness+") == 0) return OM_OldFriendBuff;
+        if (name.CompareTo("Start with a unique blueprint for Old Man") == 0) return OM_Blueprint;
+
+        if (name.CompareTo("Two Barrier Slots") == 0) return TwoBarriers;
+        if (name.CompareTo("Chance For 2 Blueprints") == 0) return TwoBlueprints;
+        if (name.CompareTo("Start With a Random Blueprint") == 0) return RandomBlueprintStart;
+
+        Debug.Log("No match for " + name);
+        return null;
+    }
     #endregion
 
     #region Enemy Logs
@@ -283,11 +368,50 @@ public class S_O_Saving
         #endregion
 
         #region Skills
-    totalPoints = 0;
-        #endregion
+        totalPoints = 0;
 
-        #region Enemy Logs
-        Angler_Fish = new Locks_n_Logs();
+        CenterpieceHealthUp = new Locks_n_Logs();
+        MachineGunBuff = new Locks_n_Logs();
+        MovementSpeedUp = new Locks_n_Logs();
+        PlayerDamageUp = new Locks_n_Logs();
+
+        MoreScrapDropped = new Locks_n_Logs();
+        LightningRodBuff = new Locks_n_Logs();
+        BallistaBuff = new Locks_n_Logs();
+        CritChanceUp = new Locks_n_Logs();
+
+        IslandChanceUp = new Locks_n_Logs();
+        ShorterCooldowns = new Locks_n_Logs();
+        TorpedoLauncherBuff = new Locks_n_Logs();
+        ShieldGeneratorBuff = new Locks_n_Logs();
+
+        BarrierHealthUp = new Locks_n_Logs();
+        BarrierReflect = new Locks_n_Logs();
+        FishingNetBuff = new Locks_n_Logs();
+        CheaperTowers = new Locks_n_Logs();
+
+        PR_BarrelAOE = new Locks_n_Logs();
+        PR_SwordBuff = new Locks_n_Logs();
+        PR_CritUp = new Locks_n_Logs();
+        PR_Blueprint = new Locks_n_Logs();
+
+        PI_EntendedTailwind = new Locks_n_Logs();
+        PI_BaseDamageUp = new Locks_n_Logs();
+        PI_DOTFlare = new Locks_n_Logs();
+        PI_PlaneDamageUp = new Locks_n_Logs();
+        PI_Blueprint = new Locks_n_Logs();
+
+        OM_FireRateUp = new Locks_n_Logs();
+        OM_OldFriendBuff = new Locks_n_Logs();
+        OM_Blueprint = new Locks_n_Logs();
+
+        TwoBarriers = new Locks_n_Logs();
+        TwoBlueprints = new Locks_n_Logs();
+        RandomBlueprintStart = new Locks_n_Logs();
+    #endregion
+
+    #region Enemy Logs
+    Angler_Fish = new Locks_n_Logs();
         Crow = new Locks_n_Logs();
         Electric_Eel = new Locks_n_Logs();
         Fish_Person = new Locks_n_Logs();

@@ -114,6 +114,15 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
     public BarrierScriptable getBarrier1() { return barrier1; }
     public BarrierScriptable getBarrier2() { return barrier2; }
     public CenterpieceScriptable getCenterpiece() { return centerpiece; }
+    public bool getCharacterUnlock(string name)
+    {
+        foreach (Player player in characterChoices)
+        {
+            if (player.getName().CompareTo(name) == 0)
+                return player.getUnlocked();
+        }
+        return false;
+    }
 
     public void LoadData(S_O_Saving saver)
     {

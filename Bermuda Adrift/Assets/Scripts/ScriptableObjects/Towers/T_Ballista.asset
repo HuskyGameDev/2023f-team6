@@ -69,6 +69,8 @@ MonoBehaviour:
   UB2LightningResistance: 0
   UB2image: {fileID: -1027113715, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   B2upgraded: 0
+  relatedSkill: {fileID: 0}
+  statEffect: 1
   anim: {fileID: 9100000, guid: bb4ed309f0aaf3243912ec8c71368b3b, type: 2}
   baseSprite: {fileID: 1330348931, guid: 8f2c6608a12272c4987ce250a7ebf840, type: 3}
   rarity: 0

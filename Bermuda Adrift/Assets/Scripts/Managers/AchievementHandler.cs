@@ -28,6 +28,9 @@ public class AchievementHandler : MonoBehaviour
             toBeUnlocked.getAssociatedCenterpiece().setUnlock(true);
         //Some achievements have none, unlocks anyway
 
+        //Add points
+        FindObjectOfType<SkillManager>().addPoints(toBeUnlocked.getSkillPoints());
+
         //Play achievement popup
         if (achievementPopup != null)
             StartCoroutine(popupAchievement(toBeUnlocked));

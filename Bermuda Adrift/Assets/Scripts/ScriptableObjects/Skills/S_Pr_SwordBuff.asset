@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f410c91a06ced45b24afc230bf868a, type: 3}
   m_Name: S_Pr_SwordBuff
   m_EditorClassIdentifier: 
-  TitleText: 
-  DescriptionText: 
+  TitleText: Sharpened Sword
+  DescriptionText: The Pirate's cutlass deals more damage
   SkillCost: 0
+  sprite: {fileID: -1531565712, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   effectStrength: 0
-  Pairs: []
+  NumPaired: 0
   unlocked: 0

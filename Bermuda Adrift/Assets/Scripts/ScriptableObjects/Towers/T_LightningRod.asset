@@ -49,6 +49,7 @@ MonoBehaviour:
   UA2cost: 350
   UA2LightningResistance: 5
   UA2image: {fileID: -1551884224, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  A2upgraded: 0
   UB1Name: Higher Voltage
   UB1Description: Electrified debuff lowers defense more and lasts longer
   UB1damageMult: 1
@@ -67,6 +68,9 @@ MonoBehaviour:
   UB2cost: 1000
   UB2LightningResistance: 2
   UB2image: {fileID: -1658623949, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
+  B2upgraded: 0
+  relatedSkill: {fileID: 0}
+  statEffect: 2
   anim: {fileID: 9100000, guid: 54323fed241002a4aac36ae0233a1041, type: 2}
   baseSprite: {fileID: 21300000, guid: ff71e224ceee8034687dcfc9231d4379, type: 3}
   rarity: 0

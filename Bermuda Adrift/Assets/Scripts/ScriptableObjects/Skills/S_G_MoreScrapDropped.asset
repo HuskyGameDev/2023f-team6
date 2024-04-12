@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91f410c91a06ced45b24afc230bf868a, type: 3}
-  m_Name: S_Blueprint_2
+  m_Name: S_G_MoreScrapDropped
   m_EditorClassIdentifier: 
-  TitleText: 
-  DescriptionText: 
+  TitleText: More Scrap
+  DescriptionText: Enemies drop more scrap
   SkillCost: 0
+  sprite: {fileID: 21300000, guid: d23bddcbc88c9f643955391cf09bd852, type: 3}
   effectStrength: 0
-  Pairs: []
+  NumPaired: 0
   unlocked: 0
