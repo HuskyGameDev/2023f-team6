@@ -83,6 +83,8 @@ public class SaveManager : MonoBehaviour
             blueprints.Add((Tower) pdb.getMatchingObject(s));
         }
         build.setPlaceables(blueprints);
+
+
     }
 
     public void endRoundSave(int i){

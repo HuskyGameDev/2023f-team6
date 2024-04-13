@@ -20,7 +20,11 @@ public class PlayerData {
     private int level;
     private int character;
     private int layout;
+    private int barrier1;
+    private int barrier2;
+    private int centerType;
     private string charName;
+    List<SettingsTracker> rafts;
     List<Player> player;
     List<PlaceableData> towers;
     List<string> saveStrings;
@@ -36,8 +40,23 @@ public class PlayerData {
         locations = new List<float>();
         upgrades = new List<int>();
         player = new List<Player>();
+        rafts = new List<SettingsTracker>();
         blueprintStrings = new List<string>();
         player.Add(attack.getCharacter());
+        rafts.Add(GameObject.FindObjectOfType<SettingsTracker>());
+
+        foreach(SettingsTracker track in rafts)
+        {
+            if(track == null)
+            {
+                break;
+            }
+            layout = track.getRaft();
+            barrier1 = track.getBarrier1Num();
+            barrier2 = track.getBarrier2Num();
+            centerType = track.getCenterNum();
+        }
+        rafts = null;
 
         foreach(Player p in player)
         {
@@ -55,7 +74,7 @@ public class PlayerData {
         {
             character = 1;
         }
-        else { character = 2; }
+        else { character = 2;}
         player = null;
 
         foreach (PlaceableData pd in towers)
@@ -131,5 +150,30 @@ public class PlayerData {
     public List<string> getBlueprints()
     {
         return blueprintStrings;
+    }
+
+    public int getChar()
+    {
+        return character;
+    }
+
+    public int getLayout()
+    {
+        return layout;
+    }
+
+    public int getBarrier1()
+    {
+        return barrier1;
+    }
+
+    public int getBarrier2()
+    {
+        return barrier2;
+    }
+
+    public int getCenterpiece()
+    {
+        return centerType;
     }
 }

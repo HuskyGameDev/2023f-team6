@@ -150,4 +150,96 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
             StartCoroutine(setSettingsInScene());
         }
     }
+
+    public int getRaft()
+    {
+        return raftSelected;
+    }
+
+    public int getBarrier1Num()
+    {
+        string barName = barrier1.getName();
+        if(barName == "Barricade")
+        {
+            return 0;
+        }
+        else if(barName == "Explosive Barricade")
+        {
+            return 1;
+        }
+        else if(barName == "Fishing Net")
+        {
+            return 2;
+        }
+        else if(barName == "Floating Mine")
+        {
+            return 3;
+        }
+        else if(barName == "Platform")
+        {
+            return 4;
+        }
+        else if(barName == "Reinforced Barrier")
+        {
+            return 5;
+        }
+        else
+        {
+            return 6;
+        }
+    }
+
+    public int getBarrier2Num()
+    {
+        string barName = barrier2.getName();
+        if (barName == "Barricade")
+        {
+            return 0;
+        }
+        else if (barName == "Explosive Barricade")
+        {
+            return 1;
+        }
+        else if (barName == "Fishing Net")
+        {
+            return 2;
+        }
+        else if (barName == "Floating Mine")
+        {
+            return 3;
+        }
+        else if (barName == "Platform")
+        {
+            return 4;
+        }
+        else if (barName == "Reinforced Barrier")
+        {
+            return 5;
+        }
+        else
+        {
+            return 6;
+        }
+    }
+
+    public int getCenterNum()
+    {
+        string centerName = centerpiece.getName();
+        if(centerName == "Barrier Centerpiece")
+        {
+            return 0;
+        }
+        else if(centerName == "Centerpiece")
+        {
+            return 1;
+        }
+        else if(centerName == "Regenerating Centerpiece")
+        {
+            return 2;
+        }
+        else
+        {
+            return 3;
+        }
+    }
 }
