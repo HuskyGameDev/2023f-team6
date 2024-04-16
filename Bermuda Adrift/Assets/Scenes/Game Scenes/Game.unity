@@ -123347,11 +123347,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1834ddf0ddde47b4fbefb2c683e94294, type: 2}
   - {fileID: 11400000, guid: de6e4157b54b77a4a836089f992e90fc, type: 2}
   - {fileID: 11400000, guid: c76faf97a4b146d47b9b36cbb379bfd8, type: 2}
+  - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
+  - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
   - {fileID: 11400000, guid: ec895a5a2c290e64ab76036169031a91, type: 2}
-  - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
   - {fileID: 11400000, guid: 8edade6bdaf01b74680e44186af283d2, type: 2}
   - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
-  - {fileID: 11400000, guid: 9b290c57b13fcec4bb5e95c7c235b39f, type: 2}
   - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
   allBarriers: []
   allCenterpieces: []
