@@ -7,7 +7,7 @@ This game is our own version of a tower defense game where you are on a raft try
 ![image](https://github.com/HuskyGameDev/2023f-team6/assets/143441535/38439b9a-5edf-4a2c-b2b8-9000c1262454)
 ![image](https://github.com/HuskyGameDev/2023f-team6/assets/143441535/152b1096-f8d0-4f57-9830-9967635c5158)
 
-While the game is an endless wave game, there are achievements and skills to unlock. There is also a "final" boss that can be defeated when certain requirments are met. There are many towers to unlock and two of the characters are locked at the start. The skills are also unlocked through the achievments. The skills help to unlock other achievments and help progress further in the game.
+While the game is an endless wave game, there are achievements, characters, towers and etc to unlock. There is also a "final" boss that can be defeated when certain requirments are met. 
 
 
 
