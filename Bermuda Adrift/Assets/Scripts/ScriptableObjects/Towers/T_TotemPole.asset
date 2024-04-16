@@ -22,6 +22,9 @@ MonoBehaviour:
   cost: 500
   lightningResistance: 0
   image: {fileID: 1168416662, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  beforeFireSound: 
+  fireSound: Totem Pole Shot
+  towerPlaceSound: Totem Pole Place
   U1Name: Mysterious Guidance
   U1Description: Boosts the fire rate and damage of nearby towers even more
   U1damageMult: 0
@@ -49,6 +52,7 @@ MonoBehaviour:
   UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: 1630017608, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  A2upgraded: 0
   UB1Name: Shark's Strength
   UB1Description: Tower damage and speed increase even more
   UB1damageMult: 0
@@ -67,6 +71,7 @@ MonoBehaviour:
   UB2cost: 600
   UB2LightningResistance: 0
   UB2image: {fileID: -2046849990, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  B2upgraded: 0
   anim: {fileID: 9100000, guid: 3586c5761cd39064fa2bd935d3c689e8, type: 2}
   baseSprite: {fileID: 0}
   rarity: 0

@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour, IDataPersistence
     [SerializeField] Slider SFXSlider;
     public Sound[] musicSounds, sfxSounds;
 
+    public string currentSong;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -67,6 +69,19 @@ public class AudioManager : MonoBehaviour, IDataPersistence
         Sound s = Array.Find(musicSounds, sound => sound.name == name);
         s.source.Play();
         s.source.loop = true;
+        currentSong = name;
+    }
+
+    public void StopMusic(string name)
+    {
+        Sound s = Array.Find(musicSounds, sound => sound.name == name);
+        s.source.Stop();
+    }
+
+    public void StopCurrentMusic()
+    {
+        Sound s = Array.Find(musicSounds, sound => sound.name == currentSong);
+        s.source.Stop();
     }
 
     public void PlaySFX(string name)

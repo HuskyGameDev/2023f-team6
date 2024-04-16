@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class EnemyManager : MonoBehaviour
 {
     public static event Action<int> onRoundEnd;
+    public static event Action<int> onRoundStart;
     public static event Action<int> onEnemyDeath;
     public static event Action<int> allEnemiesSpawned;
 
@@ -69,7 +70,6 @@ public class EnemyManager : MonoBehaviour
     }
     public void SpawnEnemies()  //Spawns all the enemies at the start of the round
     {
-
         if (Round % 10 == 0)    //Checks if it's a boss round currently. Maybe check the game state or loopCount instead to be a bit more efficient?
         {
             total = Round / 100 + 1;  //Only spawns 1 boss. After Round 100 start spawning 2, then 3 on round 200, etc
@@ -91,9 +91,14 @@ public class EnemyManager : MonoBehaviour
 
             enemySet = randomizedSet();
         } 
-        
         else
         {
+            if (AudioManager.Instance.currentSong != "Pirate Theme")
+            {
+                AudioManager.Instance.StopCurrentMusic();
+                AudioManager.Instance.PlayMusic("Pirate Theme");
+            }
+
             total = (loopSpot * 3) + (Round / 10);   //Very basic scaling of enemy difficulty. Maybe use an array or something to keep track of how many times each set is chosen and add scaling that way?
             int i = 0;
             for (; i < total / 2; i++)
@@ -117,6 +122,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
+        onRoundStart?.Invoke(total);
         allEnemiesSpawned?.Invoke(total);
     }
     public void summonFinalBoss()
@@ -180,6 +186,7 @@ public class EnemyManager : MonoBehaviour
             Round++;
             loopSpot++;
             onRoundEnd?.Invoke(Round);
+
         }
         //Add Score points?
     }

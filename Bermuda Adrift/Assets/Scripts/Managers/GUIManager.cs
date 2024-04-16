@@ -24,12 +24,15 @@ public class GUIManager : MonoBehaviour
     [SerializeField] Image raft;
     [SerializeField] Canvas Main;
     bool toggle = true;
+    int round;
 
     Resolution[] resolutions;
 
 
     private void OnEnable()
     {
+        EnemyManager.onRoundStart += updateEnemyCount;
+        EnemyManager.onRoundEnd += enemyCounterToZero;
         EnemyManager.onRoundEnd += addToRound;
         EnemyManager.onRoundEnd += clearTowerTextInt;
         EnemyManager.onEnemyDeath += updateEnemyCount;
@@ -49,6 +52,8 @@ public class GUIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        EnemyManager.onRoundStart += updateEnemyCount;
+        EnemyManager.onRoundEnd -= enemyCounterToZero;
         EnemyManager.onRoundEnd -= addToRound;
         EnemyManager.onRoundEnd -= clearTowerTextInt;
         EnemyManager.onEnemyDeath -= updateEnemyCount;
@@ -101,12 +106,39 @@ public class GUIManager : MonoBehaviour
 
     public void addToRound(int round)
     {
-        roundNo.text = "Round " + round;
+        this.round = round;
+        if (round % 10 == 0)
+        {
+            roundNo.text = "Boss";
+        }
+        else
+        {
+            roundNo.text = "Round " + round;
+        }
     }
 
     public void updateEnemyCount(int count)
     {
-       enemyCnt.text = count.ToString();
+        if (round % 10 == 0 && round != 0)
+        {
+            enemyCnt.text = "Round";
+        }
+        else
+        {
+            enemyCnt.text = "Enemies   " + count.ToString();
+        }
+    }
+
+    public void enemyCounterToZero(int round)
+    {
+        if (round % 10 == 0)
+        {
+            enemyCnt.text = "Round";
+        }
+        else
+        {
+            enemyCnt.text = "";
+        }
     }
 
     public void addScrapGUI(int scrap)

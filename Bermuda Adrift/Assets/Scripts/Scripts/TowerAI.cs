@@ -97,6 +97,7 @@ public class TowerAI : MonoBehaviour
                     placed = true;
                     anim.Play("Setup");
                     gameManager.spendScrap(tower.getCost());
+                    AudioManager.Instance.PlaySFX(tower.getTowerPlaceSound());
                 }
                 else
                 {
@@ -184,6 +185,8 @@ public class TowerAI : MonoBehaviour
 
         if (getPriority() == Priority.None)
             clearNearbyBuff(getBulletBuff());
+
+        AudioManager.Instance.PlaySFX("Destroy Tower");
 
         Destroy(gameObject);
     }
@@ -321,6 +324,8 @@ public class TowerAI : MonoBehaviour
         else
             gameObject.GetComponent<CircleCollider2D>().enabled = false;    //Target list gets created for infinite range in the start round function
 
+        AudioManager.Instance.PlaySFX("Tower Ability Upgrade");
+
         OnUpgraded?.Invoke(this);
     }
     public int getTotalSpentScrap() //Calculates the total scrap spent on placing the tower + upgrades
@@ -398,6 +403,12 @@ public class TowerAI : MonoBehaviour
 
         nozzle.transform.rotation = Quaternion.RotateTowards(nozzle.transform.rotation, output, turnSpeed * getTurnSpeed());
     }
+
+    private void beforeFire()
+    {
+        if (tower.getBeforeFireSound() != null) AudioManager.Instance.PlaySFX(tower.getBeforeFireSound());
+    }
+
     private void fire()    //Coroutine for creating the bullets as long as there's a target
     {
         anim.speed = getFireRate();
@@ -409,6 +420,9 @@ public class TowerAI : MonoBehaviour
 
         Quaternion bulletRotation = Quaternion.Euler(nozzle.transform.rotation.eulerAngles - (nozzle.transform.rotation.eulerAngles / 2));
         var boolet = Instantiate(bullet, nozzle.transform.position, bulletRotation);     //Create bullet
+
+        if (tower.getBeforeFireSound() != null) AudioManager.Instance.StopSFX(tower.getBeforeFireSound());
+        if (tower.getFireSound() != null) AudioManager.Instance.PlaySFX(tower.getFireSound());
 
         boolet.SendMessage("setBullet", bulletScript);      //Tell the bullet what kind of bullet it needs to be
         boolet.SendMessage("Mult", damageMult * getDamage());  //And how much damage it does
@@ -1095,4 +1109,11 @@ public class TowerAI : MonoBehaviour
         if (!collision.CompareTag("Enemy")) return;
         forget(collision.gameObject);
     }
+
+    #region Sound Functions
+    public void towerPlace() { AudioManager.Instance.PlaySFX(tower.getTowerPlaceSound()); }
+    public void towerReload() { AudioManager.Instance.PlaySFX(tower.getTowerReloadSound()); }
+    public void lightningRodSparks1() { AudioManager.Instance.PlaySFX("Lightning Rod Sparks 1"); }
+    public void lightningRodSparks2(){ AudioManager.Instance.PlaySFX("Lightning Rod Sparks 2"); }
+    #endregion
 }

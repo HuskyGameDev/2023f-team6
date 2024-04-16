@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
         {
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning2());
             gameObject.GetComponent<ShaderManager>().startBossRound();
+            PlayBossTheme(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getName());
         }
 
         onRoundEnd?.Invoke();
@@ -124,6 +125,15 @@ public class GameManager : MonoBehaviour
         state = GameState.Idle;
 
         AudioManager.Instance.PlaySFX("Round End");
+    }
+
+    public void PlayBossTheme(string bossName)
+    {
+        AudioManager.Instance.StopCurrentMusic();
+        if (bossName.Equals("Sea Serpent"))
+        {
+            AudioManager.Instance.PlayMusic("Blackmoor Tides");
+        }
     }
 
     private void GameEnd()
