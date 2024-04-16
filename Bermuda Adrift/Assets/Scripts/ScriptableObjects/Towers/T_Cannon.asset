@@ -22,9 +22,6 @@ MonoBehaviour:
   cost: 150
   lightningResistance: 0
   image: {fileID: -1043969054, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  beforeFireSound: 
-  fireSound: Cannon Shot
-  towerPlaceSound: Cannon Place
   U1Name: Short Fuse
   U1Description: Fire faster
   U1damageMult: 1.5
@@ -52,7 +49,6 @@ MonoBehaviour:
   UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: 334054624, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  A2upgraded: 0
   UB1Name: Flaming Cannonballs
   UB1Description: Cannonballs set enemies on fire
   UB1damageMult: 1
@@ -71,7 +67,6 @@ MonoBehaviour:
   UB2cost: 400
   UB2LightningResistance: 0
   UB2image: {fileID: 854168516, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  B2upgraded: 0
   anim: {fileID: 9100000, guid: 910219ced63550445908ae2b9692bed9, type: 2}
   baseSprite: {fileID: 940392530, guid: 8db2dfa8e8d901a4daa19d8b76bade3c, type: 3}
   rarity: 0

@@ -7,29 +7,6 @@ using UnityEngine.EventSystems;
 public class TurretMiddleMan : MonoBehaviour, IPointerDownHandler
 {
     public static event Action<GameObject> onClicked;
-
-
-    #region Sound Functions
-    public void beforeBullet()
-    {
-        SendMessageUpwards("beforeFire");
-    }
-
-    public void towerPlaced() { SendMessageUpwards("towerPlace"); }
-
-    public void towerReloaded() { SendMessageUpwards("towerReload"); }
-
-    public void lightningRodActive1()
-    {
-        SendMessageUpwards("lightningRodSparks1");
-    }
-
-    public void lightningRodActive2()
-    {
-        SendMessageUpwards("lightningRodSparks2");
-    }
-    #endregion
-
     public void fireBullet()
     {
         SendMessageUpwards("fire");

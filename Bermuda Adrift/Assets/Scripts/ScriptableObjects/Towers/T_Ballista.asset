@@ -22,9 +22,6 @@ MonoBehaviour:
   cost: 200
   lightningResistance: 0
   image: {fileID: 1560486244, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  beforeFireSound: Ballista Stretch
-  fireSound: Ballista Shot
-  towerPlaceSound: Ballista Place
   U1Name: Gears of War
   U1Description: Powerful gears pull the string back harder, raising damage
   U1damageMult: 1.5

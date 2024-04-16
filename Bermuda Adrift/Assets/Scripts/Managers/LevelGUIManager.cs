@@ -17,7 +17,6 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
 
     private BuildManager buildManager;
     [SerializeField] private GameObject ChoicesCanvas;
-    [SerializeField] private GameObject Volume;
     [SerializeField] private Tower[] allChoices;
     [SerializeField] private BarrierScriptable[] allBarriers;
     [SerializeField] private CenterpieceScriptable[] allCenterpieces;
@@ -40,8 +39,6 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     private void Start()
     {
         buildManager = FindObjectOfType<BuildManager>();
-        ChoicesCanvas.GetComponent<Canvas>().enabled = false;
-        Volume.SetActive(false);
     }
     private void Update()
     {
@@ -63,12 +60,6 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
         previousLevel = FindObjectOfType<GameManager>().getLevel();
 
         AudioManager.Instance.PlaySFX("Level Up Bell");
-
-        ChoicesCanvas.GetComponent<Canvas>().enabled = true;
-        Volume.SetActive(true);
-        ChoicesCanvas.transform.GetChild(0).gameObject.SetActive(true);
-        ChoicesCanvas.transform.GetChild(1).gameObject.SetActive(true);
-        ChoicesCanvas.transform.GetChild(2).gameObject.SetActive(true);
 
         if (numOfUnlocked() == 1)
         {
@@ -218,12 +209,6 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
             ChoicesCanvas.transform.GetChild(1).GetChild(0).GetChild(7).GetComponent<Button>().interactable = false;
             ChoicesCanvas.transform.GetChild(2).GetChild(0).GetChild(7).GetComponent<Button>().interactable = false;
         }
-
-        ChoicesCanvas.GetComponent<Canvas>().enabled = false;
-        Volume.SetActive(false);
-        ChoicesCanvas.transform.GetChild(0).gameObject.SetActive(false);
-        ChoicesCanvas.transform.GetChild(1).gameObject.SetActive(false);
-        ChoicesCanvas.transform.GetChild(2).gameObject.SetActive(false);
     }
     private int numOfUnlocked()
     {

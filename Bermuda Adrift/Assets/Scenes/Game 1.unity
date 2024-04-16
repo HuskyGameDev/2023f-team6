@@ -1374,15 +1374,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 0}
-  mainSlider: {fileID: 0}
-  mainText: {fileID: 0}
-  musicText: {fileID: 0}
-  SFXText: {fileID: 0}
   musicSlider: {fileID: 0}
   SFXSlider: {fileID: 0}
-  musicSounds: []
-  sfxSounds: []
-  currentSong: 
+  backgroundMusic: {fileID: 8300000, guid: 3115364c72b80e149991300cae83c11a, type: 3}
 --- !u!82 &43960050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29196,11 +29190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b5880107b8fae46a04890eaaddb387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionPrefab: {fileID: 0}
-  ResolutionContent: {fileID: 0}
-  ResolutionText: {fileID: 0}
-  AspectContent: {fileID: 0}
-  AspectText: {fileID: 0}
 --- !u!114 &660777649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29550,7 +29539,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &668022958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37905,7 +37893,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &970757864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37920,8 +37907,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
-  centerpiece: {fileID: 0}
-  menuButton: {fileID: 0}
 --- !u!1 &975659669
 GameObject:
   m_ObjectHideFlags: 0
@@ -41720,7 +41705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6c763eaeb74449bb7293fb45cc667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shield: {fileID: 0}
+  maxHealth: 100
 --- !u!61 &1093243193
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -61047,7 +61032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e66f7211b4a22642877c3df4b463ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonBlocker: {fileID: 0}
 --- !u!1 &1273292155
 GameObject:
   m_ObjectHideFlags: 0
@@ -63908,7 +63892,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &1328736608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63923,8 +63906,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
-  centerpiece: {fileID: 0}
-  menuButton: {fileID: 0}
 --- !u!1 &1332497966
 GameObject:
   m_ObjectHideFlags: 0
@@ -64181,7 +64162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e66f7211b4a22642877c3df4b463ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonBlocker: {fileID: 0}
 --- !u!1 &1341913002
 GameObject:
   m_ObjectHideFlags: 0
@@ -73003,7 +72983,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &1673056601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73018,8 +72997,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
-  centerpiece: {fileID: 0}
-  menuButton: {fileID: 0}
 --- !u!1 &1687522100
 GameObject:
   m_ObjectHideFlags: 0
@@ -75331,7 +75308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1290}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1786983382
@@ -78890,9 +78867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChoicesCanvas: {fileID: 1780854689}
-  Volume: {fileID: 0}
   allChoices: []
-  allBarriers: []
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80212,7 +80187,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &1973366942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82023,7 +81997,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!1 &2010595500
 GameObject:
   m_ObjectHideFlags: 0
@@ -83450,7 +83423,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: baddfa75645138349a939bb568ff6f1f, type: 2}
   - {fileID: 11400000, guid: aefcad05795496642a9091046525c9ac, type: 2}
   - {fileID: 11400000, guid: 3aaf601af0bdee64a909851d57e4b295, type: 2}
-  theMaestro: {fileID: 0}
 --- !u!4 &2038607806
 Transform:
   m_ObjectHideFlags: 0
@@ -83478,7 +83450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31525263f0cedbd40992815aab5eb663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
 --- !u!114 &2038607808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83504,8 +83475,6 @@ MonoBehaviour:
   towerCost: {fileID: 132482329}
   logbookCanvas: {fileID: 200171970}
   logbookGrid: {fileID: 1949646297}
-  raft: {fileID: 0}
-  Main: {fileID: 0}
 --- !u!114 &2038607809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83650,6 +83619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd2254c1da9444ba31740136ff6316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  achievements: []
   achievementPopup: {fileID: 0}
 --- !u!114 &2038607814
 MonoBehaviour:
@@ -83666,7 +83636,6 @@ MonoBehaviour:
   rain: {fileID: 535983544}
   normalWater: {fileID: -876546973899608171, guid: c0e593765c4ad5542a6aa5d92523913e, type: 3}
   bloodWater: {fileID: -876546973899608171, guid: d0c0f33d46c86984a9f5978f2f2d5306, type: 3}
-  shadowWater: {fileID: 0}
   water: {fileID: 1170690616}
 --- !u!114 &2038607815
 MonoBehaviour:
@@ -86310,8 +86279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e2f39a81cc8546a097a69d96ab01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTimeBetweenFootsteps: 0.1
-  maxTimeBetweenFootsteps: 0.3
 --- !u!95 &2135632954
 Animator:
   serializedVersion: 5
@@ -87244,7 +87211,6 @@ MonoBehaviour:
   tower: {fileID: 0}
   ability: {fileID: 0}
   barrier: {fileID: 0}
-  center: {fileID: 0}
 --- !u!114 &2145741566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87259,8 +87225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   barrier: {fileID: 0}
-  centerpiece: {fileID: 0}
-  menuButton: {fileID: 0}
 --- !u!1 &2146180223
 GameObject:
   m_ObjectHideFlags: 0

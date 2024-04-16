@@ -38,6 +38,9 @@ public class Hitscan : MonoBehaviour
 
         sprite.localRotation = transform.rotation;
         camera = Camera.main;   //Used for camera shake effects;
+
+        if (effect == Bullet.Effects.Explosion)
+            if (bullet.getLiveAudioString() != null) AudioManager.Instance.PlaySFX(bullet.getLiveAudioString());
     }
     private void Update()
     {
@@ -350,8 +353,8 @@ public class Hitscan : MonoBehaviour
             }
             else if (effect == Bullet.Effects.Explosion)                                         // 3 is an explosion that shakes the screen and inflicts the debuff
             {
-                AudioManager.Instance.PlaySFX(bullet.getImpactAudioString());
                 AudioManager.Instance.StopSFX(bullet.getLiveAudioString());
+                AudioManager.Instance.PlaySFX(bullet.getImpactAudioString());
 
                 camera.SendMessage("cameraShake", 0.25f);
                 

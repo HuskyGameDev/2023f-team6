@@ -102,7 +102,6 @@ public class AI : MonoBehaviour
             seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
         }
     }
-
     private void Start()    //Set up what setEnemy didn't
     {
         //setEnemy seems to run faster than Start, so there should be nothing set here that's set in setEnemy

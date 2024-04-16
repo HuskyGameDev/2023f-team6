@@ -18,10 +18,6 @@ public class Tower : ScriptableObject
     [SerializeField] private int cost;
     [SerializeField] private int lightningResistance;
     [SerializeField] private Sprite image;
-    [SerializeField] private string beforeFireSound;
-    [SerializeField] private string fireSound;
-    [SerializeField] private string towerPlaceSound;
-    [SerializeField] private string towerReloadSound;
 
 
 
@@ -128,10 +124,6 @@ public class Tower : ScriptableObject
     public string getName() { return Name; }
     public string getDescription() { return Description; }
     public Sprite getImage() { return image; }
-    public string getBeforeFireSound() { return beforeFireSound; }
-    public string getFireSound() { return fireSound; }
-    public string getTowerPlaceSound() { return towerPlaceSound; }
-    public string getTowerReloadSound() { return towerReloadSound; }
 
     //Upgrade 1
     public float U1getDamageMult() { return U1damageMult; }

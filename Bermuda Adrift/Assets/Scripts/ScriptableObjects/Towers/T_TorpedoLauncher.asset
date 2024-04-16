@@ -22,10 +22,6 @@ MonoBehaviour:
   cost: 300
   lightningResistance: 0
   image: {fileID: -1046966293, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  beforeFireSound: 
-  fireSound: Torpedo Launcher Shot
-  towerPlaceSound: Torpedo Launcher Place
-  towerReloadSound: Torpedo Launcher Reload
   U1Name: Faster Spin
   U1Description: Torpedos fire faster
   U1damageMult: 1
@@ -73,11 +69,8 @@ MonoBehaviour:
   UB2LightningResistance: 0
   UB2image: {fileID: 2040928910, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   B2upgraded: 0
-<<<<<<< Updated upstream
   relatedSkill: {fileID: 0}
   statEffect: 3
-=======
->>>>>>> Stashed changes
   anim: {fileID: 9100000, guid: 3e86527350e87b843b7d0141345e0b64, type: 2}
   baseSprite: {fileID: -1758812984, guid: ff4ee1650360beb4ea2adef86fb2cddf, type: 3}
   rarity: 0
