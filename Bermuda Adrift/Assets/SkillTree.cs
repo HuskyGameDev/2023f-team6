@@ -25,6 +25,8 @@ public class SkillTree : MonoBehaviour
 
     [SerializeField] private GameObject cardPrefab;
 
+    Color lockedColor = new Color(190f / 255f, 190f / 255f, 190f / 255f);
+
 
 
 
@@ -57,17 +59,6 @@ public class SkillTree : MonoBehaviour
             newCard(6, "Pilot");
             newCard(7, "Old Man");
             newCard(8, "Final Three");
-
-            Debug.Log(cardAvailable(Section2));
-
-            transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Button>().interactable = cardAvailable(Section1);
-            transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Button>().interactable = cardAvailable(Section2);
-            transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Button>().interactable = cardAvailable(Section3);
-            transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Button>().interactable = cardAvailable(Section4);
-            transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<Button>().interactable = cardAvailable(PirateSkills);
-            transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<Button>().interactable = cardAvailable(PilotSkills);
-            transform.GetChild(0).GetChild(0).GetChild(6).GetComponent<Button>().interactable = cardAvailable(OldManSkills);
-            transform.GetChild(0).GetChild(0).GetChild(7).GetComponent<Button>().interactable = cardAvailable(Last3);
         }
         else
         {
@@ -93,8 +84,7 @@ public class SkillTree : MonoBehaviour
                             {
                                 i++;
                                 activeCard = newCard(activeList[i]);
-                                activeCard.GetComponent<Button>().interactable = true;
-                                activeCard.GetComponent<Image>().color = Color.white;
+                                activeCard.GetComponent<Image>().color = activeList[i].getUnlocked() ? Color.white : lockedColor;
                                 activeCard.GetComponent<Button>().onClick.AddListener(() => UpdateAllSkillUI(j));
                             }
                         }
@@ -103,8 +93,25 @@ public class SkillTree : MonoBehaviour
                     }
                 }
             }
-        }
 
+            if (!cardAvailable(activeList)) //Can look at future skills, but you can't unlock them until the prerequisites are met
+            {
+                for (int i = 0; i < transform.GetChild(0).GetChild(0).childCount; i++)
+                {
+                    transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Button>().interactable = false;
+                    transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Image>().color = lockedColor;
+                }
+            }
+        }
+        StartCoroutine(scrollbarReset());
+    }
+    IEnumerator scrollbarReset()
+    {
+        transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((float)(20 + (300 + 10.4 * 2) * transform.GetChild(0).GetChild(0).childCount), transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta.y);
+
+        yield return new WaitForEndOfFrame();
+
+        transform.GetChild(1).GetComponent<Scrollbar>().value = 0;
     }
     void clearSkillCards()
     {
@@ -126,11 +133,11 @@ public class SkillTree : MonoBehaviour
 
         newCard.GetComponent<Button>().onClick.AddListener(() => FindObjectOfType<SkillManager>().buySkill(skill));
 
-        newCard.GetComponent<Button>().interactable = false;
-        newCard.GetComponent<Image>().color = new Color(190f / 255f, 190f / 255f, 190f / 255f);
+        newCard.GetComponent<Button>().interactable = skill.getUnlocked();
+        newCard.GetComponent<Image>().color = lockedColor;
         return newCard;
     }
-    void newCard(int i, string title)
+    void newCard(int i, string title)   //Used for the main cards in the base menu
     {
         GameObject newCard = Instantiate(cardPrefab, transform.GetChild(0).GetChild(0));
 
@@ -139,9 +146,11 @@ public class SkillTree : MonoBehaviour
         newCard.transform.GetChild(2).GetComponent<Image>().enabled = false;
 
         newCard.GetComponent<Button>().onClick.AddListener(() => UpdateAllSkillUI(i));
+        newCard.GetComponent<Button>().interactable = true;
+        newCard.GetComponent<Image>().color = Color.white;
     }
 
-    bool cardDone(Skill[] skillSet)
+    bool cardDone(Skill[] skillSet) //Returns true if every skill in the list is unlocked
     {
         foreach (Skill skill in skillSet)
         {
@@ -152,6 +161,8 @@ public class SkillTree : MonoBehaviour
     }
     bool cardAvailable(Skill[] card)
     {
+        if (card == null) return false;
+
         if (card == Section1) return true;
 
         if (card == Section2) return cardDone(Section1);

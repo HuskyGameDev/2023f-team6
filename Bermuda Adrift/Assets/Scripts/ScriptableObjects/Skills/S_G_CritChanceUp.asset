@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Crit Chance Up
   DescriptionText: Crit chance increased for everything
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -1195651399, guid: 297764cfb0cafca4e937d7dd0faf67c0, type: 3}
   effectStrength: 0
   NumPaired: 0

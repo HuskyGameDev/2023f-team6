@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Fishing Nets Effectiveness Up
   DescriptionText: Fishing nets slow down enemies even more
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 1013542995, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   effectStrength: 0
   NumPaired: 0

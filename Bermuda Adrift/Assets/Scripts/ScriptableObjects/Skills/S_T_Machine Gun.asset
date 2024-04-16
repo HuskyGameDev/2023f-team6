@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Machine Gun Damage Up
   DescriptionText: Machine Guns do more damage
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 1326247683, guid: f880803e86d74f545afac358feaffbda, type: 3}
   effectStrength: 0
   NumPaired: 0

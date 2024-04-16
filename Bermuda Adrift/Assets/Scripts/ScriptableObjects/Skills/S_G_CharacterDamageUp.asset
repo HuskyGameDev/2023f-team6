@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Player Damage Up
   DescriptionText: Base damage for the player character increased
-  SkillCost: 0
+  SkillCost: 3
   sprite: {fileID: 21300000, guid: 12eff220623d7e9438b43e397ef93dc2, type: 3}
   effectStrength: 0
   NumPaired: 0

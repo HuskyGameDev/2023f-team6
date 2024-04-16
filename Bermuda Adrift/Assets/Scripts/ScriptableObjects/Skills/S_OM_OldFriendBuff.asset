@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Old Friend Effectiveness+
   DescriptionText: The Old Friend lasts longer and does more damage
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 1295266417, guid: fcc7e456ab8794649a2164a724e21960, type: 3}
   effectStrength: 0
   NumPaired: 0

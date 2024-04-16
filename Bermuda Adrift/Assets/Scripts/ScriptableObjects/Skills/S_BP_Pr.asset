@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Start with a unique blueprint for Pirate
   DescriptionText: Start every run as the Pirate with a Tri Cannon blueprint
-  SkillCost: 0
+  SkillCost: 5
   sprite: {fileID: 867936739, guid: 5610b04c74c5d3c479fc5fa7e9469e33, type: 3}
   effectStrength: 0
   NumPaired: 0

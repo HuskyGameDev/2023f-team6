@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Barrier Health Up
   DescriptionText: Base health for barriers increased
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -663755172, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   effectStrength: 0
   NumPaired: 2

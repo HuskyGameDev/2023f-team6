@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Airstrike Damage Up
   DescriptionText: Airstrike does more damage
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -2031359918, guid: ba2f2ffcd46d52b409f2cd7a387e0506, type: 3}
   effectStrength: 0
   NumPaired: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Fire Rate Up
   DescriptionText: Shotgun fire rate increased
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -53032877, guid: fcc7e456ab8794649a2164a724e21960, type: 3}
   effectStrength: 0
   NumPaired: 0

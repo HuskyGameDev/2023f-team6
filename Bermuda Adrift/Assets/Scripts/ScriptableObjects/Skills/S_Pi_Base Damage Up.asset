@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Base damage up
   DescriptionText: Base Damage increased for all Pilot abilities
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -1428343779, guid: ba2f2ffcd46d52b409f2cd7a387e0506, type: 3}
   effectStrength: 0
   NumPaired: 0

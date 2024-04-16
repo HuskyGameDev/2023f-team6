@@ -18,5 +18,5 @@ MonoBehaviour:
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}
   associatedCenterpiece: {fileID: 11400000, guid: fa521d2d98585154da78b7c72e964cbd, type: 2}
-  skillPoints: 0
+  skillPoints: 10
   unlocked: 0

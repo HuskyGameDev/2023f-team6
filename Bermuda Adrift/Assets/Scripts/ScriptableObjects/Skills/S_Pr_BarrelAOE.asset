@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Barrel Radius Up
   DescriptionText: Barrel explosion radius is increased
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 1637543663, guid: b97eb4803f2ee7b4a9963f2ab0d33272, type: 3}
   effectStrength: 0
   NumPaired: 2

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Movement Speed Up
   DescriptionText: Movement speed increased for all characters
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 21300000, guid: eeb5ffddf5e38694d95b267af3e1cf24, type: 3}
   effectStrength: 0
   NumPaired: 1

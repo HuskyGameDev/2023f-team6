@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Shield Generator Effectiveness Up
   DescriptionText: Shields made by shield generators have more health
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -464829535, guid: 5b3bfff38945f7a468a6e274c78b8ce0, type: 3}
   effectStrength: 0
   NumPaired: 0

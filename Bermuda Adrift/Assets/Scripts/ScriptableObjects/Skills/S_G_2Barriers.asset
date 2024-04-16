@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Two Barrier Slots
   DescriptionText: You can choose 2 barriers to be available during the game
-  SkillCost: 0
+  SkillCost: 5
   sprite: {fileID: 21300000, guid: 655a148823108ce4d9c708da26157beb, type: 3}
   effectStrength: 0
   NumPaired: 0
-  unlocked: 1
+  unlocked: 0

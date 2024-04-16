@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Lightning Rod Range Up
   DescriptionText: Lightning Rod's electricity reaches farther now
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -1724569256, guid: 30cfb58e8b99ee34e8c7a9b35158d108, type: 3}
   effectStrength: 0
   NumPaired: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Centerpiece Health Up
   DescriptionText: Base health for the centerpiece increased
-  SkillCost: 0
+  SkillCost: 3
   sprite: {fileID: 21300000, guid: 152e2531d2824df47b26cfcde1627871, type: 3}
   effectStrength: 0
   NumPaired: 0

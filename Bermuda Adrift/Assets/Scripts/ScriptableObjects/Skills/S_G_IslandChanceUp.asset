@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Island Chance Up
   DescriptionText: Islands appear more frequently
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: -1573395332, guid: 71ee79ed3c514354d8131656c4b336bf, type: 3}
   effectStrength: 0
   NumPaired: 0

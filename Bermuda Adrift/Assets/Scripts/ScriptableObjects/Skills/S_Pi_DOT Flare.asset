@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Damaging Flares
   DescriptionText: Touching a flare damages enemies
-  SkillCost: 0
+  SkillCost: 2
   sprite: {fileID: 100617873, guid: ba2f2ffcd46d52b409f2cd7a387e0506, type: 3}
   effectStrength: 0
   NumPaired: 0

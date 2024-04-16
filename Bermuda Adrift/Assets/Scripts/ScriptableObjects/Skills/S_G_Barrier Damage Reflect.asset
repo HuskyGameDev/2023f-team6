@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Barrier Damage Reflect
   DescriptionText: Barriers reflect some damage when attacked by an enemy
-  SkillCost: 0
+  SkillCost: 4
   sprite: {fileID: -1638815568, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   effectStrength: 0
-  NumPaired: 0
+  NumPaired: 1
   unlocked: 0

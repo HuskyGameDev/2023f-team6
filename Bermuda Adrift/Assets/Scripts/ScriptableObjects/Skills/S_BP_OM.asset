@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: Start with a unique blueprint for Old Man
   DescriptionText: Start every run as the Old Man with a Scrap Turret blueprint
-  SkillCost: 0
+  SkillCost: 5
   sprite: {fileID: 71927663, guid: 5610b04c74c5d3c479fc5fa7e9469e33, type: 3}
   effectStrength: 0
   NumPaired: 0
