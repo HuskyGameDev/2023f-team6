@@ -37,7 +37,7 @@ public class SC_CircularLoading : MonoBehaviour
         {
             transform.parent.GetChild(2).gameObject.GetComponent<Image>().fillAmount = 0;
             gameObject.GetComponent<Image>().fillAmount = progression;
-            gameObject.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, progression);
+            gameObject.GetComponent<Image>().color = Color.Lerp(new Color(0.745098039f, 0.262745098f, 0.301960784f), new Color(0.290196078f, 0.745098039f, 0.262745098f), progression);
         }
 
         transform.parent.GetChild(3).GetComponent<TextMeshProUGUI>().text = centerpiece.getHealth().ToString();
