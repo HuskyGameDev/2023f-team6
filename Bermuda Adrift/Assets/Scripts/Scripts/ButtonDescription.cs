@@ -74,7 +74,7 @@ public class ButtonDescription : MonoBehaviour
             description = "Higher difficulties spawn powerful elite enemies more often";
         }
 
-        if (gameObject.GetComponent<Button>().interactable)
+        if (gameObject.GetComponent<Button>() != null && gameObject.GetComponent<Button>().interactable)
             onDescriptionUpdate?.Invoke(title, description);
     }
     public void mouseExit()

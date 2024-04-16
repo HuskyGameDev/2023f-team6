@@ -247,7 +247,10 @@ public class Hitscan : MonoBehaviour
         if (collision.name == "AOETrigger") return;
         int crit = critCalc();
 
-        if (crit > 1)
+        if (collision.GetComponent<Centerpiece>() != null)
+            collision.gameObject.SendMessage("TakeDamage", damage);
+
+        else if (crit > 1)
         {
             if (collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.Underwater || collision.gameObject.GetComponent<AI>().getType() == Enemy.Types.WaterBoss)
                 collision.gameObject.SendMessage("CritDamage", damage * underwaterMult * crit * levelScale * damageFalloff());
