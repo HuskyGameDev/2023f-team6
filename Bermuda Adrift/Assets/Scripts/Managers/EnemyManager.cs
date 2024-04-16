@@ -22,6 +22,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Enemy[] Bosses;
     [SerializeField] private Enemy theMaestro;
 
+    [SerializeField] private GameObject eliteParticles;
+
     private List<Enemy> enemySet;
 
     private float eliteChance;
@@ -107,7 +109,10 @@ public class EnemyManager : MonoBehaviour
                 Enemy newEnemy = enemySet[randomEnemy()];
 
                 if (Random.Range(0, 1f) <= eliteChance)
+                {
                     tempEnemy.SendMessage("setEliteEnemy", newEnemy);
+                    Instantiate(eliteParticles, tempEnemy.transform);
+                }
                 else
                     tempEnemy.SendMessage("setEnemy", newEnemy);
             }
@@ -118,7 +123,10 @@ public class EnemyManager : MonoBehaviour
                 tempEnemy.SendMessage("setEnemy", newEnemy);
 
                 if (Random.Range(0, 1f) <= eliteChance)
+                {
                     tempEnemy.SendMessage("setEliteEnemy", newEnemy);
+                    Instantiate(eliteParticles, tempEnemy.transform);
+                }
             }
         }
 

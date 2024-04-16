@@ -71323,7 +71323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1167211305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119153,7 +119153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1780854690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126413,6 +126413,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4df8aadc9b1d9ac4fadf75d04e1b9b1c, type: 2}
   - {fileID: 11400000, guid: b048c38f20f2b7d4d92c01ca81db0fd5, type: 2}
   theMaestro: {fileID: 11400000, guid: 26fc8bde49bc92b498b4048c5dd2b795, type: 2}
+  eliteParticles: {fileID: 4415685960399457611, guid: e96d6f2d96ca1f6418af01f8617d3f20, type: 3}
 --- !u!4 &2038607806
 Transform:
   m_ObjectHideFlags: 0
@@ -126441,7 +126442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31525263f0cedbd40992815aab5eb663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
+  difficulty: 2
 --- !u!114 &2038607808
 MonoBehaviour:
   m_ObjectHideFlags: 0
