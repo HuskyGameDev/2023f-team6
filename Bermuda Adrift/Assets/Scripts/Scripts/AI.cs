@@ -132,7 +132,7 @@ public class AI : MonoBehaviour
     }
     private void setEliteEnemy(Enemy newEnemy)
     {
-        Debug.Log("Elite Spawned: " + enemy.getName());
+        Debug.Log("Elite Spawned: " + newEnemy.getName());
         //More Health, Damage, Speed, and Scrap value
         elite = true;
 
