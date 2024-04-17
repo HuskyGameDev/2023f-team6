@@ -405,7 +405,7 @@ public class S_O_Saving
         OM_OldFriendBuff = new Locks_n_Logs();
         OM_Blueprint = new Locks_n_Logs();
 
-        TwoBarriers = new Locks_n_Logs();
+        TwoBarriers = new Locks_n_Logs(true);
         TwoBlueprints = new Locks_n_Logs();
         RandomBlueprintStart = new Locks_n_Logs();
     #endregion

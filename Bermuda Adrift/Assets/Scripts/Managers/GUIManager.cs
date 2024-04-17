@@ -125,7 +125,10 @@ public class GUIManager : MonoBehaviour
         }
         else
         {
-            enemyCnt.text = "Enemies   " + count.ToString();
+            //Debug.Log(count);
+            //Debug.Log(enemyCnt);
+            if (enemyCnt != null)
+                enemyCnt.text = "Enemies   " + count.ToString();
         }
     }
 

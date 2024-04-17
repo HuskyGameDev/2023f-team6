@@ -25,6 +25,7 @@ MonoBehaviour:
   beforeFireSound: Ballista Stretch
   fireSound: Ballista Shot
   towerPlaceSound: Ballista Place
+  towerReloadSound: 
   U1Name: Gears of War
   U1Description: Powerful gears pull the string back harder, raising damage
   U1damageMult: 1.5
@@ -52,7 +53,7 @@ MonoBehaviour:
   UA2cost: 300
   UA2LightningResistance: 0
   UA2image: {fileID: 347028501, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  A2upgraded: 0
+  A2upgraded: 1
   UB1Name: Steel String
   UB1Description: Stronger string allows for more powerful shots
   UB1damageMult: 2
@@ -71,7 +72,7 @@ MonoBehaviour:
   UB2cost: 500
   UB2LightningResistance: 0
   UB2image: {fileID: -1027113715, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  B2upgraded: 0
+  B2upgraded: 1
   relatedSkill: {fileID: 0}
   statEffect: 1
   anim: {fileID: 9100000, guid: bb4ed309f0aaf3243912ec8c71368b3b, type: 2}
@@ -81,5 +82,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 06000000
   unlocked: 0
-  logged: 0
+  logged: 1
   dimensions: 2

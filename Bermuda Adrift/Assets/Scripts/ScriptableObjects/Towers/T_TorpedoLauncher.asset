@@ -53,7 +53,7 @@ MonoBehaviour:
   UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: 1817036913, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
-  A2upgraded: 0
+  A2upgraded: 1
   UB1Name: Laser Guidance
   UB1Description: Torpedos will home in towards enemies
   UB1damageMult: 1

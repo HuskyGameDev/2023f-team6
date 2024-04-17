@@ -67,12 +67,14 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
 
         Camera.main.GetComponent<CameraEffects>().setEnabled(screenShake);
 
+        /*
         FindObjectOfType<Attack>().primaryButton.LoadBindingOverridesFromJson(primary);
         FindObjectOfType<Attack>().secondaryButton.LoadBindingOverridesFromJson(secondary);
         Debug.Log(secondary);
 
         FindObjectOfType<Attack>().utilityButton.LoadBindingOverridesFromJson(utility);
         FindObjectOfType<Attack>().specialButton.LoadBindingOverridesFromJson(special);
+        */
     }
 
     public void setRaft(int raft)

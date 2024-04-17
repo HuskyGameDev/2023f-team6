@@ -53,7 +53,7 @@ MonoBehaviour:
   UA2cost: 500
   UA2LightningResistance: 0
   UA2image: {fileID: -1114565448, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
-  A2upgraded: 0
+  A2upgraded: 1
   UB1Name: Even More Scrap
   UB1Description: Fire even more types of scrap
   UB1damageMult: 1
@@ -72,7 +72,9 @@ MonoBehaviour:
   UB2cost: 600
   UB2LightningResistance: 0
   UB2image: {fileID: -151052679, guid: 5c74f5bab4cb4414b98aa0b0d55622f2, type: 3}
-  B2upgraded: 0
+  B2upgraded: 1
+  relatedSkill: {fileID: 0}
+  statEffect: 0
   anim: {fileID: 9100000, guid: 9ed78ca465f16f64e910204afc4ae16d, type: 2}
   baseSprite: {fileID: 770356676, guid: 2c25dbb9bced58c459806c120742f6f3, type: 3}
   rarity: 0
@@ -80,5 +82,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 
   unlocked: 0
-  logged: 0
+  logged: 1
   dimensions: 2

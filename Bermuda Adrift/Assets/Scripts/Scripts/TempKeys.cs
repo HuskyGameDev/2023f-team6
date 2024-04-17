@@ -67,6 +67,12 @@ public class TempKeys : MonoBehaviour
 
             FindObjectOfType<IslandManager>().summonIsland();
         }
+
+        //~ - Summon the Maestro
+        if (Input.GetKeyDown(KeyCode.Tilde))
+        {
+            FindObjectOfType<EnemyManager>().summonFinalBoss();
+        }
     #endif
     }
 }
