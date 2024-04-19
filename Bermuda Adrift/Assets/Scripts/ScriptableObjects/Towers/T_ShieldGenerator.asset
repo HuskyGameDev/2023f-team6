@@ -15,6 +15,8 @@ MonoBehaviour:
   saveString: shield-generator
   Name: Shield Generator
   Description: Creates a shield around your centerpiece, protecting it from damage
+  Log: "Creates a barrier around the centerpiece, protecting it from some damage.\\nThis
+    technology shouldn\u2019t be possible. What year is it? "
   damageMult: 0
   turnSpeed: 10
   range: -1
@@ -82,5 +84,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 
   unlocked: 0
-  logged: 1
+  logged: 0
   dimensions: 1

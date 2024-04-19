@@ -9,6 +9,7 @@ public class LogbookManager : MonoBehaviour
 {
     public static event Action<Enemy> EnemyUnlocked;
     public static event Action<Tower> TowerUnlocked;
+    public static event Action<Player> CharacterUnlocked;
     public static event Action logbookFull;
 
     [SerializeField] RectTransform contentEne;
@@ -47,6 +48,8 @@ public class LogbookManager : MonoBehaviour
         TowerAI.OnDoubleUpgraded += unlockTower;
 
         UnlockableButtonEnemy.UnlockableEnemyButtonClicked += openEnemyInformation;
+        UnlockableButtonTower.UnlockableTowerButtonClicked += openTowerInformation;
+        UnlockableButtonCharacter.UnlockableTowerButtonClicked += openCharacterInformation;
     }
 
     private void OnDisable()
@@ -141,7 +144,7 @@ public class LogbookManager : MonoBehaviour
                 unlockedBosses.Add(e);
                 e.setLogged(true);
 
-                Debug.Log("Added Boss: " + e.getName());
+                //Debug.Log("Added Boss: " + e.getName());
 
                 txtLoggedBos.GetComponent<TextMeshProUGUI>().text = unlockedBosses.Count + " / " + allBosses.Length;
             }
@@ -153,7 +156,7 @@ public class LogbookManager : MonoBehaviour
                 unlockedEnemies.Add(e);
                 e.setLogged(true);
 
-                Debug.Log("Added Enemy: " + e.getName());
+                //Debug.Log("Added Enemy: " + e.getName());
 
                 txtLoggedEne.GetComponent<TextMeshProUGUI>().text = unlockedEnemies.Count + " / " + allEnemies.Length;
             }
@@ -171,13 +174,17 @@ public class LogbookManager : MonoBehaviour
             unlockedTowers.Add(t);
             t.setLogged(true);
 
-            Debug.Log("Added Tower: " + t.getName());
+            //Debug.Log("Added Tower: " + t.getName());
 
             if (logbookFilled())
                 logbookFull?.Invoke();
 
             txtLoggedTow.GetComponent<TextMeshProUGUI>().text = unlockedTowers.Count + " / " + allTowers.Length;
         }
+
+        if (logbookFilled())
+            logbookFull?.Invoke();
+        TowerUnlocked?.Invoke(t);
     }
     public void unlockCharacter(Enemy enemy)
     {
@@ -194,9 +201,13 @@ public class LogbookManager : MonoBehaviour
             if (logbookFilled())
                 logbookFull?.Invoke();
 
-            Debug.Log("Added Character: " + p.getName());
+            //Debug.Log("Added Character: " + p.getName());
             txtLoggedCha.GetComponent<TextMeshProUGUI>().text = unlockedCharacters.Count + " / " + allCharacters.Length;
         }
+
+        if (logbookFilled())
+            logbookFull?.Invoke();
+        CharacterUnlocked?.Invoke(p);
     }
 
     /*
@@ -240,18 +251,45 @@ public class LogbookManager : MonoBehaviour
         canvasTow.enabled = false;
         canvasCha.enabled = false;
     }
+    public void openTowerInformation(Tower t)
+    {
+        informationMask.SetActive(true);
+        entryDescription.GetComponent<TextMeshProUGUI>().text = t.getLog().Replace("\\n", "\n\n");
+        entryName.GetComponent<TextMeshProUGUI>().text = "Tower: " + t.getName();
+        entryIcon.GetComponent<Image>().sprite = t.getImage();
+        canvasMain.enabled = false;
+        canvasEne.enabled = false;
+        canvasBos.enabled = false;
+        canvasTow.enabled = false;
+        canvasCha.enabled = false;
+    }
+    public void openCharacterInformation(Player c)
+    {
+        informationMask.SetActive(true);
+        entryDescription.GetComponent<TextMeshProUGUI>().text = c.getLog();
+        entryName.GetComponent<TextMeshProUGUI>().text = "Character: " + c.getName();
+        entryIcon.GetComponent<Image>().sprite = c.getMainBodySprite();
+        canvasMain.enabled = false;
+        canvasEne.enabled = false;
+        canvasBos.enabled = false;
+        canvasTow.enabled = false;
+        canvasCha.enabled = false;
+    }
 
     bool logbookFilled()
     {
-        if (unlockedBosses.Count == allBosses.Length
+        if (unlockedBosses.Count >= allBosses.Length
             &&
-            unlockedEnemies.Count == allEnemies.Length
+            unlockedEnemies.Count >= allEnemies.Length
             &&
-            unlockedTowers.Count == allTowers.Length
+            unlockedTowers.Count >= allTowers.Length
             &&
-            unlockedCharacters.Count == allCharacters.Length)
+            unlockedCharacters.Count >= allCharacters.Length)
             return true;
         else
-        return false;
+        {
+            Debug.Log("Returning false");
+            return false;
+        }
     }
 }

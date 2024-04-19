@@ -23,6 +23,15 @@ public class DirectionalAnimations : MonoBehaviour
     {
         direction();
     }
+    bool hasMoveX()
+    {
+        foreach (AnimatorControllerParameter param in anim.parameters)
+        {
+            if (param.name == "MoveX")
+                return true;
+        }
+        return false;
+    }
 
     private void direction()
     {
@@ -31,7 +40,7 @@ public class DirectionalAnimations : MonoBehaviour
             movingX = ai.getGoal().x - location.position.x;
             movingY = ai.getGoal().y - location.position.y;
 
-        } catch (Exception e)
+        } catch (Exception)
         {
             //Don't update if there's an error
         }
@@ -39,9 +48,24 @@ public class DirectionalAnimations : MonoBehaviour
         Vector2 movementVec = new Vector2(movingX, movingY);
         movementVec = movementVec.normalized;
 
-        //Debug.Log(movementVec);
+        if (hasMoveX())
+        {
+            anim.SetFloat("MoveX", movementVec.x);
+            anim.SetFloat("MoveY", movementVec.y);
+        } 
+        else
+        {
+            if (movementVec.x < 0)
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            else
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
 
-        anim.SetFloat("moveX", movementVec.x);
-        anim.SetFloat("moveY", movementVec.y);
+            string[] opposites = { "Hamster" };
+            foreach (string name in opposites)
+            {
+                if (gameObject.GetComponent<AI>().getName().CompareTo(name) == 0)
+                    gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+            }
+        }
     }
 }

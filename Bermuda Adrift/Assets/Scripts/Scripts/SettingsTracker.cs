@@ -193,6 +193,7 @@ public class SettingsTracker : MonoBehaviour, IDataPersistence
 
     public int getBarrier2Num()
     {
+        if (barrier2 == null) return -1;
         string barName = barrier2.getName();
         if (barName == "Barricade")
         {

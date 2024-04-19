@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Swordfish
-  description: Is a swordfish
+  description: Engarde! These fast fish seem to almost fly towards me. They have
+    been on plenty of swashbuckling adventures I am sure.
   pageNumber: 0
   Health: 5
   Damage: 1

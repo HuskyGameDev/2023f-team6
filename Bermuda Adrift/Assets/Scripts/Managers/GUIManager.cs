@@ -91,7 +91,7 @@ public class GUIManager : MonoBehaviour
         if (FindObjectOfType<SettingsTracker>() == null || FindObjectOfType<SettingsTracker>().getCharacter().getUnlocked())
             SceneManager.LoadScene(scene);
         else
-            Debug.Log("Not unlocked!");
+            Debug.Log("Character not unlocked!");
     }
 
     public void SetActiveTrue(GameObject screen)

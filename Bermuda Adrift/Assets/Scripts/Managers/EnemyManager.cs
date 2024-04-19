@@ -95,12 +95,6 @@ public class EnemyManager : MonoBehaviour
         } 
         else
         {
-            if (AudioManager.Instance.currentSong != "Pirate Theme")
-            {
-                AudioManager.Instance.StopCurrentMusic();
-                AudioManager.Instance.PlayMusic("Pirate Theme");
-            }
-
             total = (loopSpot * 3) + (Round / 10);   //Very basic scaling of enemy difficulty. Maybe use an array or something to keep track of how many times each set is chosen and add scaling that way?
             int i = 0;
             for (; i < total / 2; i++)

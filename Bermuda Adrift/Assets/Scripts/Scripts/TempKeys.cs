@@ -5,6 +5,8 @@ using UnityEngine;
 public class TempKeys : MonoBehaviour
 {
     [SerializeField] private int testRound;
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private Enemy testEnemy;
     void Update()
     {
     #if UNITY_EDITOR
@@ -68,11 +70,26 @@ public class TempKeys : MonoBehaviour
             FindObjectOfType<IslandManager>().summonIsland();
         }
 
-        //~ - Summon the Maestro
-        if (Input.GetKeyDown(KeyCode.Tilde))
+        //F5 - Summon the Maestro
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             FindObjectOfType<EnemyManager>().summonFinalBoss();
         }
-    #endif
+
+        //F4 - Do 10% damage to all enemies
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            foreach (AI ai in FindObjectsOfType<AI>())
+                ai.SendMessage("TakeDamage", 1400);
+        }
+
+        //F6 - Spawn given enemy
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            var newEnemy = Instantiate(enemyPrefab, new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y + 5), Quaternion.identity);   //Maybe an animation for when they get summoned?
+            newEnemy.SendMessage("setEnemy", testEnemy);
+            FindObjectOfType<EnemyManager>().newEnemies(); //Let the Enemy manager know more enemies are being spawned
+        }
+#endif
     }
 }

@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: Bullet_LaserGuidedTorpedo
   m_EditorClassIdentifier: 
   projectileSpeed: 25
-  damage: 6
-  AOE: 2
+  damage: 12
+  AOE: 1
   effect: 4
   scale: 0.5
   timer: -1
   animator: {fileID: 9100000, guid: 6e0cde46a4f51cb4db712ac5fd03289d, type: 2}
   FriendlyFire: 0
-  Homing: 5
+  Homing: 0
   debuff: {fileID: 0}
   pierce: 0
   AOETimer: -1
   UnderwaterDamage: 1
   AirborneDamage: 0
   types: []
+  bulletTrail: {fileID: 0}
+  impactAudioString: 
+  liveAudioString: 

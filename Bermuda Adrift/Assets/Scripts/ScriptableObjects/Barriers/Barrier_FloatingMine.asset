@@ -15,6 +15,8 @@ MonoBehaviour:
   saveString: floating-mine
   barrierName: Floating Mine
   description: Powerful explosives can take down even the mightiest of foes
+  Log: "Creates a powerful explosion that can take down even the mightiest of foes.\\nIt\u2019s
+    old technology, but still useful."
   unlocked: 1
   effect: 2
   Health: 6
@@ -24,3 +26,5 @@ MonoBehaviour:
   startingSprite: {fileID: 330191402, guid: ffeef026d56537c439d7c6070a5e1fe1, type: 3}
   animator: {fileID: 9100000, guid: a741af02f96cce24cacb1164a800dc23, type: 2}
   Thumbnail: {fileID: -1166972497, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  relatedSkill: {fileID: 0}
+  statEffect: 0

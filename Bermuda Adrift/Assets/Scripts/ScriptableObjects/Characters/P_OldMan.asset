@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0dc33d762e5bb24ca4b2e175d12cc22, type: 3}
   m_Name: P_OldMan
   m_EditorClassIdentifier: 
+  Log: "\u201CThe Sea speaks to me. It tells me I will never leave\u201D the old
+    man mutters over and over again. He looks too old to be alive."
   anim: {fileID: 9100000, guid: d856fa4121c21b84eb4a6987f039d6bf, type: 2}
   defPrimary: {fileID: 11400000, guid: 5bc63f34a72b13b439d8b74320c592de, type: 2}
   defSecondary: {fileID: 11400000, guid: 36f34c081242fd049930e441d5c44762, type: 2}
@@ -28,6 +30,6 @@ MonoBehaviour:
   characterName: The Old Man
   mainBodySprite: {fileID: 2142675960, guid: 827c720708928dc4ba1c9a1c70bc9fe7, type: 3}
   speed: 3
-  unlocked: 1
+  unlocked: 0
   logged: 0
   associatedSkills: []

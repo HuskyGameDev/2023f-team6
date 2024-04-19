@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: cannon
   Name: Cannon
   Description: Fires slow, powerful cannonballs
+  Log: 'Fires a slow cannonball that can damage nearby enemies. \nEvery ship that
+    ever approached this place has disappeared. These cannons may be all that are
+    left. '
   damageMult: 1.5
   turnSpeed: 0.75
   range: 6
@@ -81,6 +84,6 @@ MonoBehaviour:
   cantTurn: 0
   noUpgrades: 0
   extraPriorities: 
-  unlocked: 0
-  logged: 1
+  unlocked: 1
+  logged: 0
   dimensions: 2

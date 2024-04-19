@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Ghost Ship
-  description: 
+  description: Fog with an aroma of death comes out of the water. Moans fill the
+    air. A ship comes into sight with no crew on board.
   pageNumber: 0
   Health: 3500
   Damage: 10

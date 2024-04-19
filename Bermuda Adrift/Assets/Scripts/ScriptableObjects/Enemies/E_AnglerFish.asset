@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Angler Fish
-  description: Is a fish that angles.
+  description: A deep sea creature. Was it chased to the surface by something?
   pageNumber: 0
   Health: 15
   Damage: 3

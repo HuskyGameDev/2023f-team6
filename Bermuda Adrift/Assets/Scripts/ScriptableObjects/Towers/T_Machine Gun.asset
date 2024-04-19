@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: machine-gun
   Name: Machine Gun
   Description: Fires weak bullets very quickly
+  Log: "Fires weak bullets very quickly. \\nPlanes have to plan around the location
+    of the Bermuda Triangle because they\u2019d crash otherwise. This gun likely
+    came from the time before that became a necessity."
   damageMult: 1
   turnSpeed: 0.75
   range: 7
@@ -81,6 +84,6 @@ MonoBehaviour:
   cantTurn: 0
   noUpgrades: 0
   extraPriorities: 
-  unlocked: 1
-  logged: 1
+  unlocked: 0
+  logged: 0
   dimensions: 2

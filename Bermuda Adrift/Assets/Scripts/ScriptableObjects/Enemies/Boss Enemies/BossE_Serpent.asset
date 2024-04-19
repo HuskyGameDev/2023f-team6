@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Sea Serpent
-  description: Is a serpent
+  description: He almost looks like my pet eel that I flushed down the toilet when
+    I was just a child.
   pageNumber: 0
   Health: 1000
   Damage: 30
@@ -35,7 +36,7 @@ MonoBehaviour:
   minion: {fileID: 11400000, guid: bb5fc4d2e6ea216428b37d4a31b6b836, type: 2}
   bossWarning: A powerful creature approaches...
   bossApproaching: The sun turns red...
-  availableAttacks: 06000000
+  availableAttacks: 0000000001000000
   phase2switch: 0
   Phase2ExtraAttacks: 
   logged: 0

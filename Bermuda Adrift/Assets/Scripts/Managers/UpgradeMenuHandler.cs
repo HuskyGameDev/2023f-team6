@@ -333,7 +333,6 @@ public class UpgradeMenuHandler : MonoBehaviour
             }
         }
 
-        Debug.Log("Not on a platform");
         return null;
     }
     void openPlatformRepair(Barriers barrier)

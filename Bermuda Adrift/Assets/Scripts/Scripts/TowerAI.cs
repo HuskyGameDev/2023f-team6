@@ -906,28 +906,29 @@ public class TowerAI : MonoBehaviour
         int towerMask = 1 << 8;
 
         Collider2D collider = Physics2D.Raycast(position, Vector3.up + Vector3.right, getTowerRange(), towerMask).collider;     //Top right corner
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        Debug.Log(collider);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.up + Vector3.left, getTowerRange(), towerMask).collider;                 //Top left corner
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.down + Vector3.left, getTowerRange(), towerMask).collider;               //Bottom left corner
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.down + Vector3.right, getTowerRange(), towerMask).collider;              //Bottom right corner
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.up, getTowerRange(), towerMask).collider;                                //Up
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.down, getTowerRange(), towerMask).collider;                              //Down
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.left, getTowerRange(), towerMask).collider;                              //Left
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
         collider = Physics2D.Raycast(position, Vector3.right, getTowerRange(), towerMask).collider;                             //Right
-        if (collider != null) collider.transform.parent.SendMessage("removeBuff", buff);
+        if (collider != null && collider.transform.parent != null) collider.transform.parent.SendMessage("removeBuff", buff);
 
     }
     private void lightningStrike(float duration) { StartCoroutine(tempDisable(duration)); }

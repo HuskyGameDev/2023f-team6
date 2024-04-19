@@ -14,7 +14,7 @@ public class CenterpieceScriptable : ScriptableObject
     [SerializeField] private Sprite sprite;
     [SerializeField] private bool unlocked;
 
-    public void setUnlock(bool unlocked) { this.unlocked = unlocked; }
+    public void setUnlock(bool unlock) { Debug.Log("Setting " + Name + " unlocked: " + unlock); this.unlocked = unlock; }
 
     public string getName() { return Name; }
     public string getDescription() { return Description; }

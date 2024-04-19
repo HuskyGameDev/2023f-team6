@@ -15,6 +15,8 @@ MonoBehaviour:
   saveString: reinforced-barrier
   barrierName: Reinforced Barrier
   description: Much more durable than a basic barricade
+  Log: "Works like a barricade but with higher durability.\\nAdding more scrap doesn\u2019t
+    change the fact that it\u2019s just a pile of scraps. "
   unlocked: 0
   effect: 0
   Health: 50
@@ -24,3 +26,5 @@ MonoBehaviour:
   startingSprite: {fileID: 2062341132, guid: 3c0669133ff39d74cb84761fcfb3f837, type: 3}
   animator: {fileID: 9100000, guid: f4c4a6ed09a6a854a9cdad987d32c48a, type: 2}
   Thumbnail: {fileID: -85373152, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  relatedSkill: {fileID: 0}
+  statEffect: 0

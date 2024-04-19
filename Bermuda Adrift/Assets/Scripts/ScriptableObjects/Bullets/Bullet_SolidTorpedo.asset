@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: Bullet_SolidTorpedo
   m_EditorClassIdentifier: 
   projectileSpeed: 30
-  damage: 15
+  damage: 18
   AOE: 0
   effect: 0
   scale: 0.5
   timer: -1
   animator: {fileID: 9100000, guid: fab9172607c0cec42945c52171a8da2c, type: 2}
   FriendlyFire: 0
-  Homing: 0.75
+  Homing: 0
   debuff: {fileID: 0}
   pierce: 0
   AOETimer: 0
   UnderwaterDamage: 1
   AirborneDamage: 0
   types: []
+  bulletTrail: {fileID: 0}
+  impactAudioString: 
+  liveAudioString: 

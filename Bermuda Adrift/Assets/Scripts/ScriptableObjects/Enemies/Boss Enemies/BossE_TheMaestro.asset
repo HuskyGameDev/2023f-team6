@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A shadow in the dark, a drop in the ocean, a whisper in an orchestra.
     Hidden within these, a god was born. - The Old Man
   pageNumber: 1
-  Health: 10000
+  Health: 7000
   Damage: 100
   Speed: 1
   attackSpeed: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
   debuff: {fileID: 0}
   extra: {fileID: 0}
   bullet: {fileID: 0}
-  minion: {fileID: 11400000, guid: 3aaf601af0bdee64a909851d57e4b295, type: 2}
+  minion: {fileID: 11400000, guid: 0eb95e05bfefcb64285d762c110c70e7, type: 2}
   bossWarning: 
   bossApproaching: 
   availableAttacks: 

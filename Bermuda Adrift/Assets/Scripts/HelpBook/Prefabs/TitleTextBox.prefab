@@ -169,8 +169,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The Book Of
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 68d5e77c32645534f8707fd9a1ce3c2b, type: 2}
-  m_sharedMaterial: {fileID: 7871101034628430030, guid: 68d5e77c32645534f8707fd9a1ce3c2b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
+  m_sharedMaterial: {fileID: 6278112331968825172, guid: cff005c9cffded74f937c17b3f4e2492, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

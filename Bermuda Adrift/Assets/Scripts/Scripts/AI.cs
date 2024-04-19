@@ -26,6 +26,7 @@ public class AI : MonoBehaviour
 
     [SerializeField] private GameObject extra;
     [SerializeField] private Bullet bullet;
+    [SerializeField] private GameObject wallEffects;
 
     private string[] impactSounds = {"Enemy Impact 1", "Enemy Impact 2", "Enemy Impact 3", "Enemy Impact 4" };
 
@@ -38,6 +39,7 @@ public class AI : MonoBehaviour
     private bool dead;
     private bool forgotten = false;
     private float wall;
+    private bool attackLoopStarted;
 
     [SerializeField] private bool noRotation;
     private Animator animator;
@@ -93,6 +95,7 @@ public class AI : MonoBehaviour
             airborne = true;
             Destroy(seeker);
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
+            nearestEntrance();
         }
         else
         {
@@ -153,8 +156,8 @@ public class AI : MonoBehaviour
 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector3(enemy.getXSize(), enemy.getYSize());    //Sets size of the hitbox. Might need another variable for the offset from the center since some of the sprites aren't centered
 
-        scrapValue = (int) (enemy.getScrap() * 1.25f);  //Extra Scrap value
-        speed = enemy.getSpeed() * 1.25f;   //Extra speed
+        scrapValue = (int) (enemy.getScrap() * 1.5f);  //Extra Scrap value
+        speed = enemy.getSpeed() * 1.5f;   //Extra speed
 
         if (enemy.getType() == Enemy.Types.WaterBoss || enemy.getType() == Enemy.Types.AirborneBoss && enemyManager.getRound() % 10 == 0)    //Boss health scaling during boss rounds, but not when a normal enemy
         {
@@ -171,6 +174,8 @@ public class AI : MonoBehaviour
         {
             airborne = true;
             Destroy(seeker);
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
+            nearestEntrance();
         }
         else
         {
@@ -243,13 +248,14 @@ public class AI : MonoBehaviour
         foreach (Enemy.Attack a in enemy.getAvailableAttacks()) //Can add multiple versions of the same attack to make it more likely
             availableAttacks.Add(a);
 
+        attackLoopStarted = true;
+
         while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(10f);
 
-            if ( (float) Health / newMaxHealth < enemy.phase2TriggerHealth())
+            if ( (float) Health / newMaxHealth < enemy.phase2TriggerHealth() )
             {
-                animator.SetTrigger("Phase Change");
                 foreach (Enemy.Attack a in enemy.getPhase2Attacks())
                     availableAttacks.Add(a);
             }
@@ -400,7 +406,7 @@ public class AI : MonoBehaviour
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;   //Can't be shot while underwater
             yield return new WaitForSeconds(1f);
-            gameObject.transform.position = new Vector3(Random.Range(8f, 20f), Random.Range(-10f, 10f));    //Pick random spot on right side of screen
+            gameObject.transform.position = new Vector3(Random.Range(12f, 20f), Random.Range(-10f, 10f));    //Pick random spot on right side of screen
             nearestEntrance();  //Switch the goal to the entrance that's nearest now
             yield return new WaitForSeconds(1f);
 
@@ -411,7 +417,7 @@ public class AI : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             //Play going-under animation
             yield return new WaitForSeconds(1f);
-            gameObject.transform.position = new Vector3(Random.Range(-20f, -8f), Random.Range(-10f, 10f));  //Random spot on left side of the screen
+            gameObject.transform.position = new Vector3(Random.Range(-20f, -12f), Random.Range(-10f, 10f));  //Random spot on left side of the screen
             nearestEntrance();
             yield return new WaitForSeconds(1f);
             //Play coming up animation
@@ -518,8 +524,11 @@ public class AI : MonoBehaviour
         wall = 0f;
 
         animator.SetTrigger("Wall");
+        GameObject wallParticles = Instantiate(wallEffects, transform);
+
         yield return new WaitForSeconds(5f);
 
+        Destroy(wallParticles);
         wall = 1f;
     }
     IEnumerator Jump()
@@ -609,7 +618,8 @@ public class AI : MonoBehaviour
     #region Goal Setters
     private void updatePath()   //Updates the path when the goal possibly changed
     {
-        seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
+        if (seeker != null)
+            seeker.StartPath(transform.position, nearestEntrance(), OnPathComplete);
     }
     private Vector3 nearestEntrance()  //Finds the closest object tagged entrance and sets the goal to be that
     {
@@ -679,6 +689,14 @@ public class AI : MonoBehaviour
         if (moreDamage * getArmor() * wall >= 1000)
             onMajorDamage?.Invoke();
 
+        if ((float)Health / newMaxHealth < enemy.phase2TriggerHealth() && !attackLoopStarted)
+        {
+            animator.SetTrigger("Phase Change");
+
+            if (enemy.getAvailableAttacks().Length <= 0 && enemy.getPhase2Attacks().Length > 0 && !attackLoopStarted)
+                StartCoroutine(randomAttacks());
+        }
+
         //if (enemy.getType() == Enemy.Types.WaterBoss)
         //    Debug.Log("Took " + (int)(moreDamage * getArmor()) + " damage, now at " + Health + " / " + newMaxHealth);
 
@@ -703,6 +721,14 @@ public class AI : MonoBehaviour
         if (moreDamage * getArmor() * wall >= 1000)
             onMajorDamage?.Invoke();
 
+        if ((float)Health / newMaxHealth < enemy.phase2TriggerHealth() && !attackLoopStarted)
+        {
+            animator.SetTrigger("Phase Change");
+
+            if (enemy.getAvailableAttacks().Length <= 0 && enemy.getPhase2Attacks().Length > 0 && !attackLoopStarted)
+                StartCoroutine(randomAttacks());
+        }
+
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
             OnCrit?.Invoke((int)(moreDamage * getArmor() * wall));
 
@@ -721,6 +747,14 @@ public class AI : MonoBehaviour
 
         if (moreDamage * getArmor() * wall >= 1000)
             onMajorDamage?.Invoke();
+
+        if ((float)Health / newMaxHealth < enemy.phase2TriggerHealth() && !attackLoopStarted)
+        {
+            animator.SetTrigger("Phase Change");
+
+            if (enemy.getAvailableAttacks().Length <= 0 && enemy.getPhase2Attacks().Length > 0 && !attackLoopStarted)
+                StartCoroutine(randomAttacks());
+        }
 
         //if (enemy.getType() == Enemy.Types.WaterBoss)
         //    Debug.Log("Took " + (int)(moreDamage * getArmor()) + " damage, now at " + Health + " / " + newMaxHealth);
@@ -750,6 +784,14 @@ public class AI : MonoBehaviour
         if (moreDamage * getArmor() * wall >= 1000)
             onMajorDamage?.Invoke();
 
+        if ((float)Health / newMaxHealth < enemy.phase2TriggerHealth() && !attackLoopStarted)
+        {
+            animator.SetTrigger("Phase Change");
+
+            if (enemy.getAvailableAttacks().Length <= 0 && enemy.getPhase2Attacks().Length > 0 && !attackLoopStarted)
+                StartCoroutine(randomAttacks());
+        }
+
         if (!forgotten) //Not even damage popups appear when an enemy is forgotten
             OnCrit?.Invoke((int)(moreDamage * getArmor() * wall));
 
@@ -767,6 +809,14 @@ public class AI : MonoBehaviour
         Health -= moreDamage;
         damage += moreDamage;
         animator.SetTrigger("TookDamage");
+
+        if ((float)Health / newMaxHealth < enemy.phase2TriggerHealth() && !attackLoopStarted)
+        {
+            animator.SetTrigger("Phase Change");
+
+            if (enemy.getAvailableAttacks().Length <= 0 && enemy.getPhase2Attacks().Length > 0 && !attackLoopStarted)
+                StartCoroutine(randomAttacks());
+        }
 
         //Debug.Log("Status: -" + moreDamage + " => " + Health + " / " + enemy.getHealth());
 
@@ -813,7 +863,7 @@ public class AI : MonoBehaviour
         while (recipient != null)
         {
             if (elite)
-                recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult() * 1.25f), this));
+                recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult() * 1.5f), this));
             else
                 recipient.SendMessage("TakeDamage", ((int)(enemy.getDamage() * getDamageMult()), this));
 

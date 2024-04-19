@@ -27,10 +27,10 @@ MonoBehaviour:
   FireRate: 1
   TurnSpeed: 1
   DamageOverTime: 5
-  DOTSpeed: 0.25
+  DOTSpeed: 0.1
   percentDOT: 0
   DOTColor: {r: 0.6415094, g: 0, b: 0, a: 1}
   Health: 1
-  armor: 1
+  armor: 0.75
   CritChance: 1
   Damage: 1

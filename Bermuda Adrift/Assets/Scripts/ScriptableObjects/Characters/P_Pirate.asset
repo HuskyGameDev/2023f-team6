@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0dc33d762e5bb24ca4b2e175d12cc22, type: 3}
   m_Name: P_Pirate
   m_EditorClassIdentifier: 
+  Log: "Mutiny was what brought this fate upon the pirate. His first mate threw him
+    overboard and made off with all of his beautiful booty. Something calls to the
+    pirate and he knows he can\u2019t resist it. Something that every pirate has
+    wanted. A ship that needs no crew."
   anim: {fileID: 9100000, guid: 3cbb698435b0de246ae17e8fe425adb6, type: 2}
   defPrimary: {fileID: 11400000, guid: 9b40d4a8a0fff984f82f9634ff5b78bb, type: 2}
   defSecondary: {fileID: 11400000, guid: e9581dacddcc28741a633c3a92b1239d, type: 2}
@@ -30,7 +34,4 @@ MonoBehaviour:
   speed: 7
   unlocked: 1
   logged: 0
-  audioPrimary: 
-  audioSecondary: Blunderbuss Fire
-  audioUtility: Drink Rum
-  audioSpecial: Barrel Rolling
+  associatedSkills: []

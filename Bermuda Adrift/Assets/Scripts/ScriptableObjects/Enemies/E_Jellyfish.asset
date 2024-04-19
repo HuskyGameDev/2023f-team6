@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Jellyfish
-  description: Is a jellyfish
+  description: "Hitting it feels like hitting a balloon that won\u2019t pop. Does
+    it even eat the food I carry?"
   pageNumber: 0
   Health: 10
   Damage: 2

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player",menuName = "ScriptableObjects/Player")]
 public class Player : ScriptableObject
 {
+    [SerializeField] private string Log;
     [SerializeField] private RuntimeAnimatorController anim;
     [SerializeField] private Ability defPrimary;
     [SerializeField] private Ability defSecondary;
@@ -80,6 +81,7 @@ public class Player : ScriptableObject
     public void setUnlock(bool unlock) { unlocked = unlock; }
 
 
+    public string getLog() { return Log; }
     public Ability getDefPrimary() { return defPrimary; }
     public Ability getDefSecondary() { return defSecondary; }
     public Ability getDefUtility() { return defUtility; }

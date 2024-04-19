@@ -11,6 +11,15 @@ public class UnlockableButtonTower : UnlockableButtonBase
 
     public Tower tower;
 
+    private void OnEnable()
+    {
+        LogbookManager.TowerUnlocked += unlockTowerButton;
+    }
+    private void OnDisable()
+    {
+        LogbookManager.TowerUnlocked -= unlockTowerButton;
+    }
+
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(buttonClicked);

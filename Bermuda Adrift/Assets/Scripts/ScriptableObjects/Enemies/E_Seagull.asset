@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 1
   specialType: 0
   Name: Seagull
-  description: Is a seagull
+  description: Birds should be a sign of land, but for some reason I doubt that these
+    birds came from outside the triangle.
   pageNumber: 0
   Health: 3
   Damage: 1

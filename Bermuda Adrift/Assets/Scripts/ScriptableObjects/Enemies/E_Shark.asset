@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Shark
-  description: Is a shark
+  description: '"I am a nice shark, not a mindless eating machine. Fish are friends,
+    and we want your food."'
   pageNumber: 0
   Health: 100
   Damage: 10

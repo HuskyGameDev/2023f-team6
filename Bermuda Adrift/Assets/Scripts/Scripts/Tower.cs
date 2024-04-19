@@ -11,6 +11,7 @@ public class Tower : ScriptableObject
     [Header("Base Form")]
     [SerializeField] private string Name;
     [SerializeField] private string Description;
+    [SerializeField] private string Log;
     [SerializeField] private float damageMult;
     [SerializeField] private float turnSpeed;   //The closer to 0, the slower the turn speed. Might add a multiplier somewhere so we don't end up working with stuff like .00001 for this variable
     [SerializeField] private float range;       //Use tiles as a measure of range? -1 for infinite range
@@ -127,6 +128,7 @@ public class Tower : ScriptableObject
     public float getRarity() { return rarity; }
     public string getName() { return Name; }
     public string getDescription() { return Description; }
+    public string getLog() { return Log; }
     public Sprite getImage() { return image; }
     public string getBeforeFireSound() { return beforeFireSound; }
     public string getFireSound() { return fireSound; }

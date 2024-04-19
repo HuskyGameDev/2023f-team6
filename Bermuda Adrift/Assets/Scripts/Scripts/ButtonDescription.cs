@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ButtonDescription : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public class ButtonDescription : MonoBehaviour
             title = center.getName();
             description = center.getDescription();
         }
-        else    //Difficulty options
+        else if (SceneManager.GetActiveScene().name == "Menu")    //Difficulty options
         {
             title = gameObject.name;
             description = "Higher difficulties spawn powerful elite enemies more often";

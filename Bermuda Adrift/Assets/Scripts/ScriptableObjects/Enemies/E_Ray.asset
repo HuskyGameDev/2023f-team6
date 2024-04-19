@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Manta Ray
-  description: Is a ray
+  description: Its face is on the bottom side of it. What a weird creature. I had
+    better watch out for that tail.
   pageNumber: 0
   Health: 20
   Damage: 3

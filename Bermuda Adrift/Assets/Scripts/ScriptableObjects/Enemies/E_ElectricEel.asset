@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Electric Eel
-  description: Is an electric eel
+  description: "Somehow they can make electricity. Maybe that\u2019s what the lightning
+    rod is based on?"
   pageNumber: 0
   Health: 15
   Damage: 3

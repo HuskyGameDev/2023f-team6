@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: scrap-turret
   Name: Scrap Turret
   Description: Fires random pieces of scrap
+  Log: Fires random bullets that have a variety of effects. \nTechnology developed
+    by a fellow survivor. Perhaps one of the first, and yet also perhaps one of the
+    last. Perhaps they are still here. Perhaps they never left.
   damageMult: 1
   turnSpeed: 1
   range: 6
@@ -82,5 +85,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 
   unlocked: 0
-  logged: 1
+  logged: 0
   dimensions: 2

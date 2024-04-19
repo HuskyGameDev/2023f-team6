@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Kraken
-  description: Purple kraken. Everyone is mad I made him purple.
+  description: Why is it purple? I always thought that it would be green.
   pageNumber: 0
   Health: 2000
   Damage: 40
@@ -36,6 +36,6 @@ MonoBehaviour:
   bossWarning: You hear the sound of screams in the distance
   bossApproaching: The sea writhes beneath you
   availableAttacks: 000000000100000002000000
-  phase2switch: 0
-  Phase2ExtraAttacks: 
+  phase2switch: 0.5
+  Phase2ExtraAttacks: 06000000
   logged: 0

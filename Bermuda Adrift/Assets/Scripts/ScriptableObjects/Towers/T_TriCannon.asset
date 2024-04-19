@@ -15,6 +15,8 @@ MonoBehaviour:
   saveString: tri-cannon
   Name: Tri-Cannon
   Description: Fires cannonballs 3 times as fast!
+  Log: 'Fires cannonballs much faster than a cannon. \nThe signature weapon of a
+    fleet long lost to the sea. How has it appeared here? '
   damageMult: 1
   turnSpeed: 1
   range: 8
@@ -82,5 +84,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 
   unlocked: 0
-  logged: 1
+  logged: 0
   dimensions: 2

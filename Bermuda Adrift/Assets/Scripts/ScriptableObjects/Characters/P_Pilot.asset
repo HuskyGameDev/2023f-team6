@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0dc33d762e5bb24ca4b2e175d12cc22, type: 3}
   m_Name: P_Pilot
   m_EditorClassIdentifier: 
+  Log: "Flying in the sky is the best feeling. Too bad the sky is shared. Those darn
+    seagulls. The seagulls are too organized; they must have a leader. The pilot
+    swore to kill all things that fly. At least the radio still sends messages even
+    though it doesn\u2019t pick any up. Crashing planes is a useful way to take out
+    sea monsters."
   anim: {fileID: 9100000, guid: 5664c933a4e6be049a81d31051d1a03a, type: 2}
   defPrimary: {fileID: 11400000, guid: b230c004693f98341bfbcefaa3c0efa7, type: 2}
   defSecondary: {fileID: 11400000, guid: be44aa432bb994a47a7124895d19f586, type: 2}
@@ -28,6 +33,6 @@ MonoBehaviour:
   characterName: The Pilot
   mainBodySprite: {fileID: -2010298464, guid: 108c2fb3a2d50454e9e6d9e20053618f, type: 3}
   speed: 5
-  unlocked: 1
+  unlocked: 0
   logged: 0
   associatedSkills: []

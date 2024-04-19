@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: lightning-rod
   Name: Lightning Rod
   Description: Electrifies the nearby water and air, lowering the defense of enemies.
+  Log: "Electrifies the nearby air and water, stopping enemies and making them take
+    more damage. \\nThis electricity is\u2026strange. Why does it feel flat, like
+    an illusion? "
   damageMult: 1
   turnSpeed: 0
   range: 3
@@ -82,5 +85,5 @@ MonoBehaviour:
   noUpgrades: 0
   extraPriorities: 
   unlocked: 0
-  logged: 1
+  logged: 0
   dimensions: 2

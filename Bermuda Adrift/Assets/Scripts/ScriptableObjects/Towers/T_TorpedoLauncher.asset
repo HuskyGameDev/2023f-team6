@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: torpedo-launcher
   Name: Torpedo Launcher
   Description: Fires explosive torpedos that can only hit underwater enemies
+  Log: "Fires explosive torpedoes that can\u2019t hit airborne enemies. \\nIf airplanes,
+    boats, and submarines all sink and explode when they enter the Bermuda Triangle,
+    why is the raft still intact? Are we\u2026entertainment?"
   damageMult: 1
   turnSpeed: 0.75
   range: 7
@@ -54,8 +57,8 @@ MonoBehaviour:
   UA2LightningResistance: 0
   UA2image: {fileID: 1817036913, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   A2upgraded: 1
-  UB1Name: Laser Guidance
-  UB1Description: Torpedos will home in towards enemies
+  UB1Name: Focused Power
+  UB1Description: Torpedos have smaller explosions, but do more damage
   UB1damageMult: 1
   UB1turnSpeed: 0.8
   UB1range: 7

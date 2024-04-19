@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: explosive-barricade
   barrierName: Explosive Barricade
   description: Explodes the second it's touched, killing everything nearby
+  Log: "Explodes in a large radius when touched by an enemy. \\nIt\u2019s amazing
+    how something this volatile was made with just scraps. What are these scraps
+    made of?"
   unlocked: 0
   effect: 2
   Health: 4
@@ -24,3 +27,5 @@ MonoBehaviour:
   startingSprite: {fileID: -96617178, guid: 3c0669133ff39d74cb84761fcfb3f837, type: 3}
   animator: {fileID: 9100000, guid: 0f0fd85e69c507d47b3c761f4bfcaf05, type: 2}
   Thumbnail: {fileID: -1638815568, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
+  relatedSkill: {fileID: 0}
+  statEffect: 0

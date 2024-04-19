@@ -28877,7 +28877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &450279483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28936,6 +28936,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testRound: 10
+  enemyPrefab: {fileID: 3398399399289917803, guid: 2fb1d2b8b7c9c0349a1c27ae343a8b28, type: 3}
+  testEnemy: {fileID: 11400000, guid: b3999ec0ea08aaa46bf65ff2b0d418a5, type: 2}
 --- !u!114 &450279487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30239,8 +30241,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29, y: 73}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 210.12, y: -87.93}
+  m_SizeDelta: {x: 678.24, y: 371.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &478026115
 MonoBehaviour:
@@ -61684,8 +61686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -13.999998, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.44400024}
+  m_SizeDelta: {x: -14, y: -7.981}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928908728
 MonoBehaviour:
@@ -61734,7 +61736,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.5
+  m_fontSize: 13.45
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -119528,7 +119530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6127269059821001702, guid: e858f7d900931ff4ba9fd30cd4a82846, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -123494,8 +123496,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9bad5f9c9411934da49b2ec6a9a121e, type: 2}
   - {fileID: 11400000, guid: 1637827154937d64cb907f0e72d62d03, type: 2}
   - {fileID: 11400000, guid: 14cb3a56be95792418b323e3ef9d8136, type: 2}
-  allBarriers: []
-  allCenterpieces: []
+  allBarriers:
+  - {fileID: 11400000, guid: d18b51052c6dac941ba77e96d47995f3, type: 2}
+  - {fileID: 11400000, guid: 6d847a584156d894781f4ad9c9fe5691, type: 2}
+  - {fileID: 11400000, guid: 6bda9d14f4c8eaf48b7b8b45ebe92113, type: 2}
+  - {fileID: 11400000, guid: c2a8362b16b5ead4194af93c64b69572, type: 2}
+  - {fileID: 11400000, guid: 88f1db238f22e2c41a87d04b53728469, type: 2}
+  - {fileID: 11400000, guid: 532bd38f285888448ba8920149275a88, type: 2}
+  allCenterpieces:
+  - {fileID: 11400000, guid: dff634282a721714ca8d140fedfbc206, type: 2}
+  - {fileID: 11400000, guid: fa521d2d98585154da78b7c72e964cbd, type: 2}
+  - {fileID: 11400000, guid: 43f112b78d724184ab0a7668812deada, type: 2}
+  - {fileID: 11400000, guid: 01ef03960fed9e442a46ed627c360fd3, type: 2}
 --- !u!114 &1939975467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126491,12 +126503,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c99c8caa38fb0e4fa54f1b96e47b27e, type: 2}
   - {fileID: 11400000, guid: 852936d7ac66db143904ff587c2a1e81, type: 2}
   - {fileID: 11400000, guid: 1f64bc60a2b4aef4fad5e00cbd44b802, type: 2}
+  - {fileID: 11400000, guid: eb65acbf6ed050c4dbf2f3bb09f9c45e, type: 2}
   - {fileID: 11400000, guid: b3e93273f28392d4f98cc0b1d4e7418d, type: 2}
   - {fileID: 11400000, guid: 1fce6e98cd7c72c46917c91302588a0f, type: 2}
+  - {fileID: 11400000, guid: 0eb95e05bfefcb64285d762c110c70e7, type: 2}
   - {fileID: 11400000, guid: b3999ec0ea08aaa46bf65ff2b0d418a5, type: 2}
   - {fileID: 11400000, guid: bb3ee2f29fc633b4a9407f0449945540, type: 2}
   - {fileID: 11400000, guid: 37bbed466e849184bbc0b4cd52a0bbe1, type: 2}
-  - {fileID: 11400000, guid: 0eb95e05bfefcb64285d762c110c70e7, type: 2}
   Bosses:
   - {fileID: 11400000, guid: baddfa75645138349a939bb568ff6f1f, type: 2}
   - {fileID: 11400000, guid: aefcad05795496642a9091046525c9ac, type: 2}
@@ -126538,7 +126551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31525263f0cedbd40992815aab5eb663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 2
 --- !u!114 &2038607808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126766,7 +126778,6 @@ MonoBehaviour:
   islands:
   - {fileID: 11400000, guid: 293677a1e8c64c246bd1975204dfb2c0, type: 2}
   - {fileID: 11400000, guid: 6d951c6ee041bbe4b9043a68ecb9b7f3, type: 2}
-  - {fileID: 11400000, guid: 8cc561454df92d84a9496a1c9b98204d, type: 2}
   - {fileID: 11400000, guid: 2849e7167ce62ec4495a45349858d1c3, type: 2}
   - {fileID: 11400000, guid: f6555dd39960879458d657fab1cdc7c7, type: 2}
   - {fileID: 11400000, guid: f6a40aa466056ce4a990da0fae004a36, type: 2}

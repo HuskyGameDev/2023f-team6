@@ -50,7 +50,29 @@ public class AnimationHandler : MonoBehaviour
         Centerpiece.onClicked -= upgradeMenu_SlideIn;
         Barriers.onClicked -= upgradeMenu_SlideIn;
         LevelGUIManager.OnLevelUpOpen -= levelUpScreen_SlideIn;
+        LevelGUIManager.OnLevelUpOpen1Option -= levelUpScreen_SlideIn1;
+        LevelGUIManager.OnLevelUpOpen2Options -= levelUpScreen_SlideIn2;
         LevelGUIManager.OnLevelUpClose -= levelUpScreen_SlideOut;
+        LevelGUIManager.OnLevelUpClose1Option -= levelUpScreen_SlideOut1;
+        LevelGUIManager.OnLevelUpClose2Options -= levelUpScreen_SlideOut2;
+    }
+    private void OnDestroy()
+    {
+        GameManager.onRoundEnd -= BuyMenu_SlideIn;
+        GameManager.OnRoundStart -= BuyMenu_SlideOut;
+        TurretMiddleMan.onClicked -= upgradeMenu_SlideIn;
+        GameManager.OnRoundStart -= upgradeMenu_SlideOut;
+        UpgradeMenuHandler.OnDestroy -= upgradeMenu_SlideOut;
+        Hints.OnPopup -= tooltipsPopup;
+        Hints.OnPopdown -= tooltipsPopdown;
+        Centerpiece.onClicked -= upgradeMenu_SlideIn;
+        Barriers.onClicked -= upgradeMenu_SlideIn;
+        LevelGUIManager.OnLevelUpOpen -= levelUpScreen_SlideIn;
+        LevelGUIManager.OnLevelUpOpen1Option -= levelUpScreen_SlideIn1;
+        LevelGUIManager.OnLevelUpOpen2Options -= levelUpScreen_SlideIn2;
+        LevelGUIManager.OnLevelUpClose -= levelUpScreen_SlideOut;
+        LevelGUIManager.OnLevelUpClose1Option -= levelUpScreen_SlideOut1;
+        LevelGUIManager.OnLevelUpClose2Options -= levelUpScreen_SlideOut2;
     }
     void BuyMenu_SlideIn()
     {

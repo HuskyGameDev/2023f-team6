@@ -140,6 +140,7 @@ MonoBehaviour:
   prefab: {fileID: 3398399399289917803}
   extra: {fileID: 0}
   bullet: {fileID: 0}
+  wallEffects: {fileID: 2126733673992187979, guid: 74c1f2e6708406c4d9d6bc96e7bb7e73, type: 3}
   noRotation: 1
 --- !u!61 &7883539249785375889
 BoxCollider2D:

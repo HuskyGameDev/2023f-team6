@@ -15,6 +15,9 @@ MonoBehaviour:
   saveString: ballista
   Name: Ballista
   Description: Fire powerful ballista bolts, dealing extra damage to flying enemies
+  Log: 'Fires ballista bolts that are especially effective against airborne enemies.
+    \nA medieval weapon from a time long ago. And yet, its effectiveness rivals everything
+    else. Why does the past feel closer than the present? '
   damageMult: 1
   turnSpeed: 1
   range: 7
@@ -80,7 +83,7 @@ MonoBehaviour:
   rarity: 0
   cantTurn: 0
   noUpgrades: 0
-  extraPriorities: 06000000
+  extraPriorities: 
   unlocked: 0
-  logged: 1
+  logged: 0
   dimensions: 2

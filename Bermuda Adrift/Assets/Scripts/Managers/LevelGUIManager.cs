@@ -40,8 +40,12 @@ public class LevelGUIManager : MonoBehaviour, IDataPersistence
     private void Start()
     {
         buildManager = FindObjectOfType<BuildManager>();
-        ChoicesCanvas.GetComponent<Canvas>().enabled = false;
-        Volume.SetActive(false);
+
+        if (ChoicesCanvas != null)
+            ChoicesCanvas.GetComponent<Canvas>().enabled = false;
+
+        if (Volume != null)
+            Volume.SetActive(false);
     }
     private void Update()
     {

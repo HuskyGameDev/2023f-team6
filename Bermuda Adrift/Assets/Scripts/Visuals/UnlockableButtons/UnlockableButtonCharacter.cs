@@ -11,6 +11,15 @@ public class UnlockableButtonCharacter : UnlockableButtonBase
 
     public Player player;
 
+    private void OnEnable()
+    {
+        LogbookManager.CharacterUnlocked += unlockPlayerButton;
+    }
+    private void OnDisable()
+    {
+        LogbookManager.CharacterUnlocked -= unlockPlayerButton;
+    }
+
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(buttonClicked);
@@ -21,7 +30,7 @@ public class UnlockableButtonCharacter : UnlockableButtonBase
         txt = gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
 
-    public void unlockTowerButton(Player p)
+    public void unlockPlayerButton(Player p)
     {
         if (p.getName().Equals(player.getName()))
         {

@@ -53,7 +53,7 @@ public class VideoSettings : MonoBehaviour, IDataPersistence
             {
                 if ((float)(allResolutions[i].width / (float)allResolutions[i].height) == (4f / 3f))
                 {
-                    string option = allResolutions[i].ToString();
+                    string option = allResolutions[i].width + " x " + allResolutions[i].height + " @ " + Mathf.Round((float)allResolutions[i].refreshRateRatio.value) + " hz";
 
                     newOption = Instantiate(optionPrefab, ResolutionContent.transform);
 
@@ -76,7 +76,7 @@ public class VideoSettings : MonoBehaviour, IDataPersistence
             {
                 if ((float)(allResolutions[i].width / (float)allResolutions[i].height) == (16f / 9f))
                 {
-                    string option = allResolutions[i].ToString();
+                    string option = allResolutions[i].width + " x " + allResolutions[i].height + " @ " + Mathf.Round((float)allResolutions[i].refreshRateRatio.value) + " hz";
 
                     newOption = Instantiate(optionPrefab, ResolutionContent.transform);
 
@@ -100,7 +100,7 @@ public class VideoSettings : MonoBehaviour, IDataPersistence
             {
                 if ((float)(allResolutions[i].width / (float)allResolutions[i].height) == (16f / 10f))
                 {
-                    string option = allResolutions[i].ToString();
+                    string option = allResolutions[i].width + " x " + allResolutions[i].height + " @ " + Mathf.Round((float)allResolutions[i].refreshRateRatio.value) + " hz";
 
                     newOption = Instantiate(optionPrefab, ResolutionContent.transform);
 
@@ -137,7 +137,7 @@ public class VideoSettings : MonoBehaviour, IDataPersistence
         MyResolution resolution = currentResolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 
-        string option = resolution.ToString();
+        string option = resolution.width + " x " + resolution.height + " @ " + Mathf.Round((float) resolution.hz.value) + " hz";
 
         ResolutionText.text = option;
 

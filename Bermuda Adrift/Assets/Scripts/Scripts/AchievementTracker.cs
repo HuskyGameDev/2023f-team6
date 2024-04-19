@@ -36,9 +36,9 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         AI.OnEnemyDeath += unlockLightningRod;
         AI.onMeleeKill += unlockExplosiveBarricade;
         AI.OnUnlockEnemyDeath += unlockReinforcedCenterpiece;
-        AI.OnEnemyDeath += Pirate1000;
-        AI.OnEnemyDeath += Pilot1000;
-        AI.OnEnemyDeath += OldMan1000;
+        AI.OnEnemyDeath += Pirate5000;
+        AI.OnEnemyDeath += Pilot5000;
+        AI.OnEnemyDeath += OldMan5000;
         AI.onMajorDamage += unlockFloatingMine;
 
         IslandManager.islandDiscovered += unlockPilot;
@@ -68,9 +68,9 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         AI.OnEnemyDeath -= unlockLightningRod;
         AI.onMeleeKill -= unlockExplosiveBarricade;
         AI.OnUnlockEnemyDeath -= unlockReinforcedCenterpiece;
-        AI.OnEnemyDeath -= Pirate1000;
-        AI.OnEnemyDeath -= Pilot1000;
-        AI.OnEnemyDeath -= OldMan1000;
+        AI.OnEnemyDeath -= Pirate5000;
+        AI.OnEnemyDeath -= Pilot5000;
+        AI.OnEnemyDeath -= OldMan5000;
         AI.onMajorDamage -= unlockFloatingMine;
 
         IslandManager.islandDiscovered -= unlockPilot;
@@ -172,7 +172,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     void unlockTorpedoLauncher(Enemy enemy) 
     {
         //Kill a shark
-        if (unlockFromEnemyDeath(enemy, "Shark", "Fin soup"))
+        if (unlockFromEnemyDeath(enemy, "Shark", "Fin Soup"))
             AI.OnUnlockEnemyDeath -= unlockTorpedoLauncher;
     }
     void unlockBallista(Enemy enemy) 
@@ -207,7 +207,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         //Own 10 blueprints
         if (count >= 10)
         {
-            unlockAchievement("Why are you hoarding?");
+            unlockAchievement("Ideas Galore");
             BuildManager.onBlueprintAdded -= unlockShieldGenerator;
         }
     }
@@ -276,7 +276,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     void unlockFloatingMine()
     {
         //Do 1,000 damage in 1 hit
-        unlockAchievement("Thats a lotta damage");
+        unlockAchievement("That's a lotta damage");
 
         AI.onMajorDamage -= unlockFloatingMine;
     }
@@ -295,7 +295,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
     void unlockReinforcedCenterpiece(Enemy enemy)
     {
         //Beat the final boss
-        if (unlockFromEnemyDeath(enemy, "The Maestro", "Well done"))
+        if (unlockFromEnemyDeath(enemy, "The Maestro", "Well Done"))
             AI.OnUnlockEnemyDeath -= unlockReinforcedCenterpiece;
     }
     void unlockBarrierCenterpiece(Island island)
@@ -336,34 +336,37 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
             IslandManager.islandDiscovered -= DevoutFollower;
         }
     }
-    void Pirate1000() 
+    void Pirate5000() 
     {
-        pirateCount++;
+        if (FindObjectOfType<SettingsTracker>() != null && FindObjectOfType<SettingsTracker>().getCharacter().getName().CompareTo("The Pirate") == 0)
+            pirateCount++;
 
-        if (pirateCount >= 1000)
+        if (pirateCount >= 5000)
         {
             unlockAchievement("New Captain");
-            AI.OnEnemyDeath -= Pirate1000;
+            AI.OnEnemyDeath -= Pirate5000;
         }
     }
-    void Pilot1000()
+    void Pilot5000()
     {
-        pilotCount++;
+        if (FindObjectOfType<SettingsTracker>() != null && FindObjectOfType<SettingsTracker>().getCharacter().getName().CompareTo("The Pilot") == 0)
+            pilotCount++;
 
-        if (pilotCount >= 1000)
+        if (pilotCount >= 5000)
         {
             unlockAchievement("Kamikaze Director");
-            AI.OnEnemyDeath -= Pilot1000;
+            AI.OnEnemyDeath -= Pilot5000;
         }
     }
-    void OldMan1000()
+    void OldMan5000()
     {
-        oldManCount++;
+        if (FindObjectOfType<SettingsTracker>() != null && FindObjectOfType<SettingsTracker>().getCharacter().getName().CompareTo("The Old Man") == 0)
+            oldManCount++;
 
-        if (oldManCount >= 1000)
+        if (oldManCount >= 5000)
         {
             unlockAchievement("Endless Looping Memories");
-            AI.OnEnemyDeath -= OldMan1000;
+            AI.OnEnemyDeath -= OldMan5000;
         }
     }
     void Round100()
@@ -371,7 +374,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         if (gameManager.gameObject.GetComponent<EnemyManager>().getRound() >= 100)
         {
             unlockAchievement("Completionist");
-            GameManager.OnGameEnd -= unlockRegeneratingCenterpiece;
+            GameManager.onRoundEnd -= Round100;
         }
     }
 
@@ -600,7 +603,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         if (lnl.unlocked)
         {
             unlockAchievementSilent("New Captain");
-            AI.OnEnemyDeath -= Pirate1000;
+            AI.OnEnemyDeath -= Pirate5000;
         }
         else
             pirateCount = saver.pirateCount;
@@ -609,7 +612,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         if (lnl.unlocked)
         {
             unlockAchievementSilent("Kamikaze Director");
-            AI.OnEnemyDeath -= Pilot1000;
+            AI.OnEnemyDeath -= Pilot5000;
         }
         else
             pilotCount = saver.pilotCount;
@@ -618,7 +621,7 @@ public class AchievementTracker : MonoBehaviour, IDataPersistence
         if (lnl.unlocked)
         {
             unlockAchievementSilent("Endless Looping Memories");
-            AI.OnEnemyDeath -= OldMan1000;
+            AI.OnEnemyDeath -= OldMan5000;
         }
         else
             oldManCount = saver.oldManCount;

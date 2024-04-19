@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Merman
-  description: Is a fish person that is blue
+  description: It almost looks like a skeleton rather than a living creature. Perhaps
+    it is already dead.
   pageNumber: 0
   Health: 20
   Damage: 5

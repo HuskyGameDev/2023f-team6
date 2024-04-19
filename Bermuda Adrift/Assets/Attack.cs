@@ -294,7 +294,7 @@ public class Attack : MonoBehaviour
     */
     public void primary()
     {
-        Debug.Log("Primary");
+        //Debug.Log("Primary");
 
         if (!primaryOnCooldown && !otherAttackActive(1))
         {
@@ -311,7 +311,7 @@ public class Attack : MonoBehaviour
     }
     public void secondary()
     {
-        Debug.Log("Secondary");
+        //Debug.Log("Secondary");
 
         if (!secondaryOnCooldown)
         {
@@ -328,7 +328,7 @@ public class Attack : MonoBehaviour
     }
     public void utility()
     {
-        Debug.Log("Utility");
+        //Debug.Log("Utility");
 
         if (!utilityOnCooldown)
         {
@@ -345,7 +345,7 @@ public class Attack : MonoBehaviour
     }
     public void special()
     {
-        Debug.Log("Special");
+        //Debug.Log("Special");
 
         if (!specialOnCooldown)
         {

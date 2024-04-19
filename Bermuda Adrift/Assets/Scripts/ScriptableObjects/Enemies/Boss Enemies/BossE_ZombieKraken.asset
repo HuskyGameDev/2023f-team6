@@ -15,13 +15,14 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Zombie Kraken
-  description: The strength of this beast's hatred lasts beyond the grave
+  description: "The strength of this beast's hatred lasts beyond the grave. At least
+    it\u2019s green now."
   pageNumber: 0
   Health: 4000
   Damage: 40
   Speed: 0.75
   attackSpeed: 1
-  sprite: {fileID: 114395884, guid: a052dd9042105f643acabd5ee50e2d03, type: 3}
+  sprite: {fileID: 1800353384, guid: a052dd9042105f643acabd5ee50e2d03, type: 3}
   xp: 3000
   scrap: 400
   rarity: 0.05
@@ -35,7 +36,7 @@ MonoBehaviour:
   minion: {fileID: 11400000, guid: 6151e1a9cde960e45ad1ce9fff13f4e3, type: 2}
   bossWarning: A foul smell permeates the air
   bossApproaching: The sea boils with hatred
-  availableAttacks: 000000000100000002000000
-  phase2switch: 0.5
-  Phase2ExtraAttacks: 06000000
+  availableAttacks: 00000000010000000200000006000000
+  phase2switch: 0
+  Phase2ExtraAttacks: 
   logged: 0

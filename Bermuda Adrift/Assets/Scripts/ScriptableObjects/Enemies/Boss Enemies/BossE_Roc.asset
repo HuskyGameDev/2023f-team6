@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 3
   specialType: 0
   Name: Roc
-  description: 
+  description: This has got to be the biggest bird i have ever seen. Better keep
+    my head down.
   pageNumber: 0
   Health: 4000
   Damage: 25

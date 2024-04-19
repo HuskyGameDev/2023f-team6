@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 3
   specialType: 0
   Name: Shadow Self
-  description: The Shadow Self
+  description: "All that\u2019s left of the man who almost escaped."
   pageNumber: 0
   Health: 4000
   Damage: 30

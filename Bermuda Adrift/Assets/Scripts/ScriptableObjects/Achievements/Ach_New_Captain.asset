@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ach_New_Captain
   m_EditorClassIdentifier: 
   Name: New Captain
-  Description: Defeat 1,000 enemies as the Pirate
+  Description: Defeat 5,000 enemies as the Pirate
   associatedTower: {fileID: 0}
   associatedBarrier: {fileID: 0}
   associatedCharacter: {fileID: 0}

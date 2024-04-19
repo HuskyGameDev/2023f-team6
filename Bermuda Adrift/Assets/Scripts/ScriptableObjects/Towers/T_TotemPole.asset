@@ -15,6 +15,8 @@ MonoBehaviour:
   saveString: totem-pole
   Name: Totem Pole
   Description: Empowers nearby towers
+  Log: Boosts the effectiveness of nearby towers. \nA totem pole adorned with a depiction
+    of some ancient deity. The depiction is foreign, but the energy is familiar.
   damageMult: 0
   turnSpeed: 0
   range: 2
@@ -25,6 +27,7 @@ MonoBehaviour:
   beforeFireSound: 
   fireSound: Totem Pole Shot
   towerPlaceSound: Totem Pole Place
+  towerReloadSound: 
   U1Name: Mysterious Guidance
   U1Description: Boosts the fire rate and damage of nearby towers even more
   U1damageMult: 0
@@ -72,6 +75,8 @@ MonoBehaviour:
   UB2LightningResistance: 0
   UB2image: {fileID: -2046849990, guid: 3937d1e3bf27aa942bbcfda92fe40086, type: 3}
   B2upgraded: 0
+  relatedSkill: {fileID: 0}
+  statEffect: 0
   anim: {fileID: 9100000, guid: 3586c5761cd39064fa2bd935d3c689e8, type: 2}
   baseSprite: {fileID: 0}
   rarity: 0

@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 1
   Name: Hamster
-  description: Is a hamster
+  description: How is a hamster here? And why do all the turrets target it? Is it
+    marked by something?
   pageNumber: 0
   Health: 50
   Damage: 0

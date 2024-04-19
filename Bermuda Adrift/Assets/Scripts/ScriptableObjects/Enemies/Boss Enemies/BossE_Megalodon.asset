@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Megalodon
-  description: 
+  description: The sharks from before are nothing compared to this beast. Its fins
+    create tides and its jaws devour islands. This one is dangerous.
   pageNumber: 0
   Health: 4000
   Damage: 75

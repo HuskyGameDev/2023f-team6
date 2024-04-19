@@ -11,6 +11,7 @@ public class BarrierScriptable : ScriptableObject
     public enum Effect { Blockade, Effect, Explosion, Platform }
     [SerializeField] private string barrierName;
     [SerializeField] private string description;
+    [SerializeField] private string Log;
     [SerializeField] private bool unlocked;
     [SerializeField] private Effect effect;
     [SerializeField] private int Health;
@@ -31,6 +32,7 @@ public class BarrierScriptable : ScriptableObject
     public string getSaveString() { return saveString; }
     public string getName() { return barrierName; }
     public string getDescription() { return description; }
+    public string getLog() { return Log; }
     public bool getUnlocked() { return unlocked; }
     public Effect getEffect() { return effect; }
     public int getHealth() { return Health; }

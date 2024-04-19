@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Turtle
-  description: Is a turtle
+  description: There appears to be a small island floating towards me. Wait, never
+    mind, it's a turtle.
   pageNumber: 0
   Health: 15
   Damage: 1

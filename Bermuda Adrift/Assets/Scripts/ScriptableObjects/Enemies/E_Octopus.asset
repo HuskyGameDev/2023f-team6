@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 0
   specialType: 0
   Name: Octopus
-  description: Is an octopus
+  description: "I\u2019ve heard these things are intelligent, but they just seem
+    focused on getting my food. Why are they so desperate?"
   pageNumber: 0
   Health: 20
   Damage: 2

@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private GameState state;
     public enum Difficulty { Easy, Medium, Hard };
-    [SerializeField] private Difficulty difficulty;
+    private Difficulty difficulty = Difficulty.Easy;
    
     private void Start()
     {
@@ -104,6 +104,11 @@ public class GameManager : MonoBehaviour
     private void endRound() //Does everything that needs doing at the end of a round (received from enemyManager)
     {
         //GameObject.Find("Audio Source").GetComponent<AudioManager>().quiet();
+        if (AudioManager.Instance.currentSong != "Pirate Theme")
+        {
+            AudioManager.Instance.StopCurrentMusic();
+            AudioManager.Instance.PlayMusic("Pirate Theme");
+        }
 
         if (gameObject.GetComponent<EnemyManager>().getRound() % 10 == 8)   //Adds the tip right before the round ends to guarantee it'll be the one to show up
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning1());
@@ -111,7 +116,9 @@ public class GameManager : MonoBehaviour
         {
             OnBossWarning?.Invoke(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getWarning2());
             gameObject.GetComponent<ShaderManager>().startBossRound();
-            PlayBossTheme(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getName());
+
+            PlayBossTheme();
+            //PlayBossTheme(gameObject.GetComponent<EnemyManager>().getUpcomingBoss().getName());
         }
 
         onRoundEnd?.Invoke();
@@ -127,13 +134,10 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.PlaySFX("Round End");
     }
 
-    public void PlayBossTheme(string bossName)
+    public void PlayBossTheme()
     {
         AudioManager.Instance.StopCurrentMusic();
-        if (bossName.Equals("Sea Serpent"))
-        {
-            AudioManager.Instance.PlayMusic("Blackmoor Tides");
-        }
+        AudioManager.Instance.PlayMusic("Blackmoor Tides");
     }
 
     private void GameEnd()
@@ -145,8 +149,8 @@ public class GameManager : MonoBehaviour
     public GameState getGameState() { return state; }   //Returns gameState; referenced a lot
 
     public void addScrap(int newScrap) { scrap += newScrap; onScrapCollect?.Invoke(scrap); }   //Received from enemy AI in death()
-    
-    public void addXP(int newXP) { XP += newXP; onXPCollect?.Invoke(XP, XPNeeded); }     //Both don't do anything yet
+
+    public void addXP(int newXP) { XP += newXP; onXPCollect?.Invoke(XP, XPNeeded); }
 
     public void levelUp()
     {
@@ -156,12 +160,14 @@ public class GameManager : MonoBehaviour
             OnLevelUp?.Invoke(getLevel());
             setXP(0);
             //Level up faster on higher difficulties
-            if (difficulty == Difficulty.Hard)
-                XPNeeded = (Mathf.Pow((float)level, 1.25f) * 100.0f);
+            //if (difficulty == Difficulty.Hard)
+            XPNeeded = Mathf.Pow(level, 1.25f) * 100.0f;
+            /*
             else if (difficulty == Difficulty.Medium)
                 XPNeeded = (Mathf.Pow((float)level, 1.35f) * 100.0f);
             else
                 XPNeeded = (Mathf.Pow((float)level, 1.5f) * 100.0f);
+            */
             
         }
     }

@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 2
   specialType: 0
   Name: Dragon
-  description: 
+  description: Thought a dragon would be a lot stronger. More like an overgrown chicken
+    who can breathe fire. Too bad this chicken has range.
   pageNumber: 0
   Health: 4000
   Damage: 50

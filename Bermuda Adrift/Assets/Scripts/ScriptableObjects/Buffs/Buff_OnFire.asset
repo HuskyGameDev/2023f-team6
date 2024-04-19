@@ -31,6 +31,6 @@ MonoBehaviour:
   percentDOT: 0
   DOTColor: {r: 1, g: 0.20716198, b: 0, a: 1}
   Health: 1
-  armor: 1
+  armor: 0.75
   CritChance: 1
   Damage: 1

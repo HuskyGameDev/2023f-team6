@@ -219,8 +219,7 @@ public class Barriers : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
-        if (placed)
+        if (placed && FindObjectOfType<GameManager>().getGameState() == GameManager.GameState.Idle)
             onClicked?.Invoke(this);
     }
 

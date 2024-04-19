@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 1
   specialType: 0
   Name: Crow
-  description: Is a crow
+  description: A bird in the ocean should be a good sign, but crows are an omen of
+    Death.
   pageNumber: 0
   Health: 3
   Damage: 1

@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 1
   specialType: 0
   Name: Shadow Creature
-  description: Is a shadow creature
+  description: I can hear them whispering. Perhaps [REDACTED] has grown tired of
+    playing games.
   pageNumber: 0
   Health: 5
   Damage: 1

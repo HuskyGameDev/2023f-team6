@@ -30,24 +30,38 @@ public class AchievementsMenu : MonoBehaviour
         foreach (Achievement a in achievements)
         {
             text = a.getName() + "\n" + a.getDescription();
+            Sprite image = null;
             if (a.getAssociatedCharacter() != null)
-                text += ". Unlocks " + a.getAssociatedCharacter().getName();
+                image = a.getAssociatedCharacter().getMainBodySprite();
             else if (a.getAssociatedTower() != null)
-                text += ". Unlocks " + a.getAssociatedTower().getName();
+                image = a.getAssociatedTower().getImage();
             else if (a.getAssociatedBarrier() != null)
-                text += ". Unlocks " + a.getAssociatedBarrier().getName();
+                image = a.getAssociatedBarrier().getThumbnail();
+            else if (a.getAssociatedCenterpiece() != null)
+                image = a.getAssociatedCenterpiece().getSprite();
 
             currentPanel = Instantiate(achievementDisplay, transform);
             currentPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+            if (image != null)
+            {
+                currentPanel.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+                currentPanel.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = image;
+            }
 
 
             RectTransform rt = gameObject.GetComponent(typeof(RectTransform)) as RectTransform;
             rt.sizeDelta = new Vector2(1285, (achievements.Length - 2) * 230);
 
             if (a.getUnlocked())
+            {
                 currentPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+                currentPanel.transform.GetChild(1).GetChild(1).GetComponent<Image>().color = Color.white;
+            }
             else
+            {
                 currentPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.grey;
+                currentPanel.transform.GetChild(1).GetChild(1).GetComponent<Image>().color = Color.grey;
+            }
         }
 
         StartCoroutine(scrollbarReset());
